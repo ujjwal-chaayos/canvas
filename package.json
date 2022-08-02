@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "canvas-to-buffer": "^2.0.0",
+    "file-saver": "^2.0.5",
+    "react-canvas-component": "^0.1.5",
+    "svg-text": "^0.5.1"
+  }
+}
