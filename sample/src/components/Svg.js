@@ -10,11 +10,14 @@ const Svg = () => {
     const {width, height} = ctx.canvas
     ctx.save()
     ctx.clearRect(0, 0, width, height)
-    ctx.fillStyle = 'black'
-    ctx.translate(width / 2, height / 2)
-    ctx.rotate(((time / 10) % 360) * Math.PI / 180)
-    ctx.fillRect(-1 * width / 4, -1 * height / 4, width / 2, height / 2)
-    ctx.restore()
+    ctx.font = "300px Arial";
+    ctx.fillText("Hello World",40,500);
+
+}
+
+function sampleFun() {
+  drawCanvas( );
+
 }
 
   // let image = document.querySelector("svg");
@@ -106,8 +109,8 @@ const Svg = () => {
 		/>
 
 	</svg>
-      {/* <button onClick={gross}>Hello</button> */}
-      <Canvas draw={drawCanvas} width={400} height={400} realtime/>
+      <button onClick={sampleFun}>Hello</button>
+      {/* <Canvas draw={drawCanvas} width={4000} height={1000} realtime/> */}
     </div>
   );
 };
