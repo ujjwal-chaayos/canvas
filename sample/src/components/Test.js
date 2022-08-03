@@ -1,6 +1,7 @@
 import React from "react";
-import img1 from "../assets/img1.png";
-import img4 from "../assets/img4.png";
+import img1 from "../assets/templates/horizontal/template2.png";
+import img4 from "../assets/menu/horizontal/menu2_horizontal.png";
+
 
 import cv from "opencv.js";
 
