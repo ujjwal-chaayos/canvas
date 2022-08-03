@@ -1,11 +1,21 @@
-import React from "react";
+import  React from "react";
+import {requestdata} from '../api/mock_server';
 import img1 from "../assets/templates/horizontal/template2.png";
 import img4 from "../assets/menu/horizontal/menu2_horizontal.png";
+import {useState,useEffect} from "react";
 
 
 import cv from "opencv.js";
 
 function Test() {
+  let [time,setTime]=useState("morning");
+
+  useEffect(()=>{
+    
+  },[time]);
+
+
+
   function findCoordinates(blocks, cv, showCountours) {
     cv.cvtColor(blocks, blocks, cv.COLOR_RGBA2GRAY); //convert color , source , destination , color ( cv.ColorConversionCodes) ,  number of channels in the destination image; if
     cv.threshold(blocks, blocks, 120, 200, cv.THRESH_BINARY); //source,destination,threshold,max value, mode , only works on single channel (B/W)

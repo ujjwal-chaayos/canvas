@@ -1,0 +1,171 @@
+{
+  "data": {
+    "cafe": {
+      "parentId": 1000,
+      "cafe_detail": {
+        "name": "Gigaplex",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "address": "Building no 2,Floor 2nd,Cafe no 2,",
+        "pin": "400708",
+        "active": true
+      }
+    },
+    "timing": {
+      "slot": "MORNING",
+      "time": "9AM"
+    },
+    "font": {
+      "size": {
+        "title": "12px",
+        "item": "6px",
+        "type": "Roboto"
+      }
+    },
+    "images": {
+      "qty": 4,
+      "image": [
+        { "img_id": "1", "value": "" },
+        { "img_id": "2", "value": "" },
+        { "img_id": "3", "value": "" },
+        { "img_id": "4", "value": "" },
+        { "img_id": "5", "value": "" }
+      ]
+    },
+    "blocks": {
+      "qty": 5,
+      "block": [
+        { "block_id": "1", "title": "" },
+        { "block_id": "2", "title": "" },
+        { "block_id": "3", "title": "" },
+        { "block_id": "4", "title": "" },
+        { "block_id": "5", "title": "" }
+      ]
+    },
+    "items": [
+      {
+        "block_id": "1",
+        "qty": 5,
+        "item": [
+          { "item_id": "1", "value": "" },
+          { "item_id": "2", "value": "" },
+          { "item_id": "3", "value": "" },
+          { "item_id": "4", "value": "" },
+          { "item_id": "5", "value": "" }
+        ]
+      },
+      {
+        "block_id": "2",
+        "qty": 6,
+        "item": [
+          { "item_id": "1", "value": "" },
+          { "item_id": "2", "value": "" },
+          { "item_id": "3", "value": "" },
+          { "item_id": "4", "value": "" },
+          { "item_id": "5", "value": "" },
+          { "item_id": "6", "value": "" }
+        ]
+      },
+      {
+        "block_id": "3",
+        "qty": 4,
+        "item": [
+          { "item_id": "1", "value": "" },
+          { "item_id": "2", "value": "" },
+          { "item_id": "3", "value": "" },
+          { "item_id": "4", "value": "" }
+        ]
+      },
+      {
+        "block_id": "4",
+        "qty": 13,
+        "item": [
+          { "item_id": "1", "value": "" },
+          { "item_id": "2", "value": "" },
+          { "item_id": "3", "value": "" },
+          { "item_id": "4", "value": "" },
+          { "item_id": "5", "value": "" },
+          { "item_id": "6", "value": "" },
+          { "item_id": "7", "value": "" },
+          { "item_id": "8", "value": "" },
+          { "item_id": "9", "value": "" },
+          { "item_id": "10", "value": "" },
+          { "item_id": "11", "value": "" },
+          { "item_id": "12", "value": "" },
+          { "item_id": "13", "value": "" }
+        ]
+      },
+      {
+        "block_id": "5",
+        "qty": 8,
+        "item": [
+          { "item_id": "1", "value": "" },
+          { "item_id": "2", "value": "" },
+          { "item_id": "3", "value": "" },
+          { "item_id": "4", "value": "" },
+          { "item_id": "5", "value": "" },
+          { "item_id": "6", "value": "" },
+          { "item_id": "7", "value": "" },
+          { "item_id": "8", "value": "" }
+        ]
+      }
+    ],
+    "prices": {
+      "r": {
+        "qty": 5,
+        "price": {
+          "1": [
+            { "item_id": "1", "value": "" },
+            { "item_id": "2", "value": "" },
+            { "item_id": "3", "value": "" },
+            { "item_id": "4", "value": "" },
+            { "item_id": "5", "value": "" }
+          ],
+          "2": [
+            { "item_id": "1", "value": "" },
+            { "item_id": "2", "value": "" },
+            { "item_id": "3", "value": "" },
+            { "item_id": "4", "value": "" },
+            { "item_id": "5", "value": "" },
+            { "item_id": "6", "value": "" }
+          ],
+          "3": [
+            { "item_id": "1", "value": "" },
+            { "item_id": "2", "value": "" },
+            { "item_id": "3", "value": "" },
+            { "item_id": "4", "value": "" }
+          ],
+          "4": [
+            { "item_id": "1", "value": "" },
+            { "item_id": "2", "value": "" },
+            { "item_id": "3", "value": "" },
+            { "item_id": "4", "value": "" },
+            { "item_id": "5", "value": "" },
+            { "item_id": "6", "value": "" },
+            { "item_id": "7", "value": "" },
+            { "item_id": "8", "value": "" },
+            { "item_id": "9", "value": "" },
+            { "item_id": "10", "value": "" },
+            { "item_id": "11", "value": "" },
+            { "item_id": "12", "value": "" },
+            { "item_id": "13", "value": "" }
+          ],
+          "5": [
+            { "item_id": "1", "value": "" },
+            { "item_id": "2", "value": "" },
+            { "item_id": "3", "value": "" },
+            { "item_id": "4", "value": "" },
+            { "item_id": "5", "value": "" },
+            { "item_id": "6", "value": "" },
+            { "item_id": "7", "value": "" },
+            { "item_id": "8", "value": "" }
+          ]
+        }
+      },
+      "f": {
+        "qty": 0,
+        "price": {}
+      }
+    }
+  }
+}
