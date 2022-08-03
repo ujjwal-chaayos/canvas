@@ -1,0 +1,345 @@
+[
+    {
+        "parentId": 1000,
+        "name": "delhi",
+        "token_mapping": "DAY_SLOT",
+        "cafe_detail": {
+            "name": "Gigaplex",
+            "refName": null,
+            "city": "Mumbai",
+            "state": "Maharashtra",
+            "stateId": 15,
+            "address": "Building no 2,Floor 2nd,Cafe no 2,",
+            "pin": "400708",
+            "active": true,
+            "lat": 19.15917,
+            "lon": 72.99858,
+            "menu": null,
+            "category": null,
+            "version": null
+        },
+        "prefrence1": {
+           "id": 1,
+            "x":"2627",
+            "y":"203",
+            "x1":"6769",
+            "y1":"933",
+            "block_id":"20",
+            "type": "Heading",
+            "title": "Meals"
+        },
+        "prefrence2": {
+         "id": 2,
+            "x":"471",
+            "y":"3175",
+            "x1":"4685",
+            "y1":"4021",
+             "block_id":"12",
+            "type": "Heading",
+            "title": "Chaat Pakore"
+        },
+        "prefrence3": {
+            "id": 3,
+            "x":"3427",
+            "y":"6087",
+            "x1":"7341",
+            "y1":"6857",
+             "block_id":"3",
+            "type": "Heading",
+            "title": "Desserts"
+        },
+        "prefrence4": {
+             "id": 4,
+            "x":"8383",
+            "y":"203",
+            "x1":"12773",
+            "y1":"933",
+             "block_id":"19",
+            "type": "Heading",
+            "title": "Snacks"
+            },
+        "prefrence5": {
+               "id": 5,
+            "x":"8467",
+            "y":"5047",
+            "x1":"12621",
+            "y1":"5777",
+             "block_id":"8",
+            "type": "Heading",
+            "title": "Sandwiches"
+            },
+        "prefrence6": {
+            "id": 6,
+            "x":"39",
+            "y":"887",
+            "x1":"2601",
+            "y1":"3317",
+             "block_id":"18",
+            "type": "Img",
+            "image_len": 1,
+            "title": "Paratha",
+            "link": "https://images.unsplash.com/photo-1534353436294-0dbd4bdac845?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"  
+            },
+        "prefrence7": {
+            "id": 7,
+            "x":"4795",
+            "y":"3447",
+            "x1":"8133",
+            "y1":"5749",
+             "block_id":"11",
+            "type": "Img",
+            "image_len": 1,
+            "title": "Dhokla Chaat",
+            "link": "https://images.unsplash.com/photo-1659424765500-bbd43e45cc1c?ixlib=rb-1.2.1&ixid=MnwxM[…]G90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"  
+        },"prefrence8": {
+           "id": 8,
+            "x":"851",
+            "y":"6087",
+            "x1":"3341",
+            "y1":"7905",
+             "block_id":"4",
+            "type": "Img",
+            "image_len": 1,
+            "title": "Brownie",
+            "link": "https://images.unsplash.com/photo-1659504709294-e4d55fb7fdf1?ixlib=rb-1.2.1&ixid=MnwxM[…]G90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"  
+        },"prefrence9": {
+               "id": 9,
+            "x":"12943",
+            "y":"1679",
+            "x1":"15329",
+            "y1":"3913",
+             "block_id":"13",
+            "type": "Img",
+            "image_len": 1,
+            "title": "Puff",
+            "link": "https://images.unsplash.com/photo-1657299156271-d5a435dd65b0?ixlib=rb-1.2.1&ixid=MnwxM[…]G90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"  
+        },"prefrence10": {
+                 "id": 10,
+            "x":"12915",
+            "y":"5479",
+            "x1":"15321",
+            "y1":"7757",
+             "block_id":"7",
+            "type": "Img",
+            "image_len": 1,
+            "title": "Sandwich",
+            "link": "https://images.unsplash.com/photo-1659394754598-bbe7b27a1f71?ixlib=rb-1.2.1&ixid=MnwxM[…]90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"  
+        },"prefrence11": {
+             "id": 11,
+            "x":"2627",
+            "y":"963",
+            "x1":"6021",
+            "y1":"2797",
+             "block_id":"17",
+            "priceId":{
+                "x":"6047",
+            "y":"963",
+            "x1":"6769",
+            "y1":"2797",
+            "block_id":"16"
+            },
+            "type": "List",
+            "title": "Meals",
+            "length":"4",
+            "products": {
+                        "41": {
+                            "name": "Poha",
+                            "active": true,
+                            "inventory": false,
+                            "new":false,
+                            "price": "44"
+                        },
+                        "42": {
+                            "name": "Chola",
+                            "active": false,
+                            "inventory": true,
+                            "new":false,
+                            "price": "335"
+                        },
+                        "43": {
+                            "name": "Rajma Chawal",
+                            "active": true,
+                            "inventory": false,
+                            "new":true,
+                            "price": "878"
+                        },
+                        "45": {
+                            "name": "Drinking Chocolate",
+                            "active": false,
+                            "inventory": true,
+                            "price": "194"
+                        }
+                    }
+        },
+        "prefrence12": {
+            "id": 12,
+            "x":"471",
+            "y":"4051",
+            "x1":"4017",
+            "y1":"5893",
+            "block_id":"10",
+            "priceId":{
+                "x":"4043",
+            "y":"4051",
+            "x1":"4685",
+            "y1":"5893",
+            "block_id":"9"
+            },
+            "type": "List",
+            "title": "Chaat Pakore",
+            "length":"4",
+            "products": {
+                        "41": {
+                            "name": "Dhokla Chaat",
+                            "active": true,
+                            "inventory": false,
+                            "new":false,
+                            "price": "169"
+                        },
+                        "42": {
+                            "name": "Pakore",
+                            "active": false,
+                            "inventory": true,
+                            "new":false,
+                            "price": "335"
+                        },
+                        "43": {
+                            "name": "Paneer Chawal",
+                            "active": true,
+                            "inventory": false,
+                            "new":true,
+                            "price": "878"
+                        },
+                        "45": {
+                            "name": "Drinking Chocolate",
+                            "active": false,
+                            "inventory": true,
+                            "price": "194"
+                        }
+                    }
+        },
+        "prefrence13": {
+            "id": 13,
+           "x":"3427",
+            "y":"6887",
+            "x1":"6673",
+            "y1":"7993",
+            "block_id":"2",
+            "priceId":{
+                "x":"6699",
+            "y":"6887",
+            "x1":"7341",
+            "y1":"7993",
+            "block_id":"1"
+            },
+            "type": "List",
+            "title": "Desserts",
+            "length":"2",
+            "products": {
+                        "41": {
+                            "name": "Cake",
+                            "active": true,
+                            "inventory": false,
+                            "new":false,
+                            "price": "169"
+                        },
+                        "42": {
+                            "name": "Brownie",
+                            "active": false,
+                            "inventory": true,
+                            "new":false,
+                            "price": "335"
+                        }
+                        
+                    }
+        },
+        "prefrence14": {
+             "id": 14,
+            "x":"8383",
+            "y":"963",
+            "x1":"12025",
+            "y1":"4817",
+            "block_id":"15",
+            "priceId":{
+                "x":"12051",
+            "y":"963",
+            "x1":"12773",
+            "y1":"12051",
+            "block_id":"14"
+            },
+            "type": "List",
+            "title": "Snacks",
+            "length":"5",
+            "products": {
+                        "41": {
+                            "name": "Bun Maska",
+                            "active": true,
+                            "inventory": false,
+                            "new":false,
+                            "price": "169"
+                        },
+                        "42": {
+                            "name": "Vada Pav",
+                            "active": false,
+                            "inventory": true,
+                            "new":false,
+                            "price": "335"
+                        },"43": {
+                            "name": "Poha",
+                            "active": false,
+                            "inventory": true,
+                            "new":false,
+                            "price": "30"
+                        },"44": {
+                            "name": "Idli",
+                            "active": false,
+                            "inventory": true,
+                            "new":false,
+                            "price": "335"
+                        },"45": {
+                            "name": "Upma",
+                            "active": false,
+                            "inventory": true,
+                            "new":false,
+                            "price": "150"
+                        }
+                        
+                    }
+            },
+        "prefrence15": {
+                 "id": 15,
+            "x":"8467",
+            "y":"5807",
+            "x1":"11913",
+            "y1":"8189",
+            "block_id":"6",
+            "priceId":{
+                "x":"11939",
+            "y":"5807",
+            "x1":"12621",
+            "y1":"8189",
+            "block_id":"5"
+            },
+            "type": "List",
+            "title": "Sandwiches",
+            "length":"2",
+            "products": {
+                        
+                        "40": {
+                            "name": "Garden Fresh",
+                            "active": false,
+                            "inventory": true,
+                            "new":false,
+                            "price": "335"
+                        },"41": {
+                            "name": "Italian",
+                            "active": true,
+                            "inventory": false,
+                            "new":true,
+                            "price": "169"
+                        }
+                        
+                    }
+            }
+        }
+]          

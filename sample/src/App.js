@@ -1,10 +1,13 @@
-import Test from './components/Test';
-import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+import Test from './components/Test'
+import Svg from './components/Svg';
 
 function App() {
   return (
     <div className="App">
-      <Test />
+      <Test/>
+      {/* <Svg /> */}
     </div>
   );
 }
