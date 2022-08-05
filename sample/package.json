@@ -36,8 +36,7 @@
     "start": "react-scripts --max-old-space-size=8192 start",
     "build": "react-scripts --max-old-space-size=8192 build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postinstall": "node_modules/.bin/rn-nodeify --install crypto,fs,https --hack"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
