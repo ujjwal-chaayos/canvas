@@ -1,9 +1,9 @@
 export function jsonConverter(menu, refrenceTemplate) {
   var imageBlocks = [];
   var textBlocks = [];
-  for (let i = 0; i < refrenceTemplate["templates"].length(); i++) {
-    textBlocks.push(refrenceTemplate["templates"][i]["text_blocks"]);
-    imageBlocks.push(refrenceTemplate["templates"][i]["image_blocks"]);
+  for (let i = 0; i < refrenceTemplate["templates"].length; i++) {
+    textBlocks = textBlocks.concat( refrenceTemplate["templates"][i]["text_blocks"]);
+    imageBlocks = imageBlocks.concat(refrenceTemplate["templates"][i]["image_blocks"]);
   }
   var refinedTemplate = {};
   var menuDetails = menu["detail"];
@@ -26,30 +26,32 @@ export function jsonConverter(menu, refrenceTemplate) {
   refinedTemplate["cafe_detail"] = cafe_detail;
   var subCategory = menu["menuSequence"]["sub-category"];
   var products = menu["productDetail"]["products"];
-  var prices = menu["prices"]["prices"];
+  var productPrices = menu["prices"]["prices"];
+  var productImages = menu["productImages"];
 
   var images = [];
   var title = [];
   refinedTemplate["images"] = { qty: "" };
-  refinedTemplate["titles"] = { qty: subCategory.length() - 1 };
+  refinedTemplate["titles"] = { qty: subCategory.length - 1 };
   refinedTemplate["items"] = [];
   refinedTemplate["prices"] = [];
 
   //validations
 
   let c = 0;
-  for (let i = 0; i < subCategory.length(); i++) {
+  for (let i = 0; i < subCategory.length; i++) {
     if (subCategory[i]["name"] === "Images") {
-      refinedTemplate["images"]["qty"] = subCategory[i]["pid"].length();
-      for (let j = 0; j < subCategory[i]["pid"].length(); j++) {
+      refinedTemplate["images"]["qty"] = subCategory[i]["pids"].length;
+      for (let j = 0; j < subCategory[i]["pids"].length; j++) {
         images.push({
-          img_id: subCategory[i]["pid"][j],
-          imgURL: productImages[subCategory[i]["pid"][j].toString()]["baseUrl"]+productImages[subCategory[i]["pid"][j].toString()]["baseUrl"],
-          block_id: imageBlocks[j]["id"],
+          img_id: subCategory[i]["pids"][j],
+          imgURL: productImages["baseUrl"]+productImages["imageMap"][subCategory[i]["pids"][j].toString()]["gridLow"],
+          block_id: imageBlocks[j]["block_id"],
           template_id: imageBlocks[j]["template_id"],
         });
       }
     } else {
+       
       title.push({
         title_id: subCategory[i]["id"],
         value: subCategory[i]["name"],
@@ -57,37 +59,37 @@ export function jsonConverter(menu, refrenceTemplate) {
       });
       var item = [];
       var value = [];
-      for (let j = 0; j < subCategory[i]["pid"].length(); j++) {
+      for (let j = 0; j < subCategory[i]["pids"].length; j++) {
         item.push({
-          item_id: subCategory[i]["pid"][j],
-          value: products[subCategory[i]["pid"][j].toString()]["name"],
-          icons: products[subCategory[i]["pid"][j].toString()]["icons"],
-          active: products[subCategory[i]["pid"][j].toString()]["active"],
-          new: products[subCategory[i]["pid"][j].toString()]["new"]
+          item_id: subCategory[i]["pids"][j],
+          value: products[subCategory[i]["pids"][j].toString()]["name"],
+          icons: products[subCategory[i]["pids"][j].toString()]["icons"],
+          active: products[subCategory[i]["pids"][j].toString()]["active"],
+          new: products[subCategory[i]["pids"][j].toString()]["new"]
         });
-        var prices = prices[subCategory[i]["pid"][j].toString()]["prices"];
+        var prices = productPrices[subCategory[i]["pids"][j].toString()]["prices"];
         let values = [];
-        for(let k=0;k<prices.lengthh();k++){
+        for(let k=0;k<prices.length;k++){
             values.push({
                 "id": prices[k]["id"],
-                "price": prices[k]["Regular"]
+                "price": prices[k]["price"]
             });
         }
         value.push({
-            item_id: subCategory[i]["pid"][j],
+            item_id: subCategory[i]["pids"][j],
             value: values
         });
       }
         refinedTemplate["items"].push({
         block_id: textBlocks[c]["block_id"],
-        qty: subCategory[i]["pid"].length(),
+        qty: subCategory[i]["pids"].length,
         item: item
       });
 
 
       refinedTemplate["prices"].push({
         block_id: textBlocks[c]["block_id"],
-        qty: subCategory[i]["pid"].length(),
+        qty: subCategory[i]["pids"].length,
         value: value
       });
       c = c + 1;
@@ -95,4 +97,8 @@ export function jsonConverter(menu, refrenceTemplate) {
   }
 
 return refinedTemplate;
+}
+
+export function  getBestBlock(blocks,data,style){
+    
 }
