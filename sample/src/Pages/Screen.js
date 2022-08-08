@@ -11,14 +11,14 @@ const Screen = () => {
   return (
     <div>
       <Box
-        position="fixed"
+        //position="fixed"
         top={0}
         left={0}
-        height="100%"
+        height="100vh"
         width="100%"
         sx={{
           display: "flex",
-        
+            overflow:"auto",
             justifyContent:"center",
             flexWrap: 'wrap',
           backgroundColor: "primary.light",

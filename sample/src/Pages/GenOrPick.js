@@ -11,10 +11,10 @@ const GenOrPick = () => {
   return (
     <div>
       <Box
-        position="fixed"
+     
         top={0}
         left={0}
-        height="100%"
+        height="100vh"
         width="100%"
         sx={{
           display: "flex",
@@ -30,9 +30,9 @@ const GenOrPick = () => {
             variant="outlined"
             size="large"
           >
-            <Typography variant="h4" component="h2" sx={{ color: "#303030" }}>
+            <Typography variant="h4" component="h2" sx={{ color: "white" }}>
               NEW
-              <Typography variant="h3" component="h2" sx={{ color: "white" }}>
+              <Typography variant="h3" component="h2" sx={{ color: "#303030" }}>
                 TEMPLATE
               </Typography>
             </Typography>
@@ -43,9 +43,9 @@ const GenOrPick = () => {
             variant="outlined"
             size="large"
           >
-            <Typography variant="h4" component="h2" sx={{ color: "#303030" }}>
+            <Typography variant="h4" component="h2" sx={{ color: "white" }}>
               OLD
-              <Typography variant="h3" component="h2" sx={{ color: "white" }}>
+              <Typography variant="h3" component="h2" sx={{ color: "#303030" }}>
                 TEMPLATE
               </Typography>
             </Typography>
