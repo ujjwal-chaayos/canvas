@@ -40,8 +40,6 @@ export function jsonConverter(menu, refrenceTemplate) {
   refinedTemplate["items"] = [];
   refinedTemplate["prices"] = [];
 
-  //validations
-
   for (let i = 0; i < subCategory.length; i++) {
     if (subCategory[i]["name"] === "Images") {
       refinedTemplate["images"]["qty"] = subCategory[i]["pids"].length;
@@ -145,5 +143,6 @@ export function getBestBlock(blocks, data, font) {
       }
     }
   }
+  screen.remove();
   return index;
 }
