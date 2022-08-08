@@ -131,10 +131,12 @@
       "prices": {
         "r": {
           "qty": 5,
-          "price": [{
+          "price": [
+            {
             "block_id": "1",
             "qty": 9,
             "value":[
+              { "item_id": "0", "value":[{"id": "Regular","price":100}], "style":"Gotham Narrow Bold" },
               { "item_id": "1", "value": "109", "style":"Gotham Narrow Bold" },
               { "item_id": "2", "value": "139", "style":"Gotham Narrow Bold" },
               { "item_id": "3", "value": "139", "style":"Gotham Narrow Bold" },
@@ -144,7 +146,8 @@
               { "item_id": "7", "value": "139", "style":"Gotham Narrow Black" },
               { "item_id": "8", "value": "189", "style":"Gotham Narrow Black" },
               { "item_id": "9", "value": "159", "style":"Gotham Narrow Black" }
-            ]},{
+            ]
+            },{
             "block_id": "2",
             "qty": 4,
             "value":[
