@@ -163,20 +163,23 @@ export default function subBlockCoordinates(points,headingHeight,priceWidth){
     // finding the coordinates of heading i.e x,y,w,h.
     heading.x = parseInt(points.x);
     heading.y = parseInt(points.y);
-    heading.h = headingHeight;
     heading.w = parseInt(points.w);
+    heading.h = headingHeight;
+
 
     // finding the coordinates of priceList i.e x,y,w,h.
     priceList.x = parseInt(points.x) + (parseInt(points.w)-priceWidth);
     priceList.y = parseInt(points.y) + headingHeight;
-    priceList.h = parseInt(points.h) - headingHeight;
     priceList.w = priceWidth;
+    priceList.h = parseInt(points.h) - headingHeight;
+
 
     // finding the coordinates of itemList i.e x,y,w,h.
     itemList.x = parseInt(points.x);
     itemList.y = parseInt(points.y) + headingHeight;
-    itemList.h = parseInt(points.h) - headingHeight;
+    
     itemList.w = parseInt(points.w) - priceWidth;
+    itemList.h = parseInt(points.h) - headingHeight;
 
     // puting all sub-block's coordinates into finalcoordinate lsit.
     finalCoordinates.title = heading;
