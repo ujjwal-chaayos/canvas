@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
-import { Avatar, Button, Stack } from "@mui/material";
+import { Button } from "@mui/material";
 import "./Home.css";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
