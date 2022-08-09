@@ -1,50 +1,249 @@
 {
-    "input-data":[
-        {"1":{"x":"","y":"","w":"","h":"","type":"menu"}},
-        {"2":{"x":"","y":"","w":"","h":"","type":"menu"}},
-        {"3":{"x":"","y":"","w":"","h":"","type":"imgs"}},
-        {"4":{"x":"","y":"","w":"","h":"","type":"menu"}},
-        {"5":{"x":"","y":"","w":"","h":"","type":"imgs"}},
-        {"6":{"x":"","y":"","w":"","h":"","type":"imgs"}},
-        {"7":{"x":"","y":"","w":"","h":"","type":"imgs"}},
-        {"8":{"x":"","y":"","w":"","h":"","type":"menu"}},
-        {"9":{"x":"","y":"","w":"","h":"","type":"imgs"}},
-        {"10":{"x":"","y":"","w":"","h":"","type":"menu"}},
-        {"11":{"x":"","y":"","w":"","h":"","type":""}},
-        {"12":{"x":"","y":"","w":"","h":"","type":""}},
-        {"13":{"x":"","y":"","w":"","h":"","type":""}},
-        {"14":{"x":"","y":"","w":"","h":"","type":""}},
-        {"15":{"x":"","y":"","w":"","h":"","type":""}},
-        {"16":{"x":"","y":"","w":"","h":"","type":""}}
-    ],
-    "output-data":[
-        {"image":[
-        {"block_id":"3", "img_id": "1", "value": "https://drive.google.com/file/d/1GqjVMvpalHmAD63Q0_gKfD5ObvUHmzgt/view?usp=sharing","x":"","y":"","w":"","h":"" },
-        {"block_id":"5", "img_id": "2", "value": "https://drive.google.com/file/d/1c0hdAp00LYw3LcGFaTcYqB8Uhjcq9MvQ/view?usp=sharing","x":"","y":"","w":"","h":"" },
-        {"block_id":"6", "img_id": "3", "value": "https://drive.google.com/file/d/1Wd6rL6oQIjqENTVeM1BON5v7mwY2YA-q/view?usp=sharing","x":"","y":"","w":"","h":"" },
-        {"block_id":"7", "img_id": "4", "value": "https://drive.google.com/file/d/1u4YkRbZvHyMP-7IquqiQ2rIqh_LWUGgs/view?usp=sharing","x":"","y":"","w":"","h":"" },
-        {"block_id":"9", "img_id": "5", "value": "https://drive.google.com/file/d/17j4kAsrXqvy95Atn_TuZSfOTdg8cpLFF/view?usp=sharing","x":"","y":"","w":"","h":"" }]},
-        {"title":[
-            {"block_id":"1", "title_id": "t1", "ref_id": "1", "value": "MEALS","x":"","y":"","w":"","h":"" },
-            {"block_id":"2", "title_id": "t2", "ref_id": "2", "value": "CHAAT PAKODE","x":"","y":"","w":"","h":"" },
-            {"block_id":"4", "title_id": "t3", "ref_id": "3", "value": "DESSERTS","x":"","y":"","w":"","h":"" },
-            {"block_id":"8", "title_id": "t4", "ref_id": "4", "value": "SNACKS","x":"","y":"","w":"","h":"" },
-            {"block_id":"10", "title_id": "t5", "ref_id": "5", "value": "SANDWICHES","x":"","y":"","w":"","h":"" }
-        ]},
-        {"items":[
-            {"block_id":"1", "ref_id": "1", "item-qty": 5 ,"x":"","y":"","w":"","h":""},
-            {"block_id":"2", "ref_id": "2", "item-qty": 6 ,"x":"","y":"","w":"","h":""},
-            {"block_id":"4", "ref_id": "3", "item-qty": 4 ,"x":"","y":"","w":"","h":""},
-            {"block_id":"8", "ref_id": "4", "item-qty": 13,"x":"","y":"","w":"","h":"" },
-            {"block_id":"10", "ref_id": "5", "item-qty": 8,"x":"","y":"","w":"","h":"" }
-        ]},
-        {"price-r":[
-            {"block_id":"1", "ref_id": "1", "item-qty": 5 ,"x":"","y":"","w":"","h":""},
-            {"block_id":"2", "ref_id": "2", "item-qty": 6 ,"x":"","y":"","w":"","h":""},
-            {"block_id":"4", "ref_id": "3", "item-qty": 4 ,"x":"","y":"","w":"","h":""},
-            {"block_id":"8", "ref_id": "4", "item-qty": 13,"x":"","y":"","w":"","h":"" },
-            {"block_id":"10", "ref_id": "5", "item-qty": 8,"x":"","y":"","w":"","h":"" }
-        ]},
-        {"price-f":[]}
-    ]
+    "name":"",
+    "templates": [ 
+    {
+        "id": "",
+        "name":"",
+        "image_blocks": [
+            {
+                "block_id": "1",
+                "template_id":"",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "2",
+                "template_id":"",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "3",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "4",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "5",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "6",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            }
+        ],"sub_blocks": [
+            {
+                "block_id": "1",
+                "parent_block_id": "1",
+                "template_id":"",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "2",
+                "template_id":"",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "3",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "4",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "5",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "6",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            }
+        ],"text_blocks": [
+            {
+                "block_id": "1",
+                "template_id":"",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "2",
+                "template_id":"",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "3",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "4",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "5",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "6",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            }
+        ]
+    },
+    {
+        "id": "",
+        "blocks": [
+            {
+                "block_id": "1",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "2",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "3",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "4",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "5",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "6",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "7",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "8",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "9",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            },
+            {
+                "block_id": "10",
+                "type":"",
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            }
+        ]
+    }
+    ] 
 }
