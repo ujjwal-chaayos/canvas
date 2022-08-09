@@ -1,767 +1,768 @@
+
 {
-  "cafe_detail": {
-      "id": 10000,
-      "parentId": 1000,
-      "source": "CAFE",
-      "name": "Good Earth City Centre",
-      "city": "Gurgaon",
-      "state": "Haryana",
-      "stateId": 8,
-      "address": "#71, Ground Fl, Good Earth City Centre",
-      "pin": "122018",
-      "active": true,
-      "lat": 28.4216,
-      "lon": 77.05316,
-      "token": "DAY_SLOT_LUNCH",
-      "partnerId": 21
-  },
-  "images": {
-      "1": {
-          "img_id": 1111,
-          "imgURL": "https://d3pjt1af33nqn0.cloudfront.net/product_image/1111_grid_menu_low_2.jpg",
-          "block_id": 1,
-          "template_id": "2"
-      },
-      "4": {
-          "img_id": 670,
-          "imgURL": "https://d3pjt1af33nqn0.cloudfront.net/product_image/670_grid_menu_low_6.jpg",
-          "block_id": 4,
-          "template_id": "2"
-      },
-      "5": {
-          "img_id": 1000080,
-          "imgURL": "https://d3pjt1af33nqn0.cloudfront.net/product_image/1000080-1_grid_menu_low_3.jpeg",
-          "block_id": 5,
-          "template_id": "2"
-      },
-      "8": {
-          "img_id": 1296,
-          "imgURL": "https://d3pjt1af33nqn0.cloudfront.net/product_image/1296_grid_menu_low_2.jpg",
-          "block_id": 8,
-          "template_id": "2"
-      },
-      "10": {
-          "img_id": 1000052,
-          "imgURL": "https://d3pjt1af33nqn0.cloudfront.net/product_image/1000052-1_grid_menu_low_2.jpg",
-          "block_id": 10,
-          "template_id": "2"
-      },
-      "qty": 5
-  },
-  "titles": {
-      "2": {
-          "title_id": 215,
-          "value": "DESSERTS",
-          "block_id": 2,
-          "template_id": "2"
-      },
-      "3": {
-          "title_id": 207,
-          "value": "SNACKS",
-          "block_id": 3,
-          "template_id": "2"
-      },
-      "6": {
-          "title_id": 209,
-          "value": "CHAAT PAKORE",
-          "block_id": 6,
-          "template_id": "2"
-      },
-      "7": {
-          "title_id": 208,
-          "value": "SANDWICHES",
-          "block_id": 7,
-          "template_id": "2"
-      },
-      "9": {
-          "title_id": 213,
-          "value": "Meals",
-          "block_id": 9,
-          "template_id": "2"
-      },
-      "qty": 5
-  },
-  "items": {
-      "2": {
-          "block_id": 2,
-          "template_id": "2",
-          "qty": 4,
-          "item": [
-              {
-                  "item_id": 1000037,
-                  "value": "Choco Dense Cake",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1000039,
-                  "value": "Banana Walnut Cake.",
-                  "icons": "NON_VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1000037,
-                  "value": "Choco Dense Cake",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1238,
-                  "value": "Choco-Chip Cookies - Chai Time Pack",
-                  "icons": null,
-                  "active": true
-              }
-          ]
-      },
-      "3": {
-          "block_id": 3,
-          "template_id": "2",
-          "qty": 13,
-          "item": [
-              {
-                  "item_id": 1201,
-                  "value": "Samosa Matar Chaat",
-                  "icons": null,
-                  "active": true
-              },
-              {
-                  "item_id": 670,
-                  "value": "Vada Pav",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1109,
-                  "value": "Baarish Wale Pakore",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1065,
-                  "value": "Palak Patta Crispies",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 690,
-                  "value": "Bun Maska",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1028,
-                  "value": "Kulhad Pav Bhaji",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1200,
-                  "value": "Bhelpuri",
-                  "icons": null,
-                  "active": true
-              },
-              {
-                  "item_id": 1000043,
-                  "value": "Bun Dabeli",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1000050,
-                  "value": "Kala Khatta",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 992,
-                  "value": "Bun Omelette",
-                  "icons": "NON_VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 992,
-                  "value": "Bun Omelette",
-                  "icons": "NON_VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 130,
-                  "value": "Honey Ginger Lemon",
-                  "icons": null,
-                  "active": true
-              },
-              {
-                  "item_id": 1064,
-                  "value": "Kala Chana Chaat",
-                  "icons": "VEG",
-                  "active": true
-              }
-          ]
-      },
-      "6": {
-          "block_id": 6,
-          "template_id": "2",
-          "qty": 8,
-          "item": [
-              {
-                  "item_id": 1200,
-                  "value": "Bhelpuri",
-                  "icons": null,
-                  "active": true
-              },
-              {
-                  "item_id": 1064,
-                  "value": "Kala Chana Chaat",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1201,
-                  "value": "Samosa Matar Chaat",
-                  "icons": null,
-                  "active": true
-              },
-              {
-                  "item_id": 1065,
-                  "value": "Palak Patta Crispies",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 150,
-                  "value": "Kashmiri Kahwa",
-                  "icons": null,
-                  "active": true
-              },
-              {
-                  "item_id": 1109,
-                  "value": "Baarish Wale Pakore",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 60,
-                  "value": "God's Chai",
-                  "icons": null,
-                  "active": true
-              },
-              {
-                  "item_id": 1000080,
-                  "value": "Dhokla Chaat",
-                  "icons": "VEG",
-                  "active": true
-              }
-          ]
-      },
-      "7": {
-          "block_id": 7,
-          "template_id": "2",
-          "qty": 8,
-          "item": [
-              {
-                  "item_id": 540,
-                  "value": "Spinach Corn Cheese Sandwich",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1296,
-                  "value": "Kasundi Paneer Sandwich",
-                  "icons": null,
-                  "active": true
-              },
-              {
-                  "item_id": 620,
-                  "value": "Homestyle Aloo Sandwich",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 868,
-                  "value": "Garden Fresh Sandwich",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 530,
-                  "value": "Italian Cheese Mushroom Sandwich",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 500,
-                  "value": "Sicilian Chicken Sandwich",
-                  "icons": "NON_VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 610,
-                  "value": "2 Minutes Sandwich",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1297,
-                  "value": "Patiala Chicken Sandwich",
-                  "icons": "NON_VEG",
-                  "active": true
-              }
-          ]
-      },
-      "9": {
-          "block_id": 9,
-          "template_id": "2",
-          "qty": 4,
-          "item": [
-              {
-                  "item_id": 1063,
-                  "value": "Kulhad Matar Kulcha",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1028,
-                  "value": "Kulhad Pav Bhaji",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1111,
-                  "value": "Paneer Loaded Open Paratha",
-                  "icons": "VEG",
-                  "active": true
-              },
-              {
-                  "item_id": 1000065,
-                  "value": "Anda Paratha",
-                  "icons": "NON_VEG",
-                  "active": true
-              }
-          ]
-      }
-  },
-  "prices": {
-      "2": {
-          "block_id": 2,
-          "template_id": "2",
-          "qty": 4,
-          "value": [
-              {
-                  "item_id": 1000037,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 199
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1000039,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 179
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1000037,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 199
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1238,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 21.19
-                      }
-                  ]
-              }
-          ]
-      },
-      "3": {
-          "block_id": 3,
-          "template_id": "2",
-          "qty": 13,
-          "value": [
-              {
-                  "item_id": 1201,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 179
-                      }
-                  ]
-              },
-              {
-                  "item_id": 670,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 99
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1109,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 209
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1065,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 199
-                      }
-                  ]
-              },
-              {
-                  "item_id": 690,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 79
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1028,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 219
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1200,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 139
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1000043,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 149
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1000050,
-                  "value": [
-                      {
-                          "id": "Regular",
-                          "price": 189
-                      },
-                      {
-                          "id": "Full",
-                          "price": 219
-                      }
-                  ]
-              },
-              {
-                  "item_id": 992,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 159
-                      }
-                  ]
-              },
-              {
-                  "item_id": 992,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 159
-                      }
-                  ]
-              },
-              {
-                  "item_id": 130,
-                  "value": [
-                      {
-                          "id": "Regular",
-                          "price": 169
-                      },
-                      {
-                          "id": "Full",
-                          "price": 195
-                      },
-                      {
-                          "id": "ChotiKetli",
-                          "price": 309
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1064,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 159
-                      }
-                  ]
-              }
-          ]
-      },
-      "6": {
-          "block_id": 6,
-          "template_id": "2",
-          "qty": 8,
-          "value": [
-              {
-                  "item_id": 1200,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 139
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1064,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 159
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1201,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 179
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1065,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 199
-                      }
-                  ]
-              },
-              {
-                  "item_id": 150,
-                  "value": [
-                      {
-                          "id": "Regular",
-                          "price": 149
-                      },
-                      {
-                          "id": "Full",
-                          "price": 175
-                      },
-                      {
-                          "id": "ChotiKetli",
-                          "price": 319
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1109,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 209
-                      }
-                  ]
-              },
-              {
-                  "item_id": 60,
-                  "value": [
-                      {
-                          "id": "Regular",
-                          "price": 149
-                      },
-                      {
-                          "id": "Full",
-                          "price": 175
-                      },
-                      {
-                          "id": "ChotiKetli",
-                          "price": 319
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1000080,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 169
-                      }
-                  ]
-              }
-          ]
-      },
-      "7": {
-          "block_id": 7,
-          "template_id": "2",
-          "qty": 8,
-          "value": [
-              {
-                  "item_id": 540,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 209
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1296,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 239
-                      }
-                  ]
-              },
-              {
-                  "item_id": 620,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 179
-                      }
-                  ]
-              },
-              {
-                  "item_id": 868,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 189
-                      }
-                  ]
-              },
-              {
-                  "item_id": 530,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 239
-                      }
-                  ]
-              },
-              {
-                  "item_id": 500,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 249
-                      }
-                  ]
-              },
-              {
-                  "item_id": 610,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 179
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1297,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 249
-                      }
-                  ]
-              }
-          ]
-      },
-      "9": {
-          "block_id": 9,
-          "template_id": "2",
-          "qty": 4,
-          "value": [
-              {
-                  "item_id": 1063,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 199
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1028,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 219
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1111,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 289
-                      }
-                  ]
-              },
-              {
-                  "item_id": 1000065,
-                  "value": [
-                      {
-                          "id": "None",
-                          "price": 159
-                      }
-                  ]
-              }
-          ]
-      }
-  },
-  "style": {
-      "font": {
-         "Title": "Helvetica, Arial, sans-serif",
-         "Items": "Helvetica, Arial, sans-serif",
-         "Prices": "Helvetica, Arial, sans-serif",
-         "New":"Helvetica, Arial, sans-serif"
-      },
-      "size": {
-        "Title": "96px",
-        "Items": "56px",
-        "Prices": "56px",
-        "New":"60px"
-     },
-      "color":{
-        "Title": "#376902",
-        "Items": "#827311",
-        "Prices": "#000000",
-        "New":"#827311"
-     },
-      "weight": {
-        "Title": "Bold",
-        "Items": "",
-        "Prices": "",
-        "New":"Bold"
-     }
-  }
+    "cafe_detail": {
+        "id": 10000,
+        "parentId": 1000,
+        "source": "CAFE",
+        "name": "Good Earth City Centre",
+        "city": "Gurgaon",
+        "state": "Haryana",
+        "stateId": 8,
+        "address": "#71, Ground Fl, Good Earth City Centre",
+        "pin": "122018",
+        "active": true,
+        "lat": 28.4216,
+        "lon": 77.05316,
+        "token": "DAY_SLOT_LUNCH",
+        "partnerId": 21
+    },
+    "images": {
+        "1": {
+            "img_id": 1111,
+            "imgURL": "https://d3pjt1af33nqn0.cloudfront.net/product_image/1111_grid_menu_low_2.jpg",
+            "block_id": 1,
+            "template_id": "2"
+        },
+        "4": {
+            "img_id": 670,
+            "imgURL": "https://d3pjt1af33nqn0.cloudfront.net/product_image/670_grid_menu_low_6.jpg",
+            "block_id": 4,
+            "template_id": "2"
+        },
+        "5": {
+            "img_id": 1000080,
+            "imgURL": "https://d3pjt1af33nqn0.cloudfront.net/product_image/1000080-1_grid_menu_low_3.jpeg",
+            "block_id": 5,
+            "template_id": "2"
+        },
+        "8": {
+            "img_id": 1296,
+            "imgURL": "https://d3pjt1af33nqn0.cloudfront.net/product_image/1296_grid_menu_low_2.jpg",
+            "block_id": 8,
+            "template_id": "2"
+        },
+        "10": {
+            "img_id": 1000052,
+            "imgURL": "https://d3pjt1af33nqn0.cloudfront.net/product_image/1000052-1_grid_menu_low_2.jpg",
+            "block_id": 10,
+            "template_id": "2"
+        },
+        "qty": 5
+    },
+    "titles": {
+        "2": {
+            "title_id": 215,
+            "value": "DESSERTS",
+            "block_id": 2,
+            "template_id": "2"
+        },
+        "3": {
+            "title_id": 207,
+            "value": "SNACKS",
+            "block_id": 3,
+            "template_id": "2"
+        },
+        "6": {
+            "title_id": 209,
+            "value": "CHAAT PAKORE",
+            "block_id": 6,
+            "template_id": "2"
+        },
+        "7": {
+            "title_id": 208,
+            "value": "SANDWICHES",
+            "block_id": 7,
+            "template_id": "2"
+        },
+        "9": {
+            "title_id": 213,
+            "value": "Meals",
+            "block_id": 9,
+            "template_id": "2"
+        },
+        "qty": 5
+    },
+    "items": {
+        "2": {
+            "block_id": 2,
+            "template_id": "2",
+            "qty": 4,
+            "item": [
+                {
+                    "item_id": 1000037,
+                    "value": "Choco Dense Cake",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1000039,
+                    "value": "Banana Walnut Cake.",
+                    "icons": "NON_VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1000037,
+                    "value": "Choco Dense Cake",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1238,
+                    "value": "Choco-Chip Cookies - Chai Time Pack",
+                    "icons": null,
+                    "active": true
+                }
+            ]
+        },
+        "3": {
+            "block_id": 3,
+            "template_id": "2",
+            "qty": 13,
+            "item": [
+                {
+                    "item_id": 1201,
+                    "value": "Samosa Matar Chaat",
+                    "icons": null,
+                    "active": true
+                },
+                {
+                    "item_id": 670,
+                    "value": "Vada Pav",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1109,
+                    "value": "Baarish Wale Pakore",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1065,
+                    "value": "Palak Patta Crispies",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 690,
+                    "value": "Bun Maska",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1028,
+                    "value": "Kulhad Pav Bhaji",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1200,
+                    "value": "Bhelpuri",
+                    "icons": null,
+                    "active": true
+                },
+                {
+                    "item_id": 1000043,
+                    "value": "Bun Dabeli",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1000050,
+                    "value": "Kala Khatta",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 992,
+                    "value": "Bun Omelette",
+                    "icons": "NON_VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 992,
+                    "value": "Bun Omelette",
+                    "icons": "NON_VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 130,
+                    "value": "Honey Ginger Lemon",
+                    "icons": null,
+                    "active": true
+                },
+                {
+                    "item_id": 1064,
+                    "value": "Kala Chana Chaat",
+                    "icons": "VEG",
+                    "active": true
+                }
+            ]
+        },
+        "6": {
+            "block_id": 6,
+            "template_id": "2",
+            "qty": 8,
+            "item": [
+                {
+                    "item_id": 1200,
+                    "value": "Bhelpuri",
+                    "icons": null,
+                    "active": true
+                },
+                {
+                    "item_id": 1064,
+                    "value": "Kala Chana Chaat",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1201,
+                    "value": "Samosa Matar Chaat",
+                    "icons": null,
+                    "active": true
+                },
+                {
+                    "item_id": 1065,
+                    "value": "Palak Patta Crispies",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 150,
+                    "value": "Kashmiri Kahwa",
+                    "icons": null,
+                    "active": true
+                },
+                {
+                    "item_id": 1109,
+                    "value": "Baarish Wale Pakore",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 60,
+                    "value": "God's Chai",
+                    "icons": null,
+                    "active": true
+                },
+                {
+                    "item_id": 1000080,
+                    "value": "Dhokla Chaat",
+                    "icons": "VEG",
+                    "active": true
+                }
+            ]
+        },
+        "7": {
+            "block_id": 7,
+            "template_id": "2",
+            "qty": 8,
+            "item": [
+                {
+                    "item_id": 540,
+                    "value": "Spinach Corn Cheese Sandwich",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1296,
+                    "value": "Kasundi Paneer Sandwich",
+                    "icons": null,
+                    "active": true
+                },
+                {
+                    "item_id": 620,
+                    "value": "Homestyle Aloo Sandwich",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 868,
+                    "value": "Garden Fresh Sandwich",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 530,
+                    "value": "Italian Cheese Mushroom Sandwich",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 500,
+                    "value": "Sicilian Chicken Sandwich",
+                    "icons": "NON_VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 610,
+                    "value": "2 Minutes Sandwich",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1297,
+                    "value": "Patiala Chicken Sandwich",
+                    "icons": "NON_VEG",
+                    "active": true
+                }
+            ]
+        },
+        "9": {
+            "block_id": 9,
+            "template_id": "2",
+            "qty": 4,
+            "item": [
+                {
+                    "item_id": 1063,
+                    "value": "Kulhad Matar Kulcha",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1028,
+                    "value": "Kulhad Pav Bhaji",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1111,
+                    "value": "Paneer Loaded Open Paratha",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1000065,
+                    "value": "Anda Paratha",
+                    "icons": "NON_VEG",
+                    "active": true
+                }
+            ]
+        }
+    },
+    "prices": {
+        "2": {
+            "block_id": 2,
+            "template_id": "2",
+            "qty": 4,
+            "value": [
+                {
+                    "item_id": 1000037,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 199
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1000039,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 179
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1000037,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 199
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1238,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 21.19
+                        }
+                    ]
+                }
+            ]
+        },
+        "3": {
+            "block_id": 3,
+            "template_id": "2",
+            "qty": 13,
+            "value": [
+                {
+                    "item_id": 1201,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 179
+                        }
+                    ]
+                },
+                {
+                    "item_id": 670,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 99
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1109,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 209
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1065,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 199
+                        }
+                    ]
+                },
+                {
+                    "item_id": 690,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 79
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1028,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 219
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1200,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 139
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1000043,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 149
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1000050,
+                    "value": [
+                        {
+                            "id": "Regular",
+                            "price": 189
+                        },
+                        {
+                            "id": "Full",
+                            "price": 219
+                        }
+                    ]
+                },
+                {
+                    "item_id": 992,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 159
+                        }
+                    ]
+                },
+                {
+                    "item_id": 992,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 159
+                        }
+                    ]
+                },
+                {
+                    "item_id": 130,
+                    "value": [
+                        {
+                            "id": "Regular",
+                            "price": 169
+                        },
+                        {
+                            "id": "Full",
+                            "price": 195
+                        },
+                        {
+                            "id": "ChotiKetli",
+                            "price": 309
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1064,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 159
+                        }
+                    ]
+                }
+            ]
+        },
+        "6": {
+            "block_id": 6,
+            "template_id": "2",
+            "qty": 8,
+            "value": [
+                {
+                    "item_id": 1200,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 139
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1064,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 159
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1201,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 179
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1065,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 199
+                        }
+                    ]
+                },
+                {
+                    "item_id": 150,
+                    "value": [
+                        {
+                            "id": "Regular",
+                            "price": 149
+                        },
+                        {
+                            "id": "Full",
+                            "price": 175
+                        },
+                        {
+                            "id": "ChotiKetli",
+                            "price": 319
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1109,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 209
+                        }
+                    ]
+                },
+                {
+                    "item_id": 60,
+                    "value": [
+                        {
+                            "id": "Regular",
+                            "price": 149
+                        },
+                        {
+                            "id": "Full",
+                            "price": 175
+                        },
+                        {
+                            "id": "ChotiKetli",
+                            "price": 319
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1000080,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 169
+                        }
+                    ]
+                }
+            ]
+        },
+        "7": {
+            "block_id": 7,
+            "template_id": "2",
+            "qty": 8,
+            "value": [
+                {
+                    "item_id": 540,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 209
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1296,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 239
+                        }
+                    ]
+                },
+                {
+                    "item_id": 620,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 179
+                        }
+                    ]
+                },
+                {
+                    "item_id": 868,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 189
+                        }
+                    ]
+                },
+                {
+                    "item_id": 530,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 239
+                        }
+                    ]
+                },
+                {
+                    "item_id": 500,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 249
+                        }
+                    ]
+                },
+                {
+                    "item_id": 610,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 179
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1297,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 249
+                        }
+                    ]
+                }
+            ]
+        },
+        "9": {
+            "block_id": 9,
+            "template_id": "2",
+            "qty": 4,
+            "value": [
+                {
+                    "item_id": 1063,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 199
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1028,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 219
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1111,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 289
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1000065,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 159
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "style": {
+        "font": {
+           "Title": "Helvetica, Arial, sans-serif",
+           "Items": "Helvetica, Arial, sans-serif",
+           "Prices": "Helvetica, Arial, sans-serif",
+           "New":"Helvetica, Arial, sans-serif"
+        },
+        "size": {
+          "Title": "96px",
+          "Items": "56px",
+          "Prices": "56px",
+          "New":"60px"
+       },
+        "color":{
+          "Title": "#376902",
+          "Items": "#827311",
+          "Prices": "#000000",
+          "New":"#827311"
+       },
+        "weight": {
+          "Title": "Bold",
+          "Items": "",
+          "Prices": "",
+          "New":"Bold"
+       }
+    }
 }
