@@ -190,14 +190,18 @@ export  function subBlockCoordinates(points,headingHeight,priceWidth){
 
 }
 
+// This function will sort the coordinates so that they are arrange in the order from left to right then top to bottom.
 export default function sortCoordinates(coordinates){
     let sortedCoordinates = {};
+
+    // sorting according to distance from top left corner.
     coordinates.sort((a, b) => Math.hypot(a.x, a.y) - Math.hypot(b.x, b.y));
     for(let i=0;i<coordinates.length;i++){
         coordinates[i]["block_id"]=i+1;
         sortedCoordinates.push(coordinates[i]);
 
     }
+    // returning the final sorted coordinates.
     return sortedCoordinates;
 }
 
