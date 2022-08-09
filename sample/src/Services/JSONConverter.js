@@ -58,6 +58,7 @@ export function jsonConverter(menu, refrenceTemplate) {
           template_id: imageBlocks[j]["template_id"],
         });
       }
+      refinedTemplate["images"]["image"] = images;
     } else {
       var item = [];
       var value = [];
@@ -69,6 +70,7 @@ export function jsonConverter(menu, refrenceTemplate) {
           active: products[subCategory[i]["pids"][j].toString()]["active"],
           new: products[subCategory[i]["pids"][j].toString()]["new"],
         });
+       
         var prices =
           productPrices[subCategory[i]["pids"][j].toString()]["prices"];
         let values = [];
@@ -90,17 +92,19 @@ export function jsonConverter(menu, refrenceTemplate) {
           qty: subCategory[i]["pids"].length,
           item: item,
         },
-        {h1:"30",h2:"22",style:"Arial",spacing:"5"}
+        { h1: "30", h2: "22", style: "Arial", spacing: "5" }
       );
 
       refinedTemplate["items"].push({
         block_id: textBlocks[c]["block_id"],
+        template_id: textBlocks[c]["template_id"],
         qty: subCategory[i]["pids"].length,
         item: item,
       });
 
       refinedTemplate["prices"].push({
         block_id: textBlocks[c]["block_id"],
+        template_id: textBlocks[c]["template_id"],
         qty: subCategory[i]["pids"].length,
         value: value,
       });
@@ -109,12 +113,12 @@ export function jsonConverter(menu, refrenceTemplate) {
         title_id: subCategory[i]["id"],
         value: subCategory[i]["name"],
         block_id: textBlocks[c]["block_id"],
+        template_id: textBlocks[c]["template_id"]
       });
+      textBlocks.splice(c,1);
     }
   }
-  refinedTemplate["titles"].push({
-    title: titles,
-  });
+  refinedTemplate["titles"]["title"] = titles;
 
   //default style from db
   //avilable icons from db
@@ -131,7 +135,7 @@ export function jsonConverter(menu, refrenceTemplate) {
 
 export function getBestBlock(blocks, data, font) {
   let index;
-  let screen = new OffscreenCanvas("200","200").getContext("2d");
+  let screen = new OffscreenCanvas("200", "200").getContext("2d");
   screen.font = font.h2 + " " + font.style;
   let quantity = parseInt(data.qty);
   let textheight = parseInt(font.h2);
@@ -181,11 +185,11 @@ export function createCoordinateJSON(
   });
 
   for (let i = 0; i < txtBlocks.length; i++) {}
-
   txtBlocks.forEach((e) => {
     e["template_id"] = templateID;
     e["type"] = "Text";
-    var subCoordinates = subBlockCoordinates(e, font.h1, e.width * 0.2);
+    var subCoordinates = subBlockCoordinates(e, font.h1, e.w * 0.2);
+   
     var heading = {
       block_id: 1,
       parent_block_id: e["block_id"],
@@ -218,7 +222,7 @@ export function createCoordinateJSON(
     };
     coordinates.sub_blocks.push(heading, items, prices);
   });
-  coordinates.image_blocks.push(imageBlocks);
-  coordinates.text_blocks.push(txtBlocks);
+  coordinates.image_blocks = imageBlocks;
+  coordinates.text_blocks = txtBlocks;
   return coordinates;
 }

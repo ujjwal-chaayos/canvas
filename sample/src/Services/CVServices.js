@@ -46,10 +46,10 @@ export  function getCoordinates(template, cv) {
 export  function drawContours(points, cv, screen) {
 
     // this will set the width of line to 2.
-    screen.lineWidth = "40";
+    screen.lineWidth = "15";
 
     // this will set thw width of dashes to 4.
-    screen.setLineDash([40]);
+    screen.setLineDash([2]);
 
     // this will define the colour of bounded reactangle to blue.
     screen.strokeStyle = "black";
@@ -175,7 +175,6 @@ export  function subBlockCoordinates(points,headingHeight,priceWidth){
     priceList.y = parseInt(points.y) + headingHeight;
     priceList.w = priceWidth;
     priceList.h = parseInt(points.h) - headingHeight;
-
 
     // finding the coordinates of itemList i.e x,y,w,h.
     itemList.x = parseInt(points.x);
