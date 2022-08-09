@@ -7,7 +7,6 @@ const UploadTemplate = () => {
 
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
-  
     useEffect(() => {
       if (selectedImage) {
         setImageUrl(URL.createObjectURL(selectedImage));
@@ -59,7 +58,7 @@ const UploadTemplate = () => {
         type="file"
         id="select-image"
         style={{ display: 'none' }}
-        onChange={e => setSelectedImage(e.target.files[0])}
+        onChange={e => setSelectedImage(e.target.files[1])}
       />
       <label htmlFor="select-image">
         <Button variant="contained" color="primary" component="span">
