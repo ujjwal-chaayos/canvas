@@ -46,7 +46,7 @@ export  function getCoordinates(template, cv) {
 export  function drawContours(points, cv, screen) {
 
     // this will set the width of line to 2.
-    screen.lineWidth = "15";
+    screen.lineWidth = "80";
 
     // this will set thw width of dashes to 4.
     screen.setLineDash([2]);
@@ -58,13 +58,12 @@ export  function drawContours(points, cv, screen) {
     screen.rect(parseInt(points.x),parseInt(points.y),parseInt(points.w), parseInt(points.h));
     screen.stroke();
     screen.save();
-    //console.log(drawn);
 }
 
 // This function will return the resized Image matrix.
 export  function reSize(image, width, height, cv) {
-
     // definig storage to store resized image
+   // let finalImage = new cv.Mat();
     let finalImage = new cv.Mat();
 
     // definig the size of final image.
@@ -83,35 +82,44 @@ export  function reSize(image, width, height, cv) {
 // This function will convert image matrix into image data.
 // and after converting to Imagedata return the imagedata.
 export  function matrixToImgData(image){
-    var tempImg = new cv.Mat;
-    var depth = image.type() % 8;
-    var scale = depth <= cv.CV_8S ? 1 : depth <= cv.CV_32S ? 1 / 256 : 255;
-    var shift = depth === cv.CV_8S || depth === cv.CV_16S ? 128 : 0;
-    image.convertTo(tempImg, cv.CV_8U, scale, shift);
-    switch (tempImg.type()) {
-        case cv.CV_8UC1:
-            cv.cvtColor(tempImg, tempImg, cv.COLOR_GRAY2RGBA);
-            break;
-        case cv.CV_8UC3:
-            cv.cvtColor(tempImg, tempImg, cv.COLOR_RGB2RGBA);
-            break;
-        case cv.CV_8UC4:
-            break;
-        default:
-            throw new Error("Bad number of channels (Source image must have 1, 3 or 4 channels)");
-            return;
-    }
-    var imgData = new ImageData(new Uint8ClampedArray(tempImg.data), tempImg.cols, tempImg.rows);
-    tempImg.delete();
+    // var tempImg = new cv.Mat(image.size().width, image.size().height, cv.CV_8UC4, new cv.Scalar(0, 0, 0, 0));
+    // var depth = image.type() % 8;
+    // var scale = depth <= cv.CV_8S ? 1 : depth <= cv.CV_32S ? 1 / 256 : 255;
+    // var shift = depth === cv.CV_8S || depth === cv.CV_16S ? 128 : 0;
+    // image.convertTo(tempImg, cv.CV_8UC4, scale, shift);
+    // switch (tempImg.type()) {
+    //     case cv.CV_8UC1:
+    //         cv.cvtColor(tempImg, tempImg, cv.COLOR_GRAY2RGBA);
+    //         break;
+    //     case cv.CV_8UC3:
+    //         cv.cvtColor(tempImg, tempImg, cv.COLOR_RGB2RGBA);
+    //         break;
+    //     case cv.CV_8UC4:
+    //         cv.cvtColor(tempImg, tempImg, cv.COLOR_RGB2RGBA);
+    //         break;
+    //     default:
+    //         throw new Error("Bad number of channels (Source image must have 1, 3 or 4 channels)");
+    //         return;
+    // }
+    var imgData = new ImageData(new Uint8ClampedArray(image.data), image.cols, image.rows);
+    //tempImg.delete();
     return imgData;
 }
 
 // This function will put the image onto the canvas(screen).
-export  function drawImage(screen, image, points) {
+export  function drawImage(screen, image, block) {
+    
+    // this will put the image at specified position.
+    screen.drawImage(image,block['x'],block['y'],block['w'],block['h']);
+    // save the screen.
+    screen.save();
+}
+
+// This function will put the image data onto the canvas(screen).
+export  function drawImageData(screen, image, points) {
     
     // this will put the image at specified position.
     screen.putImageData(image,points['x'],points['y']);
-
     // save the screen.
     screen.save();
 }

@@ -36,18 +36,18 @@ export function jsonConverter(menu, refrenceTemplate) {
   var productPrices = menu["prices"]["prices"];
   var productImages = menu["productImages"];
 
-  var images = [];
-  var titles = [];
+ // var images = {};
+  //var titles = [];
   refinedTemplate["images"] = { qty: "" };
   refinedTemplate["titles"] = { qty: subCategory.length - 1 };
-  refinedTemplate["items"] = [];
-  refinedTemplate["prices"] = [];
+  refinedTemplate["items"] = {};
+  refinedTemplate["prices"] = {};
 
   for (let i = 0; i < subCategory.length; i++) {
     if (subCategory[i]["name"] === "Images") {
       refinedTemplate["images"]["qty"] = subCategory[i]["pids"].length;
       for (let j = 0; j < subCategory[i]["pids"].length; j++) {
-        images.push({
+        refinedTemplate["images"][(imageBlocks[j]["block_id"]).toString()] = {
           img_id: subCategory[i]["pids"][j],
           imgURL:
             productImages["baseUrl"] +
@@ -56,9 +56,9 @@ export function jsonConverter(menu, refrenceTemplate) {
             ],
           block_id: imageBlocks[j]["block_id"],
           template_id: imageBlocks[j]["template_id"],
-        });
+        };
       }
-      refinedTemplate["images"]["image"] = images;
+      //refinedTemplate["images"].push = images;
     } else {
       var item = [];
       var value = [];
@@ -95,30 +95,30 @@ export function jsonConverter(menu, refrenceTemplate) {
         { h1: "30", h2: "22", style: "Arial", spacing: "5" }
       );
 
-      refinedTemplate["items"].push({
+      refinedTemplate["items"][(textBlocks[c]["block_id"]).toString()]={
         block_id: textBlocks[c]["block_id"],
         template_id: textBlocks[c]["template_id"],
         qty: subCategory[i]["pids"].length,
         item: item,
-      });
+      };
 
-      refinedTemplate["prices"].push({
+      refinedTemplate["prices"][(textBlocks[c]["block_id"]).toString()]={
         block_id: textBlocks[c]["block_id"],
         template_id: textBlocks[c]["template_id"],
         qty: subCategory[i]["pids"].length,
         value: value,
-      });
+      };
 
-      titles.push({
+      refinedTemplate["titles"][(textBlocks[c]["block_id"]).toString()]={
         title_id: subCategory[i]["id"],
         value: subCategory[i]["name"],
         block_id: textBlocks[c]["block_id"],
         template_id: textBlocks[c]["template_id"]
-      });
+      };
       textBlocks.splice(c,1);
     }
   }
-  refinedTemplate["titles"]["title"] = titles;
+ // refinedTemplate["titles"]["title"] = titles;
 
   //default style from db
   //avilable icons from db
