@@ -189,3 +189,15 @@ export default function subBlockCoordinates(points,headingHeight,priceWidth){
     return finalCoordinates;
 
 }
+
+export default function sortCoordinates(coordinates){
+    let sortedCoordinates = {};
+    coordinates.sort((a, b) => Math.hypot(a.x, a.y) - Math.hypot(b.x, b.y));
+    for(let i=0;i<coordinates.length;i++){
+        coordinates[i]["block_id"]=i+1;
+        sortedCoordinates.push(coordinates[i]);
+
+    }
+    return sortedCoordinates;
+}
+

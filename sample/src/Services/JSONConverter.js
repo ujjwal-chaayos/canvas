@@ -122,6 +122,7 @@ export function getBestBlock(blocks, data, font) {
   screen.font = font.h2 + " " + font.style;
   let quantity = parseInt(data.qty);
   let textheight = parseInt(font.h2);
+  textheight = textheight+(quantity*font.spacing);
   let maximumwidth = 0;
   for (let i = 0; i < quantity; i++) {
     let txt = data.item[j].value;
