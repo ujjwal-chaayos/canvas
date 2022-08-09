@@ -1,27 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-const ImageForm = (blockIds) => {
+const ImageForm = ({blockIds,proceed}) => {
 
   console.log("here",blockIds);
-  let all_block_id = [
-    "Select",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-  ];
+  let all_block_id = blockIds;
+
   const [qty, setQty] = useState("");
   const [imgMapValue, setImgMapValue] = useState("");
   const [saveQty, setSaveQty] = useState(false);
@@ -36,6 +19,8 @@ const ImageForm = (blockIds) => {
   let options = ["0", "1", "2", "3", "4", "5", "6"];
 
   const [formFields, setFormFields] = useState([]);
+
+
 
   const hideQtyInput = (value) => {
     setSaveQty(value);
@@ -91,6 +76,7 @@ const ImageForm = (blockIds) => {
     if (count === parseInt(qty)) {
       setBottomForm(false);
       console.log(formFields);
+      proceed(leftValues);
     } else {
       alert("Fill all values...");
     }

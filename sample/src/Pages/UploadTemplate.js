@@ -1,10 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Box, Button } from "@mui/material";
+import {useNavigate, useParams} from 'react-router-dom'
 import "./UploadTemplate.css";
 //import data from '../data/';
 
 const UploadTemplate = () => {
+
+  let navigate=useNavigate();
+  let {screenId,tempId}=useParams();
+
   const [file, setFile] = useState([]);
   let dummy_data;
 
@@ -57,6 +62,7 @@ const UploadTemplate = () => {
     if (file.length === 2) {
       dummy_data = file; //condition to save data
       console.log(dummy_data);
+      navigate(`/preview/${screenId}/${tempId}`)
     } else {
       alert("Insert both Images..");
     }
