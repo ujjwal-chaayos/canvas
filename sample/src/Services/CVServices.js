@@ -2,7 +2,7 @@ import cv from "opencv.js";
 
 
 // function will return the coordinate of all blocks provided in template
-export default function getCoordinates(template, cv) {
+export  function getCoordinates(template, cv) {
 
     // converting template into Gray Scale for processing.
     cv.cvtcolor(template, template, cv.RGBA2GRAY)
@@ -43,7 +43,7 @@ export default function getCoordinates(template, cv) {
 }
 
 // This function will draw bounded reactangle with dashed line over the block on canvas(Screen).
-export default function drawContours(points, cv, screen) {
+export  function drawContours(points, cv, screen) {
 
     // this will set the width of line to 2.
     screen.lineWidth = "2";
@@ -60,7 +60,7 @@ export default function drawContours(points, cv, screen) {
 }
 
 // This function will return the resized Image matrix.
-export default function reSize(image, width, height, cv) {
+export  function reSize(image, width, height, cv) {
 
     // definig storage to store resized image
     let finalImage = new cv.Mat();
@@ -80,7 +80,7 @@ export default function reSize(image, width, height, cv) {
 
 // This function will convert image matrix into image data.
 // and after converting to Imagedata return the imagedata.
-export default function matrixToImgData(image){
+export  function matrixToImgData(image){
     var tempImg = new cv.Mat;
     var depth = image.type() % 8;
     var scale = depth <= cv.CV_8S ? 1 : depth <= cv.CV_32S ? 1 / 256 : 255;
@@ -105,7 +105,7 @@ export default function matrixToImgData(image){
 }
 
 // This function will put the image onto the canvas(screen).
-export default function drawImage(screen, image, points) {
+export  function drawImage(screen, image, points) {
     
     // this will put the image at specified position.
     screen.putImageData(image,points['x'],points['y']);
@@ -115,7 +115,7 @@ export default function drawImage(screen, image, points) {
 }
 
 // This function will put Text on the screen.
-export default function drawText(screen,text,points,style){
+export  function drawText(screen,text,points,style){
     // This will define the Font to text to be showwn.
     screen.font = style;
     // Putting the text on the screen.
@@ -123,7 +123,7 @@ export default function drawText(screen,text,points,style){
 }
 
 // This function will draw Line below the Title.
-export default function drawLine(screen,sourcePoint,destinationPoint,style){
+export  function drawLine(screen,sourcePoint,destinationPoint,style){
 
     // defining the width of line equal to 20.
     screen.lineWidth = 20;
@@ -141,7 +141,7 @@ export default function drawLine(screen,sourcePoint,destinationPoint,style){
 }
 
 // This will download the final screen as png.
-export default function download(screen)
+export  function download(screen)
 {
     // getting the URL of image and return that URL.
     let imageURL = screen.toDataURL("image/png");
@@ -150,7 +150,7 @@ export default function download(screen)
 
 
 // This function will find the coordinates of sub-blocks within a given block.
-export default function subBlockCoordinates(points,headingHeight,priceWidth){
+export  function subBlockCoordinates(points,headingHeight,priceWidth){
     // to store final coordinates of sub-block.
     let finalCoordinates = {}
     // to store the coordinates of heading. 
