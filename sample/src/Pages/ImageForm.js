@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 
 const ImageForm = () => {
+
+
+
+    
+    let all_block_id = ["Select","1", "2", "3", "4", "5", "6","7","8","9","10","11","12","13","14","15","16"];
   const [qty, setQty] = useState("");
+  const [imgMapValue, setImgMapValue] = useState("");
   const [saveQty, setSaveQty] = useState(false);
+
   const [isDisabled, setDisabled] = useState(false);
   const [bottomForm, setBottomForm] = useState(true);
+  
 
-  let img_id = ["001", "002", "003", "004", "005", "006"];
-  let options = ["0", "1", "2", "3", "4", "5", "6"];
+    const [leftValues,setLeftValues]= useState(all_block_id);
+
+
+    let block_ids = ["1", "2", "3", "4", "5", "6"]; // dummy_data
+    let img_id = ["001", "002", "003", "004", "005", "006"];  //dummy_data
+    let options = ["0", "1", "2", "3", "4", "5", "6"];
 
   const [formFields, setFormFields] = useState([]);
 
@@ -28,9 +40,31 @@ const ImageForm = () => {
 
   const handleFormChange = (event, index) => {
     let data = [...formFields];
-    data[index][event.target.name] = event.target.value;
+    console.log(data[index].block_id)
+    data[index].block_id = event.target.value;
     setFormFields(data);
   };
+
+  const removeSelectValue = (value) =>{
+    let data=leftValues;
+    for( var i = 0; i < data.length; i++){ 
+    
+        if ( data[i] === value) { 
+    
+            data.splice(i, 1); 
+        }
+    
+    }
+    console.log(data);
+    setLeftValues(data);
+    //data.remove(value);
+  }
+
+  const handleMappedValueChange=(event,index)=>{
+    event.target.disabled=true;
+    handleFormChange(event,index);
+    removeSelectValue(event.target.value);
+  }
 
   const next = () => {
 
@@ -89,13 +123,22 @@ const ImageForm = () => {
                   return (
                     <div key={index}>
                       <input
-                        name="name"
-                        placeholder="Name"
-                        onChange={(event) => handleFormChange(event, index)}
+                        name="img_id"
+                        placeholder="Image_ID"
                         value={form.img_id}
                       />
+                    <select
+                  value={imgMapValue}
+                  onChange={(event) => handleMappedValueChange(event,index)}
+                  
+                >
+                  {leftValues.map((option, index) => (
+                    <option value={option}>{option}</option>
+                  ))}
+                </select>
+
                       <input
-                        name="age"
+                        name="block_id"
                         placeholder="Enter Block Number"
                         onChange={(event) => handleFormChange(event, index)}
                         value={form.block_id}
