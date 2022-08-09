@@ -5,14 +5,14 @@ import cv from "opencv.js";
 export  function getCoordinates(template, cv) {
 
     // converting template into Gray Scale for processing.
-    cv.cvtcolor(template, template, cv.RGBA2GRAY)
+    cv.cvtColor(template, template, cv.COLOR_RGBA2GRAY)
 
     // Finding the Threshold image which which will define our contours.
     cv.threshold(template, template, 120, 200, cv.THRESH_BINARY);
 
     // defining storage to store contours and hierarchy.
-    let contours = new cv.ImageVector();
-    let hierarchy = new cv.Image();
+    let contours = new cv.MatVector();
+    let hierarchy = new cv.Mat();
 
     // finding contours in template
     cv.findContours(
@@ -46,17 +46,19 @@ export  function getCoordinates(template, cv) {
 export  function drawContours(points, cv, screen) {
 
     // this will set the width of line to 2.
-    screen.lineWidth = "2";
+    screen.lineWidth = "40";
 
     // this will set thw width of dashes to 4.
-    screen.setLineDash([4]);
+    screen.setLineDash([40]);
 
     // this will define the colour of bounded reactangle to blue.
-    screen.strokeStyle = "blue";
+    screen.strokeStyle = "black";
     
     // this will draw the rectangle over the provided block on canvas.
     screen.rect(parseInt(points.x),parseInt(points.y),parseInt(points.w), parseInt(points.h));
     screen.stroke();
+    screen.save();
+    //console.log(drawn);
 }
 
 // This function will return the resized Image matrix.
@@ -120,6 +122,7 @@ export  function drawText(screen,text,points,style){
     screen.font = style;
     // Putting the text on the screen.
     screen.fillText(text,parseInt(points.x),parseInt(points.y));
+    screen.save();
 }
 
 // This function will draw Line below the Title.
@@ -191,17 +194,18 @@ export  function subBlockCoordinates(points,headingHeight,priceWidth){
 }
 
 // This function will sort the coordinates so that they are arrange in the order from left to right then top to bottom.
-export default function sortCoordinates(coordinates){
-    let sortedCoordinates = {};
+export  function sortCoordinates(coordinates){
+    let sortedCoordinates = [];
 
     // sorting according to distance from top left corner.
     coordinates.sort((a, b) => Math.hypot(a.x, a.y) - Math.hypot(b.x, b.y));
     for(let i=0;i<coordinates.length;i++){
-        coordinates[i]["block_id"]=i+1;
+        coordinates[i]["block_id"]=i;
         sortedCoordinates.push(coordinates[i]);
 
     }
     // returning the final sorted coordinates.
+    sortedCoordinates.shift();
     return sortedCoordinates;
 }
 

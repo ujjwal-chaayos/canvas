@@ -90,7 +90,7 @@ export function jsonConverter(menu, refrenceTemplate) {
           qty: subCategory[i]["pids"].length,
           item: item,
         },
-        font
+        {h1:"30",h2:"22",style:"Arial",spacing:"5"}
       );
 
       refinedTemplate["items"].push({
@@ -131,20 +131,20 @@ export function jsonConverter(menu, refrenceTemplate) {
 
 export function getBestBlock(blocks, data, font) {
   let index;
-  let screen = new OffscreenCanvas().getContext("2d");
+  let screen = new OffscreenCanvas("200","200").getContext("2d");
   screen.font = font.h2 + " " + font.style;
   let quantity = parseInt(data.qty);
   let textheight = parseInt(font.h2);
-  textheight = textheight + quantity * font.spacing;
+  textheight = textheight + quantity * parseInt(font.spacing);
   let maximumwidth = 0;
   for (let i = 0; i < quantity; i++) {
-    let txt = data.item[j].value;
+    let txt = data.item[i].value;
     maximumwidth = Math.max(
       maximumwidth,
       Math.floor(screen.measureText(txt).width)
     );
   }
-  let textArea = maximumwidth * (qunatity * textheight);
+  let textArea = maximumwidth * (quantity * textheight);
   let difference = Number.MAX_SAFE_INTEGER;
   for (let i = 0; i < blocks.length; i++) {
     let priceWidth = 0.2 * parseInt(blocks[i].w);
