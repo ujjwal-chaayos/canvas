@@ -76,9 +76,9 @@ export async function drawTitle(canvas,screen,data,coordinates){
       points.x = x;
       points.y = y;
      
-      screen.fillStyle = titleStyle.color.title;
+      screen.fillStyle = titleStyle.color.Title;
       let style =
-        titleStyle.weight.title + titleStyle.size.title + titleStyle.font.title;
+        titleStyle.weight.Title +" " + titleStyle.size.Title  +" " + titleStyle.font.Title;
 
       console.log(titleText);
       drawText(screen, titleText, points, style);

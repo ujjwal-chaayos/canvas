@@ -1,7 +1,7 @@
 import { subBlockCoordinates } from "./CVServices";
 import { sortCoordinates } from "./CVServices";
 
-export function jsonConverter(menu, refrenceTemplate) {
+export function jsonConverter(menu, refrenceTemplate,font) {
   var imageBlocks = [];
   var textBlocks = [];
   for (let i = 0; i < refrenceTemplate["templates"].length; i++) {
@@ -92,7 +92,7 @@ export function jsonConverter(menu, refrenceTemplate) {
           qty: subCategory[i]["pids"].length,
           item: item,
         },
-        { h1: "30", h2: "22", style: "Arial", spacing: "5" }
+        font
       );
 
       refinedTemplate["items"][(textBlocks[c]["block_id"]).toString()]={
@@ -123,12 +123,32 @@ export function jsonConverter(menu, refrenceTemplate) {
   //default style from db
   //avilable icons from db
 
-  refinedTemplate["style"] = {
-    font: ["ROBOTO", "ARIAL", "SERIF"],
-    size: ["200px", "400px", "600px", "800px"],
-    color: ["green", "red", "blue", "black"],
-    weight: ["B", "I", "U"],
-  }; //default
+  refinedTemplate["style"] ={
+    "font": {
+       "Title": "Helvetica, Arial, sans-serif",
+       "Items": "Helvetica, Arial, sans-serif",
+       "Prices": "Helvetica, Arial, sans-serif",
+       "New":"Helvetica, Arial, sans-serif"
+    },
+    "size": {
+      "Title": "96px",
+      "Items": "56px",
+      "Prices": "56px",
+      "New":"60px"
+   },
+    "color":{
+      "Title": "#376902",
+      "Items": "#827311",
+      "Prices": "#000000",
+      "New":"#827311"
+   },
+    "weight": {
+      "Title": "Bold",
+      "Items": "",
+      "Prices": "",
+      "New":"Bold"
+   }
+} //default
 
   return refinedTemplate;
 }
@@ -171,7 +191,7 @@ export function getBestBlock(blocks, data, font) {
   screen.font = font.h2 + " " + font.style;
   let quantity = parseInt(data.qty);
   let textheight = parseInt(font.h2);
-  textheight = textheight + quantity * parseInt(font.spacing);
+  textheight = (textheight +  parseInt(font.spacing))*quantity;
   let difference = Number.MAX_SAFE_INTEGER;
 
   for(let i=0;i<blocks.length;i++) {
@@ -180,13 +200,17 @@ export function getBestBlock(blocks, data, font) {
     let height = parseInt(blocks[i].h) - parseInt(font.h1);
     let textArea = width*textheight;
     let blockArea = width*height;
+    console.log("blockarea "+blockArea+" textarea "+textArea+" id "+blocks[i].block_id+" qty "+quantity)
     if (blockArea > textArea) {
+      console.log("in if");
       if (difference > blockArea - textArea) {
         difference = blockArea - textArea;
         index = i;
+        console.log("index "+i);
       }
     }
   }
+  console.log("final index "+index);
   return index;
 
 }
