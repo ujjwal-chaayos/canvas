@@ -62,7 +62,7 @@ export function jsonConverter(menu, refrenceTemplate) {
         item.push({
           item_id: subCategory[i]["pids"][j],
           value: products[subCategory[i]["pids"][j].toString()]["name"],
-          icons: products[subCategory[i]["pids"][j].toString()]["icons"],
+          icons: products[subCategory[i]["pids"][j].toString()]["attr"],
           active: products[subCategory[i]["pids"][j].toString()]["active"],
           new: products[subCategory[i]["pids"][j].toString()]["new"],
         });
@@ -113,12 +113,22 @@ export function jsonConverter(menu, refrenceTemplate) {
     title: titles,
   });
 
+  //default style from db
+  //avilable icons from db
+
+  refinedTemplate["style"] = {
+    font:["ROBOTO","ARIAL","SERIF"],
+    size:["200px","400px","600px","800px"],
+    color:["green","red","blue","black"],
+   weight:["B","I","U"]
+};//default
+
   return refinedTemplate;
 }
 
 export function getBestBlock(blocks, data, font) {
   let index;
-  let screen = document.createElement("canvas").getContext("2d");
+  let screen = new OffscreenCanvas().getContext("2d");
   screen.font = font.h2 + " " + font.style;
   let quantity = parseInt(data.qty);
   let textheight = parseInt(font.h2);
@@ -143,6 +153,5 @@ export function getBestBlock(blocks, data, font) {
       }
     }
   }
-  screen.remove();
   return index;
 }
