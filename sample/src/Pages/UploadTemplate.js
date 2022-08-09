@@ -4,77 +4,50 @@ import { Box, Button} from "@mui/material";
 import "./UploadTemplate.css";
 
 const UploadTemplate = () => {
-
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [imageUrl, setImageUrl] = useState(null);
   
-    useEffect(() => {
-      if (selectedImage) {
-        setImageUrl(URL.createObjectURL(selectedImage));
-      }
-    }, [selectedImage]);
+  const [file,setFile]=useState([]);
+
+
+  async function read(file) {
+    // Read the file as text
+    //console.log(await file.text())
+    // Read the file as ArrayBuffer to handle binary data
+    console.log(new Uint8Array(await file.arrayBuffer()))
+    let finalData=new Uint8Array(await file.arrayBuffer());
+    return finalData
+
+  }
+ 
+
+  const handleSubmit=async (event)=>{
+    let imgInfo={'imageId':'','imageInfo':'','imageType':'','imageContent':'','imageBlob':''};
+    let data=[];
+    imgInfo['imageBlob']=URL.createObjectURL(event.target.files[0]);
+    for (let myfile of event.target.files) {
+      let comingdata=await read(myfile);
+        console.log(comingdata);
+        imgInfo['imageContent']=comingdata;
+    }
+    const files=event.target.files;
+    console.log(typeof(files[0]))
+    imgInfo['imageInfo']=files[0];
+    console.log(files[0].name.slice('.'))
+    imgInfo['imgType']=files[0].name.slice(".")[1];
+    console.log(imgInfo);
+  //console.log(URL.createObjectURL(event.target.files[0]))
+  setFile([...file,...data])
+  }
+  console.log(file);
  
   return (
-    <div>
-    <Box
-    //position="fixed"
-    top={0}
-    left={0}
-    height="100vh"
-    width="100%"
-    sx={{
-      display: "flex",
-        overflow:"auto",
-        justifyContent:"center",
-        flexWrap: 'wrap',
-      backgroundColor: "primary.light",
-      "& button": { m: 5 },
-    }}
-  >
+
 
     <div>
-      <input
-        accept="image/*"
-        type="file"
-        id="select-image"
-        style={{ display: 'none' }}
-        onChange={e => setSelectedImage(e.target.files[0])}
-      />
-      <label htmlFor="select-image">
-        <Button variant="contained" color="primary" component="span">
-          Upload Image
-        </Button>
-      </label>
-      {imageUrl && selectedImage && (
-        <Box mt={2} textAlign="center">
-          <div>Image Preview:</div>
-          <img src={imageUrl} alt={selectedImage.name} height="100px" />
-        </Box>
-      )}
-    </div>
-
-    <div>
-      <input
-        accept="image/*"
-        type="file"
-        id="select-image"
-        style={{ display: 'none' }}
-        onChange={e => setSelectedImage(e.target.files[0])}
-      />
-      <label htmlFor="select-image">
-        <Button variant="contained" color="primary" component="span">
-          Upload Image
-        </Button>
-      </label>
-      {imageUrl && selectedImage && (
-        <Box mt={2} textAlign="center">
-          <div>Image Preview:</div>
-          <img src={imageUrl} alt={selectedImage.name} height="100px" />
-        </Box>
-      )}
-    </div>
-
-    </Box>
+    <form >
+      <input type="file" id="file1"  name="file1" onChange={(e)=>handleSubmit(e)} />
+      <input type="file" id="file2"  name="file2" onChange={(e)=>handleSubmit(e)} />
+      <button type="submit" className="btn btn-info"> Update File </button>
+    </form>
     </div>
   );
 };
