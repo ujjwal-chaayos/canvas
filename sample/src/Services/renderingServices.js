@@ -1,6 +1,7 @@
 import cv from "opencv.js";
 import { reSize } from "./CVServices";
 import { drawImage } from "./CVServices";
+import { drawText } from "./CVServices";
 import { matrixToImgData } from "./CVServices";
 import { drawContours } from "./CVServices";
 import img0 from '../data/Product image/0.png'
@@ -17,37 +18,66 @@ const loadImage = async img => {
     });
 };
 
-
-export async function renderJSON(data,background,coordinates){
-    const im = [img0,img1,img2,img3,img4];
-    let canvas = new OffscreenCanvas(3840,2160);
-    let screen  = canvas.getContext("2d");
+export async function renderJSON(screen,data,background,coordinates){
+    const im = [img1,img0,img3,img4,img2];
+  
     let bgImg = new Image();
     bgImg.src =background; 
     await loadImage(bgImg);
     drawImage(screen,bgImg,{x:0,y:0,w:3840,h:2160});
         
-    coordinates = coordinates.templates[1];
-   let imageArray = data.images.image;
-   let imageCoordinate = coordinates.image_blocks;
-    for(var i=0;i<imageCoordinate.length;i++){
-        let block_id = imageCoordinate[i]["block_id"];
-        for(var j=0;j<imageArray.length;j++){
-            if(imageArray[j]["block_id"]==block_id){
-                let img = new Image();
-               
-                let point =  imageCoordinate[i];
-                img.src = im[j];
-                      
-                      await loadImage(img);
-                      drawImage(screen,img,point);
-                    
-                      
-            }
-        }
+    coordinates = coordinates.templates[0];
+    let imageArray = data.images;
+    let imageCoordinate = coordinates.image_blocks;
+    let c = 0;
+    for (var i = 0; i < imageCoordinate.length; i++) {
+      let block_id = imageCoordinate[i]["block_id"];
+      let img = new Image();
+      let point = imageCoordinate[i];
+      img.src = im[c];
+      c++;
+      await loadImage(img);
+      drawImage(screen, img, point);
     }
     
-    console.log("returning");
-    return canvas.transferToImageBitmap();
+    console.log("images drawn");
 
 }
+
+export async function drawTitle(screen,data,coordinates){
+    coordinates = coordinates.templates[0];
+    let titleCoordinate = coordinates.sub_blocks;
+  let titles = data.titles;
+  let titleStyle = data.style;
+  for (var i = 0; i < titleCoordinate.length; i++) {
+    if (titleCoordinate[i].type === "Heading") {
+      let id = titleCoordinate[i].parent_block_id;
+      let titleText = titles[id.toString()].value;
+      var x =
+        titleCoordinate[i].x +
+        Math.floor(
+          (titleCoordinate[i].w - screen.measureText(titleText).width) / 2
+        );
+      var y = titleCoordinate[i].y + (titleCoordinate[i].h - 40);
+      var points = {};
+      points.x = x;
+      points.y = y;
+      screen.fillStyle = titleStyle.color.Title;
+      let style =
+        titleStyle.weight.Title+ " " + titleStyle.size.Title + " " + titleStyle.font.Title;
+     
+      drawText(screen, titleText, points, style);
+  }
+}
+console.log("title drawn");
+}
+
+
+
+
+
+
+
+
+
+

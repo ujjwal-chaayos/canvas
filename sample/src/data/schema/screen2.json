@@ -1,4 +1,3 @@
-
 {
     "cafe_detail": {
         "id": 10000,
@@ -17,10 +16,10 @@
         "partnerId": 21
     },
     "images": {
-        "1": {
+        "3": {
             "img_id": 1111,
             "imgURL": "https://d3pjt1af33nqn0.cloudfront.net/product_image/1111_grid_menu_low_2.jpg",
-            "block_id": 1,
+            "block_id": 3,
             "template_id": "2"
         },
         "4": {
@@ -29,10 +28,10 @@
             "block_id": 4,
             "template_id": "2"
         },
-        "5": {
+        "6": {
             "img_id": 1000080,
             "imgURL": "https://d3pjt1af33nqn0.cloudfront.net/product_image/1000080-1_grid_menu_low_3.jpeg",
-            "block_id": 5,
+            "block_id": 6,
             "template_id": "2"
         },
         "8": {
@@ -41,81 +40,105 @@
             "block_id": 8,
             "template_id": "2"
         },
-        "10": {
+        "9": {
             "img_id": 1000052,
             "imgURL": "https://d3pjt1af33nqn0.cloudfront.net/product_image/1000052-1_grid_menu_low_2.jpg",
-            "block_id": 10,
-            "template_id": "2"
-        },
-        "qty": 5
-    },
-    "titles": {
-        "2": {
-            "title_id": 215,
-            "value": "DESSERTS",
-            "block_id": 2,
-            "template_id": "2"
-        },
-        "3": {
-            "title_id": 207,
-            "value": "SNACKS",
-            "block_id": 3,
-            "template_id": "2"
-        },
-        "6": {
-            "title_id": 209,
-            "value": "CHAAT PAKORE",
-            "block_id": 6,
-            "template_id": "2"
-        },
-        "7": {
-            "title_id": 208,
-            "value": "SANDWICHES",
-            "block_id": 7,
-            "template_id": "2"
-        },
-        "9": {
-            "title_id": 213,
-            "value": "Meals",
             "block_id": 9,
             "template_id": "2"
         },
         "qty": 5
     },
-    "items": {
+    "titles": {
+        "1": {
+            "title_id": 209,
+            "value": "CHAAT PAKORE",
+            "block_id": 1,
+            "template_id": "2"
+        },
         "2": {
+            "title_id": 207,
+            "value": "SNACKS",
             "block_id": 2,
+            "template_id": "2"
+        },
+        "5": {
+            "title_id": 208,
+            "value": "SANDWICHES",
+            "block_id": 5,
+            "template_id": "2"
+        },
+        "7": {
+            "title_id": 215,
+            "value": "DESSERTS",
+            "block_id": 7,
+            "template_id": "2"
+        },
+        "10": {
+            "title_id": 213,
+            "value": "Meals",
+            "block_id": 10,
+            "template_id": "2"
+        },
+        "qty": 5
+    },
+    "items": {
+        "1": {
+            "block_id": 1,
             "template_id": "2",
-            "qty": 4,
+            "qty": 8,
             "item": [
                 {
-                    "item_id": 1000037,
-                    "value": "Choco Dense Cake",
-                    "icons": "VEG",
-                    "active": true
-                },
-                {
-                    "item_id": 1000039,
-                    "value": "Banana Walnut Cake.",
-                    "icons": "NON_VEG",
-                    "active": true
-                },
-                {
-                    "item_id": 1000037,
-                    "value": "Choco Dense Cake",
-                    "icons": "VEG",
-                    "active": true
-                },
-                {
-                    "item_id": 1238,
-                    "value": "Choco-Chip Cookies - Chai Time Pack",
+                    "item_id": 1200,
+                    "value": "Bhelpuri",
                     "icons": null,
+                    "active": true
+                },
+                {
+                    "item_id": 1064,
+                    "value": "Kala Chana Chaat",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1201,
+                    "value": "Samosa Matar Chaat",
+                    "icons": null,
+                    "active": true
+                },
+                {
+                    "item_id": 1065,
+                    "value": "Palak Patta Crispies",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 150,
+                    "value": "Kashmiri Kahwa",
+                    "icons": null,
+                    "active": true
+                },
+                {
+                    "item_id": 1109,
+                    "value": "Baarish Wale Pakore",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 60,
+                    "value": "God's Chai",
+                    "icons": null,
+                    "active": true
+                },
+                {
+                    "item_id": 1000080,
+                    "value": "Dhokla Chaat",
+                    "icons": "VEG",
                     "active": true
                 }
             ]
         },
-        "3": {
-            "block_id": 3,
+        "2": {
+            "block_id": 2,
             "template_id": "2",
             "qty": 13,
             "item": [
@@ -199,63 +222,8 @@
                 }
             ]
         },
-        "6": {
-            "block_id": 6,
-            "template_id": "2",
-            "qty": 8,
-            "item": [
-                {
-                    "item_id": 1200,
-                    "value": "Bhelpuri",
-                    "icons": null,
-                    "active": true
-                },
-                {
-                    "item_id": 1064,
-                    "value": "Kala Chana Chaat",
-                    "icons": "VEG",
-                    "active": true
-                },
-                {
-                    "item_id": 1201,
-                    "value": "Samosa Matar Chaat",
-                    "icons": null,
-                    "active": true
-                },
-                {
-                    "item_id": 1065,
-                    "value": "Palak Patta Crispies",
-                    "icons": "VEG",
-                    "active": true
-                },
-                {
-                    "item_id": 150,
-                    "value": "Kashmiri Kahwa",
-                    "icons": null,
-                    "active": true
-                },
-                {
-                    "item_id": 1109,
-                    "value": "Baarish Wale Pakore",
-                    "icons": "VEG",
-                    "active": true
-                },
-                {
-                    "item_id": 60,
-                    "value": "God's Chai",
-                    "icons": null,
-                    "active": true
-                },
-                {
-                    "item_id": 1000080,
-                    "value": "Dhokla Chaat",
-                    "icons": "VEG",
-                    "active": true
-                }
-            ]
-        },
-        "7": {
-            "block_id": 7,
+        "5": {
+            "block_id": 5,
             "template_id": "2",
             "qty": 8,
             "item": [
@@ -309,8 +277,39 @@
                 }
             ]
         },
-        "9": {
-            "block_id": 9,
+        "7": {
+            "block_id": 7,
+            "template_id": "2",
+            "qty": 4,
+            "item": [
+                {
+                    "item_id": 1000037,
+                    "value": "Choco Dense Cake",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1000039,
+                    "value": "Banana Walnut Cake.",
+                    "icons": "NON_VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1000037,
+                    "value": "Choco Dense Cake",
+                    "icons": "VEG",
+                    "active": true
+                },
+                {
+                    "item_id": 1238,
+                    "value": "Choco-Chip Cookies - Chai Time Pack",
+                    "icons": null,
+                    "active": true
+                }
+            ]
+        },
+        "10": {
+            "block_id": 10,
             "template_id": "2",
             "qty": 4,
             "item": [
@@ -342,22 +341,31 @@
         }
     },
     "prices": {
-        "2": {
-            "block_id": 2,
+        "1": {
+            "block_id": 1,
             "template_id": "2",
-            "qty": 4,
+            "qty": 8,
             "value": [
                 {
-                    "item_id": 1000037,
+                    "item_id": 1200,
                     "value": [
                         {
                             "id": "None",
-                            "price": 199
+                            "price": 139
                         }
                     ]
                 },
                 {
-                    "item_id": 1000039,
+                    "item_id": 1064,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 159
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1201,
                     "value": [
                         {
                             "id": "None",
@@ -366,7 +374,7 @@
                     ]
                 },
                 {
-                    "item_id": 1000037,
+                    "item_id": 1065,
                     "value": [
                         {
                             "id": "None",
@@ -375,18 +383,61 @@
                     ]
                 },
                 {
-                    "item_id": 1238,
+                    "item_id": 150,
+                    "value": [
+                        {
+                            "id": "Regular",
+                            "price": 149
+                        },
+                        {
+                            "id": "Full",
+                            "price": 175
+                        },
+                        {
+                            "id": "ChotiKetli",
+                            "price": 319
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1109,
                     "value": [
                         {
                             "id": "None",
-                            "price": 21.19
+                            "price": 209
+                        }
+                    ]
+                },
+                {
+                    "item_id": 60,
+                    "value": [
+                        {
+                            "id": "Regular",
+                            "price": 149
+                        },
+                        {
+                            "id": "Full",
+                            "price": 175
+                        },
+                        {
+                            "id": "ChotiKetli",
+                            "price": 319
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1000080,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 169
                         }
                     ]
                 }
             ]
         },
-        "3": {
-            "block_id": 3,
+        "2": {
+            "block_id": 2,
             "template_id": "2",
             "qty": 13,
             "value": [
@@ -521,103 +572,8 @@
                 }
             ]
         },
-        "6": {
-            "block_id": 6,
-            "template_id": "2",
-            "qty": 8,
-            "value": [
-                {
-                    "item_id": 1200,
-                    "value": [
-                        {
-                            "id": "None",
-                            "price": 139
-                        }
-                    ]
-                },
-                {
-                    "item_id": 1064,
-                    "value": [
-                        {
-                            "id": "None",
-                            "price": 159
-                        }
-                    ]
-                },
-                {
-                    "item_id": 1201,
-                    "value": [
-                        {
-                            "id": "None",
-                            "price": 179
-                        }
-                    ]
-                },
-                {
-                    "item_id": 1065,
-                    "value": [
-                        {
-                            "id": "None",
-                            "price": 199
-                        }
-                    ]
-                },
-                {
-                    "item_id": 150,
-                    "value": [
-                        {
-                            "id": "Regular",
-                            "price": 149
-                        },
-                        {
-                            "id": "Full",
-                            "price": 175
-                        },
-                        {
-                            "id": "ChotiKetli",
-                            "price": 319
-                        }
-                    ]
-                },
-                {
-                    "item_id": 1109,
-                    "value": [
-                        {
-                            "id": "None",
-                            "price": 209
-                        }
-                    ]
-                },
-                {
-                    "item_id": 60,
-                    "value": [
-                        {
-                            "id": "Regular",
-                            "price": 149
-                        },
-                        {
-                            "id": "Full",
-                            "price": 175
-                        },
-                        {
-                            "id": "ChotiKetli",
-                            "price": 319
-                        }
-                    ]
-                },
-                {
-                    "item_id": 1000080,
-                    "value": [
-                        {
-                            "id": "None",
-                            "price": 169
-                        }
-                    ]
-                }
-            ]
-        },
-        "7": {
-            "block_id": 7,
+        "5": {
+            "block_id": 5,
             "template_id": "2",
             "qty": 8,
             "value": [
@@ -695,8 +651,51 @@
                 }
             ]
         },
-        "9": {
-            "block_id": 9,
+        "7": {
+            "block_id": 7,
+            "template_id": "2",
+            "qty": 4,
+            "value": [
+                {
+                    "item_id": 1000037,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 199
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1000039,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 179
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1000037,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 199
+                        }
+                    ]
+                },
+                {
+                    "item_id": 1238,
+                    "value": [
+                        {
+                            "id": "None",
+                            "price": 21.19
+                        }
+                    ]
+                }
+            ]
+        },
+        "10": {
+            "block_id": 10,
             "template_id": "2",
             "qty": 4,
             "value": [
@@ -741,28 +740,28 @@
     },
     "style": {
         "font": {
-           "Title": "Helvetica, Arial, sans-serif",
-           "Items": "Helvetica, Arial, sans-serif",
-           "Prices": "Helvetica, Arial, sans-serif",
-           "New":"Helvetica, Arial, sans-serif"
+            "Title": "Helvetica, Arial, sans-serif",
+            "Items": "Helvetica, Arial, sans-serif",
+            "Prices": "Helvetica, Arial, sans-serif",
+            "New": "Helvetica, Arial, sans-serif"
         },
         "size": {
-          "Title": "96px",
-          "Items": "56px",
-          "Prices": "56px",
-          "New":"60px"
-       },
-        "color":{
-          "Title": "#376902",
-          "Items": "#827311",
-          "Prices": "#000000",
-          "New":"#827311"
-       },
+            "Title": "96px",
+            "Items": "56px",
+            "Prices": "56px",
+            "New": "60px"
+        },
+        "color": {
+            "Title": "#376902",
+            "Items": "#827311",
+            "Prices": "#000000",
+            "New": "#827311"
+        },
         "weight": {
-          "Title": "Bold",
-          "Items": "",
-          "Prices": "",
-          "New":"Bold"
-       }
+            "Title": "Bold",
+            "Items": "",
+            "Prices": "",
+            "New": "Bold"
+        }
     }
 }

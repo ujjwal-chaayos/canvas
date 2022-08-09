@@ -95,7 +95,7 @@ function Test() {
     //   let imageBlocks = [];
     //   let txtBlocks = [];
     //   for(let i=0;i<sortedCoordinates.length;i++){
-    //     if(i==0||i==4||i==3||i==7||i==9){
+    //     if(i==2||i==5||i==3||i==7||i==8){
     //       sortedCoordinates[i]["type"]="Image";
     //       imageBlocks.push(sortedCoordinates[i]);
     //     }else{
@@ -123,7 +123,7 @@ function Test() {
     // };
     // screen2Img.src = screen2;
 
-    console.log(jsonConverter(menu,refrenceTemplate));
+    console.log(jsonConverter(menu,refrenceTemplate,{ h1: "160", h2: "56", style: "Helvetica, Arial, sans-serif", spacing: "5"}));
    
   }
 
