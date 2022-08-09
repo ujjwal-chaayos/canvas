@@ -16,7 +16,7 @@ const loadImage = async (img) => {
     });
 };
 
-export async function renderJSON(canvas,screen,data, background, coordinates) 
+export async function renderJSON(screen,data, background, coordinates) 
 {
     const im = [img1, img0, img3, img4, img2];
    
@@ -30,7 +30,7 @@ export async function renderJSON(canvas,screen,data, background, coordinates)
     let imageArray = data.images;
 
     let imageCoordinate = coordinates.image_blocks;
-
+    
     let c = 0;
     for (var i = 0; i < imageCoordinate.length; i++) 
     {
@@ -41,7 +41,7 @@ export async function renderJSON(canvas,screen,data, background, coordinates)
         let point = imageCoordinate[i];
         img.src = im[c];
         c++;
-
+       
         await loadImage(img);
         console.log(point);
         drawImage(screen, img, point);
@@ -49,13 +49,13 @@ export async function renderJSON(canvas,screen,data, background, coordinates)
 
 
 
-
+   
 console.log("returning");
 
 }
 
 
-export async function drawTitle(canvas,screen,data,coordinates){
+export async function drawTitle(screen,data,coordinates){
     coordinates = coordinates.templates[0];
     let titleCoordinate = coordinates.sub_blocks;
   let titles = data.titles;
@@ -85,5 +85,34 @@ export async function drawTitle(canvas,screen,data,coordinates){
     
   }
 }
+
+}
+
+export async function drawItem(screen,data,coordinates){
+  coordinates = coordinates.templates[0];
+  let itemCoordinates = coordinates.sub_blocks;
+  let itemStyle = data.style;
+  let items = data.items;
+  for (var i = 0; i < itemCoordinates.length; i++){
+    if (itemCoordinates[i].type === "Items"){
+      let style = itemStyle.weight.Items + " " +itemStyle.size.Items +" "+ itemStyle.font.Items;
+      screen.fillStyle = itemStyle.color.Items;
+      var x = itemCoordinates[i].x+10;
+      let y = itemCoordinates[i].y;
+      let id= itemCoordinates[i].parent_block_id;
+      let itemArray = items[id.toString()].item;
+      //height and width validation
+      //
+      for(var k = 0;k<itemArray.length;k++){
+        var text = itemArray[k].value;
+         y = y+56+5;
+        var points={};
+        points.x = x;
+        points.y = y;
+        drawText(screen,text,points,style);
+    }
+    }
+  }
+
 
 }

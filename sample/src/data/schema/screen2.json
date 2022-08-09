@@ -748,7 +748,7 @@
         "size": {
             "Title": "96px",
             "Items": "56px",
-            "Prices": "56px",
+            "Prices": "36px",
             "New": "60px"
         },
         "color": {
@@ -759,7 +759,7 @@
         },
         "weight": {
             "Title": "Bold",
-            "Items": "",
+            "Items": "Bold",
             "Prices": "",
             "New": "Bold"
         }
