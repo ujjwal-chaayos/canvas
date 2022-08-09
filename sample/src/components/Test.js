@@ -20,7 +20,10 @@ function Test() {
       screen1ctx = screen1canvas.getContext("2d");
       let mat1 = cv.imread(screen1Img);
       let sortedCoordinates = sortCoordinates(getCoordinates(mat1, cv));
-      drawContours(sortedCoordinates,cv,screen1ctx);
+      sortedCoordinates.forEach((e) => {
+        drawContours(e,cv,screen1ctx);
+      });
+     
       screen1ctx.fillStyle ="#FFFFFF";
       screen1ctx.save();
       sortedCoordinates.forEach((e) => {
@@ -47,7 +50,9 @@ function Test() {
       screen2ctx = screen2canvas.getContext("2d");
       let mat2 = cv.imread(screen2Img);
       let sortedCoordinates = sortCoordinates(getCoordinates(mat2, cv));
-      drawContours(sortedCoordinates,cv,screen2ctx);
+      sortedCoordinates.forEach((e) => {
+        drawContours(e,cv,screen2ctx);
+      });
       screen2ctx.fillStyle ="#FFFFFF";
       screen2ctx.save();
       sortedCoordinates.forEach((e) => {
