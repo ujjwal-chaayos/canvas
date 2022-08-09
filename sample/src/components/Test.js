@@ -6,7 +6,7 @@ import cv from "opencv.js";
 
 function Test() {
   function testFunction() {
-   
+   console.log(jsonConverter(menu,refferenceTemplate));
   }
 
   return (
