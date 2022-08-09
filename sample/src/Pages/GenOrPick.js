@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import { Avatar, Button, Stack } from "@mui/material";
+import {  Button } from "@mui/material";
 import { Typography } from '@mui/material';
 import "./GenOrPick.css";
 // import "@fontsource/roboto/300.css";
