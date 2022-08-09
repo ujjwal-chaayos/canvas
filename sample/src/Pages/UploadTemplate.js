@@ -115,7 +115,7 @@ const UploadTemplate = () => {
                 sx={{ display: "flex", p: 1, mx: 20 }}
               >
                 {" "}
-                Upload a file
+                Upload Template
                 <input
                   type="file"
                   id="template"
@@ -139,7 +139,7 @@ const UploadTemplate = () => {
                 sx={{ display: "flex", p: 1, mx: 20 }}
               >
                 {" "}
-                Upload a file
+                Upload Background
                 <input
                   type="file"
                   id="background"

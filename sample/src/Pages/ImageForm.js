@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Button,Select,Input } from "@mui/material";
+import Box from "@mui/material/Box";
+import { Button, MenuItem, Select, Input } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
 import { Typography } from "@mui/material";
-import "./ImageForm.css";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const ImageForm = () => {
   let all_block_id = [
@@ -55,9 +58,13 @@ const ImageForm = () => {
 
   const handleFormChange = (event, index) => {
     let data = [...formFields];
-    console.log(data[index].block_id);
+
+    // console.log(data);
+    // console.log(data[index].block_id);
+
     data[index].block_id = event.target.value;
     setFormFields(data);
+    console.log(data);
   };
 
   const removeSelectValue = (value) => {
@@ -79,7 +86,20 @@ const ImageForm = () => {
   };
 
   const next = () => {
-    setBottomForm(false);
+    let count = 0;
+    for (let i = 0; i < formFields.length; i++) {
+      if (formFields[i].block_id !== "") {
+        count += 1;
+      }
+    }
+    //console.log(count,qty);
+
+    if (count === parseInt(qty)) {
+      setBottomForm(false);
+      console.log(formFields);
+    } else {
+      alert("Fill all values...");
+    }
   };
 
   const addFields = (quantity) => {
@@ -90,13 +110,14 @@ const ImageForm = () => {
         block_id: "",
       });
     }
-    console.log(newArr);
+    //console.log(newArr);
 
     setFormFields(newArr);
   };
 
   const save = (e) => {
     e.preventDefault();
+    console.log(formFields);
   };
 
   const removeFields = () => {
@@ -104,74 +125,207 @@ const ImageForm = () => {
     setFormFields(data);
   };
 
+  async function read(file) {
+    // Read the file as text
+    //console.log(await file.text())
+    // Read the file as ArrayBuffer to handle binary data
+    //console.log(new Uint8Array(await file.arrayBuffer()));
+    let finalData = new Uint8Array(await file.arrayBuffer());
+    return finalData;
+  }
+
+  const handleUpload = async (event, value) => {
+    let coming_block_id = event.target.name;
+    let saved_block_id = value["block_id"];
+    let imgInfo = {
+      imageId: "",
+      imageInfo: "",
+      imageType: "",
+      imageContent: "",
+      imageBlob: "",
+    };
+    imgInfo["imageBlob"] = URL.createObjectURL(event.target.files[0]);
+    for (let myfile of event.target.files) {
+      let comingdata = await read(myfile);
+      imgInfo["imageContent"] = comingdata;
+    }
+    const files = event.target.files;
+
+    imgInfo["imageInfo"] = files[0];
+    imgInfo["imageType"] = files[0].name.split(".")[1];
+    imgInfo["imageId"] = event.target.id;
+    formFields[event.target.id]["image_info"] = imgInfo;
+    setFormFields(formFields);
+    // console.log(coming_block_id,saved_block_id,imgInfo,formFields)
+  };
+
+  //console.log(formFields);
+
   return (
-    <div class="flex-container">
+    <Box
+      top={0}
+      left={0}
+      height="100vh"
+      width="100%"
+      sx={{
+        display: "flex",
+        border:2,
+        backgroundColor: "primary.dark",
+        "& button": { m: 5 },
+      }}
+    >
+      <Box sx={{ display: "flex", p: 1, m: 1 }}>
+                <img id="template1" width="100%" height="200px" />
+              </Box>
+      <Box
+        top={0}
+        left={0}
+        height="100vh"
+        width="45%"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginLeft: "55%",
+          backgroundColor: "primary.light",
+          "& button": { m: 2 },
+        }}
+      >
+        {bottomForm ? (
+          <div className="mapping">
+            <form style={{ justifyContent: "center", alignItems: "center" }}>
+              <Typography
+                variant="h5"
+                component="h2"
+                align="center"
+                sx={{ color: "#303030", p: 3 }}
+              >
+                Enter the quantity of Image blocks
+              </Typography>
+              <Select
+                alignItems="center"
+                justifyContent="center"
+                sx={{ display: "flex", p: 1, mx: 20 }}
+                value={qty}
+                onChange={(event) => handleQuantityChange(event)}
+                disabled={saveQty}
+              >
+                {options.map((option, index) => (
+                  <MenuItem value={option}>{option}</MenuItem>
+                ))}
+              </Select>
 
-    <div class="flex-child">
+              <Button
+                variant="contained"
+                onClick={() => hideQtyInput(true)}
+                disabled={isDisabled}
+              >
+                Submit Quantity
+              </Button>
+              <Button variant="contained" onClick={() => hideQtyInput(false)}>
+                Edit Quantity
+              </Button>
+              {formFields.map((form, index) => {
+                //console.log(form);
+                return (
+                  <div key={index}>
+                    <Input
+                      name="img_id"
+                      placeholder="Image_ID"
+                      value={form.img_id}
+                    />
+                    <Select
+                      value={imgMapValue}
+                      onChange={(event) =>
+                        handleMappedValueChange(event, index)
+                      }
+                    >
+                      {leftValues.map((option, index) => (
+                        <MenuItem value={option}>{option}</MenuItem>
+                      ))}
+                    </Select>
+                    <Input
+                      name="block_id"
+                      placeholder="Enter Block Number"
+                      onChange={(event) => handleFormChange(event, index)}
+                      value={form.block_id}
+                    />
+                  </div>
+                );
+              })}
+            </form>
 
-      </div>
-      {bottomForm ? (
-        <div class="flex-child">
-          <form>
-            <Select
-            labelId="demo-select-small"
-            id="demo-select-small"
-              value={qty}
-              onChange={(event) => handleQuantityChange(event)}
-              disabled={saveQty}
+            <Button
+              alignItems="center"
+              justifyContent="center"
+              variant="contained"
+              onClick={removeFields}
             >
-              {options.map((option, index) => (
-                <option value={option}>{option}</option>
-              ))}
-            </Select>
-
-            <Button variant="contained" onClick={() => hideQtyInput(true)} disabled={isDisabled}>
-              Submit Quantity
+              Clear Data
             </Button>
-            <Button variant="contained" onClick={() => hideQtyInput(false)}>Edit Quantity</Button>
-            {formFields.map((form, index) => {
-              console.log(form);
-              return (
-                <div key={index}>
-                  <Input
-                    name="img_id"
-                    placeholder="Image_ID"
-                    value={form.img_id}
-                  />
-                  <Select
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    value={imgMapValue}
-                    onChange={(event) => handleMappedValueChange(event, index)}
+            <br />
+            <Button
+              alignItems="center"
+              justifyContent="center"
+              variant="contained"
+              onClick={next}
+            >
+              NEXT
+            </Button>
+          </div>
+        ) : (
+          <div className="upload">
+            <form>
+              <Typography
+                variant="h5"
+                component="h2"
+                align="center"
+                sx={{ color: "#303030", p: 2 }}
+              >
+                Upload the images for selected blocks
+              </Typography>
+              {formFields.map((value, index) => (
+                <>
+                  <Typography
+                    variant="h6"
+                    component="h2"
+                    align="center"
+                    sx={{ color: "#303030", p: 3 }}
                   >
-                    {leftValues.map((option, index) => (
-                      <option value={option}>{option}</option>
-                    ))}
-                  </Select>
-
-                  <Input
-                    name="block_id"
-                    placeholder="Enter Block Number"
-                    onChange={(event) => handleFormChange(event, index)}
-                    value={form.block_id}
-                  />
-                </div>
-              );
-            })}
-          </form>
-
-          <button onClick={removeFields}>Clear Data</button>
-          <br />
-          <button onClick={next}>NEXT</button>
-        </div>
-      ) : (
-        <div className="upload">
-          <button onClick={removeFields}>Clear Data</button>
-          <br />
-          <button onClick={save}>SAVE</button>
-        </div>
-      )}
-    </div>
+                    Choose image for block{` ${value["block_id"]}`}
+                  </Typography>
+                  <Button
+                    endIcon={<CloudUploadIcon />}
+                    variant="contained"
+                    component="label"
+                    color="primary"
+                    alignItems="center"
+                    justifyContent="center"
+                    sx={{ display: "flex", p: 1, mx: 20 }}
+                  >
+                    <input
+                      id={index}
+                      type="file"
+                      hidden
+                      name={`${value["block_id"]}`}
+                      onChange={(e) => handleUpload(e, value)}
+                    />
+                  </Button>
+                </>
+              ))}
+            </form>
+            <br />
+            <Button endIcon={<NavigateNextIcon/>}
+              alignItems="center"
+              justifyContent="center"
+              variant="contained"
+              type="submit"
+              onClick={save}>
+              SAVE
+            </Button>
+          </div>
+        )}
+      </Box>
+    </Box>
   );
 };
 
