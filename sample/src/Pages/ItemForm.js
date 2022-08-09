@@ -1,8 +1,17 @@
 import React from 'react'
 
-const ItemForm = () => {
+const ItemForm = ({blockIds,proceed}) => {
+  console.log(blockIds);
+  const save = (e) => {
+  
+    proceed(blockIds);
+  };
+
   return (
-    <div>ItemForm</div>
+    <div>
+      <h1>ItemForm</h1>
+      <button onClick={save}>Next</button>
+    </div>
   )
 }
 

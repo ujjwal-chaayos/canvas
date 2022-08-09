@@ -76,7 +76,7 @@ const ImageForm = ({blockIds,proceed}) => {
     if (count === parseInt(qty)) {
       setBottomForm(false);
       console.log(formFields);
-      proceed(leftValues);
+    
     } else {
       alert("Fill all values...");
     }
@@ -98,6 +98,7 @@ const ImageForm = ({blockIds,proceed}) => {
   const save = (e) => {
     e.preventDefault();
     console.log(formFields);
+    proceed(leftValues);
   };
 
   const removeFields = () => {

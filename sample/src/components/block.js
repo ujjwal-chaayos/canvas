@@ -30,7 +30,7 @@ const Block = () => {
 
   const [ids, setIds] = useState(all_block_id);
   const [show, setShow] = useState('image');   //"image","item","preview"
-  const [type, setType] = useState('template');
+  const [type, setType] = useState('image');
 
 
 
@@ -39,17 +39,33 @@ const Block = () => {
     setIds(left);
     setShow('preview');
   };
+  const manageItemId = (left) => {
+    console.log(left);
+    setIds(left);
+    setType('menu');
+    setShow('preview');
+  };
 
   const manageImagePreview = (value) =>{
     //logic for return back, proceed further
-    console.log("hiiiii")
+    console.log("manageImagePreview",value)
+    switch(value) {
+      case "image-n": setShow('item')  
+      // case "image-p": setShow('image')
+      // case "menu-n": setShow('save')
+      // case "menu-p": setType('item'); setShow('preview'); 
+    
+
+      default:      return <h1>No project match</h1>
+    }
   }
 
   const project = () => {
+    console.log("manageShow",show)
     switch(show) {
 
       case "image":   return <ImageForm blockIds={ids} proceed={manageBlockId} />;
-      case "item":   return <ItemForm blockIds={ids} />;
+      case "item":   return <ItemForm blockIds={ids} proceed={manageItemId} />;
       case "preview": return <Preview type={type} manage={manageImagePreview} />;
     
 
