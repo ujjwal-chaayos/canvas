@@ -16,9 +16,9 @@ const AllRoutes = () => {
       <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/screen" element={<Screen/>}/>
-          <Route path="/pick" element={<GenOrPick/>}/>
-          <Route path="/select-template" element={<ChooseTemplate/>}/>
-          <Route path="/upload-template" element={<UploadTemplate/>}/>
+          <Route path="/pick/:screen" element={<GenOrPick/>}/>
+          <Route path="/select-template/:screen" element={<ChooseTemplate/>}/>
+          <Route path="/upload-template/:screenId/:tempId" element={<UploadTemplate/>}/>
           <Route path="/image/:screenId/:tempId" element={<ImageForm/>}/>
           <Route path="/testing" element={<Test/>}/>
 

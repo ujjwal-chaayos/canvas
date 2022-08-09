@@ -31,8 +31,9 @@ const UploadTemplate = () => {
     const files=event.target.files;
     console.log(typeof(files[0]))
     imgInfo['imageInfo']=files[0];
-    console.log(files[0].name.slice('.'))
-    imgInfo['imgType']=files[0].name.slice(".")[1];
+  
+    imgInfo['imageType']=files[0].name.split(".")[1];
+    imgInfo['imageId']=event.target.id;
     console.log(imgInfo);
   //console.log(URL.createObjectURL(event.target.files[0]))
   setFile([...file,...data])
@@ -44,8 +45,8 @@ const UploadTemplate = () => {
 
     <div>
     <form >
-      <input type="file" id="file1"  name="file1" onChange={(e)=>handleSubmit(e)} />
-      <input type="file" id="file2"  name="file2" onChange={(e)=>handleSubmit(e)} />
+      <input type="file" id="template"  name="file1" onChange={(e)=>handleSubmit(e)} />
+      <input type="file" id="background"  name="file2" onChange={(e)=>handleSubmit(e)} />
       <button type="submit" className="btn btn-info"> Update File </button>
     </form>
     </div>
