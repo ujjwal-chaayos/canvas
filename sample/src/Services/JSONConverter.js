@@ -132,6 +132,7 @@ export function getBestBlock(blocks, data, font) {
   screen.font = font.h2 + " " + font.style;
   let quantity = parseInt(data.qty);
   let textheight = parseInt(font.h2);
+  textheight = textheight+(quantity*font.spacing);
   let maximumwidth = 0;
   for (let i = 0; i < quantity; i++) {
     let txt = data.item[j].value;
@@ -143,6 +144,7 @@ export function getBestBlock(blocks, data, font) {
   let textArea = maximumwidth * (qunatity * textheight);
   let difference = Number.MAX_SAFE_INTEGER;
   for (let i = 0; i < blocks.length; i++) {
+    let priceWidth = 0.2*parseInt(blocks[i].w);
     let height = parseInt(blocks[i].h) - parseInt(font.h1);
     let width = parseInt(blocks[i].w) - priceWidth;
     let blockArea = width * height;
