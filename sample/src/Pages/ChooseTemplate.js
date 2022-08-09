@@ -3,11 +3,22 @@ import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import { Typography } from '@mui/material';
 import "./ChooseTemplate.css";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+
+import {useNavigate,useParams} from 'react-router-dom'
+// import "@fontsource/roboto/300.css";
+// import "@fontsource/roboto/400.css";
+// import "@fontsource/roboto/500.css";
+// import "@fontsource/roboto/700.css";
 const ChooseTemplate = () => {
+
+  let navigate=useNavigate();
+  let {screen}=useParams();
+
+  const handleTempId=(id)=>{
+        navigate(`/upload-template/${screen}/${id}`);
+  }
+
+
   return (
     <div>
       <Box
@@ -31,7 +42,7 @@ const ChooseTemplate = () => {
             style={{ minWidth: "40%", minHeight: "27%", borderRadius: 10 , "margin-top":"0"}}
             variant="outlined"
             size="large"
-
+            onClick={()=>handleTempId("t1")}
           >
            <Typography variant="h6" component="h2">
               TEMPLATE 1{" "}
@@ -45,6 +56,7 @@ const ChooseTemplate = () => {
             style={{ minWidth: "40%", minHeight: "27%", borderRadius: 10, "margin-top":"0" }}
             variant="outlined"
             size="large"
+            onClick={()=>handleTempId("t2")}
           >
             <Typography variant="h6" component="h2">
               TEMPLATE 2{" "}
@@ -58,6 +70,7 @@ const ChooseTemplate = () => {
             style={{ minWidth: "40%", minHeight: "27%", borderRadius: 10, "margin-top":"0" }}
             variant="outlined"
             size="large"
+            onClick={()=>handleTempId("t3")}
           >
              <Typography variant="h6" component="h2">
               TEMPLATE 3{" "}
@@ -71,6 +84,7 @@ const ChooseTemplate = () => {
             style={{ minWidth: "40%", minHeight: "27%", borderRadius: 10, "margin-top":"0" }}
             variant="outlined"
             size="large"
+            onClick={()=>handleTempId("t4")}
           >
             <Typography variant="h6" component="h2">
               TEMPLATE 4{" "}
@@ -84,6 +98,7 @@ const ChooseTemplate = () => {
             style={{ minWidth: "40%", minHeight: "27%", borderRadius: 10 ,"margin-top":"0"}}
             variant="outlined"
             size="large"
+            onClick={()=>handleTempId("t5")}
           >
             <Typography variant="h6" component="h2">
               TEMPLATE 5{" "}
@@ -97,6 +112,7 @@ const ChooseTemplate = () => {
             style={{ minWidth: "40%", minHeight: "27%", borderRadius: 10, "margin-top":"0" }}
             variant="outlined"
             size="large"
+            onClick={()=>handleTempId("t6")}
           >
             <Typography variant="h6" component="h2">
               TEMPLATE 6{" "}
