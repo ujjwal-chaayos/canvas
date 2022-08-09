@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-const ImageForm = () => {
+const ImageForm = (blockIds) => {
+
+  console.log("here",blockIds);
   let all_block_id = [
     "Select",
     "1",

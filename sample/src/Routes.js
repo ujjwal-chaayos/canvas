@@ -9,6 +9,8 @@ import ChooseTemplate from './Pages/ChooseTemplate'
 import UploadTemplate from './Pages/UploadTemplate'
 import ImageForm from './Pages/ImageForm'
 
+import Block from './components/block'
+
 
 
 const AllRoutes = () => {
@@ -18,9 +20,13 @@ const AllRoutes = () => {
           <Route path="/screen" element={<Screen/>}/>
           <Route path="/pick/:screen" element={<GenOrPick/>}/>
           <Route path="/select-template/:screen" element={<ChooseTemplate/>}/>
+          
           <Route path="/upload-template/:screenId/:tempId" element={<UploadTemplate/>}/>
           <Route path="/image/:screenId/:tempId" element={<ImageForm/>}/>
+          
           <Route path="/testing" element={<Test/>}/>
+
+          
 
       </Routes>
     )
