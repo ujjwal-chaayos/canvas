@@ -24,7 +24,7 @@ function Test() {
         drawContours(e,cv,screen1ctx);
       });
      
-      screen1ctx.fillStyle ="#FFFFFF";
+      screen1ctx.fillStyle ="#000000";
       screen1ctx.save();
       sortedCoordinates.forEach((e) => {
         drawText(
@@ -53,7 +53,7 @@ function Test() {
       sortedCoordinates.forEach((e) => {
         drawContours(e,cv,screen2ctx);
       });
-      screen2ctx.fillStyle ="#FFFFFF";
+      screen2ctx.fillStyle ="#000000";
       screen2ctx.save();
       sortedCoordinates.forEach((e) => {
         drawText(
