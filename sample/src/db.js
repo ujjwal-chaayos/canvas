@@ -2,7 +2,7 @@ const mongo = require("mongoose");
 
 var screenSchema = mongo.Schema;
 
-var dataSchema = new Schema({
+var screenSchema = new Schema({
   cafe: {
     type : Object,
     required : true 
@@ -34,7 +34,7 @@ items: {
 prices: {
     type : Object,
     required : true 
-},
+}
   
 });
 
