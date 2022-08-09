@@ -46,10 +46,10 @@ export  function getCoordinates(template, cv) {
 export  function drawContours(points, cv, screen) {
 
     // this will set the width of line to 2.
-    screen.lineWidth = "40";
+    screen.lineWidth = "10";
 
     // this will set thw width of dashes to 4.
-    screen.setLineDash([40]);
+    screen.setLineDash([4]);
 
     // this will define the colour of bounded reactangle to blue.
     screen.strokeStyle = "black";
@@ -99,7 +99,7 @@ export  function matrixToImgData(image){
             break;
         default:
             throw new Error("Bad number of channels (Source image must have 1, 3 or 4 channels)");
-            return;
+            
     }
     var imgData = new ImageData(new Uint8ClampedArray(tempImg.data), tempImg.cols, tempImg.rows);
     tempImg.delete();
@@ -196,16 +196,13 @@ export  function subBlockCoordinates(points,headingHeight,priceWidth){
 // This function will sort the coordinates so that they are arrange in the order from left to right then top to bottom.
 export  function sortCoordinates(coordinates){
     let sortedCoordinates = [];
-
-    // sorting according to distance from top left corner.
-    coordinates.sort((a, b) => Math.hypot(a.x, a.y) - Math.hypot(b.x, b.y));
-    for(let i=0;i<coordinates.length;i++){
+    coordinates.sort((a,b) => (((parseInt(a.x)*10)+((parseInt(a.y)*10)) < (((parseInt(b.x)*10)+((parseInt(b.y)*10))) ? -1 : 1))));
+    for(let i =0;i<coordinates.length;i++){
         coordinates[i]["block_id"]=i;
         sortedCoordinates.push(coordinates[i]);
-
     }
-    // returning the final sorted coordinates.
     sortedCoordinates.shift();
+    console.log(sortCoordinates);
     return sortedCoordinates;
 }
 
