@@ -25,7 +25,7 @@ const UploadTemplate = () => {
       imageContent: "",
       imageBlob: "",
     };
-    let data = [];
+
     imgInfo["imageBlob"] = URL.createObjectURL(event.target.files[0]);
     for (let myfile of event.target.files) {
       let comingdata = await read(myfile);

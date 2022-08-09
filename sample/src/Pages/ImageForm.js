@@ -33,8 +33,6 @@ const ImageForm = () => {
   let img_id = ["001", "002", "003", "004", "005", "006"]; //dummy_data
   let options = ["0", "1", "2", "3", "4", "5", "6"];
 
-  let mappedValues = [];  //final_mapped_data
-
   const [formFields, setFormFields] = useState([]);
 
   const hideQtyInput = (value) => {
@@ -54,8 +52,8 @@ const ImageForm = () => {
 
   const handleFormChange = (event, index) => {
     let data = [...formFields];
-    console.log(data);
-    console.log(data[index].block_id);
+    // console.log(data);
+    // console.log(data[index].block_id);
     data[index].block_id = event.target.value;
     setFormFields(data);
     console.log(data);
@@ -80,23 +78,20 @@ const ImageForm = () => {
   };
 
   const next = () => {
-    let count=0;
-    for(let i=0;i<formFields.length;i++){
-   
-      if(formFields[i].block_id!==''){
-        count+=1;
+    let count = 0;
+    for (let i = 0; i < formFields.length; i++) {
+      if (formFields[i].block_id !== "") {
+        count += 1;
       }
     }
     //console.log(count,qty);
 
-    if(count===parseInt(qty)){
-
-      mappedValues=formFields;
+    if (count === parseInt(qty)) {
       setBottomForm(false);
-    }else{
-      alert("Fill all values...")
+      console.log(formFields);
+    } else {
+      alert("Fill all values...");
     }
-    
   };
 
   const addFields = (quantity) => {
@@ -107,13 +102,14 @@ const ImageForm = () => {
         block_id: "",
       });
     }
-    console.log(newArr);
+    //console.log(newArr);
 
     setFormFields(newArr);
   };
 
   const save = (e) => {
     e.preventDefault();
+    console.log(formFields);
   };
 
   const removeFields = () => {
@@ -121,13 +117,41 @@ const ImageForm = () => {
     setFormFields(data);
   };
 
-  const handleUpload = (e) => {
-
+  async function read(file) {
+    // Read the file as text
+    //console.log(await file.text())
+    // Read the file as ArrayBuffer to handle binary data
+    //console.log(new Uint8Array(await file.arrayBuffer()));
+    let finalData = new Uint8Array(await file.arrayBuffer());
+    return finalData;
   }
 
-  const handleSubmit = () => {
+  const handleUpload = async (event, value) => {
+    let coming_block_id = event.target.name;
+    let saved_block_id = value["block_id"];
+    let imgInfo = {
+      imageId: "",
+      imageInfo: "",
+      imageType: "",
+      imageContent: "",
+      imageBlob: "",
+    };
+    imgInfo["imageBlob"] = URL.createObjectURL(event.target.files[0]);
+    for (let myfile of event.target.files) {
+      let comingdata = await read(myfile);
+      imgInfo["imageContent"] = comingdata;
+    }
+    const files = event.target.files;
 
-  }
+    imgInfo["imageInfo"] = files[0];
+    imgInfo["imageType"] = files[0].name.split(".")[1];
+    imgInfo["imageId"] = event.target.id;
+    formFields[event.target.id]["image_info"] = imgInfo;
+    setFormFields(formFields);
+    // console.log(coming_block_id,saved_block_id,imgInfo,formFields)
+  };
+
+  //console.log(formFields);
 
   return (
     <div>
@@ -182,30 +206,21 @@ const ImageForm = () => {
           <button onClick={next}>NEXT</button>
         </div>
       ) : (
-        
         <div className="upload">
-          
-          <form onSubmit={handleSubmit}>
-            {formFields.map((value,index)=>(
+          <form>
+            {formFields.map((value, index) => (
               <>
-              <p>Hello</p>
-              <input
-                type="file"
-                id={`image${value[index].block_id}`}
-                name="file1"
-                onChange={(e) => handleUpload(e)}
-              />
+                <p>Choose image for block{` ${value["block_id"]}`}</p>
+                <input
+                  id={index}
+                  type="file"
+                  name={`${value["block_id"]}`}
+                  onChange={(e) => handleUpload(e, value)}
+                />
               </>
-
             ))}
-           
-
-            <img id="template1" width="50%" height="200px" alt="Template" />
-            <img id="background1" width="50%" height="200px" alt="Background" />
-
-            <button type="submit"> NEXT </button>
           </form>
-   
+
           <br />
           <button onClick={save}>SAVE</button>
         </div>
