@@ -46,7 +46,7 @@ export  function getCoordinates(template, cv) {
 export  function drawContours(points, cv, screen) {
 
     // this will set the width of line to 2.
-    screen.lineWidth = "80";
+    screen.lineWidth = "5";
 
     // this will set thw width of dashes to 4.
     screen.setLineDash([2]);
