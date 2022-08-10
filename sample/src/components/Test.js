@@ -7,6 +7,7 @@ import data from '../data/schema/screen2.json';
 import coordinates from '../data/coordinate/test.json';
 import background from '../data/background/Meals-food Background.jpg';
 import { drawTitle } from "../Services/renderingServices";
+import {downloadImage}   from "../Services/CVServices";
 import cv from "opencv.js";
 
 function Test() {
@@ -22,6 +23,11 @@ function Test() {
 
     let imageBitMap = canvas.transferToImageBitmap(); 
       document.getElementById("output").getContext("bitmaprenderer").transferFromImageBitmap(imageBitMap);
+
+
+    let url =   downloadImage(document.getElementById("output"));
+   var btn =  document.getElementById("download");
+   btn.href=url;
   }
 
   return (
@@ -31,6 +37,8 @@ function Test() {
       <br/>
       <br/>
       <canvas id = "output"></canvas>
+      <br/>
+      <a href="" download = "dynamicMenu.png" id="download">Download</a>
       
       
     </div>

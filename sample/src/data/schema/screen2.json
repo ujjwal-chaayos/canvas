@@ -75,7 +75,7 @@
         },
         "10": {
             "title_id": 213,
-            "value": "Meals",
+            "value": "MEALS",
             "block_id": 10,
             "template_id": "2"
         },
@@ -97,7 +97,7 @@
                     "item_id": 1064,
                     "value": "Kala Chana Chaat",
                     "icons": "VEG",
-                    "active": true
+                    "active": false
                 },
                 {
                     "item_id": 1201,
@@ -127,7 +127,8 @@
                     "item_id": 60,
                     "value": "God's Chai",
                     "icons": null,
-                    "active": true
+                    "active": true,
+                    "new": true
                 },
                 {
                     "item_id": 1000080,
@@ -229,37 +230,37 @@
             "item": [
                 {
                     "item_id": 540,
-                    "value": "Spinach Corn Cheese Sandwich",
+                    "value": "Spinach Corn Cheese",
                     "icons": "VEG",
                     "active": true
                 },
                 {
                     "item_id": 1296,
-                    "value": "Kasundi Paneer Sandwich",
+                    "value": "Kasundi Paneer",
                     "icons": null,
                     "active": true
                 },
                 {
                     "item_id": 620,
-                    "value": "Homestyle Aloo Sandwich",
+                    "value": "Homestyle Aloo",
                     "icons": "VEG",
                     "active": true
                 },
                 {
                     "item_id": 868,
-                    "value": "Garden Fresh Sandwich",
+                    "value": "Garden Fresh",
                     "icons": "VEG",
                     "active": true
                 },
                 {
                     "item_id": 530,
-                    "value": "Italian Cheese Mushroom Sandwich",
+                    "value": "Italian Cheese Mushroom",
                     "icons": "VEG",
                     "active": true
                 },
                 {
                     "item_id": 500,
-                    "value": "Sicilian Chicken Sandwich",
+                    "value": "Sicilian Chicken",
                     "icons": "NON_VEG",
                     "active": true
                 },
@@ -271,7 +272,7 @@
                 },
                 {
                     "item_id": 1297,
-                    "value": "Patiala Chicken Sandwich",
+                    "value": "Patiala Chicken",
                     "icons": "NON_VEG",
                     "active": true
                 }
@@ -302,7 +303,7 @@
                 },
                 {
                     "item_id": 1238,
-                    "value": "Choco-Chip Cookies - Chai Time Pack",
+                    "value": "Choco-Chip Cookies",
                     "icons": null,
                     "active": true
                 }
@@ -327,7 +328,7 @@
                 },
                 {
                     "item_id": 1111,
-                    "value": "Paneer Loaded Open Paratha",
+                    "value": "Paneer Loaded Paratha",
                     "icons": "VEG",
                     "active": true
                 },
@@ -688,7 +689,7 @@
                     "value": [
                         {
                             "id": "None",
-                            "price": 21.19
+                            "price": 210
                         }
                     ]
                 }
@@ -748,19 +749,19 @@
         "size": {
             "Title": "96px",
             "Items": "56px",
-            "Prices": "36px",
+            "Prices": "56px",
             "New": "60px"
         },
         "color": {
             "Title": "#376902",
             "Items": "#827311",
             "Prices": "#000000",
-            "New": "#827311"
+            "New": "red"
         },
         "weight": {
             "Title": "Bold",
             "Items": "Bold",
-            "Prices": "",
+            "Prices": "Bold",
             "New": "Bold"
         }
     }

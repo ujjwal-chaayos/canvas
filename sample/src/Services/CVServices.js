@@ -46,7 +46,7 @@ export  function getCoordinates(template, cv) {
 export  function drawContours(points, cv, screen) {
 
     // this will set the width of line to 2.
-    screen.lineWidth = "80";
+    screen.lineWidth = "5";
 
     // this will set thw width of dashes to 4.
     screen.setLineDash([2]);
@@ -152,7 +152,7 @@ export  function drawLine(screen,sourcePoint,destinationPoint,style){
 }
 
 // This will download the final screen as png.
-export  function download(screen)
+export  function downloadImage(screen)
 {
     // getting the URL of image and return that URL.
     let imageURL = screen.toDataURL("image/png");
@@ -218,3 +218,45 @@ export  function sortCoordinates(coordinates){
     return sortedCoordinates;
 }
 
+ export function roundedRect(screen,point, r,style) {
+    if (point.w < 2 * r) r = point.w / 2;
+    if (point.h < 2 * r) r = point.h / 2;
+    screen.beginPath();
+    screen.moveTo(point.x+r, point.y);
+    screen.arcTo(point.x+point.w, point.y,   point.x+point.w, point.y+point.h, r);
+    screen.arcTo(point.x+point.w, point.y+point.h, point.x,   point.y+point.h, r);
+    screen.arcTo(point.x,   point.y+point.h, point.x,   point.y,   r);
+    screen.arcTo(point.x,   point.y,   point.x+point.w, point.y,   r);
+    screen.closePath();
+    screen.fillStyle = style;
+    screen.fill();
+    screen.save();
+  }
+
+  export function newItemRect(screen,point, r,style1,style2) {
+    if (point.w < 2 * r) r = point.w / 2;
+    if (point.h < 2 * r) r = point.h / 2;
+    screen.beginPath();
+    screen.moveTo(point.x+r, point.y);
+    screen.arcTo(point.x+point.w, point.y,   point.x+point.w, point.y+point.h, r);
+    screen.arcTo(point.x+point.w, point.y+point.h, point.x,   point.y+point.h, r);
+    screen.arcTo(point.x,   point.y+point.h, point.x,   point.y,   r);
+    screen.arcTo(point.x,   point.y,   point.x+point.w, point.y,   r);
+    screen.closePath();
+    screen.fillStyle = style1;
+    screen.fill();
+    screen.save();
+
+    screen.beginPath();
+    screen.moveTo(point.x+Math.ceil(point.w*0.75), point.y);
+    screen.arcTo(point.x+point.w, point.y,   point.x+point.w, point.y+point.h, r);
+    screen.arcTo(point.x+point.w, point.y+point.h, point.x,   point.y+point.h, r);
+    screen.arcTo(point.x+Math.ceil(point.w*0.70),   point.y+point.h, point.x,   point.y,   r);
+   
+    screen.closePath();
+    screen.fillStyle = style2;
+    screen.fill();
+    
+    screen.save();
+
+  }
