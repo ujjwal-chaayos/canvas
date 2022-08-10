@@ -4730,96 +4730,7 @@
                     1000052
                 ]
             },
-            {
-                "id": 1455,
-                "name": "CHAI  & CHILL",
-                "desc": "15% Off on all orders from Dine-in, Take- Away and Bazaar",
-                "tag": "TT",
-                "picId": null,
-                "banner": "http://d2o0imqyae2p40.cloudfront.net/select.jpg",
-                "details": "15% Off on all orders from Dine-in, Take- Away and Bazaar",
-                "show": false,
-                "pids": [
-                    460,
-                    450,
-                    1060,
-                    300,
-                    310,
-                    1000050,
-                    1540,
-                    440
-                ]
-            },
-            {
-                "id": 447,
-                "name": "UNCHAI",
-                "desc": "Most loved by our guests this week",
-                "tag": "TT",
-                "picId": null,
-                "banner": null,
-                "details": null,
-                "show": false,
-                "pids": [
-                    1000042,
-                    1000031,
-                    60,
-                    150,
-                    130,
-                    272
-                ]
-            },
-            {
-                "id": 216,
-                "name": "INDIAN CHAI",
-                "desc": "All time classics, you'll just end up loving",
-                "tag": "SP",
-                "picId": null,
-                "banner": null,
-                "details": null,
-                "show": false,
-                "pids": [
-                    1375,
-                    1205,
-                    170,
-                    30,
-                    20,
-                    80,
-                    1648,
-                    1000066
-                ]
-            },
-            {
-                "id": 206,
-                "name": "SHAKES",
-                "desc": "Fill your tummy with your Chaayos favorites from the meals menu",
-                "tag": "REG",
-                "picId": 80,
-                "banner": null,
-                "details": null,
-                "show": true,
-                "pids": [
-                    370,
-                    420,
-                    480,
-                    1179
-                ]
-            },
-            {
-                "id": 211,
-                "name": "THANDI CHAI",
-                "desc": "Popular Chai flavors, right here for you!",
-                "tag": "REG",
-                "picId": 1375,
-                "banner": null,
-                "details": null,
-                "show": true,
-                "pids": [
-                    40,
-                    40,
-                    40,
-                    40
-                ]
-            },
+            
             {
                 "id": 213,
                 "name": "Meals",
@@ -4855,7 +4766,7 @@
                     1200,
                     1000043,
                     1000050,
-                    1033,
+                    992,
                     992,
                     130,
                     1064
@@ -4911,10 +4822,10 @@
                 "details": null,
                 "show": true,
                 "pids": [
-                    1239,
-                    1238,
-                    1004,
-                    1003
+                    1000037,
+                    1000039,
+                    1000037,
+                    1238
                 ]
             }
         ],

@@ -1,4 +1,7 @@
-export function jsonConverter(menu, refrenceTemplate) {
+import { subBlockCoordinates } from "./CVServices";
+import { sortCoordinates } from "./CVServices";
+
+export function jsonConverter(menu, refrenceTemplate,font) {
   var imageBlocks = [];
   var textBlocks = [];
   for (let i = 0; i < refrenceTemplate["templates"].length; i++) {
@@ -33,18 +36,18 @@ export function jsonConverter(menu, refrenceTemplate) {
   var productPrices = menu["prices"]["prices"];
   var productImages = menu["productImages"];
 
-  var images = [];
-  var titles = [];
+ // var images = {};
+  //var titles = [];
   refinedTemplate["images"] = { qty: "" };
   refinedTemplate["titles"] = { qty: subCategory.length - 1 };
-  refinedTemplate["items"] = [];
-  refinedTemplate["prices"] = [];
+  refinedTemplate["items"] = {};
+  refinedTemplate["prices"] = {};
 
   for (let i = 0; i < subCategory.length; i++) {
     if (subCategory[i]["name"] === "Images") {
       refinedTemplate["images"]["qty"] = subCategory[i]["pids"].length;
       for (let j = 0; j < subCategory[i]["pids"].length; j++) {
-        images.push({
+        refinedTemplate["images"][(imageBlocks[j]["block_id"]).toString()] = {
           img_id: subCategory[i]["pids"][j],
           imgURL:
             productImages["baseUrl"] +
@@ -53,8 +56,9 @@ export function jsonConverter(menu, refrenceTemplate) {
             ],
           block_id: imageBlocks[j]["block_id"],
           template_id: imageBlocks[j]["template_id"],
-        });
+        };
       }
+      //refinedTemplate["images"].push = images;
     } else {
       var item = [];
       var value = [];
@@ -62,10 +66,11 @@ export function jsonConverter(menu, refrenceTemplate) {
         item.push({
           item_id: subCategory[i]["pids"][j],
           value: products[subCategory[i]["pids"][j].toString()]["name"],
-          icons: products[subCategory[i]["pids"][j].toString()]["icons"],
+          icons: products[subCategory[i]["pids"][j].toString()]["attr"],
           active: products[subCategory[i]["pids"][j].toString()]["active"],
           new: products[subCategory[i]["pids"][j].toString()]["new"],
         });
+       
         var prices =
           productPrices[subCategory[i]["pids"][j].toString()]["prices"];
         let values = [];
@@ -90,50 +95,83 @@ export function jsonConverter(menu, refrenceTemplate) {
         font
       );
 
-      refinedTemplate["items"].push({
+      refinedTemplate["items"][(textBlocks[c]["block_id"]).toString()]={
         block_id: textBlocks[c]["block_id"],
+        template_id: textBlocks[c]["template_id"],
         qty: subCategory[i]["pids"].length,
         item: item,
-      });
+      };
 
-      refinedTemplate["prices"].push({
+      refinedTemplate["prices"][(textBlocks[c]["block_id"]).toString()]={
         block_id: textBlocks[c]["block_id"],
+        template_id: textBlocks[c]["template_id"],
         qty: subCategory[i]["pids"].length,
         value: value,
-      });
+      };
 
-      titles.push({
+      refinedTemplate["titles"][(textBlocks[c]["block_id"]).toString()]={
         title_id: subCategory[i]["id"],
         value: subCategory[i]["name"],
         block_id: textBlocks[c]["block_id"],
-      });
+        template_id: textBlocks[c]["template_id"]
+      };
+      textBlocks.splice(c,1);
     }
   }
-  refinedTemplate["titles"].push({
-    title: titles,
-  });
+ // refinedTemplate["titles"]["title"] = titles;
+
+  //default style from db
+  //avilable icons from db
+
+  refinedTemplate["style"] ={
+    "font": {
+       "Title": "Helvetica, Arial, sans-serif",
+       "Items": "Helvetica, Arial, sans-serif",
+       "Prices": "Helvetica, Arial, sans-serif",
+       "New":"Helvetica, Arial, sans-serif"
+    },
+    "size": {
+      "Title": "96px",
+      "Items": "56px",
+      "Prices": "56px",
+      "New":"60px"
+   },
+    "color":{
+      "Title": "#376902",
+      "Items": "#827311",
+      "Prices": "#000000",
+      "New":"#827311"
+   },
+    "weight": {
+      "Title": "Bold",
+      "Items": "",
+      "Prices": "",
+      "New":"Bold"
+   }
+} //default
 
   return refinedTemplate;
 }
-
+/*
 export function getBestBlock(blocks, data, font) {
   let index;
-  let screen = document.createElement("canvas").getContext("2d");
+  let screen = new OffscreenCanvas("200", "200").getContext("2d");
   screen.font = font.h2 + " " + font.style;
   let quantity = parseInt(data.qty);
   let textheight = parseInt(font.h2);
+  textheight = textheight + quantity * parseInt(font.spacing);
   let maximumwidth = 0;
   for (let i = 0; i < quantity; i++) {
-    let txt = data.item[j].value;
+    let txt = data.item[i].value;
     maximumwidth = Math.max(
       maximumwidth,
       Math.floor(screen.measureText(txt).width)
     );
   }
-  let textArea = maximumwidth * (qunatity * textheight);
+  let textArea = maximumwidth * (quantity * textheight);
   let difference = Number.MAX_SAFE_INTEGER;
   for (let i = 0; i < blocks.length; i++) {
-    let priceWidth = 0.2*parseInt(blocks[i].w);
+    let priceWidth = 0.2 * parseInt(blocks[i].w);
     let height = parseInt(blocks[i].h) - parseInt(font.h1);
     let width = parseInt(blocks[i].w) - priceWidth;
     let blockArea = width * height;
@@ -144,6 +182,98 @@ export function getBestBlock(blocks, data, font) {
       }
     }
   }
-  screen.remove();
   return index;
+}
+*/
+export function getBestBlock(blocks, data, font) {
+  let index;
+  let screen = new OffscreenCanvas("3840", "2160").getContext("2d");
+  screen.font = font.h2 + " " + font.style;
+  let quantity = parseInt(data.qty);
+  let textheight = parseInt(font.h2);
+  textheight = (textheight +  parseInt(font.spacing))*quantity;
+  let difference = Number.MAX_SAFE_INTEGER;
+
+  for(let i=0;i<blocks.length;i++) {
+    let priceWidth = 0.2 * parseInt(blocks[i].w);
+    let width = parseInt(blocks[i].w) - priceWidth;
+    let height = parseInt(blocks[i].h) - parseInt(font.h1);
+    let textArea = width*textheight;
+    let blockArea = width*height;
+    console.log("blockarea "+blockArea+" textarea "+textArea+" id "+blocks[i].block_id+" qty "+quantity)
+    if (blockArea > textArea) {
+      console.log("in if");
+      if (difference > blockArea - textArea) {
+        difference = blockArea - textArea;
+        index = i;
+        console.log("index "+i);
+      }
+    }
+  }
+  console.log("final index "+index);
+  return index;
+
+}
+
+
+export function createCoordinateJSON(
+  templateID,
+  templateName,
+  imageBlocks,
+  txtBlocks,
+  font
+) {
+  var coordinates = {
+    id: templateID,
+    name: templateName,
+    image_blocks: [],
+    sub_blocks: [],
+    text_blocks: [],
+  };
+  imageBlocks.forEach((e) => {
+    e["template_id"] = templateID;
+    e["type"] = "Image";
+  });
+
+  for (let i = 0; i < txtBlocks.length; i++) {}
+  txtBlocks.forEach((e) => {
+    e["template_id"] = templateID;
+    e["type"] = "Text";
+    var subCoordinates = subBlockCoordinates(e, font.h1, e.w * 0.2);
+   
+    var heading = {
+      block_id: 1,
+      parent_block_id: e["block_id"],
+      template_id: templateID,
+      type: "Heading",
+      x: subCoordinates.title.x,
+      y: subCoordinates.title.y,
+      w: subCoordinates.title.w,
+      h: subCoordinates.title.h,
+    };
+    var items = {
+      block_id: 2,
+      parent_block_id: e["block_id"],
+      template_id: templateID,
+      type: "Items",
+      x: subCoordinates.items.x,
+      y: subCoordinates.items.y,
+      w: subCoordinates.items.w,
+      h: subCoordinates.items.h,
+    };
+    var prices = {
+      block_id: 3,
+      parent_block_id: e["block_id"],
+      template_id: templateID,
+      type: "Prices",
+      x: subCoordinates.price.x,
+      y: subCoordinates.price.y,
+      w: subCoordinates.price.w,
+      h: subCoordinates.price.h,
+    };
+    coordinates.sub_blocks.push(heading, items, prices);
+  });
+  coordinates.image_blocks = imageBlocks;
+  coordinates.text_blocks = txtBlocks;
+  return coordinates;
 }
