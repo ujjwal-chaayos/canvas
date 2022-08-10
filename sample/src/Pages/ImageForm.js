@@ -4,11 +4,10 @@ import { Button, MenuItem, Select, Input } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import { Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
-const ImageForm = ({blockIds,proceed}) => {
-
-  console.log("here",blockIds);
+const ImageForm = ({ blockIds, proceed }) => {
+  console.log("here-image ", blockIds);
   let all_block_id = blockIds;
 
   const [qty, setQty] = useState("");
@@ -20,13 +19,10 @@ const ImageForm = ({blockIds,proceed}) => {
 
   const [leftValues, setLeftValues] = useState(all_block_id);
 
-  let block_ids = ["1", "2", "3", "4", "5", "6"]; // dummy_data
-  let img_id = ["001", "002", "003", "004", "005", "006"]; //dummy_data
-  let options = ["0", "1", "2", "3", "4", "5", "6"];
+  let img_id = ["001", "002", "003", "004", "005", "006"]; //dummy_data coming from db for with image_id
+  let options = ["0", "1", "2", "3", "4", "5", "6"]; //quantity of images
 
   const [formFields, setFormFields] = useState([]);
-
-
 
   const hideQtyInput = (value) => {
     setSaveQty(value);
@@ -67,9 +63,10 @@ const ImageForm = ({blockIds,proceed}) => {
   };
 
   const handleMappedValueChange = (event, index) => {
-    event.target.disabled = true;
+    // event.target.disabled = true;
     handleFormChange(event, index);
     removeSelectValue(event.target.value);
+    setImgMapValue(event.target.value);
   };
 
   const next = () => {
@@ -84,7 +81,6 @@ const ImageForm = ({blockIds,proceed}) => {
     if (count === parseInt(qty)) {
       setBottomForm(false);
       console.log(formFields);
-    
     } else {
       alert("Fill all values...");
     }
@@ -158,7 +154,7 @@ const ImageForm = ({blockIds,proceed}) => {
       width="100%"
       sx={{
         display: "flex",
-        border:2,
+        border: 2,
         backgroundColor: "primary.dark",
         "& button": { m: 5 },
       }}
@@ -213,7 +209,7 @@ const ImageForm = ({blockIds,proceed}) => {
                 Edit Quantity
               </Button>
               {formFields.map((form, index) => {
-                //console.log(form);
+                console.log(form["block_id"] !== "");
                 return (
                   <div key={index}>
                     <Input
@@ -221,14 +217,18 @@ const ImageForm = ({blockIds,proceed}) => {
                       placeholder="Image_ID"
                       value={form.img_id}
                     />
-                    <Select         
-                      value={imgMapValue}                
+                    <Select
+                      id={"select" + index}
+                      disabled={form["block_id"] !== ""}
+                      // disabled={form}
                       onChange={(event) =>
-                        handleMappedValueChange(event, index)  
+                        handleMappedValueChange(event, index)
                       }
                     >
                       {leftValues.map((option, index) => (
-                        <MenuItem value={option}>{option}</MenuItem>
+                        <MenuItem id={index} value={option}>
+                          {option}
+                        </MenuItem>
                       ))}
                     </Select>
                     <Input
@@ -302,12 +302,14 @@ const ImageForm = ({blockIds,proceed}) => {
               ))}
             </form>
             <br />
-            <Button endIcon={<NavigateNextIcon/>}
+            <Button
+              endIcon={<NavigateNextIcon />}
               alignItems="center"
               justifyContent="center"
               variant="contained"
               type="submit"
-              onClick={save}>
+              onClick={save}
+            >
               SAVE
             </Button>
           </div>
