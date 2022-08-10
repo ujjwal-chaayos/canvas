@@ -21,6 +21,11 @@ const UploadTemplate = () => {
   let {screenId,tempId}=useParams();
   let [resultImage,setResultImage]=useState("");
   const [file, setFile] = useState([]);
+  const [coordinates, setCoordinates] = useState([]);
+
+  useEffect(() => {
+    localStorage.setItem('coordinates', JSON.stringify(coordinates));
+  }, [coordinates]);
   let dummy_data;
 
   async function read(file) {
@@ -69,7 +74,7 @@ const UploadTemplate = () => {
 
   const seePreview = async (e)=>{
     if(resultImage!==''){
-      // navigate(`/preview/${screenId}/${tempId}`)
+     navigate(`/preview/${screenId}/${tempId}`)
 
     }
   }
@@ -87,8 +92,10 @@ const UploadTemplate = () => {
       
       let link= URL.createObjectURL(blob);
       console.log(link);
+
       
       setResultImage(link);
+      setCoordinates(sortedCoordinates);
 
 
 
