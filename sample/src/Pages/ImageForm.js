@@ -174,9 +174,6 @@ const ImageForm = () => {
         "& button": { m: 5 },
       }}
     >
-      <Box sx={{ display: "flex", p: 1, m: 1 }}>
-                <img id="template1" width="100%" height="200px" />
-              </Box>
       <Box
         top={0}
         left={0}
@@ -188,6 +185,8 @@ const ImageForm = () => {
           marginLeft: "55%",
           backgroundColor: "primary.light",
           "& button": { m: 2 },
+          overflow: "hidden",
+          overflowY: "scroll",
         }}
       >
         {bottomForm ? (
