@@ -8,6 +8,10 @@ import Test from './components/Test'
 import ChooseTemplate from './Pages/ChooseTemplate'
 import UploadTemplate from './Pages/UploadTemplate'
 import ImageForm from './Pages/ImageForm'
+import ItemForm from './Pages/ItemForm'
+
+import Block from './components/block'
+
 
 
 
@@ -19,8 +23,14 @@ const AllRoutes = () => {
           <Route path="/pick/:screen" element={<GenOrPick/>}/>
           <Route path="/select-template/:screen" element={<ChooseTemplate/>}/>
           <Route path="/upload-template/:screenId/:tempId" element={<UploadTemplate/>}/>
+          
+          <Route path="/preview/:screenId/:tempId" element={<Block/>}/>
+          
           <Route path="/image/:screenId/:tempId" element={<ImageForm/>}/>
+          <Route path="/item/:screenId/:tempId" element={<ItemForm/>}/>
+          
           <Route path="/testing" element={<Test/>}/>
+
 
       </Routes>
     )

@@ -1,10 +1,21 @@
 import React from "react";
+
 import { useState, useEffect } from "react";
-import { Box, Button } from "@mui/material";
+
+import {useNavigate, useParams} from 'react-router-dom'
+
+import { Box, Button, Input, Typography } from "@mui/material";
+
 import "./UploadTemplate.css";
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 //import data from '../data/';
 
 const UploadTemplate = () => {
+
+  let navigate=useNavigate();
+  let {screenId,tempId}=useParams();
+
   const [file, setFile] = useState([]);
   let dummy_data;
 
@@ -25,8 +36,8 @@ const UploadTemplate = () => {
       imageContent: "",
       imageBlob: "",
     };
-    let data = [];
     imgInfo["imageBlob"] = URL.createObjectURL(event.target.files[0]);
+
     for (let myfile of event.target.files) {
       let comingdata = await read(myfile);
       imgInfo["imageContent"] = comingdata;
@@ -57,33 +68,116 @@ const UploadTemplate = () => {
     if (file.length === 2) {
       dummy_data = file; //condition to save data
       console.log(dummy_data);
+      navigate(`/preview/${screenId}/${tempId}`)
     } else {
       alert("Insert both Images..");
     }
   };
   console.log(file);
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="file"
-          id="template"
-          name="file1"
-          onChange={(e) => handleUpload(e)}
-        />
-        <input
-          type="file"
-          id="background"
-          name="file2"
-          onChange={(e) => handleUpload(e)}
-        />
+    
+    <Box
 
-        <img id="template1" width="50%" height="200px" alt="Template" />
-        <img id="background1" width="50%" height="200px" alt="Background" />
+      top={0}
+      left={0}
+      height="100vh"
+      width="100%"
+      sx={{
+        display: "flex",
+    
+        backgroundColor: "primary.light",
 
-        <button type="submit"> NEXT </button>
-      </form>
-    </div>
+        "& button": { m: 5 },
+      }}
+    >
+      <Box
+        sx={{
+          m: 2,
+          border: 2,
+          borderColor: "primary.main",
+        }}
+        style={{
+          width: "100%",
+          borderRadius: 10,
+        }}
+      >
+        <Typography
+          variant="h4"
+          component="h2"
+          align="center"
+          sx={{ color: "#303030", p: 5 }}
+        >
+          UPLOAD TEMPLATE & BACKGROUND IMAGE
+        </Typography>
+        <form
+          style={{ justifyContent: "center", alignItems: "center" }}
+          onSubmit={handleSubmit}
+        >
+          <Box sx={{ display: "flex", p: 1, m: 1 }}>
+            <div style={{ width: "50%" }}>
+              <Button
+              endIcon={<CloudUploadIcon/>}
+                variant="contained"
+                component="label"
+                color="primary"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ display: "flex", p: 1, mx: 20 }}
+              >
+                {" "}
+                Upload Template
+                <input
+                  type="file"
+                  id="template"
+                  name="file1"
+                  onChange={(e) => handleUpload(e)}
+                  hidden
+                />
+              </Button>
+              <Box sx={{ display: "flex", p: 1, m: 1 }}>
+                <img id="template1" width="100%" height="200px" />
+              </Box>
+            </div>
+            <div style={{ width: "50%" }}>
+              <Button
+              endIcon={<CloudUploadIcon/>}
+                variant="contained"
+                component="label"
+                color="primary"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ display: "flex", p: 1, mx: 20 }}
+              >
+                {" "}
+                Upload Background
+                <input
+                  type="file"
+                  id="background"
+                  name="file2"
+                  onChange={(e) => handleUpload(e)}
+                  hidden
+                />
+              </Button>
+              <Box sx={{ display: "flex", p: 1, m: 1 }}>
+                <img id="background1" width="100%" height="200px" />
+              </Box>
+            </div>
+          </Box>
+          <Box sx={{ display: "flex", p: 1, m: 1, justifyContent: 'space-evenly' }}>
+            <Button
+              endIcon={<NavigateNextIcon/>}
+              alignItems="center"
+              justifyContent="center"
+              variant="contained"
+              type="submit"
+            >
+              {" "}
+              NEXT{" "}
+            </Button>
+          </Box>
+        </form>
+      </Box>
+    </Box>
   );
 };
 

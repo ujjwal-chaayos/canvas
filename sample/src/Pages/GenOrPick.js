@@ -2,6 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import {  Button } from "@mui/material";
 import { Typography } from '@mui/material';
+import {useNavigate,useParams } from 'react-router-dom';
 import "./GenOrPick.css";
 // import "@fontsource/roboto/300.css";
 // import "@fontsource/roboto/400.css";
@@ -9,6 +10,14 @@ import "./GenOrPick.css";
 // import "@fontsource/roboto/700.css";
 
 const GenOrPick = () => {
+  let { screen } = useParams();
+ 
+  let navigate= useNavigate();
+
+  const choose=()=>{
+      navigate(`/select-template/${screen}`)
+  }
+
   return (
     <div>
       <Box
@@ -30,6 +39,7 @@ const GenOrPick = () => {
             style={{ minWidth: "40%", minHeight: "50%", borderRadius: 10 }}
             variant="outlined"
             size="large"
+            onClick={choose}
           >
             <Typography variant="h4" component="h2" sx={{ color: "white" }}>
               NEW
@@ -43,6 +53,7 @@ const GenOrPick = () => {
             style={{ minWidth: "40%", minHeight: "50%", borderRadius: 10 }}
             variant="outlined"
             size="large"
+            onClick={choose}
           >
             <Typography variant="h4" component="h2" sx={{ color: "white" }}>
               OLD
