@@ -20,6 +20,7 @@ const ImageForm = ({blockIds,proceed}) => {
 
   const [leftValues, setLeftValues] = useState(all_block_id);
 
+
  
   let img_id = ["001", "002", "003", "004", "005", "006"]; //dummy_data coming from db for with image_id
   let options = ["0", "1", "2", "3", "4", "5", "6"];  //quantity of images
@@ -77,6 +78,8 @@ const ImageForm = ({blockIds,proceed}) => {
     handleFormChange(event, index);
     removeSelectValue(event.target.value);
     setImgMapValue(event.target.value);
+
+
  
   };
 
@@ -222,7 +225,7 @@ const ImageForm = ({blockIds,proceed}) => {
                 Edit Quantity
               </Button>
               {formFields.map((form, index) => {
-                //console.log(form);
+                console.log(form['block_id']!=='');
                 return (
                   <div key={index}>
                     <Input
@@ -232,8 +235,8 @@ const ImageForm = ({blockIds,proceed}) => {
                     />
                     <Select 
                     id={'select'+index}
-
-                      
+                      disabled={form['block_id']!==''}
+                      // disabled={form}
                       onChange={(event) =>
                         handleMappedValueChange(event, index)
                       
