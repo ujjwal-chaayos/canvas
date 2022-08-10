@@ -25,6 +25,7 @@ const UploadTemplate = () => {
 
   useEffect(() => {
     localStorage.setItem('coordinates', JSON.stringify(coordinates));
+    localStorage.setItem('imageBlob', JSON.stringify(resultImage));
   }, [coordinates]);
   let dummy_data;
 

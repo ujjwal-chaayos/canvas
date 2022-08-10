@@ -19,8 +19,22 @@ const ImageForm = ({ blockIds, proceed }) => {
 
   const [leftValues, setLeftValues] = useState(all_block_id);
 
+  const [items, setItems] = useState([]);
+
+useEffect(() => {
+  const items = JSON.parse(localStorage.getItem('coordinates'));
+  if (items) {
+   setItems(items);
+  }
+}, []);
+
   let img_id = ["001", "002", "003", "004", "005", "006"]; //dummy_data coming from db for with image_id
-  let options = ["0", "1", "2", "3", "4", "5", "6"]; //quantity of images
+  let comingQty = items;
+  let options = [...comingQty.keys()]; //quantity of images
+
+  console.log(options);
+
+  
 
   const [formFields, setFormFields] = useState([]);
 
