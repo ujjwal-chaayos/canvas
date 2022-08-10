@@ -221,10 +221,10 @@ const ImageForm = ({blockIds,proceed}) => {
                       placeholder="Image_ID"
                       value={form.img_id}
                     />
-                    <Select
-                      value={imgMapValue}
+                    <Select         
+                      value={imgMapValue}                
                       onChange={(event) =>
-                        handleMappedValueChange(event, index)
+                        handleMappedValueChange(event, index)  
                       }
                     >
                       {leftValues.map((option, index) => (
