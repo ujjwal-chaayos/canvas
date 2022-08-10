@@ -8,21 +8,21 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const ImageForm = ({blockIds,proceed}) => {
 
-  console.log("here",blockIds);
+  console.log("here-image ",blockIds);
   let all_block_id = blockIds;
 
   const [qty, setQty] = useState("");
   const [imgMapValue, setImgMapValue] = useState("");
   const [saveQty, setSaveQty] = useState(false);
-
+  
   const [isDisabled, setDisabled] = useState(false);
   const [bottomForm, setBottomForm] = useState(true);
 
   const [leftValues, setLeftValues] = useState(all_block_id);
 
-  let block_ids = ["1", "2", "3", "4", "5", "6"]; // dummy_data
-  let img_id = ["001", "002", "003", "004", "005", "006"]; //dummy_data
-  let options = ["0", "1", "2", "3", "4", "5", "6"];
+ 
+  let img_id = ["001", "002", "003", "004", "005", "006"]; //dummy_data coming from db for with image_id
+  let options = ["0", "1", "2", "3", "4", "5", "6"];  //quantity of images
 
   const [formFields, setFormFields] = useState([]);
 
@@ -38,6 +38,8 @@ const ImageForm = ({blockIds,proceed}) => {
       setDisabled(false);
     }
   };
+
+
 
   const handleQuantityChange = (event) => {
     setQty(event.target.value);
@@ -66,10 +68,16 @@ const ImageForm = ({blockIds,proceed}) => {
     //data.remove(value);
   };
 
+
+
   const handleMappedValueChange = (event, index) => {
-    event.target.disabled = true;
+
+ 
+   // event.target.disabled = true;
     handleFormChange(event, index);
     removeSelectValue(event.target.value);
+    setImgMapValue(event.target.value);
+ 
   };
 
   const next = () => {
@@ -196,6 +204,7 @@ const ImageForm = ({blockIds,proceed}) => {
                 value={qty}
                 onChange={(event) => handleQuantityChange(event)}
                 disabled={saveQty}
+                
               >
                 {options.map((option, index) => (
                   <MenuItem value={option}>{option}</MenuItem>
@@ -221,17 +230,21 @@ const ImageForm = ({blockIds,proceed}) => {
                       placeholder="Image_ID"
                       value={form.img_id}
                     />
-                    <Select
-                      value={imgMapValue}
+                    <Select 
+                    id={'select'+index}
+
+                      
                       onChange={(event) =>
                         handleMappedValueChange(event, index)
+                      
                       }
                     >
                       {leftValues.map((option, index) => (
-                        <MenuItem value={option}>{option}</MenuItem>
+                        <MenuItem id={index} value={option}>{option}</MenuItem>
                       ))}
                     </Select>
                     <Input
+                    
                       name="block_id"
                       placeholder="Enter Block Number"
                       onChange={(event) => handleFormChange(event, index)}
