@@ -1,10 +1,17 @@
 import cv from "opencv.js";
-import { drawText } from "./CVServices";
-import { drawImage } from "./CVServices";
-import { heightValidation } from "./ValidationService";
-import { widthValidation } from "./ValidationService";
-import { wrapValidation } from "./ValidationService";
-import { drawContours } from "./CVServices";
+import {
+  drawText,
+  drawImage,
+  drawContours,
+  downloadImage,
+  getCoordinates,
+  sortCoordinates,
+} from "./CVServices";
+import {
+  heightValidation,
+  widthValidation,
+  wrapValidation,
+} from "./ValidationService";
 
 import img0 from "../data/Product image/0.png";
 import img1 from "../data/Product image/1.png";
@@ -19,6 +26,52 @@ const loadImage = async (img) => {
     };
   });
 };
+
+//returns image rendered by offscreen canvas in uint8array blob
+export async function mergeTemplateBackground(template, background) {
+  let templateImg = new Image();
+  templateImg.src = template;
+  await loadImage(templateImg);
+  let screen1canvas = new OffscreenCanvas(
+    templateImg.width,
+    templateImg.height
+  );
+  let screen1ctx = screen1canvas.getContext("2d");
+  let templateMat = cv.imread(templateImg);
+  let sortedCoordinates = sortCoordinates(getCoordinates(templateMat, cv));
+
+  let bgImg = new Image();
+  bgImg.src = background;
+  await loadImage(bgImg);
+  drawImage(screen1ctx, bgImg, {
+    x: 0,
+    y: 0,
+    w: templateImg.width,
+    h: templateImg.height,
+  });
+  sortedCoordinates.forEach((e) => {
+    drawContours(e, cv, screen1ctx);
+  });
+  screen1ctx.fillStyle = "#000000";
+  screen1ctx.save();
+  sortedCoordinates.forEach((e) => {
+    drawText(
+      screen1ctx,
+      e["block_id"],
+      {
+        x: parseInt(e.x) + 10,
+        y: parseInt(e.y) + 90,
+      },
+      "80px Arial"
+    );
+  });
+
+  let blob = await screen1canvas.convertToBlob();
+  let arraybuffer = await blob.arrayBuffer();
+  var uint8View = new Uint8Array(arraybuffer);
+   blob = new Blob( [ uint8View ], { type: "image/png" } );
+   return {blob,sortedCoordinates};
+}
 
 export async function renderJSON(screen, data, background, coordinates) {
   const im = [img1, img0, img3, img4, img2];
@@ -111,7 +164,10 @@ export async function drawItem(screen, data, coordinates) {
           spacing: "5",
         })
       ) {
-        console.log("height validation failed for block "+itemCoordinates[i].parent_block_id);
+        console.log(
+          "height validation failed for block " +
+            itemCoordinates[i].parent_block_id
+        );
         //drawContours(itemCoordinates[i], cv, screen);
       }
       if (
@@ -120,10 +176,13 @@ export async function drawItem(screen, data, coordinates) {
           style: itemStyle.weight.Items + " " + itemStyle.font.Items,
         })
       ) {
-        console.log("width validation failed for block "+itemCoordinates[i].parent_block_id);
+        console.log(
+          "width validation failed for block " +
+            itemCoordinates[i].parent_block_id
+        );
         //drawContours(itemCoordinates[i], cv, screen);
       }
-     
+
       for (var k = 0; k < itemArray.length; k++) {
         var text = itemArray[k].value;
         y = y + 56 + 5;

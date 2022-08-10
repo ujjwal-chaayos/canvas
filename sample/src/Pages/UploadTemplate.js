@@ -9,13 +9,17 @@ import { Box, Button, Input, Typography } from "@mui/material";
 import "./UploadTemplate.css";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+
+import {mergeTemplateBackground} from '../Services/renderingServices';
+
+
 //import data from '../data/';
 
 const UploadTemplate = () => {
 
   let navigate=useNavigate();
   let {screenId,tempId}=useParams();
-
+  let [resultImage,setResultImage]=useState("");
   const [file, setFile] = useState([]);
   let dummy_data;
 
@@ -63,17 +67,36 @@ const UploadTemplate = () => {
     setFile([...file, [imgInfo]]);
   };
 
-  const handleSubmit = (e) => {
+  const seePreview = async (e)=>{
+    if(resultImage!==''){
+      // navigate(`/preview/${screenId}/${tempId}`)
+
+    }
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (file.length === 2) {
       dummy_data = file; //condition to save data
       console.log(dummy_data);
-      navigate(`/preview/${screenId}/${tempId}`)
+      console.log(file);
+      let {blob,sortedCoordinates}= await mergeTemplateBackground(file[0][0]['imageBlob'],file[1][0]['imageBlob']);
+      
+      console.log(blob);
+      let temp = document.getElementById("background1");
+      
+      let link= URL.createObjectURL(blob);
+      console.log(link);
+      
+      setResultImage(link);
+
+
+
     } else {
       alert("Insert both Images..");
     }
   };
-  console.log(file);
+  console.log("hello",resultImage);
   return (
     
     <Box
@@ -101,18 +124,33 @@ const UploadTemplate = () => {
           borderRadius: 10,
         }}
       >
-        <Typography
+         { resultImage===''?       <Typography
           variant="h4"
           component="h2"
           align="center"
           sx={{ color: "#303030", p: 5 }}
         >
+         
           UPLOAD TEMPLATE & BACKGROUND IMAGE
-        </Typography>
-        <form
-          style={{ justifyContent: "center", alignItems: "center" }}
-          onSubmit={handleSubmit}
+        </Typography>:       <Typography
+          variant="h4"
+          component="h2"
+          align="center"
+          sx={{ color: "#303030", p: 5 }}
         >
+         
+          PREVIEW OF BACKGROUND IMAGE
+        </Typography>}
+ 
+         {
+
+
+       
+          resultImage===''?(
+            <>
+          <form
+              style={{ justifyContent: "center", alignItems: "center" }}
+              onSubmit={handleSubmit}>
           <Box sx={{ display: "flex", p: 1, m: 1 }}>
             <div style={{ width: "50%" }}>
               <Button
@@ -172,10 +210,29 @@ const UploadTemplate = () => {
               type="submit"
             >
               {" "}
-              NEXT{" "}
+              SUBMIT{" "}
             </Button>
           </Box>
+           
+
         </form>
+         </>
+        ):(<>     
+          <Box sx={{ display: "flex", p: 1, m: 1, justifyContent:"center" }}>
+            <img id="background1" src={resultImage} width="776px" height="436px"/>
+          </Box>
+          <Button
+          endIcon={<NavigateNextIcon/>}
+          alignItems="center"
+          justifyContent="center"
+          variant="contained"
+          onClick={seePreview}
+        >
+          {" "}
+          NEXT{" "}
+        </Button>
+      </>)
+    }
       </Box>
     </Box>
   );
