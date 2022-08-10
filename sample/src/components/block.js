@@ -51,9 +51,9 @@ const Block = () => {
     console.log("manageImagePreview",value)
     switch(value) {
       case "image-n": setShow('item'); break; 
-      case "image-p": setShow('image'); break;
+      case "image-p": setShow('image');  break;
       case "menu-n": setShow('save'); break;
-      case "menu-p": setType('item'); setShow('item');  break;
+      case "menu-p": setType('item'); setShow('item'); setIds(ids); break;
     
 
       default:      return <h1>No project match</h1>
