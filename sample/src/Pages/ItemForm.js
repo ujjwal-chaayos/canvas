@@ -63,18 +63,46 @@ const ItemForm = ({blockIds,proceed}) => {
 
   return (
     <div>
-      <h1>ItemForm</h1>
+      <Box
+      top={0}
+      left={0}
+      height="100vh"
+      width="100%"
+      sx={{
+        display: "flex",
+        border: 2,
+        backgroundColor: "primary.dark",
+        "& button": { m: 5 },
+      }}
+    >
+      <Box
+        top={0}
+        left={0}
+        height="100vh"
+        width="45%"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginLeft: "55%",
+          backgroundColor: "primary.light",
+          "& button": { m: 2 },
+          overflow: "hidden",
+          overflowY: "scroll",
+        }}
+      >
+      
       <div>
-        <form>
-        <Typography
+      <Typography
+               fontStyle="italic"
                 variant="h5"
                 component="h2"
                 align="center"
+                justifyContent="center"
                 sx={{ color: "#303030", p: 2 }}
               >
-                Upload the images for selected blocks
+                ADD HEADING TO THE BLOCKS
               </Typography>
-        </form>
+        <form>
         {
           titles.map((title,index)=>
             
@@ -84,7 +112,7 @@ const ItemForm = ({blockIds,proceed}) => {
             <>
                   <Typography
                     variant="h6"
-                    component="h2"
+                    component="h6"
                     align="center"
                     sx={{ color: "#303030", p: 3 }}
                   >
@@ -103,11 +131,16 @@ const ItemForm = ({blockIds,proceed}) => {
                   </Typography>
             </>)
             }
-
           )
         }
+        <Box sx={{ display: "flex", p: 1, m: 1, justifyContent: 'space-evenly' }}>
+        <Button alignItems="center"
+              justifyContent="center" style={{ borderRadius: 10}} variant="contained" onClick={save}>Next</Button>
+              </Box>
+              </form>
       </div>
-      <button onClick={save}>Next</button>
+      </Box>
+      </Box>
     </div>
   )
 }
