@@ -159,6 +159,7 @@ const ImageForm = ({ blockIds, proceed }) => {
         "& button": { m: 5 },
       }}
     >
+          
       <Box
         top={0}
         left={0}
@@ -178,12 +179,13 @@ const ImageForm = ({ blockIds, proceed }) => {
           <div className="mapping">
             <form style={{ justifyContent: "center", alignItems: "center" }}>
               <Typography
+                fontStyle="italic"
                 variant="h5"
                 component="h2"
                 align="center"
                 sx={{ color: "#303030", p: 3 }}
               >
-                Enter the quantity of Image blocks
+                ENTER THE QUANTITY OF IMAGE BLOCKS
               </Typography>
               <Select
                 alignItems="center"
@@ -197,79 +199,114 @@ const ImageForm = ({ blockIds, proceed }) => {
                   <MenuItem value={option}>{option}</MenuItem>
                 ))}
               </Select>
-
-              <Button
-                variant="contained"
-                onClick={() => hideQtyInput(true)}
-                disabled={isDisabled}
+              <Box
+                sx={{
+                  display: "flex",
+                  p: 1,
+                  m: 1,
+                  justifyContent: "space-evenly",
+                }}
               >
-                Submit Quantity
-              </Button>
-              <Button variant="contained" onClick={() => hideQtyInput(false)}>
-                Edit Quantity
-              </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => hideQtyInput(true)}
+                  disabled={isDisabled}
+                >
+                  Submit Quantity
+                </Button>
+                <Button variant="contained" onClick={() => hideQtyInput(false)}>
+                  Edit Quantity
+                </Button>
+              </Box>
+
               {formFields.map((form, index) => {
                 console.log(form["block_id"] !== "");
                 return (
-                  <div key={index}>
-                    <Input
-                      name="img_id"
-                      placeholder="Image_ID"
-                      value={form.img_id}
-                    />
-                    <Select
-                      id={"select" + index}
-                      disabled={form["block_id"] !== ""}
-                      // disabled={form}
-                      onChange={(event) =>
-                        handleMappedValueChange(event, index)
-                      }
-                    >
-                      {leftValues.map((option, index) => (
-                        <MenuItem id={index} value={option}>
-                          {option}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    <Input
-                      name="block_id"
-                      placeholder="Enter Block Number"
-                      onChange={(event) => handleFormChange(event, index)}
-                      value={form.block_id}
-                    />
-                  </div>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      p: 1,
+                      m: 1,
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    <div key={index}>
+                      <Input
+                        name="img_id"
+                        placeholder="Image_ID"
+                        value={form.img_id}
+                      />
+                      <Select
+                        id={"select" + index}
+                        disabled={form["block_id"] !== ""}
+                        // disabled={form}
+                        onChange={(event) =>
+                          handleMappedValueChange(event, index)
+                        }
+                      >
+                        {leftValues.map((option, index) => (
+                          <MenuItem id={index} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                      <Input
+                        name="block_id"
+                        placeholder="Enter Block Number"
+                        onChange={(event) => handleFormChange(event, index)}
+                        value={form.block_id}
+                      />
+                    </div>
+                  </Box>
                 );
               })}
             </form>
-
-            <Button
-              alignItems="center"
-              justifyContent="center"
-              variant="contained"
-              onClick={removeFields}
+            <Box
+              sx={{
+                display: "flex",
+                p: 1,
+                m: 1,
+                justifyContent: "space-evenly",
+              }}
             >
-              Clear Data
-            </Button>
-            <br />
-            <Button
-              alignItems="center"
-              justifyContent="center"
-              variant="contained"
-              onClick={next}
+              <Button
+                alignItems="center"
+                justifyContent="center"
+                variant="contained"
+                onClick={removeFields}
+              >
+                Clear Data
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                p: 1,
+                m: 1,
+                justifyContent: "space-evenly",
+              }}
             >
-              NEXT
-            </Button>
+              <Button
+                alignItems="center"
+                justifyContent="center"
+                variant="contained"
+                onClick={next}
+              >
+                NEXT
+              </Button>
+            </Box>
           </div>
         ) : (
           <div className="upload">
             <form>
               <Typography
+                fontStyle="italic"
                 variant="h5"
                 component="h2"
                 align="center"
                 sx={{ color: "#303030", p: 2 }}
               >
-                Upload the images for selected blocks
+                UPLOAD IMAGES FOR SELECTED BLOCKS
               </Typography>
               {formFields.map((value, index) => (
                 <>
@@ -288,12 +325,12 @@ const ImageForm = ({ blockIds, proceed }) => {
                     color="primary"
                     alignItems="center"
                     justifyContent="center"
-                    sx={{ display: "flex", p: 1, mx: 20 }}
+                    sx={{ display: "flex", p: 1, mx: 40}}
                   >
                     <input
                       id={index}
                       type="file"
-                      hidden
+                      //hidden
                       name={`${value["block_id"]}`}
                       onChange={(e) => handleUpload(e, value)}
                     />
@@ -302,16 +339,25 @@ const ImageForm = ({ blockIds, proceed }) => {
               ))}
             </form>
             <br />
-            <Button
-              endIcon={<NavigateNextIcon />}
-              alignItems="center"
-              justifyContent="center"
-              variant="contained"
-              type="submit"
-              onClick={save}
+            <Box
+              sx={{
+                display: "flex",
+                p: 1,
+                m: 1,
+                justifyContent: "space-evenly",
+              }}
             >
-              SAVE
-            </Button>
+              <Button
+                endIcon={<NavigateNextIcon />}
+                alignItems="center"
+                justifyContent="center"
+                variant="contained"
+                type="submit"
+                onClick={save}
+              >
+                Save
+              </Button>
+            </Box>
           </div>
         )}
       </Box>
