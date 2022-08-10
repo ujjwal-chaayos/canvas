@@ -49,11 +49,13 @@ const Block = () => {
   const manageImagePreview = (value) =>{
     //logic for return back, proceed further
     console.log("manageImagePreview",value)
+    console.log("im checking ids for previos",ids);
     switch(value) {
       case "image-n": setShow('item'); break; 
-      case "image-p": setShow('image');  break;
+      case "image-p": setShow('image'); setIds(all_block_id); break;
       case "menu-n": setShow('save'); break;
-      case "menu-p": setType('item'); setShow('item'); setIds(ids); break;
+      case "menu-p":setIds(ids); setType('item'); setShow('item');  break;
+
     
 
       default:      return <h1>No project match</h1>

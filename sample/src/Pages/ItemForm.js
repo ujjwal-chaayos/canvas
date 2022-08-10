@@ -135,7 +135,7 @@ const ItemForm = ({blockIds,proceed}) => {
         }
         <Box sx={{ display: "flex", p: 1, m: 1, justifyContent: 'space-evenly' }}>
         <Button alignItems="center"
-              justifyContent="center" style={{ borderRadius: 10}} variant="contained" onClick={save}>Next</Button>
+              justifyContent="center" style={{ borderRadius: 5}} variant="contained" onClick={save}>Next</Button>
               </Box>
               </form>
       </div>
