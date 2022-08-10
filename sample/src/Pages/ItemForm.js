@@ -48,7 +48,7 @@ const ItemForm = ({blockIds,proceed}) => {
   };
   
   const handleMappedValueChange = (event, index) => {
-    event.target.disabled = true;
+    //event.target.disabled = true;
     handleFormChange(event, index);
     removeSelectValue(event.target.value);
     console.log(titles)
@@ -76,7 +76,11 @@ const ItemForm = ({blockIds,proceed}) => {
               </Typography>
         </form>
         {
-          dummy_data.map((title,index)=>(
+          titles.map((title,index)=>
+            
+            {
+              console.log(title)
+              return (
             <>
                   <Typography
                     variant="h6"
@@ -86,6 +90,7 @@ const ItemForm = ({blockIds,proceed}) => {
                   >
                     Choose Block for {`${title["value"]}`}
                     <Select
+                    disabled={title['block_id']!==''}
                       value={imgMapValue}
                       onChange={(event) =>
                         handleMappedValueChange(event, index)
@@ -96,9 +101,10 @@ const ItemForm = ({blockIds,proceed}) => {
                       ))}
                     </Select>
                   </Typography>
-            </>
+            </>)
+            }
 
-          ))
+          )
         }
       </div>
       <button onClick={save}>Next</button>
