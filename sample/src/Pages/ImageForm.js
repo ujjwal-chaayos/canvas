@@ -173,7 +173,7 @@ useEffect(() => {
         "& button": { m: 5 },
       }}
     >
-          
+
       <Box
         top={0}
         left={0}
@@ -182,7 +182,7 @@ useEffect(() => {
         sx={{
           display: "flex",
           justifyContent: "center",
-          marginLeft: "55%",
+          marginLeft: "65%",
           backgroundColor: "primary.light",
           "& button": { m: 2 },
           overflow: "hidden",
