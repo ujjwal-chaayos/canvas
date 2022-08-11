@@ -5,7 +5,7 @@ import InputLabel from "@mui/material/InputLabel";
 import { Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import {drawProductImage} from "../Services/renderingServices"
+import { drawProductImage } from "../Services/renderingServices";
 
 const ImageForm = ({ blockIds, proceed }) => {
   console.log("here-image ", blockIds);
@@ -23,24 +23,21 @@ const ImageForm = ({ blockIds, proceed }) => {
   const [coordinate, setCoordinate] = useState([]);
   const [backgroundBlob, setBackgroundBlob] = useState("");
 
-useEffect(() => {
-  const coordinate = JSON.parse(localStorage.getItem('coordinates'));
-  const background = (localStorage.getItem('imageBlob'));
-  if (coordinate && background) {
-    console.log(typeof(background))
-   setCoordinate(coordinate);
-   setBackgroundBlob(background);
-  }
-}, []);
-
+  useEffect(() => {
+    const coordinate = JSON.parse(localStorage.getItem("coordinates"));
+    const background = localStorage.getItem("imageBlob");
+    if (coordinate && background) {
+      console.log(typeof background);
+      setCoordinate(coordinate);
+      setBackgroundBlob(background);
+    }
+  }, []);
 
   let img_id = ["001", "002", "003", "004", "005", "006"]; //dummy_data coming from db for with image_id
   let comingQty = coordinate;
   let options = [...comingQty.keys()]; //quantity of images
 
-  console.log("wtf",backgroundBlob);
-
-  
+  console.log("wtf", backgroundBlob);
 
   const [formFields, setFormFields] = useState([]);
 
@@ -121,8 +118,12 @@ useEffect(() => {
 
   const save = async (e) => {
     e.preventDefault();
-    console.log("backgroundBlob",backgroundBlob)
-    let comingData=await drawProductImage(backgroundBlob,formFields,coordinate)
+    console.log("backgroundBlob", backgroundBlob);
+    let comingData = await drawProductImage(
+      backgroundBlob,
+      formFields,
+      coordinate
+    );
     console.log(formFields);
     //proceed(leftValues);
   };
@@ -172,30 +173,26 @@ useEffect(() => {
     <Box
       top={0}
       left={0}
- 
-      width="100%"
       sx={{
         display: "flex",
-        border: 2,
+
         backgroundColor: "primary.dark",
         "& button": { m: 5 },
+        height: "100vh",
+        width: "auto",
       }}
     >
-      <Box  top={0}
-        left={0}
-       
-        width="70%" sx={{m:8}}>
-          <img src={backgroundBlob} width="100%" height="90%"/>
+      <Box width="60%" sx={{ p: 9 }}>
+        <img src={backgroundBlob} width="100%" height="90%" />
       </Box>
-          
+
       <Box
         top={0}
-        left={0}
-        height="100vh"
-        width="30%"
+        width="40%"
         sx={{
           display: "flex",
           justifyContent: "center",
+
           backgroundColor: "primary.light",
           "& button": { m: 2 },
           overflow: "hidden",
@@ -203,16 +200,15 @@ useEffect(() => {
         }}
       >
         {bottomForm ? (
-          <div className="mapping">
+          <div className="mapping" style={{"text-align": "center"}}>
             <form style={{ justifyContent: "center", alignItems: "center" }}>
               <Typography
-                fontStyle="italic"
+                fontWeight="bold"
                 variant="h5"
-                component="h2"
                 align="center"
                 sx={{ color: "#303030", p: 3 }}
               >
-                ENTER THE QUANTITY OF IMAGE BLOCKS
+                ENTER IMAGE QUANTITY
               </Typography>
               <Select
                 alignItems="center"
@@ -258,11 +254,15 @@ useEffect(() => {
                     }}
                   >
                     <div key={index}>
-                      <Input
-                        name="img_id"
-                        placeholder="Image_ID"
-                        value={form.img_id}
-                      />
+                    <Typography
+                
+                
+                align="center"
+                sx={{ color: "#303030", p: 3 }}
+              >
+                Select Image{form.img_id.slice(2)} Block
+              </Typography>
+                     
                       <Select
                         id={"select" + index}
                         disabled={form["block_id"] !== ""}
@@ -277,25 +277,23 @@ useEffect(() => {
                           </MenuItem>
                         ))}
                       </Select>
-                      <Input
-                        name="block_id"
-                        placeholder="Enter Block Number"
-                        onChange={(event) => handleFormChange(event, index)}
-                        value={form.block_id}
-                      />
+                      
+                                       <Typography
+                variant="caption"
+                
+                align="center"
+                sx={{ color: "#303030", p: 3 }}
+              >
+              You chose {form.block_id}
+              </Typography>
+
+                      
                     </div>
                   </Box>
                 );
               })}
             </form>
-            <Box
-              sx={{
-                display: "flex",
-                p: 1,
-                m: 1,
-                justifyContent: "space-evenly",
-              }}
-            >
+            <Box display="flex" justifyContent="space-around">
               <Button
                 alignItems="center"
                 justifyContent="center"
@@ -304,15 +302,7 @@ useEffect(() => {
               >
                 Clear Data
               </Button>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                p: 1,
-                m: 1,
-                justifyContent: "space-evenly",
-              }}
-            >
+
               <Button
                 alignItems="center"
                 justifyContent="center"
@@ -352,7 +342,7 @@ useEffect(() => {
                     color="primary"
                     alignItems="center"
                     justifyContent="center"
-                    sx={{ display: "flex", p: 1, mx: 40}}
+                    sx={{ display: "flex", p: 1, mx: 40 }}
                   >
                     <input
                       id={index}

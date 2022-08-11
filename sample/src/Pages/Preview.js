@@ -40,28 +40,30 @@ const Preview = ({ type, manage }) => {
           display: "flex",
           justifyContent: "center",
           backgroundColor: "primary.light",
+          
         }}
       >
         <div
           style={{
-            display: "block",
+            "display": "block",
             "align-items": "center",
             "justify-content": "center",
-            width: "80%",
-            margin: "1rem 0",
+            "width": "80%",
+           "margin": "1rem 0",
             "border-radius": "5px",
-            cursor: "pointer",
+            "cursor": "pointer",
           }}
         >
           <Typography
             variant="h5"
-            component="h2"
+            component="h3"
+            fontWeight="bold"
             align="center"
             sx={{ color: "#303030" }}
           >
             Preview of {`${type}`}
           </Typography>
-          <Box sx={{ display: "flex", justifyContent: "center", p: 1, m: 1 }}>
+          <Box sx={{ display: "flex", justifyContent: "center"}}>
             <img id="preview-imgage" width="776px" height="436px" />
           </Box>
           <Box sx={{ display: "flex", p: 1, m: 1 }}>
