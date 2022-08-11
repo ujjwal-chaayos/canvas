@@ -25,15 +25,16 @@ const ImageForm = ({ blockIds, proceed }) => {
 
   useEffect(() => {
     const coordinate = JSON.parse(localStorage.getItem("coordinates"));
-    const background = localStorage.getItem("imageBlob");
+    const background = JSON.parse(localStorage.getItem("imageBlob"));
     if (coordinate && background) {
       console.log(typeof background);
       setCoordinate(coordinate);
       setBackgroundBlob(background);
+      
     }
   }, []);
 
-  let img_id = ["001", "002", "003", "004", "005", "006"]; //dummy_data coming from db for with image_id
+  let img_id = ["001", "002", "003", "004", "005", "006","007","008","009"]; //dummy_data coming from db for with image_id
   let comingQty = coordinate;
   let options = [...comingQty.keys()]; //quantity of images
 
@@ -182,9 +183,7 @@ const ImageForm = ({ blockIds, proceed }) => {
         width: "auto",
       }}
     >
-      <Box width="60%" sx={{ p: 9 }}>
-        <img src={backgroundBlob} width="100%" height="90%" />
-      </Box>
+
 
       <Box
         top={0}
@@ -260,7 +259,7 @@ const ImageForm = ({ blockIds, proceed }) => {
                 align="center"
                 sx={{ color: "#303030", p: 3 }}
               >
-                Select Image{form.img_id.slice(2)} Block
+                Select Block for Image{form.img_id.slice(2)} 
               </Typography>
                      
                       <Select
@@ -316,19 +315,18 @@ const ImageForm = ({ blockIds, proceed }) => {
         ) : (
           <div className="upload">
             <form>
-              <Typography
-                fontStyle="italic"
+            <Typography
+                fontWeight="bold"
                 variant="h5"
-                component="h2"
                 align="center"
-                sx={{ color: "#303030", p: 2 }}
+                sx={{ color: "#303030", p: 3 }}
               >
-                UPLOAD IMAGES FOR SELECTED BLOCKS
+                UPLOAD IMAGES
               </Typography>
               {formFields.map((value, index) => (
                 <>
                   <Typography
-                    variant="h6"
+                    variant="body1"
                     component="h2"
                     align="center"
                     sx={{ color: "#303030", p: 3 }}
@@ -377,6 +375,9 @@ const ImageForm = ({ blockIds, proceed }) => {
             </Box>
           </div>
         )}
+      </Box>
+      <Box width="60%" sx={{ p: 9 }}>
+        <img src={backgroundBlob} width="100%" height="90%" />
       </Box>
     </Box>
   );
