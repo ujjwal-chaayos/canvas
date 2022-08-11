@@ -5,6 +5,7 @@ import InputLabel from "@mui/material/InputLabel";
 import { Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import {drawProductImage} from "../Services/renderingServices"
 
 const ImageForm = ({ blockIds, proceed }) => {
   console.log("here-image ", blockIds);
@@ -19,20 +20,25 @@ const ImageForm = ({ blockIds, proceed }) => {
 
   const [leftValues, setLeftValues] = useState(all_block_id);
 
-  const [items, setItems] = useState([]);
+  const [coordinate, setCoordinate] = useState([]);
+  const [backgroundBlob, setBackgroundBlob] = useState("");
 
 useEffect(() => {
-  const items = JSON.parse(localStorage.getItem('coordinates'));
-  if (items) {
-   setItems(items);
+  const coordinate = JSON.parse(localStorage.getItem('coordinates'));
+  const background = (localStorage.getItem('imageBlob'));
+  if (coordinate && background) {
+    console.log(typeof(background))
+   setCoordinate(coordinate);
+   setBackgroundBlob(background);
   }
 }, []);
 
+
   let img_id = ["001", "002", "003", "004", "005", "006"]; //dummy_data coming from db for with image_id
-  let comingQty = items;
+  let comingQty = coordinate;
   let options = [...comingQty.keys()]; //quantity of images
 
-  console.log(options);
+  console.log("wtf",backgroundBlob);
 
   
 
@@ -113,10 +119,12 @@ useEffect(() => {
     setFormFields(newArr);
   };
 
-  const save = (e) => {
+  const save = async (e) => {
     e.preventDefault();
+    console.log("backgroundBlob",backgroundBlob)
+    let comingData=await drawProductImage(backgroundBlob,formFields,coordinate)
     console.log(formFields);
-    proceed(leftValues);
+    //proceed(leftValues);
   };
 
   const removeFields = () => {
@@ -164,7 +172,7 @@ useEffect(() => {
     <Box
       top={0}
       left={0}
-      height="100vh"
+ 
       width="100%"
       sx={{
         display: "flex",
@@ -173,16 +181,21 @@ useEffect(() => {
         "& button": { m: 5 },
       }}
     >
+      <Box  top={0}
+        left={0}
+       
+        width="70%" sx={{m:8}}>
+          <img src={backgroundBlob} width="100%" height="90%"/>
+      </Box>
           
       <Box
         top={0}
         left={0}
         height="100vh"
-        width="45%"
+        width="30%"
         sx={{
           display: "flex",
           justifyContent: "center",
-          marginLeft: "55%",
           backgroundColor: "primary.light",
           "& button": { m: 2 },
           overflow: "hidden",

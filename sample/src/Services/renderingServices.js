@@ -73,6 +73,22 @@ export async function mergeTemplateBackground(template, background) {
    return {blob,sortedCoordinates};
 }
 
+export async function drawProductImage(background,imageData,coordinateData){
+  console.log(background,imageData,coordinateData)
+  let bgImg = new Image();
+  bgImg.src = background;
+  await loadImage(bgImg);
+  let screen1canvas = new OffscreenCanvas(
+    bgImg.width,
+    bgImg.height
+  );
+  let screen1ctx = screen1canvas.getContext("2d");
+  
+
+}
+
+
+
 export async function renderJSON(screen, data, background, coordinates) {
   const im = [img1, img0, img3, img4, img2];
 
