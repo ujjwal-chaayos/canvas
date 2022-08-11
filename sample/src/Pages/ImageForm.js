@@ -34,6 +34,8 @@ const ImageForm = ({ blockIds, proceed }) => {
     }
   }, []);
 
+
+
   let img_id = ["001", "002", "003", "004", "005", "006","007","008","009"]; //dummy_data coming from db for with image_id
   let comingQty = coordinate;
   let options = [...comingQty.keys()]; //quantity of images
@@ -165,10 +167,11 @@ const ImageForm = ({ blockIds, proceed }) => {
     imgInfo["imageId"] = event.target.id;
     formFields[event.target.id]["image_info"] = imgInfo;
     setFormFields(formFields);
+  
     // console.log(coming_block_id,saved_block_id,imgInfo,formFields)
   };
 
-  //console.log(formFields);
+  console.log(formFields);
 
   return (
     <Box
@@ -313,7 +316,7 @@ const ImageForm = ({ blockIds, proceed }) => {
             </Box>
           </div>
         ) : (
-          <div className="upload">
+          <div className="upload" style={{"width": "100%"}}>
             <form>
             <Typography
                 fontWeight="bold"
@@ -340,29 +343,26 @@ const ImageForm = ({ blockIds, proceed }) => {
                     color="primary"
                     alignItems="center"
                     justifyContent="center"
-                    sx={{ display: "flex", p: 1, mx: 40 }}
+                    sx={{ display: "flex" , mx:20 }}
                   >
+                    <label for={index}>UPLOAD</label>
                     <input
                       id={index}
                       type="file"
-                      //hidden
+                      hidden
                       name={`${value["block_id"]}`}
-                      onChange={(e) => handleUpload(e, value)}
+                      onChange={(e) => handleUpload(e, value)} 
                     />
                   </Button>
+                  <Box>
+                    <img id={'img'+index}/>
+                  </Box>
                 </>
               ))}
             </form>
             <br />
-            <Box
-              sx={{
-                display: "flex",
-                p: 1,
-                m: 1,
-                justifyContent: "space-evenly",
-              }}
-            >
-              <Button
+    
+              <Button 
                 endIcon={<NavigateNextIcon />}
                 alignItems="center"
                 justifyContent="center"
@@ -372,7 +372,7 @@ const ImageForm = ({ blockIds, proceed }) => {
               >
                 Save
               </Button>
-            </Box>
+            
           </div>
         )}
       </Box>
