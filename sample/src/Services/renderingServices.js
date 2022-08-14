@@ -12,13 +12,11 @@ import {
   widthValidation,
   wrapValidation,
 } from "./ValidationService";
-
 import img0 from "../data/Product image/0.png";
 import img1 from "../data/Product image/1.png";
 import img2 from "../data/Product image/2.png";
 import img3 from "../data/Product image/3.png";
 import img4 from "../data/Product image/4.png";
-
 const loadImage = async (img) => {
   return new Promise((resolve, reject) => {
     img.onload = async () => {
@@ -26,7 +24,6 @@ const loadImage = async (img) => {
     };
   });
 };
-
 //returns image rendered by offscreen canvas in uint8array blob
 export async function mergeTemplateBackground(template, background) {
   let templateImg = new Image();
@@ -39,7 +36,6 @@ export async function mergeTemplateBackground(template, background) {
   let screen1ctx = screen1canvas.getContext("2d");
   let templateMat = cv.imread(templateImg);
   let sortedCoordinates = sortCoordinates(getCoordinates(templateMat, cv));
-
   let bgImg = new Image();
   bgImg.src = background;
   await loadImage(bgImg);
@@ -52,6 +48,21 @@ export async function mergeTemplateBackground(template, background) {
   sortedCoordinates.forEach((e) => {
     drawContours(e, cv, screen1ctx);
   });
+  let screen2canvas = new OffscreenCanvas(
+    templateImg.width,
+    templateImg.height
+  );
+  let screen2ctx = screen2canvas.getContext("2d");
+  let bg2Img = new Image();
+  bg2Img.src = background;
+  await loadImage(bg2Img);
+  drawImage(screen2ctx, bg2Img, {
+    x: 0,
+    y: 0,
+    w: templateImg.width,
+    h: templateImg.height,
+  });
+  screen2ctx.save();
   screen1ctx.fillStyle = "#000000";
   screen1ctx.save();
   sortedCoordinates.forEach((e) => {
@@ -65,14 +76,17 @@ export async function mergeTemplateBackground(template, background) {
       "80px Arial"
     );
   });
-
   let blob = await screen1canvas.convertToBlob();
   let arraybuffer = await blob.arrayBuffer();
   var uint8View = new Uint8Array(arraybuffer);
    blob = new Blob( [ uint8View ], { type: "image/png" } );
-   return {blob,sortedCoordinates};
+   let blob2 = await screen2canvas.convertToBlob();
+   let arraybuffer2 = await blob2.arrayBuffer();
+   var uint8View = new Uint8Array(arraybuffer2);
+    blob2 = new Blob( [ uint8View ], { type: "image/png" } );
+    // returning blob with contour drawn , blob2 witrhgout contour drawn,sorted coordinates
+   return {blob,blob2,sortedCoordinates};
 }
-
 export async function drawProductImage(background,imageData,coordinateData){
   //console.log(background,imageData,coordinateData)
   let bgImg = new Image();
@@ -82,11 +96,8 @@ export async function drawProductImage(background,imageData,coordinateData){
     bgImg.width,
     bgImg.height
   );
-
- 
   let screen1ctx = screen1canvas.getContext("2d");
   for(var i=0;i<imageData.length; i++){
-    //console.log(imageData[i]);
     let imgBlockId = imageData[i].block_id;
     let itemImgInfo = imageData[i].image_info.imageBlob;
     let productImg = new Image();
@@ -100,60 +111,39 @@ export async function drawProductImage(background,imageData,coordinateData){
         points.y = coordinateData[j].y;
         points.w = coordinateData[j].w;
         points.h = coordinateData[j].h;
-        console.log(points);
-        console.log(itemImgInfo);
-        console.log(typeof(productImg));
         drawImage(screen1ctx,productImg,points);
         screen1ctx.save();
-
-
-        
       }
     }
   }
-
   let blob = await screen1canvas.convertToBlob();
   let arraybuffer = await blob.arrayBuffer();
   var uint8View = new Uint8Array(arraybuffer);
    blob = new Blob( [ uint8View ], { type: "image/png" } );
    return {blob};
-  
 }
-
-
-
 export async function renderJSON(screen, data, background, coordinates) {
   const im = [img1, img0, img3, img4, img2];
-
   let bgImg = new Image();
   bgImg.src = background;
   await loadImage(bgImg);
   drawImage(screen, bgImg, { x: 0, y: 0, w: 3840, h: 2160 });
-
   coordinates = coordinates.templates[0];
-
   let imageArray = data.images;
-
   let imageCoordinate = coordinates.image_blocks;
-
   let c = 0;
   for (var i = 0; i < imageCoordinate.length; i++) {
     let block_id = imageCoordinate[i]["block_id"];
-
     let img = new Image();
-
     let point = imageCoordinate[i];
     img.src = im[c];
     c++;
-
     await loadImage(img);
     console.log(point);
     drawImage(screen, img, point);
   }
-
   console.log("returning");
 }
-
 export async function drawTitle(screen, data, coordinates) {
   coordinates = coordinates.templates[0];
   let titleCoordinate = coordinates.sub_blocks;
@@ -162,9 +152,7 @@ export async function drawTitle(screen, data, coordinates) {
   for (var i = 0; i < titleCoordinate.length; i++) {
     if (titleCoordinate[i].type === "Heading") {
       let id = titleCoordinate[i].parent_block_id;
-
       let titleText = titles[id.toString()].value;
-
       var x =
         titleCoordinate[i].x +
         Math.floor(
@@ -174,7 +162,6 @@ export async function drawTitle(screen, data, coordinates) {
       var points = {};
       points.x = x;
       points.y = y;
-
       screen.fillStyle = titleStyle.color.Title;
       let style =
         titleStyle.weight.Title +
@@ -182,13 +169,11 @@ export async function drawTitle(screen, data, coordinates) {
         titleStyle.size.Title +
         " " +
         titleStyle.font.Title;
-
       console.log(titleText);
       drawText(screen, titleText, points, style);
     }
   }
 }
-
 export async function drawItem(screen, data, coordinates) {
   coordinates = coordinates.templates[0];
   let itemCoordinates = coordinates.sub_blocks;
@@ -231,7 +216,6 @@ export async function drawItem(screen, data, coordinates) {
         );
         //drawContours(itemCoordinates[i], cv, screen);
       }
-
       for (var k = 0; k < itemArray.length; k++) {
         var text = itemArray[k].value;
         y = y + 56 + 5;
