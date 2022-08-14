@@ -82,8 +82,40 @@ export async function drawProductImage(background,imageData,coordinateData){
     bgImg.width,
     bgImg.height
   );
-  let screen1ctx = screen1canvas.getContext("2d");
   
+  let screen1ctx = screen1canvas.getContext("2d");
+  drawImage(screen1ctx, bgImg, {
+    x: 0,
+    y: 0,
+    w: bgImg.width,
+    h: bgImg.height,
+  });
+
+  for(var i =0;i<imageData.length;i++){
+    let imgBlockId = imageData[i][i.toString()].block_id;
+    let productImg = imageData[i][i.tostring()].image_info.imageBlob;
+    for(var j =0;j<coordinateData.length;j++){
+      let coordinateBlockId = coordinateData[j][j.toString()].block_id;
+      if(parseInt(coordinateBlockId)===parseInt(imgBlockId)){
+        let points = {};
+        points.x = coordinateData[j][j.toString()].x;
+        points.y = coordinateData[j][j.toString()].y;
+        points.w = coordinateData[j][j.toString()].w;
+        points.h = coordinateData[j][j.toString()].h;
+        let itemImg = new Image();
+        itemImg.src = productImg;
+        await loadImage(itemImg);
+        drawImage(screen1ctx,itemImg,points);
+      }
+    }
+
+  }
+  let blob = await screen1canvas.convertToBlob();
+  let arraybuffer = await blob.arrayBuffer();
+  var uint8View = new Uint8Array(arraybuffer);
+   blob = new Blob( [ uint8View ], { type: "image/png" } );
+   console.log(blob);
+   return {blob};
 
 }
 

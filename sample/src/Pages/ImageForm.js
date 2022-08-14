@@ -8,6 +8,8 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { drawProductImage } from "../Services/renderingServices";
 
 const ImageForm = ({ blockIds, proceed }) => {
+
+
   console.log("here-image ", blockIds);
   let all_block_id = blockIds;
 
@@ -353,6 +355,7 @@ const ImageForm = ({ blockIds, proceed }) => {
                       name={`${value["block_id"]}`}
                       onChange={(e) => handleUpload(e, value)} 
                     />
+                  
                   </Button>
                   <Box>
                     <img id={'img'+index}/>
