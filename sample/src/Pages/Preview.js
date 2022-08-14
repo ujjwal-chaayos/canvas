@@ -1,10 +1,20 @@
 import React from "react";
 import Box from "@mui/material/Box";
+import {useEffect} from "react";
 import { Button, MenuItem, Select, Input, Typography } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const Preview = ({ type, manage }) => {
+
+  useEffect((type)=>{
+    if(type==='image'){
+      let imgObj=document.getElementById('preview-image');
+      let blob=JSON.parse(localStorage.getItem("productImgBlob"));
+      imgObj.setAttribute('src',blob);
+    }
+  },[])
+
   console.log("Block", type);
   const proceed = () => {
     if (type === "image") {
@@ -64,7 +74,7 @@ const Preview = ({ type, manage }) => {
             Preview of {`${type}`}
           </Typography>
           <Box sx={{ display: "flex", justifyContent: "center"}}>
-            <img id="preview-imgage" width="776px" height="436px" />
+            <img id="preview-image" width="776px" height="436px" />
           </Box>
           <Box sx={{ display: "flex", p: 1, m: 1 }}>
             <div style={{ width: "50%" }}>

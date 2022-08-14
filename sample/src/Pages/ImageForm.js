@@ -25,9 +25,11 @@ const ImageForm = ({ blockIds, proceed }) => {
   const [coordinate, setCoordinate] = useState([]);
   const [backgroundBlob, setBackgroundBlob] = useState("");
 
+  const [imgBlob, setImgBlob] = useState("");
+
   useEffect(() => {
     const coordinate = JSON.parse(localStorage.getItem("coordinates"));
-    const background = JSON.parse(localStorage.getItem("imageBlob"));
+    const background = JSON.parse(localStorage.getItem("originalImg"));
     if (coordinate && background) {
       console.log(typeof background);
       setCoordinate(coordinate);
@@ -35,6 +37,11 @@ const ImageForm = ({ blockIds, proceed }) => {
       
     }
   }, []);
+
+
+  useEffect(()=>{
+    localStorage.setItem("productImgBlob", JSON.stringify(imgBlob));
+  },[imgBlob])
 
 
 
@@ -129,8 +136,13 @@ const ImageForm = ({ blockIds, proceed }) => {
       formFields,
       coordinate
     );
+      console.log(comingData);
+    let link = URL.createObjectURL(comingData['blob']);
+    //console.log(link);
+    console.log(link);
     console.log(formFields);
-    //proceed(leftValues);
+    setImgBlob(link);
+    proceed(leftValues);
   };
 
   const removeFields = () => {

@@ -18,12 +18,14 @@ const UploadTemplate = () => {
   let navigate = useNavigate();
   let { screenId, tempId } = useParams();
   let [resultImage, setResultImage] = useState("");
+  let [orignalImg, setOriginalImg] = useState("");
   const [file, setFile] = useState([]);
   const [coordinates, setCoordinates] = useState([]);
 
   useEffect(() => {
     localStorage.setItem("coordinates", JSON.stringify(coordinates));
     localStorage.setItem("imageBlob", JSON.stringify(resultImage));
+    localStorage.setItem("orignalImg", JSON.stringify(orignalImg));
   }, [coordinates]);
   let dummy_data;
 
@@ -83,17 +85,19 @@ const UploadTemplate = () => {
       dummy_data = file; //condition to save data
       console.log(dummy_data);
       console.log(file);
-      let { blob, sortedCoordinates } = await mergeTemplateBackground(
+      let { blob,blob2, sortedCoordinates } = await mergeTemplateBackground(
         file[0][0]["imageBlob"],
         file[1][0]["imageBlob"]
       );
 
       console.log(blob);
+
       let temp = document.getElementById("background1");
 
       let link = URL.createObjectURL(blob);
-      console.log(link);
-
+      let link2= URL.createObjectURL(blob2);
+      console.log(link,link2);
+        setOriginalImg(link2);
       setResultImage(link);
       setCoordinates(sortedCoordinates);
     } else {
