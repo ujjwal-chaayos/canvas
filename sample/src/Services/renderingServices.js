@@ -88,7 +88,7 @@ export async function mergeTemplateBackground(template, background) {
    return {blob,blob2,sortedCoordinates};
 }
 export async function drawProductImage(background,imageData,coordinateData){
-  //console.log(background,imageData,coordinateData)
+  console.log("bg:",background,imageData,coordinateData)
   let bgImg = new Image();
   bgImg.src = background;
   await loadImage(bgImg);

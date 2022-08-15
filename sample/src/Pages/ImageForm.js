@@ -25,30 +25,39 @@ const ImageForm = ({ blockIds, proceed }) => {
   const [coordinate, setCoordinate] = useState([]);
   const [backgroundBlob, setBackgroundBlob] = useState("");
 
-  const [imgBlob, setImgBlob] = useState("");
+ 
 
   useEffect(() => {
+    console.log("i am in")
     const coordinate = JSON.parse(localStorage.getItem("coordinates"));
-    const background = JSON.parse(localStorage.getItem("originalImg"));
+    const background = JSON.parse(localStorage.getItem("imageBlob"));
+   
+
     if (coordinate && background) {
       console.log(typeof background);
+      console.log("coordinaes",coordinate)
+  
       setCoordinate(coordinate);
       setBackgroundBlob(background);
+    
+      
       
     }
+
+    
+
+
   }, []);
 
 
-  useEffect(()=>{
-    localStorage.setItem("productImgBlob", JSON.stringify(imgBlob));
-  },[imgBlob])
+//TODO: save the coming product image in local storage
 
 
 
   let img_id = ["001", "002", "003", "004", "005", "006","007","008","009"]; //dummy_data coming from db for with image_id
   let comingQty = coordinate;
   let options = [...comingQty.keys()]; //quantity of images
-
+  console.log(options);
   console.log("wtf", backgroundBlob);
 
   const [formFields, setFormFields] = useState([]);
@@ -131,17 +140,17 @@ const ImageForm = ({ blockIds, proceed }) => {
   const save = async (e) => {
     e.preventDefault();
     console.log("backgroundBlob", backgroundBlob);
+    console.log(comingData);
     let comingData = await drawProductImage(
-      backgroundBlob,
+      JSON.parse(localStorage.getItem("orignalImg")),
       formFields,
       coordinate
     );
-      console.log(comingData);
     let link = URL.createObjectURL(comingData['blob']);
     //console.log(link);
-    console.log(link);
+    console.log(typeof(link));
     console.log(formFields);
-    setImgBlob(link);
+    localStorage.setItem("productImgBlob",JSON.stringify(link));
     proceed(leftValues);
   };
 
