@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import ImageForm from "../Pages/ImageForm";
 import ItemForm from "../Pages/ItemForm";
 import Preview from "../Pages/Preview";
+import FinalPage from "../Pages/Final";
 
 const Block = () => {
   let location = useLocation();
@@ -46,6 +47,8 @@ const Block = () => {
     setShow('preview');
   };
 
+
+
   const manageImagePreview = (value) =>{
     //logic for return back, proceed further
     console.log("manageImagePreview",value)
@@ -69,6 +72,7 @@ const Block = () => {
       case "image":   return <ImageForm blockIds={ids} proceed={manageBlockId} />;
       case "item":   return <ItemForm blockIds={ids} proceed={manageItemId} />;
       case "preview": return <Preview type={type} manage={manageImagePreview} />;
+      case "save": return <FinalPage />;
     
 
       default:      return <h1>No project match</h1>

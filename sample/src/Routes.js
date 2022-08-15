@@ -10,6 +10,8 @@ import UploadTemplate from './Pages/UploadTemplate'
 import ImageForm from './Pages/ImageForm'
 import ItemForm from './Pages/ItemForm'
 
+import Final from './Pages/Final'
+
 import Block from './components/block'
 
 
@@ -28,8 +30,10 @@ const AllRoutes = () => {
           
           <Route path="/image/:screenId/:tempId" element={<ImageForm/>}/>
           <Route path="/item/:screenId/:tempId" element={<ItemForm/>}/>
+        
+
           
-          <Route path="/testing" element={<Test/>}/>
+          <Route path="/testing" element={<Final/>}/>
 
 
       </Routes>
