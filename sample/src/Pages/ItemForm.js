@@ -62,7 +62,9 @@ const ItemForm = ({blockIds,proceed}) => {
     console.log(titles);
     
     let data=await drawItemText(JSON.parse(localStorage.getItem('productImgBlob')), titles, JSON.parse(localStorage.getItem("coordinates")));
-    localStorage.setItem("finalMenu", JSON.stringify(data));
+    let link = URL.createObjectURL(data['blob']);
+
+    localStorage.setItem("finalMenu", JSON.stringify(link));
     proceed(blockIds);
   };
 
