@@ -69,7 +69,8 @@ const Preview = ({ type, manage }) => {
             Preview of {`${type}`}
           </Typography>
           <Box sx={{ display: "flex", justifyContent: "center"}}>
-            {type==='image'?(<img src={JSON.parse(localStorage.getItem("productImgBlob"))} id="preview-image" width="776px" height="436px" />):(<img  id="preview-image" width="776px" height="436px" />)}
+            {type==='image' && (<img src={JSON.parse(localStorage.getItem("productImgBlob"))} id="preview-image" width="776px" height="436px" />)}
+            {type==='item' && (<img src={JSON.parse(localStorage.getItem("finalMenu"))} id="preview-image" width="776px" height="436px" />)}
            
           </Box>
           <Box sx={{ display: "flex", p: 1, m: 1 }}>

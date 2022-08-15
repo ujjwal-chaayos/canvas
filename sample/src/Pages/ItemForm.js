@@ -5,6 +5,7 @@ import InputLabel from "@mui/material/InputLabel";
 import { Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import {drawItemText} from '../Services/renderingServices';
 
 const ItemForm = ({blockIds,proceed}) => {
 
@@ -21,6 +22,7 @@ const ItemForm = ({blockIds,proceed}) => {
   const [titles,setTitles]=useState(dummy_data);
   const [imgMapValue, setImgMapValue] = useState("");
   const [leftValues, setLeftValues] = useState(all_block_id);
+
 
 
 
@@ -56,8 +58,11 @@ const ItemForm = ({blockIds,proceed}) => {
 
 
   console.log(blockIds);
-  const save = (e) => {
-  
+  const save = async (e) => {
+    console.log(titles);
+    
+    let data=await drawItemText(JSON.parse(localStorage.getItem('productImgBlob')), titles, JSON.parse(localStorage.getItem("coordinates")));
+    localStorage.setItem("finalMenu", JSON.stringify(data));
     proceed(blockIds);
   };
 
@@ -70,20 +75,26 @@ const ItemForm = ({blockIds,proceed}) => {
       width="100%"
       sx={{
         display: "flex",
-        border: 2,
         backgroundColor: "primary.dark",
         "& button": { m: 5 },
       }}
-    >
+    >      
+    <Box
+    width="60%" sx={{ p: 9 }}
+  >
+     <img src={JSON.parse(localStorage.getItem("imageBlob"))} width="100%" height="90%" />
+  </Box>
+
+
       <Box
         top={0}
         left={0}
         height="100vh"
-        width="45%"
+        width="30%"
         sx={{
           display: "flex",
           justifyContent: "center",
-          marginLeft: "55%",
+      
           backgroundColor: "primary.light",
           "& button": { m: 2 },
           overflow: "hidden",
@@ -93,12 +104,11 @@ const ItemForm = ({blockIds,proceed}) => {
       
       <div>
       <Typography
-               fontStyle="italic"
+                
+                fontWeight="bold"
                 variant="h5"
-                component="h2"
                 align="center"
-                justifyContent="center"
-                sx={{ color: "#303030", p: 2 }}
+                sx={{ color: "#303030", p: 3 }}
               >
                 ADD HEADING TO THE BLOCKS
               </Typography>
@@ -111,10 +121,8 @@ const ItemForm = ({blockIds,proceed}) => {
               return (
             <>
                   <Typography
-                    variant="h6"
-                    component="h6"
-                    align="center"
-                    sx={{ color: "#303030", p: 3 }}
+                     align="center"
+                     sx={{ color: "#303030", p: 3 }}
                   >
                     Choose Block for {`${title["value"]}`}
                     <Select
