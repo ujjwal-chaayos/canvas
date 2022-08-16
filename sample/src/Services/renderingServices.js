@@ -9,6 +9,7 @@ import {
   subBlockCoordinates,
   roundedRect,
   newItemRect,
+  drawLine,
 } from "./CVServices";
 import {
   heightValidation,
@@ -232,12 +233,18 @@ export async function drawItemText(background, mapping, coordinates) {
       screen.font = style;
       screen.save();
       var x = titleCoordinate[i].x + Math.floor((titleCoordinate[i].w - screen.measureText(titleText).width) / 2);
+      var x1 = x+ screen.measureText(titleText).width;
       var y = titleCoordinate[i].y + (titleCoordinate[i].h - 40);
       var points = {};
+      var destPoint = {};
+      destPoint.x = x1;
+      destPoint.y = y+10;
       points.x = x;
       points.y = y;
       //console.log(titleText);
       drawText(screen, titleText, points, style);
+      points.y = y+10;
+      drawLine(screen,points,destPoint, style);
 
     }
   }

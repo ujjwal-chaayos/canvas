@@ -137,7 +137,7 @@ export  function drawText(screen,text,points,style){
 export  function drawLine(screen,sourcePoint,destinationPoint,style){
 
     // defining the width of line equal to 20.
-    screen.lineWidth = 20;
+    screen.lineWidth = 10;
     
     // defining starting point of line.
     screen.moveTo(parseInt(sourcePoint.x), parseInt(sourcePoint.y));
@@ -146,7 +146,7 @@ export  function drawLine(screen,sourcePoint,destinationPoint,style){
     screen.lineTo(parseInt(destinationPoint.x), parseInt(destinationPoint.y));
 
     // defining the color of line and finally draw it then save it.
-    screen.strokeStyle = "#AB8E3E";
+    screen.strokeStyle = "#376902";
     screen.stroke();
     screen.save();
 }
