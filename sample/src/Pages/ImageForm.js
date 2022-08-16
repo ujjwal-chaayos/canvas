@@ -149,7 +149,6 @@ const ImageForm = ({ blockIds, proceed }) => {
     let link = URL.createObjectURL(comingData['blob']);
     //console.log(link);
     console.log(typeof(link));
-    console.log(link);
     console.log(formFields);
     localStorage.setItem("productImgBlob",JSON.stringify(link));
     proceed(leftValues);
