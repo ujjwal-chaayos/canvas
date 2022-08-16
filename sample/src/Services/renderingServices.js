@@ -221,7 +221,6 @@ export async function drawItemText(background, mapping, coordinates) {
   let titleCoordinate = coordinateJson;
   let titles = data.titles;
   let titleStyle = data.style;
-
   // Drawing tilte.
   for (var i = 0; i < titleCoordinate.length; i++) {
     if (titleCoordinate[i].type === "Heading") {

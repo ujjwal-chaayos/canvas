@@ -12,11 +12,11 @@ const ItemForm = ({blockIds,proceed}) => {
   console.log("here-item ",blockIds);
   let all_block_id = blockIds;
   let dummy_data= [
-    { "title_id": "t1", "value": "INDIAN CHAI" ,"block_id":""},
-    { "title_id": "t2", "value": "SHAKES" ,"block_id":""},
-    { "title_id": "t3", "value": "THANDI CHAI" ,"block_id":""},
-    { "title_id": "t4", "value": "UNCHAI" ,"block_id":""},
-    { "title_id": "t5", "value": "CHAI & CHILL" ,"block_id":""}
+    { "title_id": "t1", "value": "CHAAT PAKORE" ,"block_id":""},
+    { "title_id": "t2", "value": "SNACKS" ,"block_id":""},
+    { "title_id": "t3", "value": "SANDWICHES" ,"block_id":""},
+    { "title_id": "t4", "value": "DESSERTS" ,"block_id":""},
+    { "title_id": "t5", "value": "MEALS" ,"block_id":""}
   ]; //dummy_data coming from db for with image_id
 
   const [titles,setTitles]=useState(dummy_data);
