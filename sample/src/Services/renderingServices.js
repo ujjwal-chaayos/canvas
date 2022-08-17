@@ -16,7 +16,6 @@ import {
   widthValidation,
   wrapValidation,
 } from "./ValidationService";
-import { uiJsonConverter } from "./JSONConverter";
 
 import data from "../data/schema/screen2.json";
 
@@ -30,9 +29,6 @@ import img1 from "../data/Product image/1.png";
 import img2 from "../data/Product image/2.png";
 import img3 from "../data/Product image/3.png";
 import img4 from "../data/Product image/4.png";
-
-import menu from "../data/Menus/menu.json";
-import { ContactlessOutlined } from "@mui/icons-material";
 
 const loadImage = async (img) => {
   return new Promise((resolve, reject) => {
@@ -163,6 +159,8 @@ export async function drawProductImage(background, imageData, coordinateData) {
 }
 
 export async function drawItemText(background, mapping, coordinates) {
+  console.log("i am in");
+  console.log(background,data,coordinates)
    let bgImg = new Image();
    bgImg.src = background;
    await loadImage(bgImg);
@@ -219,22 +217,17 @@ export async function drawItemText(background, mapping, coordinates) {
       }
     }
   }
-  
-  let jsondata = uiJsonConverter(menu,mapping);
-  console.log("jsondata " );
-  console.log(jsondata);
-  console.log("coordinateJson " );
   console.log(coordinateJson);
+
   let titleCoordinate = coordinateJson;
-  let titles = jsondata.titles;
-  let titleStyle = jsondata.style;
+  let titles = data.titles;
+  let titleStyle = data.style;
   // Drawing tilte.
   for (var i = 0; i < titleCoordinate.length; i++) {
     if (titleCoordinate[i].type === "Heading") {
       // drawContours(titleCoordinate[i],cv,screen);
       let id = titleCoordinate[i].parent_block_id;
-      console.log(id);
-      let titleText = titles.id.value;
+      let titleText = titles[id.toString()].value;
       screen.fillStyle = titleStyle.color.Title;
       let style = titleStyle.weight.Title + " " + titleStyle.size.Title + " " + titleStyle.font.Title;
       screen.font = style;
@@ -258,9 +251,9 @@ export async function drawItemText(background, mapping, coordinates) {
 
   // Drawing text And Price
   let itemCoordinates = coordinateJson;
-  let itemStyle = jsondata.style;
-  let items = jsondata.items;
-  let prices = jsondata.prices;
+  let itemStyle = data.style;
+  let items = data.items;
+  let prices = data.prices;
   for (var i = 0; i < itemCoordinates.length; i++) {
     if (itemCoordinates[i].type === "Items") {
       //drawContours(itemCoordinates[i],cv,screen);
@@ -421,6 +414,7 @@ export async function drawItemText(background, mapping, coordinates) {
   return { blob };
 
 }
+
 
 export async function renderJSON(screen, data, background, coordinates) {
   const im = [img1, img0, img3, img4, img2];
