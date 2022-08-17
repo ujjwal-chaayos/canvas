@@ -13,6 +13,7 @@ import ItemForm from './Pages/ItemForm'
 import Final from './Pages/Final'
 
 import Block from './components/block'
+import ChooseCafe from './Pages/ChooseCafe'
 
 
 
@@ -23,7 +24,9 @@ const AllRoutes = () => {
           <Route path="/" element={<Home/>}/>
           <Route path="/screen" element={<Screen/>}/>
           <Route path="/pick/:screen" element={<GenOrPick/>}/>
+          <Route path="/select-cafe" element={<ChooseCafe/>}/>
           <Route path="/select-template/:screen" element={<ChooseTemplate/>}/>
+
           <Route path="/upload-template/:screenId/:tempId" element={<UploadTemplate/>}/>
           
           <Route path="/preview/:screenId/:tempId" element={<Block/>}/>

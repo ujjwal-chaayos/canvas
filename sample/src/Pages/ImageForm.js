@@ -221,11 +221,12 @@ const ImageForm = ({ blockIds, proceed }) => {
           backgroundColor: "primary.light",
           "& button": { m: 2 },
           overflow: "hidden",
-          overflowY: "scroll",
+          overflowY: "scroll",  
         }}
       >
         {bottomForm ? (
           <div className="mapping" style={{"text-align": "center"}}>
+            
             <form style={{ justifyContent: "center", alignItems: "center" }}>
               <Typography
                 fontWeight="bold"
