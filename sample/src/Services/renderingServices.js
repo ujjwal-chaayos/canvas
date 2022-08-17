@@ -227,7 +227,12 @@ export async function drawItemText(background, mapping, coordinates) {
     if (titleCoordinate[i].type === "Heading") {
       // drawContours(titleCoordinate[i],cv,screen);
       let id = titleCoordinate[i].parent_block_id;
+<<<<<<< HEAD
       let titleText = titles[id.toString()].value;
+=======
+      console.log("id "+id);
+      let titleText = titles[id].value;
+>>>>>>> kush-dev
       screen.fillStyle = titleStyle.color.Title;
       let style = titleStyle.weight.Title + " " + titleStyle.size.Title + " " + titleStyle.font.Title;
       screen.font = style;

@@ -9,7 +9,7 @@ export function uiJsonConverter(menu, mapping) {
   var products = menu["productDetail"]["products"];
   var productPrices = menu["prices"]["prices"];
   for (let i = 0; i < mapping.length; i++) {
-    for (let j = 0; j < mapping.length; j++) {
+    for (let j = 0; j < subCategory.length; j++) {
       if (
         subCategory[j].name.toLowerCase() === mapping[i].value.toLowerCase()
       ) {
@@ -77,31 +77,31 @@ export function uiJsonConverter(menu, mapping) {
     items: items,
     prices: prices,
     "style":{
-      font: {
-        Title: "Helvetica, Arial, sans-serif",
-        Items: "Helvetica, Arial, sans-serif",
-        Prices: "Helvetica, Arial, sans-serif",
-        New: "Helvetica, Arial, sans-serif",
+      "font": {
+          "Title": "Helvetica, Arial, sans-serif",
+          "Items": "Helvetica, Arial, sans-serif",
+          "Prices": "Helvetica, Arial, sans-serif",
+          "New": "Helvetica, Arial, sans-serif"
       },
-      size: {
-        Title: "96px",
-        Items: "56px",
-        Prices: "56px",
-        New: "60px",
+      "size": {
+          "Title": "96px",
+          "Items": "56px",
+          "Prices": "56px",
+          "New": "60px"
       },
-      color: {
-        Title: "#376902",
-        Items: "#827311",
-        Prices: "#000000",
-        New: "#827311",
+      "color": {
+          "Title": "#376902",
+          "Items": "#827311",
+          "Prices": "#000000",
+          "New": "red"
       },
-      weight: {
-        Title: "Bold",
-        Items: "",
-        Prices: "",
-        New: "Bold",
-      },
-    }
+      "weight": {
+          "Title": "Bold",
+          "Items": "Bold",
+          "Prices": "Bold",
+          "New": "Bold"
+      }
+  }
   };
 }
 
