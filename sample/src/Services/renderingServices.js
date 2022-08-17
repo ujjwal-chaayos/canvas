@@ -233,8 +233,8 @@ export async function drawItemText(background, mapping, coordinates) {
     if (titleCoordinate[i].type === "Heading") {
       // drawContours(titleCoordinate[i],cv,screen);
       let id = titleCoordinate[i].parent_block_id;
-      console.log(id);
-      let titleText = titles.id.value;
+      console.log("id "+id);
+      let titleText = titles[id].value;
       screen.fillStyle = titleStyle.color.Title;
       let style = titleStyle.weight.Title + " " + titleStyle.size.Title + " " + titleStyle.font.Title;
       screen.font = style;

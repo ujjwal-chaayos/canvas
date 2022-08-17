@@ -9,7 +9,7 @@ export function uiJsonConverter(menu, mapping) {
   var products = menu["productDetail"]["products"];
   var productPrices = menu["prices"]["prices"];
   for (let i = 0; i < mapping.length; i++) {
-    for (let j = 0; j < mapping.length; j++) {
+    for (let j = 0; j < subCategory.length; j++) {
       if (
         subCategory[j].name.toLowerCase() === mapping[i].value.toLowerCase()
       ) {
