@@ -1,4 +1,5 @@
 import cv from "opencv.js";
+import axios from 'axios';
 import {
   drawText,
   drawImage,
@@ -20,6 +21,7 @@ import { uiJsonConverter } from "./JSONConverter";
 
 import data from "../data/schema/screen2.json";
 
+
 import newIcon from "../data/background/New icon.svg";
 import nonvegIcon from "../data/background/Non veg icon.svg";
 import vegIcon from "../data/background/veg icon.svg";
@@ -33,6 +35,10 @@ import img4 from "../data/Product image/4.png";
 
 import menu from "../data/Menus/menu.json";
 import { ContactlessOutlined } from "@mui/icons-material";
+
+import React ,{useEffect,useState} from 'react'
+
+
 
 const loadImage = async (img) => {
   return new Promise((resolve, reject) => {
@@ -133,7 +139,7 @@ export async function drawProductImage(background, imageData, coordinateData) {
 
   for (var i = 0; i < imageData.length; i++) {
     let imgBlockId = imageData[i].block_id;
-    let itemImgInfo = imageData[i].image_info.imageBlob;
+    let itemImgInfo = imageData[i].image_info[0].blob;
     let productImg = new Image();
     productImg.src = itemImgInfo;
     await loadImage(productImg);
@@ -163,15 +169,15 @@ export async function drawProductImage(background, imageData, coordinateData) {
 }
 
 export async function drawItemText(background, mapping, coordinates) {
-   let bgImg = new Image();
-   bgImg.src = background;
-   await loadImage(bgImg);
-   let screen1canvas = new OffscreenCanvas(
-     bgImg.width,
-     bgImg.height
-   );
-   let screen = screen1canvas.getContext("2d");
-   drawImage(screen, bgImg, {
+  let bgImg = new Image();
+  bgImg.src = background;
+  await loadImage(bgImg);
+  let screen1canvas = new OffscreenCanvas(
+    bgImg.width,
+    bgImg.height
+  );
+  let screen = screen1canvas.getContext("2d");
+  drawImage(screen, bgImg, {
     x: 0,
     y: 0,
     w: bgImg.width,
@@ -179,12 +185,12 @@ export async function drawItemText(background, mapping, coordinates) {
   });
   screen.save();
   let coordinateJson = [];
-  for(var i =0;i<mapping.length;i++){
+  for (var i = 0; i < mapping.length; i++) {
     let titleBlockId = mapping[i].block_id;
-    for(var j=0;j<coordinates.length;j++){
+    for (var j = 0; j < coordinates.length; j++) {
       var coordinateBlockId = coordinates[j].block_id;
-      if(parseInt(coordinateBlockId)=== parseInt(titleBlockId)){
-        let subcoordinate = subBlockCoordinates(coordinates[j],200,coordinates[j].w*0.2);
+      if (parseInt(coordinateBlockId) === parseInt(titleBlockId)) {
+        let subcoordinate = subBlockCoordinates(coordinates[j], 200, coordinates[j].w * 0.2);
         let detailHeading = {};
         detailHeading.block_id = 1;
         detailHeading.parent_block_id = coordinateBlockId;
@@ -211,19 +217,25 @@ export async function drawItemText(background, mapping, coordinates) {
         detailPrice.x = subcoordinate.price.x;
         detailPrice.y = subcoordinate.price.y;
         detailPrice.w = subcoordinate.price.w;
-        detailPrice.h = subcoordinate.price.h;  
-        
+        detailPrice.h = subcoordinate.price.h;
+
         coordinateJson.push(detailPrice);
         coordinateJson.push(detailItem);
         coordinateJson.push(detailHeading);
       }
     }
   }
-  
-  let jsondata = uiJsonConverter(menu,mapping);
-  console.log("jsondata " );
+
+
+	let {data} = await axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000");
+
+  let menu=data;
+  console.log(menu);
+
+  let jsondata = uiJsonConverter(menu, mapping);
+  console.log("jsondata ");
   console.log(jsondata);
-  console.log("coordinateJson " );
+  console.log("coordinateJson ");
   console.log(coordinateJson);
   let titleCoordinate = coordinateJson;
   let titles = jsondata.titles;
@@ -233,25 +245,25 @@ export async function drawItemText(background, mapping, coordinates) {
     if (titleCoordinate[i].type === "Heading") {
       // drawContours(titleCoordinate[i],cv,screen);
       let id = titleCoordinate[i].parent_block_id;
-      console.log("id "+id);
+      console.log("id " + id);
       let titleText = titles[id].value;
       screen.fillStyle = titleStyle.color.Title;
       let style = titleStyle.weight.Title + " " + titleStyle.size.Title + " " + titleStyle.font.Title;
       screen.font = style;
       screen.save();
       var x = titleCoordinate[i].x + Math.floor((titleCoordinate[i].w - screen.measureText(titleText).width) / 2);
-      var x1 = x+ screen.measureText(titleText).width;
+      var x1 = x + screen.measureText(titleText).width;
       var y = titleCoordinate[i].y + (titleCoordinate[i].h - 40);
       var points = {};
       var destPoint = {};
       destPoint.x = x1;
-      destPoint.y = y+10;
+      destPoint.y = y + 10;
       points.x = x;
       points.y = y;
       //console.log(titleText);
       drawText(screen, titleText, points, style);
-      points.y = y+10;
-      drawLine(screen,points,destPoint, style);
+      points.y = y + 10;
+      drawLine(screen, points, destPoint, style);
 
     }
   }
@@ -304,7 +316,7 @@ export async function drawItemText(background, mapping, coordinates) {
 
       for (var k = 0; k < itemArray.length; k++) {
 
-
+        
         var text = itemArray[k].value;
         var item_id = itemArray[k].item_id;
         itemY = itemY + 56 + 5;
@@ -357,6 +369,7 @@ export async function drawItemText(background, mapping, coordinates) {
               drawText(screen, priceText, pricePoints, style);
             }
             if (priceList.length > 1) {
+              priceList.sort((a,b) => a.price - b.price);
               let priceText = priceList[0].price.toString();
 
               priceText = priceText + "|" + priceList[1].price.toString();
@@ -417,9 +430,69 @@ export async function drawItemText(background, mapping, coordinates) {
   let arraybuffer = await blob.arrayBuffer();
   var uint8View = new Uint8Array(arraybuffer);
   blob = new Blob([uint8View], { type: "image/png" });
-  console.log({blob});
+  console.log({ blob });
   return { blob };
 
+}
+export async function CreateGifImage(background, imageData, coordinateData) {
+
+  let maxImages = 0;
+  for (var i = 0; i < imageData.length; i++) {
+    if (maxImages < imageData[i].imgInfo.length) {
+      maxImages = imageData[i].imgInfo.length;
+    }
+  }
+  let finalImagesArray = [];
+  for (var index = 0; index < maxImages; index++) {
+    let bgImg = new Image();
+    bgImg.src = background;
+    await loadImage(bgImg);
+    let screen1canvas = new OffscreenCanvas(
+      bgImg.width,
+      bgImg.height
+    );
+    let screen1ctx = screen1canvas.getContext("2d");
+
+    drawImage(screen1ctx, bgImg, {
+      x: 0,
+      y: 0,
+      w: bgImg.width,
+      h: bgImg.height,
+    });
+    for (var i = 0; i < imageData.length; i++) {
+      let imgBlockId = imageData[i].block_id;
+      let reqiredImageIndex;
+      if (index >= imageData[i].image_info.length) {
+        reqiredImageIndex = imageData[i].image_info.length - ((index + 1) % imageData[i].image_info.length) - 1;
+      }
+      else {
+        reqiredImageIndex = index;
+      }
+      //let reqiredImageIndex = index % imageData[i].image_info.length;
+      let itemImgInfo = imageData[i].image_info[reqiredImageIndex].blob;
+      let productImg = new Image();
+      productImg.src = itemImgInfo;
+      await loadImage(productImg);
+      for (var j = 0; j < coordinateData.length; j++) {
+        let coordinateBlockId = coordinateData[j].block_id;
+        if (parseInt(imgBlockId) === parseInt(coordinateBlockId)) {
+          let points = {};
+          points.x = coordinateData[j].x;
+          points.y = coordinateData[j].y;
+          points.w = coordinateData[j].w;
+          points.h = coordinateData[j].h;
+          drawImage(screen1ctx, productImg, points);
+          screen1ctx.save();
+        }
+      }
+    }
+    let blob = await screen1canvas.convertToBlob();
+    let arraybuffer = await blob.arrayBuffer();
+    var uint8View = new Uint8Array(arraybuffer);
+    blob = new Blob([uint8View], { type: "image/png" });
+    finalImagesArray.push(blob);
+  }
+  return finalImagesArray;
 }
 
 export async function renderJSON(screen, data, background, coordinates) {
