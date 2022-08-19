@@ -26,10 +26,6 @@ const ImageForm = ({ blockIds, proceed }) => {
   const [backgroundBlob, setBackgroundBlob] = useState("");
 
 
-  
-
- 
-
   useEffect(() => {
     console.log("i am in")
     const coordinate = JSON.parse(localStorage.getItem("coordinates"));
