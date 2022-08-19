@@ -168,7 +168,7 @@ export async function drawProductImage(background, imageData, coordinateData) {
 
 }
 
-export async function drawItemText(background, mapping, coordinates) {
+export async function drawItemText(background,bckgroundPlain ,mapping, coordinates) {
   let bgImg = new Image();
   bgImg.src = background;
   await loadImage(bgImg);
@@ -183,7 +183,24 @@ export async function drawItemText(background, mapping, coordinates) {
     w: bgImg.width,
     h: bgImg.height,
   });
+
+  let bgImg2 = new Image();
+  bgImg2.src = bckgroundPlain;
+  await loadImage(bgImg2);
+  let screen2canvas = new OffscreenCanvas(
+    bgImg.width,
+    bgImg.height
+  );
+  let screen2 = screen2canvas.getContext("2d");
+  drawImage(screen2, bgImg2, {
+    x: 0,
+    y: 0,
+    w: bgImg2.width,
+    h: bgImg2.height,
+  });
+
   screen.save();
+  screen2.save();
   let coordinateJson = [];
   for (var i = 0; i < mapping.length; i++) {
     let titleBlockId = mapping[i].block_id;
@@ -248,9 +265,14 @@ export async function drawItemText(background, mapping, coordinates) {
       console.log("id " + id);
       let titleText = titles[id].value;
       screen.fillStyle = titleStyle.color.Title;
+      screen2.fillStyle = titleStyle.color.Title;
+
       let style = titleStyle.weight.Title + " " + titleStyle.size.Title + " " + titleStyle.font.Title;
       screen.font = style;
+      screen2.font = style;
+
       screen.save();
+      screen2.save();
       var x = titleCoordinate[i].x + Math.floor((titleCoordinate[i].w - screen.measureText(titleText).width) / 2);
       var x1 = x + screen.measureText(titleText).width;
       var y = titleCoordinate[i].y + (titleCoordinate[i].h - 40);
@@ -262,8 +284,12 @@ export async function drawItemText(background, mapping, coordinates) {
       points.y = y;
       //console.log(titleText);
       drawText(screen, titleText, points, style);
+      drawText(screen2, titleText, points, style);
+
       points.y = y + 10;
       drawLine(screen, points, destPoint, style);
+      drawLine(screen2, points, destPoint, style);
+
 
     }
   }
@@ -331,10 +357,16 @@ export async function drawItemText(background, mapping, coordinates) {
           rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
           rectpoint.h = 56 + 10;
           roundedRect(screen, rectpoint, 20, "grey");
+          roundedRect(screen2, rectpoint, 20, "grey");
+
           screen.fillStyle = "Black";
+          screen2.fillStyle = "Black";
+
         }
         else {
           screen.fillStyle = itemStyle.color.Items;
+          screen2.fillStyle = itemStyle.color.Items;
+
 
         }
 
@@ -345,17 +377,25 @@ export async function drawItemText(background, mapping, coordinates) {
           rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
           rectpoint.h = 56 + 10;
           newItemRect(screen, rectpoint, 30, "yellow", "orange");
+          newItemRect(screen2, rectpoint, 30, "yellow", "orange");
+
           screen.fillStyle = itemStyle.color.New;
+          screen2.fillStyle = itemStyle.color.New;
+
         }
         else {
           if (itemArray[k].active)
             screen.fillStyle = itemStyle.color.Items;
+            screen2.fillStyle = itemStyle.color.Items;
+
         }
 
 
         //screen.fillStyle = itemStyle.color.Items;
 
         drawText(screen, text, points, style);
+        drawText(screen2, text, points, style);
+
         for (var j = 0; j < priceArray.length; j++) {
           if (priceArray[j].item_id === item_id) {
             let priceList = priceArray[j].value;
@@ -366,7 +406,11 @@ export async function drawItemText(background, mapping, coordinates) {
               pricePoints.x = priceX;
               pricePoints.y = priceY;
               screen.fillStyle = itemStyle.color.Prices;
+              screen2.fillStyle = itemStyle.color.Prices;
+
               drawText(screen, priceText, pricePoints, style);
+              drawText(screen2, priceText, pricePoints, style);
+
             }
             if (priceList.length > 1) {
               priceList.sort((a,b) => a.price - b.price);
@@ -378,7 +422,11 @@ export async function drawItemText(background, mapping, coordinates) {
               pricePoints.x = priceX;
               pricePoints.y = priceY;
               screen.fillStyle = itemStyle.color.Prices;
+              screen2.fillStyle = itemStyle.color.Prices;
+
               drawText(screen, priceText, pricePoints, style);
+              drawText(screen2, priceText, pricePoints, style);
+
             }
             break;
           }
@@ -394,6 +442,8 @@ export async function drawItemText(background, mapping, coordinates) {
           iconpoint.h = Math.floor(screen.measureText(text).fontBoundingBoxAscent) + 15;
           console.log(screen.measureText(text));
           drawImage(screen, vegicon, iconpoint);
+          drawImage(screen2, vegicon, iconpoint);
+
         } else if (itemArray[k].icons === "NON_VEG") {
           let nonvegicon = new Image();
           nonvegicon.src = nonvegIcon;
@@ -405,7 +455,10 @@ export async function drawItemText(background, mapping, coordinates) {
           iconpoint.h = Math.floor(screen.measureText(text).fontBoundingBoxAscent) + 15;
           console.log(screen.measureText(text));
           drawImage(screen, nonvegicon, iconpoint);
+          drawImage(screen2, nonvegicon, iconpoint);
+
           screen.save();
+          screen2.save();
         }
         if (itemArray[k].new === true) {
           let newicon = new Image();
@@ -417,7 +470,10 @@ export async function drawItemText(background, mapping, coordinates) {
           iconpoint.w = 150;
           iconpoint.h = 150;
           drawImage(screen, newicon, iconpoint);
+          drawImage(screen2, newicon, iconpoint);
+
           screen.save();
+          screen2.save();
         }
 
 
@@ -426,12 +482,19 @@ export async function drawItemText(background, mapping, coordinates) {
     }
   }
   screen.save();
+  screen2.save();
   let blob = await screen1canvas.convertToBlob();
   let arraybuffer = await blob.arrayBuffer();
   var uint8View = new Uint8Array(arraybuffer);
   blob = new Blob([uint8View], { type: "image/png" });
   console.log({ blob });
-  return { blob };
+
+  let blob2 = await screen2canvas.convertToBlob();
+  let arraybuffer2 = await blob2.arrayBuffer();
+  var uint8View = new Uint8Array(arraybuffer2);
+  blob2 = new Blob([uint8View], { type: "image/png" });
+  console.log({ blob2 });
+  return { blob ,blob2};
 
 }
 export async function CreateGifImage(background, imageData, coordinateData) {
