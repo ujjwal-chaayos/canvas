@@ -2,17 +2,41 @@ const mongoose = require("mongoose");
 
 const menuSchema = new mongoose.Schema(
   {
-    menu_id:{
-        require:true,
+    menuId:{
+        required:true,
         type: String
     },
-    cafe_detail:{
-        require:true,
+    cafeDetail:{
+        required:true,
         type: String
     },
-    cafe_id:{
-        require:true,
+    cafeId:{
+        required:true,
         type:String
+    },
+    cafeTemplate:{
+        required:true,
+        type:Buffer
+    },
+    cafeBackground:{
+        required:true,
+        type:Buffer
+    },
+    cafeImgOnlyMenu:{
+        required:true,
+        type:Buffer
+    },
+    cafeFinalMenu:{
+        required:true,
+        type:Buffer
+    },
+    cafeTempCoordinates:{
+        required:true,
+        type:Object
+    }
+    cafeMenuJson:{
+        required:true,
+        type:Object
     }
 
   { timestamps: true }
