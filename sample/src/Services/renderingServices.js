@@ -492,8 +492,83 @@ export async function CreateGifImage(background, imageData, coordinateData) {
     blob = new Blob([uint8View], { type: "image/png" });
     finalImagesArray.push(blob);
   }
-  return finalImagesArray;
+  drawAnimatedImage(finalImagesArray, 500, 300, 0, 1, 250,background);
 }
+
+//isha
+export async function drawAnimatedImage(arr, x, y, angle, factor, changespeed,background) {
+  let bgImg = new Image();
+  bgImg.src = background;
+  await loadImage(bgImg);
+  let finalcanvas = new OffscreenCanvas(
+    bgImg.width,
+    bgImg.height
+  );
+  let ctx = finalcanvas.getContext("2d");;
+  if (!factor) {
+    factor = 1;
+  }
+  if (!changespeed) {
+    changespeed = 1;
+  }
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate((angle * Math.PI) / 180);
+  if (!!arr[Math.round(Date.now() / changespeed) % arr.length]) {
+    ctx.drawImage(
+      arr[Math.round(Date.now() / changespeed) % arr.length],
+      -(
+        (arr[Math.round(Date.now() / changespeed) % arr.length].width *
+          factor) /
+        2
+      ),
+      -(
+        (arr[Math.round(Date.now() / changespeed) % arr.length].height *
+          factor) /
+        2
+      ),
+      arr[Math.round(Date.now() / changespeed) % arr.length].width * factor,
+      arr[Math.round(Date.now() / changespeed) % arr.length].height * factor
+    );
+  }
+  ctx.restore();
+  startRecording(finalcanvas);
+}
+
+function startRecording(canvas){
+  //var canvas =  document.getElementById('myCanvas');
+ // const ctx = canvas.getContext('2d');
+  const chunks = []; // here we will store our recorded media chunks (Blobs)
+  const stream = canvas.captureStream(); // grab our canvas MediaStream
+  const rec = new MediaRecorder(stream); // init the recorder
+  // every time the recorder has new data, we will store it in our array
+  rec.ondataavailable = e => chunks.push(e.data);
+  // only when the recorder stops, we construct a complete Blob from all the chunks
+  rec.onstop = e => exportVid(new Blob(chunks, {type: 'image/gif'}));
+  
+  rec.start();
+  setTimeout(()=>rec.stop(), 3000); // stop recording in 3s
+  
+}
+
+
+function exportVid(blob) {
+  const vid = document.createElement('video');
+  vid.src = URL.createObjectURL(blob);
+  vid.controls = true;
+  document.body.appendChild(vid);
+  const a = document.createElement('a');
+  a.download = 'myvid.gif';
+  a.href = window.URL.createObjectURL(blob);
+  a.dataset.downloadurl = ['application/octet-stream', a.download, a.href].join(':');
+  a.textContent = 'download the video';
+  document.body.appendChild(a);//
+}
+
+//isha
+
+
+
 
 export async function renderJSON(screen, data, background, coordinates) {
   const im = [img1, img0, img3, img4, img2];
