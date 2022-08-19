@@ -32,11 +32,11 @@ const menuSchema = new mongoose.Schema(
     },
     cafeTempCoordinates:{
         required:true,
-        type:Object
+        type:object
     }
     cafeMenuJson:{
         required:true,
-        type:Object
+        type:object
     }
 
   { timestamps: true }

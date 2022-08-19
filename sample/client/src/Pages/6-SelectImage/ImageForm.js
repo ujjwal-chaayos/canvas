@@ -125,20 +125,20 @@ const ImageForm = ({ blockIds, proceed }) => {
   };
 
   const save = async (e) => {
-    e.preventDefault();
-    console.log("backgroundBlob", backgroundBlob);
-    console.log(comingData);
-    let comingData = await drawProductImage(
-      JSON.parse(localStorage.getItem("orignalImg")),
-      formFields,
-      coordinate
-    );
-    let link = URL.createObjectURL(comingData["blob"]);
-    //console.log(link);
-    console.log(typeof link);
-    console.log(formFields);
-    localStorage.setItem("productImgBlob", JSON.stringify(link));
-    proceed(leftValues);
+    // e.preventDefault();
+    // console.log("backgroundBlob", backgroundBlob);
+    // console.log(comingData);
+    // let comingData = await drawProductImage(
+    //   JSON.parse(localStorage.getItem("orignalImg")),
+    //   formFields,
+    //   coordinate
+    // );
+    // let link = URL.createObjectURL(comingData["blob"]);
+    // //console.log(link);
+    // console.log(typeof link);
+    // console.log(formFields);
+    // localStorage.setItem("productImgBlob", JSON.stringify(link));
+    // proceed(leftValues);
   };
 
   const removeFields = () => {

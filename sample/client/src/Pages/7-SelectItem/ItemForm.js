@@ -57,18 +57,18 @@ const ItemForm = ({ blockIds, proceed }) => {
 
   console.log(blockIds);
   const save = async (e) => {
-    console.log(titles);
+    // console.log(titles);
 
-    let data = await drawItemText(
-      JSON.parse(localStorage.getItem("productImgBlob")),
-      titles,
-      JSON.parse(localStorage.getItem("coordinates"))
-    );
-    console.log(data);
-    let link = URL.createObjectURL(data["blob"]);
+    // let data = await drawItemText(
+    //   JSON.parse(localStorage.getItem("productImgBlob")),
+    //   titles,
+    //   JSON.parse(localStorage.getItem("coordinates"))
+    // );
+    // console.log(data);
+    // let link = URL.createObjectURL(data["blob"]);
 
-    localStorage.setItem("finalMenu", JSON.stringify(link));
-    proceed(blockIds);
+    // localStorage.setItem("finalMenu", JSON.stringify(link));
+    // proceed(blockIds);
   };
 
   return (

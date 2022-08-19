@@ -6,9 +6,10 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Box, Button, Input, Typography } from "@mui/material";
 
-import "./UploadTemplate.css";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
+import axios from 'axios';
 
 
 //Create route for that function--
@@ -82,29 +83,29 @@ const UploadTemplate = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (file.length === 2) {
-      dummy_data = file; //condition to save data
-      console.log(dummy_data);
-      console.log(file);
-      let { blob, blob2, sortedCoordinates } = await mergeTemplateBackground(
-        file[0][0]["imageBlob"],
-        file[1][0]["imageBlob"]
-      );
+    // e.preventDefault();
+    // if (file.length === 2) {
+    //   dummy_data = file; //condition to save data
+    //   console.log(dummy_data);
+    //   console.log(file);
+    //   let { blob, blob2, sortedCoordinates } = await mergeTemplateBackground(
+    //     file[0][0]["imageBlob"],
+    //     file[1][0]["imageBlob"]
+    //   );
 
-      console.log(blob);
+    //   console.log(blob);
 
-      let temp = document.getElementById("background1");
+    //   let temp = document.getElementById("background1");
 
-      let link = URL.createObjectURL(blob);
-      let link2 = URL.createObjectURL(blob2);
-      console.log(link, link2);
-      setOriginalImg(link2);
-      setResultImage(link);
-      setCoordinates(sortedCoordinates);
-    } else {
-      alert("Insert both Images..");
-    }
+    //   let link = URL.createObjectURL(blob);
+    //   let link2 = URL.createObjectURL(blob2);
+    //   console.log(link, link2);
+    //   setOriginalImg(link2);
+    //   setResultImage(link);
+    //   setCoordinates(sortedCoordinates);
+    // } else {
+    //   alert("Insert both Images..");
+    // }
   };
   console.log("hello", resultImage);
   return (
