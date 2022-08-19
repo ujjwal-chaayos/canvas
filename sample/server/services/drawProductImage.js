@@ -1,28 +1,31 @@
-import cv from "opencv.js";
-import {
-  drawText,
-  drawImage,
-  drawContours,
-  downloadImage,
-  getCoordinates,
-  sortCoordinates,
-  subBlockCoordinates,
-  roundedRect,
-  newItemRect,
-  drawLine,
-} from "./CVServices";
-import {
-  heightValidation,
-  widthValidation,
-  wrapValidation,
-} from "./ValidationService";
-import { uiJsonConverter } from "./JSONConverter";
-import data from "../data/schema/screen2.json";
-import newIcon from "../data/background/New icon.svg";
-import nonvegIcon from "../data/background/Non veg icon.svg";
-import vegIcon from "../data/background/veg icon.svg";
-import menu from "../data/Menus/menu.json";
 
+const cv = require("opencv.js");
+
+const {drawText,
+    drawImage,
+    drawContours,
+    downloadImage,
+    getCoordinates,
+    sortCoordinates,
+    subBlockCoordinates,
+    roundedRect,
+    newItemRect,
+    drawLine} = require("./CVServices");
+
+const {
+    heightValidation,
+    widthValidation,
+    wrapValidation
+} = require("./ValidationService");
+
+
+const {uiJsonConverter} = require("./JSONConverter")
+const data = require("../data/schema/screen2.json")
+const newIcon = require("../data/background/New icon.svg")
+const nonvegIcon = require("../data/background/Non veg icon.svg")
+const vegIcon = require("../data/background/veg icon.svg")
+
+const menu = require("../data/Menus/menu.json");
 
 const loadImage = async (img) => {
   return new Promise((resolve, reject) => {
@@ -32,7 +35,7 @@ const loadImage = async (img) => {
   });
 };
 
-async function drawProductImage(background, imageData, coordinateData) {
+const drawProductImage = async (background, imageData, coordinateData) => {
     //console.log(background,imageData,coordinateData)
     let bgImg = new Image();
     bgImg.src = background;
@@ -80,3 +83,6 @@ async function drawProductImage(background, imageData, coordinateData) {
     return { blob };
   
   }
+
+
+  module.exports = drawProductImage;

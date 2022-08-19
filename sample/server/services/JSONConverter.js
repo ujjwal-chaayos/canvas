@@ -1,7 +1,8 @@
-import { subBlockCoordinates } from "./CVServices";
-import { sortCoordinates } from "./CVServices";
 
-export function uiJsonConverter(menu, mapping) {
+
+const {subBlockCoordinates, sortCoordinates} = require("./CVServices");
+
+const uiJsonConverter = (menu, mapping) => {
   let titles = {};
   let items = {};
   let prices = {};
@@ -105,7 +106,7 @@ export function uiJsonConverter(menu, mapping) {
   };
 }
 
-export function jsonConverter(menu, refrenceTemplate, font) {
+const jsonConverter = (menu, refrenceTemplate, font) => {
   var imageBlocks = [];
   var textBlocks = [];
   for (let i = 0; i < refrenceTemplate["templates"].length; i++) {
@@ -256,40 +257,8 @@ export function jsonConverter(menu, refrenceTemplate, font) {
 
   return refinedTemplate;
 }
-/*
-export function getBestBlock(blocks, data, font) {
-  let index;
-  let screen = new OffscreenCanvas("200", "200").getContext("2d");
-  screen.font = font.h2 + " " + font.style;
-  let quantity = parseInt(data.qty);
-  let textheight = parseInt(font.h2);
-  textheight = textheight + quantity * parseInt(font.spacing);
-  let maximumwidth = 0;
-  for (let i = 0; i < quantity; i++) {
-    let txt = data.item[i].value;
-    maximumwidth = Math.max(
-      maximumwidth,
-      Math.floor(screen.measureText(txt).width)
-    );
-  }
-  let textArea = maximumwidth * (quantity * textheight);
-  let difference = Number.MAX_SAFE_INTEGER;
-  for (let i = 0; i < blocks.length; i++) {
-    let priceWidth = 0.2 * parseInt(blocks[i].w);
-    let height = parseInt(blocks[i].h) - parseInt(font.h1);
-    let width = parseInt(blocks[i].w) - priceWidth;
-    let blockArea = width * height;
-    if (blockArea > textArea) {
-      if (difference > blockArea - textArea) {
-        difference = blockArea - textArea;
-        index = i;
-      }
-    }
-  }
-  return index;
-}
-*/
-export function getBestBlock(blocks, data, font) {
+
+const getBestBlock = (blocks, data, font) => {
   let index;
   let screen = new OffscreenCanvas("3840", "2160").getContext("2d");
   screen.font = font.h2 + " " + font.style;
@@ -327,13 +296,7 @@ export function getBestBlock(blocks, data, font) {
   return index;
 }
 
-export function createCoordinateJSON(
-  templateID,
-  templateName,
-  imageBlocks,
-  txtBlocks,
-  font
-) {
+const createCoordinateJSON = ( templateID,  templateName,  imageBlocks,  txtBlocks,  font) => {
   var coordinates = {
     id: templateID,
     name: templateName,
@@ -388,3 +351,6 @@ export function createCoordinateJSON(
   coordinates.text_blocks = txtBlocks;
   return coordinates;
 }
+
+
+module.exports = {uiJsonConverter,jsonConverter,getBestBlock,createCoordinateJSON}

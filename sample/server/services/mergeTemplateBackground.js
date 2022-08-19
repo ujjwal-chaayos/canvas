@@ -1,27 +1,31 @@
-import cv from "opencv.js";
-import {
-  drawText,
-  drawImage,
-  drawContours,
-  downloadImage,
-  getCoordinates,
-  sortCoordinates,
-  subBlockCoordinates,
-  roundedRect,
-  newItemRect,
-  drawLine,
-} from "./CVServices";
-import {
-  heightValidation,
-  widthValidation,
-  wrapValidation,
-} from "./ValidationService";
-import { uiJsonConverter } from "./JSONConverter";
-import data from "../data/schema/screen2.json";
-import newIcon from "../data/background/New icon.svg";
-import nonvegIcon from "../data/background/Non veg icon.svg";
-import vegIcon from "../data/background/veg icon.svg";
-import menu from "../data/Menus/menu.json";
+
+const cv = require("opencv.js");
+
+const {drawText,
+    drawImage,
+    drawContours,
+    downloadImage,
+    getCoordinates,
+    sortCoordinates,
+    subBlockCoordinates,
+    roundedRect,
+    newItemRect,
+    drawLine} = require("./CVServices");
+
+const {
+    heightValidation,
+    widthValidation,
+    wrapValidation
+} = require("./ValidationService");
+
+
+const {uiJsonConverter} = require("./JSONConverter")
+const data = require("../data/schema/screen2.json")
+const newIcon = require("../data/background/New icon.svg")
+const nonvegIcon = require("../data/background/Non veg icon.svg")
+const vegIcon = require("../data/background/veg icon.svg")
+
+const menu = require("../data/Menus/menu.json");
 
 
 const loadImage = async (img) => {
@@ -33,51 +37,75 @@ const loadImage = async (img) => {
 };
 
 
-async function drawProductImage(background, imageData, coordinateData) {
-    //console.log(background,imageData,coordinateData)
+const mergeTemplateBackground = async (template, background) => {
+    let templateImg = new Image();
+    templateImg.src = template;
+    await loadImage(templateImg);
+    let screen1canvas = new OffscreenCanvas(
+      templateImg.width,
+      templateImg.height
+    );
+    let screen1ctx = screen1canvas.getContext("2d");
+    let templateMat = cv.imread(templateImg);
+    let sortedCoordinates = sortCoordinates(getCoordinates(templateMat, cv));
+  
     let bgImg = new Image();
     bgImg.src = background;
     await loadImage(bgImg);
-    let screen1canvas = new OffscreenCanvas(
-      bgImg.width,
-      bgImg.height
-    );
-    let screen1ctx = screen1canvas.getContext("2d");
-  
     drawImage(screen1ctx, bgImg, {
       x: 0,
       y: 0,
-      w: bgImg.width,
-      h: bgImg.height,
+      w: templateImg.width,
+      h: templateImg.height,
+    });
+    sortedCoordinates.forEach((e) => {
+      drawContours(e, cv, screen1ctx);
     });
   
-    for (var i = 0; i < imageData.length; i++) {
-      let imgBlockId = imageData[i].block_id;
-      let itemImgInfo = imageData[i].image_info.imageBlob;
-      let productImg = new Image();
-      productImg.src = itemImgInfo;
-      await loadImage(productImg);
-      for (var j = 0; j < coordinateData.length; j++) {
-        let coordinateBlockId = coordinateData[j].block_id;
-        if (parseInt(imgBlockId) === parseInt(coordinateBlockId)) {
-          let points = {};
-          points.x = coordinateData[j].x;
-          points.y = coordinateData[j].y;
-          points.w = coordinateData[j].w;
-          points.h = coordinateData[j].h;
-          drawImage(screen1ctx, productImg, points);
-          screen1ctx.save();
+  
+    let screen2canvas = new OffscreenCanvas(
+      templateImg.width,
+      templateImg.height
+    );
+    let screen2ctx = screen2canvas.getContext("2d");
+    let bg2Img = new Image();
+    bg2Img.src = background;
+    await loadImage(bg2Img);
+    drawImage(screen2ctx, bg2Img, {
+      x: 0,
+      y: 0,
+      w: templateImg.width,
+      h: templateImg.height,
+    });
+    screen2ctx.save();
   
   
-        }
-      }
-    }
+    screen1ctx.fillStyle = "#000000";
+    screen1ctx.save();
+    sortedCoordinates.forEach((e) => {
+      drawText(
+        screen1ctx,
+        e["block_id"],
+        {
+          x: parseInt(e.x) + 10,
+          y: parseInt(e.y) + 90,
+        },
+        "80px Arial"
+      );
+    });
   
     let blob = await screen1canvas.convertToBlob();
     let arraybuffer = await blob.arrayBuffer();
     var uint8View = new Uint8Array(arraybuffer);
     blob = new Blob([uint8View], { type: "image/png" });
-    console.log("i m in image " + blob);
-    return { blob };
   
+    let blob2 = await screen2canvas.convertToBlob();
+    let arraybuffer2 = await blob2.arrayBuffer();
+    var uint8View = new Uint8Array(arraybuffer2);
+    blob2 = new Blob([uint8View], { type: "image/png" });
+    // returning blob with contour drawn , blob2 witrhgout contour drawn,sorted coordinates
+    return { blob, blob2, sortedCoordinates };
   }
+
+
+  module.exports = mergeTemplateBackground;
