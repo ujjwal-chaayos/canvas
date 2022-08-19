@@ -227,9 +227,9 @@ export async function drawItemText(background, mapping, coordinates) {
   }
 
 
-	let {data} = await axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000");
+	//let {data} = await axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000");
 
-  let menu=data;
+  //let menu=data;
   console.log(menu);
 
   let jsondata = uiJsonConverter(menu, mapping);

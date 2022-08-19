@@ -13,7 +13,7 @@ const ItemForm = ({blockIds,proceed}) => {
   let all_block_id = blockIds;
   let dummy_data= [
     { "title_id": "t1", "value": "Chaat Pakore" ,"block_id":""},
-    { "title_id": "t2", "value": "Chai Unchai" ,"block_id":""},
+    { "title_id": "t2", "value": "Snacks" ,"block_id":""},
     { "title_id": "t3", "value": "SANDWICHES" ,"block_id":""},
     { "title_id": "t4", "value": "DESSERTS" ,"block_id":""},
     { "title_id": "t5", "value": "MEALS" ,"block_id":""}
@@ -60,8 +60,8 @@ const ItemForm = ({blockIds,proceed}) => {
   console.log(blockIds);
   const save = async (e) => {
     console.log(titles);
-    
-    let data=await drawItemText(JSON.parse(localStorage.getItem('productImgBlob')), titles, JSON.parse(localStorage.getItem("coordinates")));
+    ///////////////////////////////
+    let data=await drawItemText(JSON.parse(localStorage.getItem('productImgBlob')),JSON.parse(localStorage.getItem('background')), titles, JSON.parse(localStorage.getItem("coordinates")));
     console.log(data);
     let link = URL.createObjectURL(data['blob']);
 
