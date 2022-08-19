@@ -1,9 +1,6 @@
 {
   "name": "clippy-server",
   "version": "1.0.0",
-  "description": "",
-
-  "main": "index.js",
 
 
   "dependencies": {
@@ -88,10 +85,15 @@
     "webidl-conversions": "^7.0.0",
     "whatwg-url": "^11.0.0"
   },
+
+  "description": "server of clippy",
+  "main": "app.js",
+
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC"
+
 }
