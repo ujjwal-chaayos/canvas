@@ -5,7 +5,9 @@ import InputLabel from "@mui/material/InputLabel";
 import { Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { drawProductImage } from "../Services/renderingServices";
+
+//Create Route for that function---
+//import { drawProductImage } from "../Services/renderingServices";
 
 const ImageForm = ({ blockIds, proceed }) => {
   console.log("here-image ", blockIds);

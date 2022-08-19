@@ -1,18 +1,18 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import GenOrPick from "./Pages/GenOrPick";
-import Screen from "./Pages/Screen";
-import Home from "./Pages/Home";
-import Test from "./components/Test";
 
-import ChooseTemplate from "./Pages/ChooseTemplate";
-import UploadTemplate from "./Pages/UploadTemplate";
-import ImageForm from "./Pages/ImageForm";
-import ItemForm from "./Pages/ItemForm";
+import Home from "../Pages/1-HomePage/Home";
+import Screen from "../Pages/2-ScreenPage/Screen";
+import GenOrPick from "../Pages/3-PickTemplate/GenOrPick";
 
-import Final from "./Pages/Final";
+import ChooseTemplate from "../Pages/4-TemplatePage/ChooseTemplate";
+import UploadTemplate from "../Pages/5-UploadTemplate/UploadTemplate";
+// import ImageForm from "./Pages/ImageForm";
+// import ItemForm from "./Pages/ItemForm";
 
-import Block from "./components/block";
+import Final from "../Pages/ThankPage/Final";
+
+import Block from "../components/block";
 
 const AllRoutes = () => {
   return (

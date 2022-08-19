@@ -5,7 +5,10 @@ import InputLabel from "@mui/material/InputLabel";
 import { Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { drawItemText } from "../Services/renderingServices";
+
+
+//Create route for that function---
+//import { drawItemText } from "../Services/renderingServices";
 
 const ItemForm = ({ blockIds, proceed }) => {
   console.log("here-item ", blockIds);

@@ -10,7 +10,9 @@ import "./UploadTemplate.css";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-import { mergeTemplateBackground } from "../Services/renderingServices";
+
+//Create route for that function--
+//import { mergeTemplateBackground } from "../Services/renderingServices";
 
 //import data from '../data/';
 
