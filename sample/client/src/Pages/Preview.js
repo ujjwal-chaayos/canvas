@@ -9,70 +9,74 @@ import { CreateGifImage } from "../Services/renderingServices";
 const Preview = ({ type, manage }) => {
 
 
-  // function downloadBlob(blob, name) {
-  //   // Convert your blob into a Blob URL (a special url that points to an object in the browser's memory)
+  function downloadBlob(blob, name) {
+    // Convert your blob into a Blob URL (a special url that points to an object in the browser's memory)
     
   
-  //   // Create a link element
-  //   const link = document.createElement("a");
+    // Create a link element
+    const link = document.createElement("a");
   
-  //   // Set link's href to point to the Blob URL
-  //   link.href = blob;
-  //   link.download = name;
+    // Set link's href to point to the Blob URL
+    link.href = blob;
+    link.download = name;
   
-  //   // Append link to the body
-  //   document.body.appendChild(link);
+    // Append link to the body
+    document.body.appendChild(link);
   
-  //   // Dispatch click event on the link
-  //   // This is necessary as link.click() does not work on the latest firefox
-  //   link.dispatchEvent(
-  //     new MouseEvent('click', { 
-  //       bubbles: true, 
-  //       cancelable: true, 
-  //       view: window 
-  //     })
-  //   );
+    // Dispatch click event on the link
+    // This is necessary as link.click() does not work on the latest firefox
+    link.dispatchEvent(
+      new MouseEvent('click', { 
+        bubbles: true, 
+        cancelable: true, 
+        view: window 
+      })
+    );
   
-  //   // Remove link from body
-  //   document.body.removeChild(link);
-  // }
+    // Remove link from body
+    document.body.removeChild(link);
+  }
   
-  // // Usage
+  // Usage
  
   
 
 
-  // console.log("Block", type);
+  console.log("Block", type);
 
 
-  // const proceed = () => {
-  //   if (type === "image") {
-  //     console.log("image-n", type);
-  //     manage("image-n");
-  //   }
-  //   if (type === "menu") {
-  //     console.log("menu-n", type);
-  //     //downloadBlob(JSON.parse(localStorage.getItem('finalMenu')), 'myfile.png');
-  //     let commingData= await CreateGifImage(
-  //       JSON.parse(localStorage.getItem("background")),
-  //       formFields,
-  //       coordinate
-  //     )
-  //     manage("menu-n");
-  //   }
-  // };
+  const proceed = () => {
+    if (type === "image") {
+      console.log("image-n", type);
+      manage("image-n");
+    }
+    if (type === "menu") {
+      console.log("menu-n", type);
+      downloadBlob(JSON.parse(localStorage.getItem('finalMenu')), 'myfile.png');
+      manage("menu-n");
+    }
+  };
 
-  // const back = () => {
-  //   if (type === "image") {
-  //     console.log("image-p", type);
+  const back = () => {
+    if (type === "image") {
+      console.log("image-p", type);
 
-  //     manage("image-p");
-  //   }
-  //   if (type === "menu") {
-  //     console.log("menu-p", type);
-  //     manage("menu-p");
-  //   }
-  // };
+      manage("image-p");
+    }
+    if (type === "menu") {
+      console.log("menu-p", type);
+      manage("menu-p");
+    }
+  };
+
+ const proceedGif = () =>{
+       CreateGifImage(
+        JSON.parse(localStorage.getItem("backgroundBlob")),
+        JSON.parse(localStorage.getItem("formFields")),
+        JSON.parse(localStorage.getItem("coordinate")),
+      )
+  }
+
 
   return (
     
@@ -139,13 +143,24 @@ const Preview = ({ type, manage }) => {
                 justifyContent="center"
                 endIcon={<NavigateNextIcon />}
                 sx={{ display: "flex", p: 1, mx: 5 }}
-                onClick={CreateGifImage(
-                  JSON.parse(localStorage.getItem("background")),
-                  formFields,
-                  coordinate
-                )}
+                onClick={proceed}
               >
                 Proceed
+              </Button>
+            </div>
+
+            <div style={{ width: "50%" }}>
+              <Button
+                variant="contained"
+                component="label"
+                color="primary"
+                alignItems="center"
+                justifyContent="center"
+                endIcon={<NavigateNextIcon />}
+                sx={{ display: "flex", p: 1, mx: 5 }}
+                onClick={proceedGif}
+              >
+                GIF
               </Button>
             </div>
           </Box>

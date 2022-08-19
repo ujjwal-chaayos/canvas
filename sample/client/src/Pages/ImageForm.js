@@ -177,16 +177,8 @@ const ImageForm = ({ blockIds, proceed }) => {
   
     let imgBlob = URL.createObjectURL(event.target.files[i]);
     formdata[i]['blob']=imgBlob;
- 
-
-
-
-   }
-
-   
+   } 
      console.log(formdata);
-  
-
      formFields[event.target.id]["image_info"] = formdata;
     setFormFields(formFields);
   

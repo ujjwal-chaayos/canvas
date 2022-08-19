@@ -61,11 +61,14 @@ const ItemForm = ({blockIds,proceed}) => {
   const save = async (e) => {
     console.log(titles);
     ///////////////////////////////
-    let data=await drawItemText(JSON.parse(localStorage.getItem('productImgBlob')),JSON.parse(localStorage.getItem('background')), titles, JSON.parse(localStorage.getItem("coordinates")));
+    let {data}=await drawItemText(JSON.parse(localStorage.getItem('productImgBlob')), titles, JSON.parse(localStorage.getItem("coordinates")));
     console.log(data);
     let link = URL.createObjectURL(data['blob']);
+   // let link2 = URL.createObjectURL(data2['blob']);
+
 
     localStorage.setItem("finalMenu", JSON.stringify(link));
+    //localStorage.setItem("gifMenu", JSON.stringify(link2));
     proceed(blockIds);
   };
 
