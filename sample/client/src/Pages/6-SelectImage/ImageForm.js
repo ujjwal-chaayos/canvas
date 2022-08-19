@@ -5,11 +5,11 @@ import InputLabel from "@mui/material/InputLabel";
 import { Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { drawProductImage } from "../Services/renderingServices";
+
+//Create Route for that function---
+//import { drawProductImage } from "../Services/renderingServices";
 
 const ImageForm = ({ blockIds, proceed }) => {
-
-
   console.log("here-image ", blockIds);
   let all_block_id = blockIds;
 
@@ -25,35 +25,23 @@ const ImageForm = ({ blockIds, proceed }) => {
   const [coordinate, setCoordinate] = useState([]);
   const [backgroundBlob, setBackgroundBlob] = useState("");
 
-
   useEffect(() => {
-    console.log("i am in")
+    console.log("i am in");
     const coordinate = JSON.parse(localStorage.getItem("coordinates"));
     const background = JSON.parse(localStorage.getItem("imageBlob"));
-   
 
     if (coordinate && background) {
       console.log(typeof background);
-      console.log("coordinaes",coordinate)
-  
+      console.log("coordinaes", coordinate);
+
       setCoordinate(coordinate);
       setBackgroundBlob(background);
-    
-      
-      
     }
-
-    
-
-
   }, []);
 
+  //TODO: save the coming product image in local storage
 
-//TODO: save the coming product image in local storage
-
-
-
-  let img_id = ["001", "002", "003", "004", "005", "006","007","008","009"]; //dummy_data coming from db for with image_id
+  let img_id = ["001", "002", "003", "004", "005", "006", "007", "008", "009"]; //dummy_data coming from db for with image_id
   let comingQty = coordinate;
   let options = [...comingQty.keys()]; //quantity of images
   console.log(options);
@@ -137,20 +125,21 @@ const ImageForm = ({ blockIds, proceed }) => {
   };
 
   const save = async (e) => {
-    e.preventDefault();
-  //  console.log("backgroundBlob", backgroundBlob);
-  //  console.log(comingData);
-    let comingData = await drawProductImage(
-      JSON.parse(localStorage.getItem("orignalImg")),
-      formFields,
-      coordinate
-    );
-    let link = URL.createObjectURL(comingData['blob']);
-    //console.log(link);
-    console.log(typeof(link));
-    console.log(formFields);
-    localStorage.setItem("productImgBlob",JSON.stringify(link));
-    proceed(leftValues);
+
+    // e.preventDefault();
+    // console.log("backgroundBlob", backgroundBlob);
+    // console.log(comingData);
+    // let comingData = await drawProductImage(
+    //   JSON.parse(localStorage.getItem("orignalImg")),
+    //   formFields,
+    //   coordinate
+    // );
+    // let link = URL.createObjectURL(comingData["blob"]);
+    // //console.log(link);
+    // console.log(typeof link);
+    // console.log(formFields);
+    // localStorage.setItem("productImgBlob", JSON.stringify(link));
+    // proceed(leftValues);
   };
 
   const removeFields = () => {
@@ -168,22 +157,28 @@ const ImageForm = ({ blockIds, proceed }) => {
   }
 
   const handleUpload = async (event, value) => {
-   // let coming_block_id = event.target.name;
-    //let saved_block_id = value["block_id"];
-    console.log(event.target.files)
-    let formdata=[];
-    for(let i = 0 ; i<event.target.files.length; i++){
-     formdata.push(event.target.files[i])
-  
-    let imgBlob = URL.createObjectURL(event.target.files[i]);
-    formdata[i]['blob']=imgBlob;
-   } 
-     console.log(formdata);
-     formFields[event.target.id]["image_info"] = formdata;
+    let coming_block_id = event.target.name;
+    let saved_block_id = value["block_id"];
+    let imgInfo = {
+      imageId: "",
+      imageInfo: "",
+      imageType: "",
+      imageContent: "",
+      imageBlob: "",
+    };
+    imgInfo["imageBlob"] = URL.createObjectURL(event.target.files[0]);
+    for (let myfile of event.target.files) {
+      let comingdata = await read(myfile);
+      imgInfo["imageContent"] = comingdata;
+    }
+    const files = event.target.files;
+
+    imgInfo["imageInfo"] = files[0];
+    imgInfo["imageType"] = files[0].name.split(".")[1];
+    imgInfo["imageId"] = event.target.id;
+    formFields[event.target.id]["image_info"] = imgInfo;
     setFormFields(formFields);
-    console.log(formFields);
-    // console.log(coming_block_id,saved_block_id,imgInfo,formFields)
-  };
+  } 
 
   console.log(formFields);
 
@@ -200,8 +195,6 @@ const ImageForm = ({ blockIds, proceed }) => {
         width: "auto",
       }}
     >
-
-
       <Box
         top={0}
         width="40%"
@@ -216,8 +209,7 @@ const ImageForm = ({ blockIds, proceed }) => {
         }}
       >
         {bottomForm ? (
-          <div className="mapping" style={{"text-align": "center"}}>
-            
+          <div className="mapping" style={{ "text-align": "center" }}>
             <form style={{ justifyContent: "center", alignItems: "center" }}>
               <Typography
                 fontWeight="bold"
@@ -271,15 +263,13 @@ const ImageForm = ({ blockIds, proceed }) => {
                     }}
                   >
                     <div key={index}>
-                    <Typography
-                
-                
-                align="center"
-                sx={{ color: "#303030", p: 3 }}
-              >
-                Select Block for Image{form.img_id.slice(2)} 
-              </Typography>
-                     
+                      <Typography
+                        align="center"
+                        sx={{ color: "#303030", p: 3 }}
+                      >
+                        Select Block for Image{form.img_id.slice(2)}
+                      </Typography>
+
                       <Select
                         id={"select" + index}
                         disabled={form["block_id"] !== ""}
@@ -294,17 +284,14 @@ const ImageForm = ({ blockIds, proceed }) => {
                           </MenuItem>
                         ))}
                       </Select>
-                      
-                                       <Typography
-                variant="caption"
-                
-                align="center"
-                sx={{ color: "#303030", p: 3 }}
-              >
-              You chose {form.block_id}
-              </Typography>
 
-                      
+                      <Typography
+                        variant="caption"
+                        align="center"
+                        sx={{ color: "#303030", p: 3 }}
+                      >
+                        You chose {form.block_id}
+                      </Typography>
                     </div>
                   </Box>
                 );
@@ -331,9 +318,9 @@ const ImageForm = ({ blockIds, proceed }) => {
             </Box>
           </div>
         ) : (
-          <div className="upload" style={{"width": "100%"}}>
+          <div className="upload" style={{ width: "100%" }}>
             <form>
-            <Typography
+              <Typography
                 fontWeight="bold"
                 variant="h5"
                 align="center"
@@ -358,7 +345,7 @@ const ImageForm = ({ blockIds, proceed }) => {
                     color="primary"
                     alignItems="center"
                     justifyContent="center"
-                    sx={{ display: "flex" , mx:5}}
+                    sx={{ display: "flex", mx: 20 }}
                   >
                     <label for={index}>UPLOAD</label>
                     <input
@@ -367,29 +354,27 @@ const ImageForm = ({ blockIds, proceed }) => {
                       multiple
                       //hidden
                       name={`${value["block_id"]}`}
-                      onChange={(e) => handleUpload(e, value)} 
+                      onChange={(e) => handleUpload(e, value)}
                     />
-                  
                   </Button>
                   <Box>
-                    <img id={'img'+index}/>
+                    <img id={"img" + index} />
                   </Box>
                 </>
               ))}
             </form>
             <br />
-    
-              <Button 
-                endIcon={<NavigateNextIcon />}
-                alignItems="center"
-                justifyContent="center"
-                variant="contained"
-                type="submit"
-                onClick={save}
-              >
-                Save
-              </Button>
-            
+
+            <Button
+              endIcon={<NavigateNextIcon />}
+              alignItems="center"
+              justifyContent="center"
+              variant="contained"
+              type="submit"
+              onClick={save}
+            >
+              Save
+            </Button>
           </div>
         )}
       </Box>

@@ -1,4 +1,6 @@
-export function heightValidation(block,txt,font,spacing){
+
+
+const heightValidation=(block,txt,font,spacing)=>{
     var txtHeight;
     if(Array.isArray(txt)){
         txtHeight = (parseInt(font.height)+parseInt(font.spacing))*txt.length;
@@ -7,7 +9,7 @@ export function heightValidation(block,txt,font,spacing){
     }
     return txtHeight<block.h?true:false;
 }
-export function widthValidation(block,txt,font){
+const widthValidation=(block,txt,font)=>{
     let screen = new OffscreenCanvas(3840,2160).getContext("2d");
     screen.font = font.height + " " + font.style;
     screen.save();
@@ -21,7 +23,7 @@ export function widthValidation(block,txt,font){
     }
     return txtWidth<block.w?true:false;
 }
-export function wrapValidation(block,txt,font){
+const wrapValidation=(block,txt,font)=>{
     var txtHeight;
      var txtWidth;
      let screen = new OffscreenCanvas(3840,2160).getContext("2d");
@@ -36,3 +38,5 @@ export function wrapValidation(block,txt,font){
     else
         return false;
 }
+
+module.exports={heightValidation,widthValidation,wrapValidation}

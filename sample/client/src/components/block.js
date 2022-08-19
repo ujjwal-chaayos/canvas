@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import ImageForm from "../Pages/ImageForm";
-import ItemForm from "../Pages/ItemForm";
-import Preview from "../Pages/Preview";
-import FinalPage from "../Pages/Final";
+import ImageForm from "../Pages/6-SelectImage/ImageForm";
+import ItemForm from "../Pages/7-SelectItem/ItemForm";
+import Preview from "../Pages/Preview/Preview";
+import FinalPage from "../Pages/ThankPage/Final";
 
 const Block = () => {
   let location = useLocation();

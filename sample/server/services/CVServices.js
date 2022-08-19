@@ -1,8 +1,8 @@
-import cv from "opencv.js";
+const cv = require("opencv.js")
 
 
 // function will return the coordinate of all blocks provided in template
-export  function getCoordinates(template, cv) {
+const getCoordinates = (template, cv) => {
 
     // converting template into Gray Scale for processing.
     cv.cvtColor(template, template, cv.COLOR_RGBA2GRAY)
@@ -26,7 +26,7 @@ export  function getCoordinates(template, cv) {
     // stroing coordinates of each blocks define by contour in format of [{x,y,w,h}] , (x,y) are the coordinate of top left corner of blocks
     // and w,h are the height and width of respective block.
     const coordinates = [];
-    for (let i = 0; i < contours.size(); ++i) {
+    for (let i = 0; i < contours.size(); ++i)=>{
         const ci = contours.get(i);
         let rect = cv.boundingRect(ci);
         let p = {};
@@ -43,7 +43,7 @@ export  function getCoordinates(template, cv) {
 }
 
 // This function will draw bounded reactangle with dashed line over the block on canvas(Screen).
-export  function drawContours(points, cv, screen) {
+const drawContours = (points, cv, screen) => {
 
     // this will set the width of line to 2.
     screen.lineWidth = "5";
@@ -61,7 +61,7 @@ export  function drawContours(points, cv, screen) {
 }
 
 // This function will return the resized Image matrix.
-export  function reSize(image, width, height, cv) {
+const reSize = (image, width, height, cv) => {
     // definig storage to store resized image
    // let finalImage = new cv.Mat();
     let finalImage = new cv.Mat();
@@ -81,13 +81,13 @@ export  function reSize(image, width, height, cv) {
 
 // This function will convert image matrix into image data.
 // and after converting to Imagedata return the imagedata.
-export  function matrixToImgData(image){
+const matrixToImgData = (image) => {
     // var tempImg = new cv.Mat(image.size().width, image.size().height, cv.CV_8UC4, new cv.Scalar(0, 0, 0, 0));
     // var depth = image.type() % 8;
     // var scale = depth <= cv.CV_8S ? 1 : depth <= cv.CV_32S ? 1 / 256 : 255;
     // var shift = depth === cv.CV_8S || depth === cv.CV_16S ? 128 : 0;
     // image.convertTo(tempImg, cv.CV_8UC4, scale, shift);
-    // switch (tempImg.type()) {
+    // switch (tempImg.type())=>{
     //     case cv.CV_8UC1:
     //         cv.cvtColor(tempImg, tempImg, cv.COLOR_GRAY2RGBA);
     //         break;
@@ -107,7 +107,7 @@ export  function matrixToImgData(image){
 }
 
 // This function will put the image onto the canvas(screen).
-export  function drawImage(screen, image, block) {
+const drawImage=(screen, image, block)=>{
     
     // this will put the image at specified position.
     screen.drawImage(image,block['x'],block['y'],block['w'],block['h']);
@@ -116,7 +116,7 @@ export  function drawImage(screen, image, block) {
 }
 
 // This function will put the image data onto the canvas(screen).
-export  function drawImageData(screen, image, points) {
+const drawImageData=(screen, image, points)=>{
     
     // this will put the image at specified position.
     screen.putImageData(image,points['x'],points['y']);
@@ -125,7 +125,7 @@ export  function drawImageData(screen, image, points) {
 }
 
 // This function will put Text on the screen.
-export  function drawText(screen,text,points,style){
+const drawText=(screen,text,points,style)=>{
     // This will define the Font to text to be showwn.
     screen.font = style;
     // Putting the text on the screen.
@@ -134,7 +134,7 @@ export  function drawText(screen,text,points,style){
 }
 
 // This function will draw Line below the Title.
-export  function drawLine(screen,sourcePoint,destinationPoint,style){
+const drawLine=(screen,sourcePoint,destinationPoint,style)=>{
 
     // defining the width of line equal to 20.
     screen.lineWidth = 10;
@@ -152,8 +152,7 @@ export  function drawLine(screen,sourcePoint,destinationPoint,style){
 }
 
 // This will download the final screen as png.
-export  function downloadImage(screen)
-{
+const downloadImage=(screen)=>{
     // getting the URL of image and return that URL.
     let imageURL = screen.toDataURL("image/png");
     return imageURL;
@@ -161,7 +160,7 @@ export  function downloadImage(screen)
 
 
 // This function will find the coordinates of sub-blocks within a given block.
-export  function subBlockCoordinates(points,headingHeight,priceWidth){
+const subBlockCoordinates=(points,headingHeight,priceWidth)=>{
     // to store final coordinates of sub-block.
     let finalCoordinates = {}
     // to store the coordinates of heading. 
@@ -201,7 +200,7 @@ export  function subBlockCoordinates(points,headingHeight,priceWidth){
 }
 
 // This function will sort the coordinates so that they are arrange in the order from left to right then top to bottom.
-export  function sortCoordinates(coordinates){
+const sortCoordinates=(coordinates)=>{
     let sortedCoordinates = [];
 
     // sorting according to distance from top left corner.
@@ -218,7 +217,7 @@ export  function sortCoordinates(coordinates){
     return sortedCoordinates;
 }
 
- export function roundedRect(screen,point, r,style) {
+const roundedRect=(screen,point, r,style)=>{
     if (point.w < 2 * r) r = point.w / 2;
     if (point.h < 2 * r) r = point.h / 2;
     screen.beginPath();
@@ -231,9 +230,9 @@ export  function sortCoordinates(coordinates){
     screen.fillStyle = style;
     screen.fill();
     screen.save();
-  }
+}
 
-  export function newItemRect(screen,point, r,style1,style2) {
+const newItemRect=(screen,point, r,style1,style2)=>{
     if (point.w < 2 * r) r = point.w / 2;
     if (point.h < 2 * r) r = point.h / 2;
     screen.beginPath();
@@ -259,4 +258,14 @@ export  function sortCoordinates(coordinates){
     
     screen.save();
 
-  }
+};
+
+
+
+
+
+
+
+
+
+  module.exports={getCoordinates,drawContours,reSize,matrixToImgData,drawImage,drawImageData,drawText,drawLine,downloadImage,subBlockCoordinates,sortCoordinates,roundedRect,newItemRect}
