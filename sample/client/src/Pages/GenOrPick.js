@@ -1,8 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import {  Button } from "@mui/material";
-import { Typography } from '@mui/material';
-import {useNavigate,useParams } from 'react-router-dom';
+import { Button } from "@mui/material";
+import { Typography } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import "./GenOrPick.css";
 // import "@fontsource/roboto/300.css";
 // import "@fontsource/roboto/400.css";
@@ -11,17 +11,16 @@ import "./GenOrPick.css";
 
 const GenOrPick = () => {
   let { screen } = useParams();
- 
-  let navigate= useNavigate();
 
-  const choose=()=>{
-      navigate(`/select-template/${screen}`)
-  }
+  let navigate = useNavigate();
+
+  const choose = () => {
+    navigate(`/select-template/${screen}`);
+  };
 
   return (
     <div>
       <Box
-     
         top={0}
         left={0}
         height="100vh"

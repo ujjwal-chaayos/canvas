@@ -85,7 +85,7 @@ const UploadTemplate = () => {
       dummy_data = file; //condition to save data
       console.log(dummy_data);
       console.log(file);
-      let { blob,blob2, sortedCoordinates } = await mergeTemplateBackground(
+      let { blob, blob2, sortedCoordinates } = await mergeTemplateBackground(
         file[0][0]["imageBlob"],
         file[1][0]["imageBlob"]
       );
@@ -95,9 +95,9 @@ const UploadTemplate = () => {
       let temp = document.getElementById("background1");
 
       let link = URL.createObjectURL(blob);
-      let link2= URL.createObjectURL(blob2);
-      console.log(link,link2);
-        setOriginalImg(link2);
+      let link2 = URL.createObjectURL(blob2);
+      console.log(link, link2);
+      setOriginalImg(link2);
       setResultImage(link);
       setCoordinates(sortedCoordinates);
     } else {
@@ -107,7 +107,7 @@ const UploadTemplate = () => {
   console.log("hello", resultImage);
   return (
     <Box
-    position="absolute"
+      position="absolute"
       top={0}
       left={0}
       height="100vh"
@@ -117,12 +117,11 @@ const UploadTemplate = () => {
         backgroundColor: "primary.light",
       }}
     >
-      <Box 
+      <Box
         sx={{
           m: 2,
           border: 2,
           borderColor: "primary.main",
-          
         }}
         style={{
           width: "100%",
@@ -157,8 +156,8 @@ const UploadTemplate = () => {
               style={{ justifyContent: "center", alignItems: "center" }}
               onSubmit={handleSubmit}
             >
-              <Box sx={{ display: "flex", p: 1,m:1 }}>
-                <div style={{ width: "50%"}}>
+              <Box sx={{ display: "flex", p: 1, m: 1 }}>
+                <div style={{ width: "50%" }}>
                   <Button
                     endIcon={<CloudUploadIcon />}
                     variant="contained"
@@ -171,7 +170,7 @@ const UploadTemplate = () => {
                     {" "}
                     Upload Template
                     <input
-                      type="file"                                    //3,4,6,8,9
+                      type="file" //3,4,6,8,9
                       id="template"
                       name="file1"
                       onChange={(e) => handleUpload(e)}
@@ -229,29 +228,35 @@ const UploadTemplate = () => {
             </form>
           </>
         ) : (
-          
-          <Box style={{"marginLeft":"120px"}} sx={{ display: "flex",justifyContent:"center"}}>
-           <Box sx={{ display: "flex",justifyContent:"center"}}>
+          <Box
+            style={{ marginLeft: "120px" }}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
               <img
                 id="background1"
                 src={resultImage}
                 width="776px"
                 height="460px"
               />
-            <Button
-              style={{ "margin":"70px","height":"50px","justifyContent":"center","marginTop":"180px"}}
-              endIcon={<NavigateNextIcon />}
-              alignItems="center"
-              justifyContent="center"
-              variant="contained"
-              onClick={seePreview}
-            >
-              {" "}
-              NEXT{" "}
-            </Button>
+              <Button
+                style={{
+                  margin: "70px",
+                  height: "50px",
+                  justifyContent: "center",
+                  marginTop: "180px",
+                }}
+                endIcon={<NavigateNextIcon />}
+                alignItems="center"
+                justifyContent="center"
+                variant="contained"
+                onClick={seePreview}
+              >
+                {" "}
+                NEXT{" "}
+              </Button>
             </Box>
           </Box>
-          
         )}
       </Box>
     </Box>

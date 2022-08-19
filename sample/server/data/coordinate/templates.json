@@ -1,0 +1,469 @@
+{
+    "name":"TestCoordinates",
+    "templates": [
+        {
+            "id": "1",
+            "name": "screen1",
+            "image_blocks": [
+                {
+                    "x": 66,
+                    "y": 83,
+                    "w": 2607,
+                    "h": 1379,
+                    "block_id": 2,
+                    "type": "Image",
+                    "template_id": "1"
+                }
+            ],
+            "sub_blocks": [
+                {
+                    "block_id": 1,
+                    "parent_block_id": 1,
+                    "template_id": "1",
+                    "type": "Heading",
+                    "x": 2742,
+                    "y": 51,
+                    "w": 1047,
+                    "h": 200
+                },
+                {
+                    "block_id": 2,
+                    "parent_block_id": 1,
+                    "template_id": "1",
+                    "type": "Items",
+                    "x": 2742,
+                    "y": 251,
+                    "w": 837.6,
+                    "h": 495
+                },
+                {
+                    "block_id": 3,
+                    "parent_block_id": 1,
+                    "template_id": "1",
+                    "type": "Prices",
+                    "x": 3579.6,
+                    "y": 251,
+                    "w": 209.4,
+                    "h": 495
+                },
+                {
+                    "block_id": 1,
+                    "parent_block_id": 3,
+                    "template_id": "1",
+                    "type": "Heading",
+                    "x": 2746,
+                    "y": 811,
+                    "w": 1047,
+                    "h": 200
+                },
+                {
+                    "block_id": 2,
+                    "parent_block_id": 3,
+                    "template_id": "1",
+                    "type": "Items",
+                    "x": 2746,
+                    "y": 1011,
+                    "w": 837.6,
+                    "h": 427
+                },
+                {
+                    "block_id": 3,
+                    "parent_block_id": 3,
+                    "template_id": "1",
+                    "type": "Prices",
+                    "x": 3583.6,
+                    "y": 1011,
+                    "w": 209.4,
+                    "h": 427
+                },
+                {
+                    "block_id": 1,
+                    "parent_block_id": 4,
+                    "template_id": "1",
+                    "type": "Heading",
+                    "x": 1862,
+                    "y": 1531,
+                    "w": 859,
+                    "h": 200
+                },
+                {
+                    "block_id": 2,
+                    "parent_block_id": 4,
+                    "template_id": "1",
+                    "type": "Items",
+                    "x": 1862,
+                    "y": 1731,
+                    "w": 687.2,
+                    "h": 359
+                },
+                {
+                    "block_id": 3,
+                    "parent_block_id": 4,
+                    "template_id": "1",
+                    "type": "Prices",
+                    "x": 2549.2,
+                    "y": 1731,
+                    "w": 171.8,
+                    "h": 359
+                },
+                {
+                    "block_id": 1,
+                    "parent_block_id": 5,
+                    "template_id": "1",
+                    "type": "Heading",
+                    "x": 2762,
+                    "y": 1531,
+                    "w": 1031,
+                    "h": 200
+                },
+                {
+                    "block_id": 2,
+                    "parent_block_id": 5,
+                    "template_id": "1",
+                    "type": "Items",
+                    "x": 2762,
+                    "y": 1731,
+                    "w": 824.8,
+                    "h": 363
+                },
+                {
+                    "block_id": 3,
+                    "parent_block_id": 5,
+                    "template_id": "1",
+                    "type": "Prices",
+                    "x": 3586.8,
+                    "y": 1731,
+                    "w": 206.20000000000002,
+                    "h": 363
+                },
+                {
+                    "block_id": 1,
+                    "parent_block_id": 6,
+                    "template_id": "1",
+                    "type": "Heading",
+                    "x": 46,
+                    "y": 1571,
+                    "w": 1771,
+                    "h": 200
+                },
+                {
+                    "block_id": 2,
+                    "parent_block_id": 6,
+                    "template_id": "1",
+                    "type": "Items",
+                    "x": 46,
+                    "y": 1771,
+                    "w": 1416.8,
+                    "h": 327
+                },
+                {
+                    "block_id": 3,
+                    "parent_block_id": 6,
+                    "template_id": "1",
+                    "type": "Prices",
+                    "x": 1462.8,
+                    "y": 1771,
+                    "w": 354.20000000000005,
+                    "h": 327
+                }
+            ],
+            "text_blocks": [
+                {
+                    "x": 2742,
+                    "y": 51,
+                    "w": 1047,
+                    "h": 695,
+                    "block_id": 1,
+                    "type": "Text",
+                    "template_id": "1"
+                },
+                {
+                    "x": 2746,
+                    "y": 811,
+                    "w": 1047,
+                    "h": 627,
+                    "block_id": 3,
+                    "type": "Text",
+                    "template_id": "1"
+                },
+                {
+                    "x": 1862,
+                    "y": 1531,
+                    "w": 859,
+                    "h": 559,
+                    "block_id": 4,
+                    "type": "Text",
+                    "template_id": "1"
+                },
+                {
+                    "x": 2762,
+                    "y": 1531,
+                    "w": 1031,
+                    "h": 563,
+                    "block_id": 5,
+                    "type": "Text",
+                    "template_id": "1"
+                },
+                {
+                    "x": 46,
+                    "y": 1571,
+                    "w": 1771,
+                    "h": 527,
+                    "block_id": 6,
+                    "type": "Text",
+                    "template_id": "1"
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "screen2",
+            "image_blocks": [
+                {
+                    "x": 14,
+                    "y": 78,
+                    "w": 567,
+                    "h": 499,
+                    "block_id": 1,
+                    "type": "Image",
+                    "template_id": "2"
+                },
+                {
+                    "x": 3390,
+                    "y": 262,
+                    "w": 406,
+                    "h": 598,
+                    "block_id": 4,
+                    "type": "Image",
+                    "template_id": "2"
+                },
+                {
+                    "x": 1490,
+                    "y": 962,
+                    "w": 783,
+                    "h": 451,
+                    "block_id": 5,
+                    "type": "Image",
+                    "template_id": "2"
+                },
+                {
+                    "x": 3342,
+                    "y": 1310,
+                    "w": 446,
+                    "h": 590,
+                    "block_id": 8,
+                    "type": "Image",
+                    "template_id": "2"
+                },
+                {
+                    "x": 238,
+                    "y": 1670,
+                    "w": 647,
+                    "h": 427,
+                    "block_id": 10,
+                    "type": "Image",
+                    "template_id": "2"
+                }
+            ],
+            "sub_blocks": [
+                {
+                    "block_id": 1,
+                    "parent_block_id": 2,
+                    "template_id": "2",
+                    "type": "Heading",
+                    "x": 638,
+                    "y": 106,
+                    "w": 1195,
+                    "h": 160
+                },
+                {
+                    "block_id": 2,
+                    "parent_block_id": 2,
+                    "template_id": "2",
+                    "type": "Items",
+                    "x": 638,
+                    "y": 266,
+                    "w": 956,
+                    "h": 675
+                },
+                {
+                    "block_id": 3,
+                    "parent_block_id": 2,
+                    "template_id": "2",
+                    "type": "Prices",
+                    "x": 1594,
+                    "y": 266,
+                    "w": 239,
+                    "h": 675
+                },
+                {
+                    "block_id": 1,
+                    "parent_block_id": 3,
+                    "template_id": "2",
+                    "type": "Heading",
+                    "x": 2298,
+                    "y": 114,
+                    "w": 999,
+                    "h": 160
+                },
+                {
+                    "block_id": 2,
+                    "parent_block_id": 3,
+                    "template_id": "2",
+                    "type": "Items",
+                    "x": 2298,
+                    "y": 274,
+                    "w": 799.2,
+                    "h": 923
+                },
+                {
+                    "block_id": 3,
+                    "parent_block_id": 3,
+                    "template_id": "2",
+                    "type": "Prices",
+                    "x": 3097.2,
+                    "y": 274,
+                    "w": 199.8,
+                    "h": 923
+                },
+                {
+                    "block_id": 1,
+                    "parent_block_id": 6,
+                    "template_id": "2",
+                    "type": "Heading",
+                    "x": 58,
+                    "y": 1022,
+                    "w": 1023,
+                    "h": 160
+                },
+                {
+                    "block_id": 2,
+                    "parent_block_id": 6,
+                    "template_id": "2",
+                    "type": "Items",
+                    "x": 58,
+                    "y": 1182,
+                    "w": 818.4,
+                    "h": 435
+                },
+                {
+                    "block_id": 3,
+                    "parent_block_id": 6,
+                    "template_id": "2",
+                    "type": "Prices",
+                    "x": 876.4,
+                    "y": 1182,
+                    "w": 204.60000000000002,
+                    "h": 435
+                },
+                {
+                    "block_id": 1,
+                    "parent_block_id": 7,
+                    "template_id": "2",
+                    "type": "Heading",
+                    "x": 2306,
+                    "y": 1238,
+                    "w": 995,
+                    "h": 160
+                },
+                {
+                    "block_id": 2,
+                    "parent_block_id": 7,
+                    "template_id": "2",
+                    "type": "Items",
+                    "x": 2306,
+                    "y": 1398,
+                    "w": 796,
+                    "h": 667
+                },
+                {
+                    "block_id": 3,
+                    "parent_block_id": 7,
+                    "template_id": "2",
+                    "type": "Prices",
+                    "x": 3102,
+                    "y": 1398,
+                    "w": 199,
+                    "h": 667
+                },
+                {
+                    "block_id": 1,
+                    "parent_block_id": 9,
+                    "template_id": "2",
+                    "type": "Heading",
+                    "x": 1146,
+                    "y": 1446,
+                    "w": 1087,
+                    "h": 160
+                },
+                {
+                    "block_id": 2,
+                    "parent_block_id": 9,
+                    "template_id": "2",
+                    "type": "Items",
+                    "x": 1146,
+                    "y": 1606,
+                    "w": 869.6,
+                    "h": 503
+                },
+                {
+                    "block_id": 3,
+                    "parent_block_id": 9,
+                    "template_id": "2",
+                    "type": "Prices",
+                    "x": 2015.6,
+                    "y": 1606,
+                    "w": 217.4,
+                    "h": 503
+                }
+            ],
+            "text_blocks": [
+                {
+                    "x": 638,
+                    "y": 106,
+                    "w": 1195,
+                    "h": 835,
+                    "block_id": 2,
+                    "type": "Text",
+                    "template_id": "2"
+                },
+                {
+                    "x": 2298,
+                    "y": 114,
+                    "w": 999,
+                    "h": 1083,
+                    "block_id": 3,
+                    "type": "Text",
+                    "template_id": "2"
+                },
+                {
+                    "x": 58,
+                    "y": 1022,
+                    "w": 1023,
+                    "h": 595,
+                    "block_id": 6,
+                    "type": "Text",
+                    "template_id": "2"
+                },
+                {
+                    "x": 2306,
+                    "y": 1238,
+                    "w": 995,
+                    "h": 827,
+                    "block_id": 7,
+                    "type": "Text",
+                    "template_id": "2"
+                },
+                {
+                    "x": 1146,
+                    "y": 1446,
+                    "w": 1087,
+                    "h": 663,
+                    "block_id": 9,
+                    "type": "Text",
+                    "template_id": "2"
+                }
+            ]
+        }
+    ]
+}

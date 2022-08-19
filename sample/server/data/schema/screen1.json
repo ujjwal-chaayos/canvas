@@ -1,0 +1,251 @@
+{
+    "data": {
+      "cafe": {
+        "parentId": 1000,
+        "cafe_detail": {
+          "name": "Gigaplex",
+          "city": "Mumbai",
+          "state": "Maharashtra",
+          "address": "Building no 2,Floor 2nd,Cafe no 2,",
+          "pin": "400708",
+          "active": true
+        }
+      },
+      "timing": {
+          "s1":{
+              "slot":"MORNING",
+              "time":"9am"
+          },
+          "s2":{
+              "slot":"LUNCH",
+              "time":"1pm"
+          },
+          "s3":{
+              "slot":"EVENING",
+              "time":"5pm"
+          },
+          "s4":{
+              "slot":"DINNER",
+              "time":"8pm"
+          },
+          "s5":{
+              "slot":"POST_DINNER",
+              "time":"10pm"
+          }
+      },
+      "style":{
+          "font":["ROBOTO","ARIAL","SERIF"],
+          "size":["200px","400px","600px","800px"],
+          "color":["green","red","blue","black"],
+          "weight":["B","I","U"]
+      },
+      "icons":{
+          "i1":"",
+          "i2":"",
+          "i3":"",
+          "i4":"",
+          "i5":"",
+          "i6":"",
+          "i7":"",
+          "i8":""
+      },
+      "images": {
+        "qty": 5,
+        "image": 
+          { "img_id": "1", "value": "https://drive.google.com/file/d/1GqjVMvpalHmAD63Q0_gKfD5ObvUHmzgt/view?usp=sharing" }
+      },
+      "titles": {
+        "qty": 5,
+        "title": [
+          { "title_id": "t1", "value": "INDIAN CHAI" ,"block_id":"1"},
+          { "title_id": "t2", "value": "SHAKES" ,"block_id":"2"},
+          { "title_id": "t3", "value": "THANDI CHAI" ,"block_id":"3"},
+          { "title_id": "t4", "value": "UNCHAI" ,"block_id":"4"},
+          { "title_id": "t5", "value": "CHAI & CHILL" ,"block_id":"5"}
+        ]
+      },
+      "items": [
+        {
+          "block_id": "1",
+          "qty": 9,
+          "item": [
+            { "item_id": "1", "value": "Desi Chai", "icons":["https://drive.google.com/file/d/1HWMF5Pma0YiZUBcogXppJzFCj67TtdWU/view?usp=sharing","https://drive.google.com/file/d/1bIHpSAWgaTrC6ggtkg2_g0XY80vt0NUH/view?usp=sharing"], "style":"Gotham Narrow Bold" },
+            { "item_id": "2", "value": "Black Tea", "icons":["https://drive.google.com/file/d/1HWMF5Pma0YiZUBcogXppJzFCj67TtdWU/view?usp=sharing","https://drive.google.com/file/d/1bIHpSAWgaTrC6ggtkg2_g0XY80vt0NUH/view?usp=sharing"], "style":"Gotham Narrow Bold" },
+            { "item_id": "3", "value": "Green Tea", "icons":["https://drive.google.com/file/d/1yv-pNe45TH-sC_ETgDIxS0zbfByRIPWZ/view?usp=sharing"], "style":"Gotham Narrow Bold" },
+            { "item_id": "4", "value": "Baarish Lemongrass Chai", "icons":["https://drive.google.com/file/d/1UiWVVfq_vWKPK5GZW74D404g98Eyz1pN/view?usp=sharing"], "style":"Gotham Narrow Bold" },
+            { "item_id": "5", "value": "Cutting Tea", "icons":["https://drive.google.com/file/d/1HWMF5Pma0YiZUBcogXppJzFCj67TtdWU/view?usp=sharing","https://drive.google.com/file/d/1bIHpSAWgaTrC6ggtkg2_g0XY80vt0NUH/view?usp=sharing"], "style":"Gotham Narrow Bold" },
+            { "item_id": "6", "value": "Sulemani Nimbu Chai", "icons":["https://drive.google.com/file/d/1HWMF5Pma0YiZUBcogXppJzFCj67TtdWU/view?usp=sharing","https://drive.google.com/file/d/1bIHpSAWgaTrC6ggtkg2_g0XY80vt0NUH/view?usp=sharing"], "style":"Gotham Narrow Bold" },
+            { "item_id": "7", "value": "Kulhad Chai", "icons":["https://drive.google.com/file/d/1yv-pNe45TH-sC_ETgDIxS0zbfByRIPWZ/view?usp=sharing"], "style":"Gotham Narrow Bold" },
+            { "item_id": "8", "value": "Vegan Chai", "icons":["https://drive.google.com/file/d/1UiWVVfq_vWKPK5GZW74D404g98Eyz1pN/view?usp=sharing"], "style":"Gotham Narrow Bold" },
+            { "item_id": "9", "value": "Kesar Chai", "icons":["https://drive.google.com/file/d/1UiWVVfq_vWKPK5GZW74D404g98Eyz1pN/view?usp=sharing","https://drive.google.com/file/d/19R1ymjahcLvZNXWQjkOpqdWS8oCJkuSm/view?usp=sharing"], "style":"Gotham Narrow Black" }
+          ]
+        },
+        {
+          "block_id": "2",
+          "qty": 4,
+          "item": [
+            { "item_id": "1", "value": "Strawberry","icons":[], "style":"Gotham Narrow Bold" },
+            { "item_id": "2", "value": "Chocolate Shake","icons":["https://drive.google.com/file/d/1pvI9CasS0j3KTC96FpmDso7CgmymkZjR/view?usp=sharing","https://drive.google.com/file/d/1bIHpSAWgaTrC6ggtkg2_g0XY80vt0NUH/view?usp=sharing"], "style":"Gotham Narrow Bold" },
+            { "item_id": "3", "value": "Desi Cold Coffee","icons":["https://drive.google.com/file/d/1HWMF5Pma0YiZUBcogXppJzFCj67TtdWU/view?usp=sharing","https://drive.google.com/file/d/1bIHpSAWgaTrC6ggtkg2_g0XY80vt0NUH/view?usp=sharing"], "style":"Gotham Narrow Bold" },
+            { "item_id": "4", "value": "Kulfi Shake","icons":["https://drive.google.com/file/d/1HWMF5Pma0YiZUBcogXppJzFCj67TtdWU/view?usp=sharing"], "style":"Gotham Narrow Bold" }
+          ]
+        },
+        {
+          "block_id": "3",
+          "qty": 4,
+          "item": [
+            { "item_id": "1", "value": "Shaunf","icons":["https://drive.google.com/file/d/1UiWVVfq_vWKPK5GZW74D404g98Eyz1pN/view?usp=sharing"], "style":"Gotham Narrow Bold"  },
+            { "item_id": "2", "value": "Elaichi","icons":["https://drive.google.com/file/d/1UiWVVfq_vWKPK5GZW74D404g98Eyz1pN/view?usp=sharing"], "style":"Gotham Narrow Bold"  },
+            { "item_id": "3", "value": "Masala","icons":["https://drive.google.com/file/d/1yv-pNe45TH-sC_ETgDIxS0zbfByRIPWZ/view?usp=sharing"], "style":"Gotham Narrow Bold"  },
+            { "item_id": "4", "value": "Cinnamon","icons":["https://drive.google.com/file/d/1yv-pNe45TH-sC_ETgDIxS0zbfByRIPWZ/view?usp=sharing"], "style":"Gotham Narrow Bold"  }
+          ]
+        },
+        {
+          "block_id": "4",
+          "qty": 7,
+          "item": [
+            { "item_id": "1", "value": "Detox Kahwa","icons":[], "style":"Gotham Narrow Bold"  },
+            { "item_id": "2", "value": "Black Coffee","icons":[], "style":"Gotham Narrow Bold"  },
+            { "item_id": "3", "value": "Desi Filter Coffee","icons":["https://drive.google.com/file/d/1bIHpSAWgaTrC6ggtkg2_g0XY80vt0NUH/view?usp=sharing"], "style":"Gotham Narrow Bold"  },
+            { "item_id": "4", "value": "God's Chai","icons":[], "style":"Gotham Narrow Bold"  },
+            { "item_id": "5", "value": "Honey Ginger","icons":[], "style":"Gotham Narrow Bold"  },
+            { "item_id": "6", "value": "Drinking Chocolate","icons":[], "style":"Gotham Narrow Bold"  },
+            { "item_id": "7", "value": "Kashmiri Kahwa","icons":[], "style":"Gotham Narrow Bold"  }
+        ]
+        },
+        {
+          "block_id": "5",
+          "qty": 8,
+          "item": [
+            { "item_id": "1", "value": "Modinagar Shikanji","icons":[], "style":"Gotham Narrow Bold" },
+            { "item_id": "2", "value": "Mint Lemonade","icons":[], "style":"" },
+            { "item_id": "3", "value": "Aam Panna Iced Tea","icons":["https://drive.google.com/file/d/1pvI9CasS0j3KTC96FpmDso7CgmymkZjR/view?usp=sharing"], "style":"Gotham Narrow Bold" },
+            { "item_id": "4", "value": "Lemonade Iced Tea","icons":[], "style":"Gotham Narrow Bold" },
+            { "item_id": "5", "value": "Peach Iced Tea","icons":[], "style":"Gotham Narrow Bold" },
+            { "item_id": "6", "value": "Kala Khatta","icons":[], "style":"Gotham Narrow Bold" },
+            { "item_id": "7", "value": "Imly Banta","icons":["https://drive.google.com/file/d/1UiWVVfq_vWKPK5GZW74D404g98Eyz1pN/view?usp=sharing"], "style":"Gotham Narrow Bold" },
+            { "item_id": "8", "value": "Badam Thandai","icons":["https://drive.google.com/file/d/1UiWVVfq_vWKPK5GZW74D404g98Eyz1pN/view?usp=sharing","https://drive.google.com/file/d/1bIHpSAWgaTrC6ggtkg2_g0XY80vt0NUH/view?usp=sharing"], "style":"Gotham Narrow Bold" }
+          ]
+        }
+      ],
+      "prices": {
+        "r": {
+          "qty": 5,
+          "price": [
+            {
+            "block_id": "1",
+            "qty": 9,
+            "value":[
+              { "item_id": "0", "value":[{"id": "Regular","price":100}], "style":"Gotham Narrow Bold" },
+              { "item_id": "1", "value": "109", "style":"Gotham Narrow Bold" },
+              { "item_id": "2", "value": "139", "style":"Gotham Narrow Bold" },
+              { "item_id": "3", "value": "139", "style":"Gotham Narrow Bold" },
+              { "item_id": "4", "value": "149", "style":"Gotham Narrow Bold" },
+              { "item_id": "5", "value": "99", "style":"Gotham Narrow Black" },
+              { "item_id": "6", "value": "99", "style":"Gotham Narrow Black" },
+              { "item_id": "7", "value": "139", "style":"Gotham Narrow Black" },
+              { "item_id": "8", "value": "189", "style":"Gotham Narrow Black" },
+              { "item_id": "9", "value": "159", "style":"Gotham Narrow Black" }
+            ]
+            },{
+            "block_id": "2",
+            "qty": 4,
+            "value":[
+              { "item_id": "1", "value": "209", "style":"Gotham Narrow Bold" },
+              { "item_id": "2", "value": "219", "style":"Gotham Narrow Bold" },
+              { "item_id": "3", "value": "209", "style":"Gotham Narrow Bold" },
+              { "item_id": "4", "value": "219", "style":"Gotham Narrow Bold" }
+            ]},{
+            "block_id": "3",
+            "qty": 4,
+            "value": [
+              { "item_id": "1", "value": "189", "style":"Gotham Narrow Bold" },
+              { "item_id": "2", "value": "189", "style":"Gotham Narrow Bold" },
+              { "item_id": "3", "value": "189", "style":"Gotham Narrow Bold" },
+              { "item_id": "4", "value": "189", "style":"Gotham Narrow Bold" }
+            ]},{
+            "block_id": "4",
+            "qty": 7,
+            "value": [
+              { "item_id": "1", "value": "149", "style":"Gotham Narrow Bold" },
+              { "item_id": "2", "value": "149", "style":"Gotham Narrow Bold" },
+              { "item_id": "3", "value": "179", "style":"Gotham Narrow Bold" },
+              { "item_id": "4", "value": "159", "style":"Gotham Narrow Bold" },
+              { "item_id": "5", "value": "179", "style":"Gotham Narrow Bold" },
+              { "item_id": "6", "value": "209", "style":"Gotham Narrow Bold" },
+              { "item_id": "7", "value": "159", "style":"Gotham Narrow Bold" }
+            ]},{
+              "block_id": "5",
+              "qty": 8,
+              "value": [
+              { "item_id": "1", "value": "179", "style":"Gotham Narrow Bold" },
+              { "item_id": "2", "value": "179", "style":"Gotham Narrow Bold" },
+              { "item_id": "3", "value": "199", "style":"Gotham Narrow Bold" },
+              { "item_id": "4", "value": "199", "style":"Gotham Narrow Bold" },
+              { "item_id": "5", "value": "199", "style":"Gotham Narrow Bold" },
+              { "item_id": "6", "value": "199", "style":"Gotham Narrow Bold" },
+              { "item_id": "7", "value": "199", "style":"Gotham Narrow Bold" },
+              { "item_id": "8", "value": "219", "style":"Gotham Narrow Bold" }
+            ]}
+          ]
+        },
+        "f": {
+            "qty": 5,
+            "price": [{
+              "block_id": "1",
+              "qty": 9,
+              "value":[
+                { "item_id": "1", "value": "129", "style":"Gotham Narrow Bold" },
+                { "item_id": "2", "value": "165", "style":"Gotham Narrow Bold" },
+                { "item_id": "3", "value": "165", "style":"Gotham Narrow Bold" },
+                { "item_id": "4", "value": "165", "style":"Gotham Narrow Bold" },
+                { "item_id": "5", "value": "", "style":"Gotham Narrow Black" },
+                { "item_id": "6", "value": "", "style":"Gotham Narrow Black" },
+                { "item_id": "7", "value": "", "style":"Gotham Narrow Black" },
+                { "item_id": "8", "value": "", "style":"Gotham Narrow Black" },
+                { "item_id": "9", "value": "", "style":"Gotham Narrow Black" }
+              ]},{
+              "block_id": "2",
+              "qty": 4,
+              "value":[
+                { "item_id": "1", "value": "", "style":"Gotham Narrow Bold" },
+                { "item_id": "2", "value": "249", "style":"Gotham Narrow Bold" },
+                { "item_id": "3", "value": "239", "style":"Gotham Narrow Bold" },
+                { "item_id": "4", "value": "", "style":"Gotham Narrow Bold" }
+              ]},{
+              "block_id": "3",
+              "qty": 4,
+              "value": [
+                { "item_id": "1", "value": "", "style":"Gotham Narrow Bold" },
+                { "item_id": "2", "value": "", "style":"Gotham Narrow Bold" },
+                { "item_id": "3", "value": "", "style":"Gotham Narrow Bold" },
+                { "item_id": "4", "value": "", "style":"Gotham Narrow Bold" }
+              ]},{
+              "block_id": "4",
+              "qty": 7,
+              "value": [
+                { "item_id": "1", "value": "", "style":"Gotham Narrow Bold" },
+                { "item_id": "2", "value": "", "style":"Gotham Narrow Bold" },
+                { "item_id": "3", "value": "", "style":"Gotham Narrow Bold" },
+                { "item_id": "4", "value": "185", "style":"Gotham Narrow Bold" },
+                { "item_id": "5", "value": "205", "style":"Gotham Narrow Bold" },
+                { "item_id": "6", "value": "235", "style":"Gotham Narrow Bold" },
+                { "item_id": "7", "value": "185", "style":"Gotham Narrow Bold" }
+              ]},{
+                "block_id": "5",
+                "qty": 8,
+                "value": [
+                { "item_id": "1", "value": "209", "style":"Gotham Narrow Bold" },
+                { "item_id": "2", "value": "209", "style":"Gotham Narrow Bold" },
+                { "item_id": "3", "value": "229", "style":"Gotham Narrow Bold" },
+                { "item_id": "4", "value": "229", "style":"Gotham Narrow Bold" },
+                { "item_id": "5", "value": "229", "style":"Gotham Narrow Bold" },
+                { "item_id": "6", "value": "229", "style":"Gotham Narrow Bold" },
+                { "item_id": "7", "value": "229", "style":"Gotham Narrow Bold" },
+                { "item_id": "8", "value": "", "style":"Gotham Narrow Bold" }
+              ]}
+            ]
+          }
+      }
+    }
+  } 

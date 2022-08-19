@@ -11,7 +11,6 @@ import "./Home.css";
 // import "@fontsource/roboto/700.css";
 
 const Home = () => {
-
   return (
     <div>
       <Box

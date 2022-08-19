@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 
 import { Button, MenuItem, Select, Input, Typography } from "@mui/material";
@@ -6,40 +6,34 @@ import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const Preview = ({ type, manage }) => {
-
-
   function downloadBlob(blob, name) {
     // Convert your blob into a Blob URL (a special url that points to an object in the browser's memory)
-    
-  
+
     // Create a link element
     const link = document.createElement("a");
-  
+
     // Set link's href to point to the Blob URL
     link.href = blob;
     link.download = name;
-  
+
     // Append link to the body
     document.body.appendChild(link);
-  
+
     // Dispatch click event on the link
     // This is necessary as link.click() does not work on the latest firefox
     link.dispatchEvent(
-      new MouseEvent('click', { 
-        bubbles: true, 
-        cancelable: true, 
-        view: window 
+      new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+        view: window,
       })
     );
-  
+
     // Remove link from body
     document.body.removeChild(link);
   }
-  
-  // Usage
- 
-  
 
+  // Usage
 
   console.log("Block", type);
   const proceed = () => {
@@ -49,7 +43,7 @@ const Preview = ({ type, manage }) => {
     }
     if (type === "menu") {
       console.log("menu-n", type);
-      downloadBlob(JSON.parse(localStorage.getItem('finalMenu')), 'myfile.png');
+      downloadBlob(JSON.parse(localStorage.getItem("finalMenu")), "myfile.png");
       manage("menu-n");
     }
   };
@@ -67,7 +61,6 @@ const Preview = ({ type, manage }) => {
   };
 
   return (
-    
     <div>
       <Box
         position="fixed"
@@ -79,18 +72,17 @@ const Preview = ({ type, manage }) => {
           display: "flex",
           justifyContent: "center",
           backgroundColor: "primary.light",
-          
         }}
       >
         <div
           style={{
-            "display": "block",
+            display: "block",
             "align-items": "center",
             "justify-content": "center",
-            "width": "80%",
-           "margin": "1rem 0",
+            width: "80%",
+            margin: "1rem 0",
             "border-radius": "5px",
-            "cursor": "pointer",
+            cursor: "pointer",
           }}
         >
           <Typography
@@ -102,10 +94,23 @@ const Preview = ({ type, manage }) => {
           >
             Preview of {`${type}`}
           </Typography>
-          <Box sx={{ display: "flex", justifyContent: "center"}}>
-            {type==='image' && (<img src={JSON.parse(localStorage.getItem("productImgBlob"))} id="preview-image" width="776px" height="436px" />)}
-            {type==='menu' && (<img src={JSON.parse(localStorage.getItem("finalMenu"))} id="preview-image" width="776px" height="436px" />)}
-           
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            {type === "image" && (
+              <img
+                src={JSON.parse(localStorage.getItem("productImgBlob"))}
+                id="preview-image"
+                width="776px"
+                height="436px"
+              />
+            )}
+            {type === "menu" && (
+              <img
+                src={JSON.parse(localStorage.getItem("finalMenu"))}
+                id="preview-image"
+                width="776px"
+                height="436px"
+              />
+            )}
           </Box>
           <Box sx={{ display: "flex", p: 1, m: 1 }}>
             <div style={{ width: "50%" }}>
