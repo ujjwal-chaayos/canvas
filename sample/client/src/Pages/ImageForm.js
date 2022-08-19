@@ -138,8 +138,8 @@ const ImageForm = ({ blockIds, proceed }) => {
 
   const save = async (e) => {
     e.preventDefault();
-    console.log("backgroundBlob", backgroundBlob);
-    console.log(comingData);
+  //  console.log("backgroundBlob", backgroundBlob);
+  //  console.log(comingData);
     let comingData = await drawProductImage(
       JSON.parse(localStorage.getItem("orignalImg")),
       formFields,
@@ -168,8 +168,8 @@ const ImageForm = ({ blockIds, proceed }) => {
   }
 
   const handleUpload = async (event, value) => {
-    let coming_block_id = event.target.name;
-    let saved_block_id = value["block_id"];
+   // let coming_block_id = event.target.name;
+    //let saved_block_id = value["block_id"];
     console.log(event.target.files)
     let formdata=[];
     for(let i = 0 ; i<event.target.files.length; i++){
@@ -181,7 +181,7 @@ const ImageForm = ({ blockIds, proceed }) => {
      console.log(formdata);
      formFields[event.target.id]["image_info"] = formdata;
     setFormFields(formFields);
-  
+    console.log(formFields);
     // console.log(coming_block_id,saved_block_id,imgInfo,formFields)
   };
 

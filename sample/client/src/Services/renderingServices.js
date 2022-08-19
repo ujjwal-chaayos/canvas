@@ -120,7 +120,7 @@ export async function mergeTemplateBackground(template, background) {
 }
 
 export async function drawProductImage(background, imageData, coordinateData) {
-  //console.log(background,imageData,coordinateData)
+  console.log(background)
   let bgImg = new Image();
   bgImg.src = background;
   await loadImage(bgImg);
@@ -136,9 +136,12 @@ export async function drawProductImage(background, imageData, coordinateData) {
     w: bgImg.width,
     h: bgImg.height,
   });
+ console.log(imageData);
+ for (var i = 0; i < imageData.length; i++) {
 
-  for (var i = 0; i < imageData.length; i++) {
     let imgBlockId = imageData[i].block_id;
+    console.log(imageData.image_info);
+
     let itemImgInfo = imageData[i].image_info[0].blob;
     let productImg = new Image();
     productImg.src = itemImgInfo;

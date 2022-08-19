@@ -69,14 +69,6 @@ const Preview = ({ type, manage }) => {
     }
   };
 
- const proceedGif = () =>{
-       CreateGifImage(
-        JSON.parse(localStorage.getItem("backgroundBlob")),
-        JSON.parse(localStorage.getItem("formFields")),
-        JSON.parse(localStorage.getItem("coordinate")),
-      )
-  }
-
 
   return (
     
@@ -146,21 +138,6 @@ const Preview = ({ type, manage }) => {
                 onClick={proceed}
               >
                 Proceed
-              </Button>
-            </div>
-
-            <div style={{ width: "50%" }}>
-              <Button
-                variant="contained"
-                component="label"
-                color="primary"
-                alignItems="center"
-                justifyContent="center"
-                endIcon={<NavigateNextIcon />}
-                sx={{ display: "flex", p: 1, mx: 5 }}
-                onClick={proceedGif}
-              >
-                GIF
               </Button>
             </div>
           </Box>
