@@ -12,8 +12,8 @@ const ItemForm = ({blockIds,proceed}) => {
   console.log("here-item ",blockIds);
   let all_block_id = blockIds;
   let dummy_data= [
-    { "title_id": "t1", "value": "CHAAT PAKORE" ,"block_id":""},
-    { "title_id": "t2", "value": "SNACKS" ,"block_id":""},
+    { "title_id": "t1", "value": "Chaat Pakore" ,"block_id":""},
+    { "title_id": "t2", "value": "Chai Unchai" ,"block_id":""},
     { "title_id": "t3", "value": "SANDWICHES" ,"block_id":""},
     { "title_id": "t4", "value": "DESSERTS" ,"block_id":""},
     { "title_id": "t5", "value": "MEALS" ,"block_id":""}

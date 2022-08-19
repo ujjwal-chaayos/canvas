@@ -2,6 +2,7 @@ const mongo = require("mongoose");
 
 var screenSchema = mongo.Schema;
 
+
 var screenSchema = new Schema({
   cafe: {
     type : Object,
