@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 console.log("hello world");
-=======
 console.log("hello world")
->>>>>>> main
-=======
 require("dotenv").config();
 
 const express = require("express");
@@ -42,4 +38,4 @@ const connection = mongoose
 app.listen(8000, function () {
     console.log("server running on port 8000");
   });
->>>>>>> main
+

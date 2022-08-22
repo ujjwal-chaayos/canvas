@@ -16,7 +16,7 @@ exports.uploadTemplate = (req, res) => {
 }
 
 exports.setImageMapping = (req, res) => {
-
+       
 }
 
 exports.setItemMapping = (req, res) => {
