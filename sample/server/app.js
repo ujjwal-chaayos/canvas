@@ -20,6 +20,15 @@ app.use(cors());
 
 app.use(menu);
 
+function loadOpenCV() {
+    return new Promise(resolve => {
+      global.Module = {
+        onRuntimeInitialized: resolve
+      };
+      global.cv = require('./services/opencv.js');
+      console.log("cv object created");
+    });
+  }
 
 
 const connection = mongoose
@@ -36,6 +45,7 @@ const connection = mongoose
 
 
 app.listen(8000, function () {
+    loadOpenCV();
     console.log("server running on port 8000");
   });
 
