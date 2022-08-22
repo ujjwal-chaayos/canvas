@@ -1,4 +1,4 @@
-const cv = require("opencv.js")
+
 
 
 // function will return the coordinate of all blocks provided in template

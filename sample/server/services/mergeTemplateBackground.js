@@ -1,6 +1,4 @@
-
-const cv = require("opencv.js");
-
+const  cv = require('./opencv.js')
 const { createCanvas, loadImage } = require('canvas');
 
 const {drawText,
@@ -17,19 +15,29 @@ const {drawText,
 
 
 
-
 const mergeTemplateBackground = async (template, background) => {
   console.log(template,background);
     // let templateImg = new Image();
     // templateImg.src = template;
     // await loadImage(templateImg);
-    let context= createCanvas(templateImg.width,templateImg.height);
+    let screen1canvas;
+    let templateMat;
+    await loadImage(template).then(image => {
+      console.log(image.width, image.height);
+      screen1canvas= createCanvas(image.width, image.height);
+
+      screen1canvas.drawImage(image, 0, 0, image.width, image.height)
+      templateMat = cv.imread(image);
+
+    })
+
+    //let screen1canvas= createCanvas(templateImg.width,templateImg.height);
     // let screen1canvas = new OffscreenCanvas(
     //   templateImg.width,
     //   templateImg.height
     // );
     let screen1ctx = screen1canvas.getContext("2d");
-    let templateMat = cv.imread(templateImg);
+    //let templateMat = cv.imread(templateImg);
     let sortedCoordinates = sortCoordinates(getCoordinates(templateMat, cv));
   
     let bgImg = new Image();
