@@ -28,6 +28,7 @@ const UploadTemplate = () => {
   useEffect(() => {
     localStorage.setItem("coordinates", JSON.stringify(coordinates));
     localStorage.setItem("imageBlob", JSON.stringify(resultImage));
+    //localStorage.setItem("imageBlob", resultImage);
     localStorage.setItem("orignalImg", JSON.stringify(orignalImg));
   }, [coordinates]);
   let dummy_data;
@@ -49,6 +50,8 @@ const UploadTemplate = () => {
       imageContent: "",
       imageBlob: "",
     };
+
+    //changes
     imgInfo["imageBlob"] = URL.createObjectURL(event.target.files[0]);
 
     for (let myfile of event.target.files) {
@@ -71,7 +74,6 @@ const UploadTemplate = () => {
       temp.setAttribute("src", URL.createObjectURL(event.target.files[0]));
       console.log(temp);
     }
-
     //console.log(URL.createObjectURL(event.target.files[0]))
     setFile([...file, [imgInfo]]);
   };
@@ -86,19 +88,23 @@ const UploadTemplate = () => {
     let response;
     e.preventDefault();
     console.log("i am running")
+    console.log(file);
      if (file.length === 2) {
        dummy_data = file; //condition to save data
        let form = {
-        "file1":file[0][0]["imageBlob"],
-        "file2":file[1][0]['imageBlob']
+        "file1":file[0][0]["imageContent"],
+        "file2":file[1][0]['imageContent']
       }
       console.log(form);
+     // let response= await axios.post("http://localhost:800/uploadTemplate",form);
       let response = await axios({
         method: 'post',
         url: 'http://localhost:8000/uploadTemplate',
         data: form
     });
     console.log(response);
+       
+
     //   console.log(dummy_data);
     //   console.log(file);
     //   let { blob, blob2, sortedCoordinates } = await mergeTemplateBackground(
