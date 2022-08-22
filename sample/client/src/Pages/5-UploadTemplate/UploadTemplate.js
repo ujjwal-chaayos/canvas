@@ -66,12 +66,12 @@ const UploadTemplate = () => {
     if (event.target.id === "template") {
       let temp = document.getElementById("template1");
       temp.setAttribute("src", URL.createObjectURL(event.target.files[0]));
-      console.log(temp);
+     // console.log(temp);
     }
     if (event.target.id === "background") {
       let temp = document.getElementById("background1");
       temp.setAttribute("src", URL.createObjectURL(event.target.files[0]));
-      console.log(temp);
+     // console.log(temp);
     }
     //console.log(URL.createObjectURL(event.target.files[0]))
     setFile([...file, [imgInfo]]);
@@ -97,9 +97,9 @@ const UploadTemplate = () => {
        }
        
       
-      console.log(formData);
-      let response = await axios.post('http://localhost:8000/uploadTemplate', formData);
-    console.log(response);
+      //console.log(formData);
+     let response = await axios.post('http://localhost:8000/uploadTemplate', formData);
+   // console.log(response);
        
 
     //   console.log(dummy_data);
@@ -126,7 +126,7 @@ const UploadTemplate = () => {
       alert("Insert both Images..");
     }
   };
-  console.log("hello", resultImage);
+  //console.log("hello", resultImage);
   return (
     <Box
       position="absolute"
