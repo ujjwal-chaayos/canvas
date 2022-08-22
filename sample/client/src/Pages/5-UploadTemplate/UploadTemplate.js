@@ -83,15 +83,31 @@ const UploadTemplate = () => {
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // if (file.length === 2) {
-    //   dummy_data = file; //condition to save data
+    let response;
+    e.preventDefault();
+    console.log("i am running")
+     if (file.length === 2) {
+       dummy_data = file; //condition to save data
+       let form = {
+        "file1":file[0][0]["imageBlob"],
+        "file2":file[1][0]['imageBlob']
+      }
+      console.log(form);
+      let response = await axios({
+        method: 'post',
+        url: 'http://localhost:8000/uploadTemplate',
+        data: form
+    });
+    console.log(response);
     //   console.log(dummy_data);
     //   console.log(file);
     //   let { blob, blob2, sortedCoordinates } = await mergeTemplateBackground(
     //     file[0][0]["imageBlob"],
     //     file[1][0]["imageBlob"]
     //   );
+    
+
+       
 
     //   console.log(blob);
 
@@ -103,9 +119,9 @@ const UploadTemplate = () => {
     //   setOriginalImg(link2);
     //   setResultImage(link);
     //   setCoordinates(sortedCoordinates);
-    // } else {
-    //   alert("Insert both Images..");
-    // }
+    } else {
+      alert("Insert both Images..");
+    }
   };
   console.log("hello", resultImage);
   return (
