@@ -140,7 +140,7 @@ export async function drawProductImage(background, imageData, coordinateData) {
  for (var i = 0; i < imageData.length; i++) {
 
     let imgBlockId = imageData[i].block_id;
-    console.log(imageData.image_info);
+    //console.log(imageData.image_info);
 
     let itemImgInfo = imageData[i].image_info[0].blob;
     let productImg = new Image();
@@ -171,7 +171,7 @@ export async function drawProductImage(background, imageData, coordinateData) {
 
 }
 
-export async function drawItemText(background,bckgroundPlain ,mapping, coordinates) {
+export async function drawItemText(background,mapping, coordinates) {
   let bgImg = new Image();
   bgImg.src = background;
   await loadImage(bgImg);
@@ -187,23 +187,23 @@ export async function drawItemText(background,bckgroundPlain ,mapping, coordinat
     h: bgImg.height,
   });
 
-  let bgImg2 = new Image();
-  bgImg2.src = bckgroundPlain;
-  await loadImage(bgImg2);
-  let screen2canvas = new OffscreenCanvas(
-    bgImg.width,
-    bgImg.height
-  );
-  let screen2 = screen2canvas.getContext("2d");
-  drawImage(screen2, bgImg2, {
-    x: 0,
-    y: 0,
-    w: bgImg2.width,
-    h: bgImg2.height,
-  });
+  // let bgImg2 = new Image();
+  // bgImg2.src = bckgroundPlain;
+  // await loadImage(bgImg2);
+  // let screen2canvas = new OffscreenCanvas(
+  //   bgImg.width,
+  //   bgImg.height
+  // );
+  // let screen2 = screen2canvas.getContext("2d");
+  // drawImage(screen2, bgImg2, {
+  //   x: 0,
+  //   y: 0,
+  //   w: bgImg2.width,
+  //   h: bgImg2.height,
+  // });
 
   screen.save();
-  screen2.save();
+  //screen2.save();
   let coordinateJson = [];
   for (var i = 0; i < mapping.length; i++) {
     let titleBlockId = mapping[i].block_id;
@@ -268,14 +268,14 @@ export async function drawItemText(background,bckgroundPlain ,mapping, coordinat
       console.log("id " + id);
       let titleText = titles[id].value;
       screen.fillStyle = titleStyle.color.Title;
-      screen2.fillStyle = titleStyle.color.Title;
+     // screen2.fillStyle = titleStyle.color.Title;
 
       let style = titleStyle.weight.Title + " " + titleStyle.size.Title + " " + titleStyle.font.Title;
       screen.font = style;
-      screen2.font = style;
+     // screen2.font = style;
 
       screen.save();
-      screen2.save();
+    //  screen2.save();
       var x = titleCoordinate[i].x + Math.floor((titleCoordinate[i].w - screen.measureText(titleText).width) / 2);
       var x1 = x + screen.measureText(titleText).width;
       var y = titleCoordinate[i].y + (titleCoordinate[i].h - 40);
@@ -287,11 +287,11 @@ export async function drawItemText(background,bckgroundPlain ,mapping, coordinat
       points.y = y;
       //console.log(titleText);
       drawText(screen, titleText, points, style);
-      drawText(screen2, titleText, points, style);
+    //  drawText(screen2, titleText, points, style);
 
       points.y = y + 10;
       drawLine(screen, points, destPoint, style);
-      drawLine(screen2, points, destPoint, style);
+    //  drawLine(screen2, points, destPoint, style);
 
 
     }

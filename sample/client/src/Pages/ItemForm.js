@@ -61,7 +61,7 @@ const ItemForm = ({blockIds,proceed}) => {
   const save = async (e) => {
     console.log(titles);
     ///////////////////////////////
-    let {data}=await drawItemText(JSON.parse(localStorage.getItem('productImgBlob')), titles, JSON.parse(localStorage.getItem("coordinates")));
+    let data=await drawItemText(JSON.parse(localStorage.getItem('productImgBlob')), titles, JSON.parse(localStorage.getItem("coordinates")));
     console.log(data);
     let link = URL.createObjectURL(data['blob']);
    // let link2 = URL.createObjectURL(data2['blob']);
