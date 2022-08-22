@@ -1,50 +1,33 @@
 
 const cv = require("opencv.js");
 
+const { createCanvas, loadImage } = require('canvas');
+
 const {drawText,
     drawImage,
     drawContours,
     downloadImage,
     getCoordinates,
     sortCoordinates,
-    subBlockCoordinates,
-    roundedRect,
-    newItemRect,
-    drawLine} = require("./CVServices");
-
-const {
-    heightValidation,
-    widthValidation,
-    wrapValidation
-} = require("./ValidationService");
+} = require("./CVServices");
 
 
-const {uiJsonConverter} = require("./JSONConverter")
-const data = require("../data/schema/screen2.json")
-const newIcon = require("../data/background/New icon.svg")
-const nonvegIcon = require("../data/background/Non veg icon.svg")
-const vegIcon = require("../data/background/veg icon.svg")
-
-const menu = require("../data/Menus/menu.json");
 
 
-const loadImage = async (img) => {
-  return new Promise((resolve, reject) => {
-    img.onload = async () => {
-      resolve(true);
-    };
-  });
-};
+
+
 
 
 const mergeTemplateBackground = async (template, background) => {
-    let templateImg = new Image();
-    templateImg.src = template;
-    await loadImage(templateImg);
-    let screen1canvas = new OffscreenCanvas(
-      templateImg.width,
-      templateImg.height
-    );
+  console.log(template,background);
+    // let templateImg = new Image();
+    // templateImg.src = template;
+    // await loadImage(templateImg);
+    let context= createCanvas(templateImg.width,templateImg.height);
+    // let screen1canvas = new OffscreenCanvas(
+    //   templateImg.width,
+    //   templateImg.height
+    // );
     let screen1ctx = screen1canvas.getContext("2d");
     let templateMat = cv.imread(templateImg);
     let sortedCoordinates = sortCoordinates(getCoordinates(templateMat, cv));
@@ -108,4 +91,4 @@ const mergeTemplateBackground = async (template, background) => {
   }
 
 
-  module.exports = mergeTemplateBackground;
+  module.exports = {mergeTemplateBackground};

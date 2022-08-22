@@ -26,7 +26,7 @@ const getCoordinates = (template, cv) => {
     // stroing coordinates of each blocks define by contour in format of [{x,y,w,h}] , (x,y) are the coordinate of top left corner of blocks
     // and w,h are the height and width of respective block.
     const coordinates = [];
-    for (let i = 0; i < contours.size(); ++i)=>{
+    for (let i = 0; i < contours.size(); ++i){
         const ci = contours.get(i);
         let rect = cv.boundingRect(ci);
         let p = {};
