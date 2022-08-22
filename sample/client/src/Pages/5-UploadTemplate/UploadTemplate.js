@@ -50,7 +50,6 @@ const UploadTemplate = () => {
       imageBlob: "",
     };
     imgInfo["imageBlob"] = URL.createObjectURL(event.target.files[0]);
-
     for (let myfile of event.target.files) {
       let comingdata = await read(myfile);
       imgInfo["imageContent"] = comingdata;
@@ -88,16 +87,17 @@ const UploadTemplate = () => {
     console.log("i am running")
      if (file.length === 2) {
        dummy_data = file; //condition to save data
-       let form = {
-        "file1":file[0][0]["imageBlob"],
-        "file2":file[1][0]['imageBlob']
-      }
-      console.log(form);
-      let response = await axios({
-        method: 'post',
-        url: 'http://localhost:8000/uploadTemplate',
-        data: form
-    });
+       console.log(file);
+       let  formData = {
+        "file1":file[0][0],
+        "file2":file[1][0]
+       }
+       
+      
+      console.log(formData);
+      let response = await axios.post('http://localhost:8000/uploadTemplate', formData);
+        
+     
     console.log(response);
     //   console.log(dummy_data);
     //   console.log(file);
