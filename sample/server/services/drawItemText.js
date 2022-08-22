@@ -1,5 +1,5 @@
 
-const cv = require("opencv.js");
+const   cv = require('./opencv.js')
 
 const {drawText,
     drawImage,
