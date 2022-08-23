@@ -28,7 +28,6 @@ const UploadTemplate = () => {
   useEffect(() => {
     localStorage.setItem("coordinates", JSON.stringify(coordinates));
     localStorage.setItem("imageBlob", JSON.stringify(resultImage));
-    //localStorage.setItem("imageBlob", resultImage);
     localStorage.setItem("orignalImg", JSON.stringify(orignalImg));
   }, [coordinates]);
   let dummy_data;
@@ -50,7 +49,6 @@ const UploadTemplate = () => {
       imageContent: "",
       imageBlob: "",
     };
-
     imgInfo["imageBlob"] = URL.createObjectURL(event.target.files[0]);
     for (let myfile of event.target.files) {
       let comingdata = await read(myfile);
@@ -65,14 +63,15 @@ const UploadTemplate = () => {
     if (event.target.id === "template") {
       let temp = document.getElementById("template1");
       temp.setAttribute("src", URL.createObjectURL(event.target.files[0]));
-     // console.log(temp);
+      console.log(temp);
     }
     if (event.target.id === "background") {
       let temp = document.getElementById("background1");
       temp.setAttribute("src", URL.createObjectURL(event.target.files[0]));
-     // console.log(temp);
+      console.log(temp);
     }
-    console.log(URL.createObjectURL(event.target.files[0]))
+
+    //console.log(URL.createObjectURL(event.target.files[0]))
     setFile([...file, [imgInfo]]);
   };
 
@@ -88,45 +87,19 @@ const UploadTemplate = () => {
     console.log("i am running")
      if (file.length === 2) {
        dummy_data = file; //condition to save data
-       console.log(file);
-       let  formData = {
-        "file1":file[0][0]['imageInfo'],
-        "file2":file[1][0]['imageInfo']
-       }
-       const config={
-        headers : {
-          'Content-Type':'multipart/form-data'
-        }
-       }
+       console.log(file[0][0]['imageInfo']);
+       let  formData = new FormData();
+       formData.append("template",file[0][0]['imageInfo']);
+       formData.append("background",file[1][0]['imageInfo']);
       
       console.log(formData);
-      console.log(typeof(file[0][0]['imageInfo']))
-      // var data ={"formData":formData}
-    //  let response = await axios.post('http://localhost:8000/uploadTemplate', formData.
-    axios({
-      method:'post',
-      url:"http://localhost:8000/uploadTemplate",
-      data:formData,
-      headers:{
-        'Content-Type':'multipart'
-      }
-    })
-    .then((res)=>{
-        console.log("returned")
-    }).catch((e)=>{
-        console.log("Error occured")
-    })
-    //  ,{
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data'
-    //   }
-  // //   let response = await axios.post('http://localhost:8000/uploadTemplate', {
-  // //     body : formData,
-  // }
-
-   // console.log(response);
-       
-
+      let response = await axios.post('http://localhost:8000/uploadTemplate', formData,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }});
+        
+     
+    console.log(response);
     //   console.log(dummy_data);
     //   console.log(file);
     //   let { blob, blob2, sortedCoordinates } = await mergeTemplateBackground(
@@ -151,7 +124,7 @@ const UploadTemplate = () => {
       alert("Insert both Images..");
     }
   };
-  //console.log("hello", resultImage);
+  console.log("hello", resultImage);
   return (
     <Box
       position="absolute"
