@@ -1,6 +1,16 @@
 const  cv = require('./opencv.js')
+//const template = require("../data/templates/screen2.png")
+//const background = require("../data/templates/Meals-food Background.jpg")
 const { createCanvas, loadImage } = require('canvas');
+const { Image } = require('canvas')
+const fs = require('fs');
+var FileAPI = require('file-api')
+  , File = FileAPI.File
+  , FileList = FileAPI.FileList
+  , FileReader = FileAPI.FileReader
+  ;
 
+const {Blob} = require('node:buffer');
 const {drawText,
     drawImage,
     drawContours,
@@ -8,58 +18,134 @@ const {drawText,
     getCoordinates,
     sortCoordinates,
 } = require("./CVServices");
+//const async = require('async');
+
+const blobToImage =async  (blob,img) => {
+  return new Promise(resolve => {
+    const url = URL.createObjectURL(blob)
+    //let img = new Image()
+    img.onload = () => {
+      console.log(url);
+      URL.revokeObjectURL(url)
+      resolve(img)
+    }
+    img.src = url
+  })
+}
 
 
-const mergeTemplateBackground = async (template, background) => {
-  let tempImg = Object.keys(template).map(function (key) {
-    return template[key];
-  });
-  let back = Object.keys(background).map(function (key) {
-    return background[key];
-  });
-  console.log(tempImg);
-    //console.log("hiiiiiiiiii")
-    console.log(back);
 
 
-    const content = new Uint8Array(tempImg);
+const mergeTemplateBackground = async (tempImg, background) => {
+  //console.log(template,background);
 
-    document.getElementById('my-img').src = URL.createObjectURL(
-     new Blob([content.buffer], { type: 'image/png' } /* (1) */)
-    );
- // console.log(template,background);
+
+//   let tempImg = Object.keys(template).map(function (key) {
+         
+//     return template[key];
+// });
+console.log(tempImg.data);
+var img = new Image();
+img.onload = () => console.log(img.width, img.height)
+img.src = tempImg.data;
+
+
+// var reader = new FileReader();
+// console.log("------------------------");
+// console.log(tempImg);
+// let datauri = reader.readAsDataURL(tempImg.fileImage);
+// console.log("daturi  "+datauri);
+
+// let img = new Image();
+console.log("ji");
+//tempImg = new Uint8Array(tempImg);
+// let blob = new Blob([tempImg.data], { type: 'image/png' } /* (1) */);
+// console.log(blob);
+//const url = URL.createObjectURL(blob)
+//console.log(url);
+//img.src = url;
+// img.src = URL.createObjectURL(
+
+//   new Blob([tempImg.buffer], { type: 'image/png' } /* (1) */)
+// );
+//img = loadImage(tempImg);
+//console.log(img.width, img.height);
+
+console.log("agya");
+//let iimg = await blobToImage(blob,img);
+//console.log(iimg)
+
+
+// let imgX = await loadImage(tempImg);
+// console.log("LOG:::::::");
+// try{
+//   console.log("hi im in blob");
+//   console.log(image.width, image.height);
+//   screen1canvas= createCanvas(image.width, image.height);
+//   screen1ctx = screen1canvas.getContext("2d");
+//   screen1ctx.drawImage(image, 0, 0, image.width, image.height)
+//   templateMat = cv.imread(image);
+// } catch {
+//   console.error("Error in file");
+//}
+
+// let screen1canvas;
+// let screen1ctx;
+// let templateMat;
+// console.log("ji");
+
+// await loadImage(img).then(image => {
+//     console.log("hi im in blob");
+//     console.log(image.width, image.height);
+//     screen1canvas= createCanvas(image.width, image.height);
+//     screen1ctx = screen1canvas.getContext("2d");
+//     screen1ctx.drawImage(image, 0, 0, image.width, image.height)
+//     templateMat = cv.imread(image);
+// })
+
+
     // let templateImg = new Image();
     // templateImg.src = template;
     // await loadImage(templateImg);
-    //let objectURL = URL.createObjectURL(template);
-
-    ///////////
-    // console.log("in merge")
-    // console.log(template);
     // let screen1canvas;
     // let templateMat;
+    // let screen1ctx = screen1canvas.getContext("2d");
     // await loadImage(template).then(image => {
-    //  // console.log(image.width, image.height);
+    //   console.log(image.width, image.height);
     //   screen1canvas= createCanvas(image.width, image.height);
-
-    //   screen1canvas.drawImage(image, 0, 0, image.width, image.height)
+    //   screen1ctx = screen1canvas.getContext("2d");
+    //   screen1ctx.drawImage(image, 0, 0, image.width, image.height)
     //   templateMat = cv.imread(image);
 
     // })
-    //////////////////////////
 
-    //let screen1canvas= createCanvas(templateImg.width,templateImg.height);
-    // let screen1canvas = new OffscreenCanvas(
-    //   templateImg.width,
-    //   templateImg.height
+
+    // let url = URL.createObjectURL(
+    //   new Blob([template.buffer], { type: 'image/png' } /* (1) */)
     // );
-    // let screen1ctx = screen1canvas.getContext("2d");
+    // let templateImg = new Image();
+    // // templateImg.src = template;
+    // await loadImage(url).then(image => {
+    //   console.log(image.width, image.height);
+    //   screen1canvas= createCanvas(image.width, image.height);
+    //   screen1ctx = screen1canvas.getContext("2d");
+    //   screen1ctx.drawImage(image, 0, 0, image.width, image.height)
+    //   templateMat = cv.imread(image);
+
+    // })
+
+    // //let screen1canvas= createCanvas(templateImg.width,templateImg.height);
+    // // let screen1canvas = new OffscreenCanvas(
+    // //   templateImg.width,
+    // //   templateImg.height
+    // // );
+    // //let screen1ctx = screen1canvas.getContext("2d");
     // //let templateMat = cv.imread(templateImg);
     // let sortedCoordinates = sortCoordinates(getCoordinates(templateMat, cv));
   
-    let bgImg = new Image();
-    bgImg.src = template;
-    await loadImage(bgImg);
+    // let bgImg = new Image();
+    // bgImg.src = background;
+    // await loadImage(bgImg);
     // drawImage(screen1ctx, bgImg, {
     //   x: 0,
     //   y: 0,

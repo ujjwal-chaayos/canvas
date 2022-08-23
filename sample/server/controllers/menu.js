@@ -1,28 +1,29 @@
+
 require("dotenv").config();
 
-const express = require("express");
 const mongoose = require("mongoose");
 const Menu = require("../model/menu");
-const {mergeTemplateBackground} = require("../services/mergeTemplateBackground");
+
+const {mergeTemplateBackground}= require('../services/mergeTemplateBackground')
+
+
 
 exports.uploadTemplate = (req, res) => {
-  var app= express();
-  // app.get("https://cafes.chaayos.com/oneIndiaBulls.jpg",(req,res)=>{
-  //   console.log("@@@@@@@@@@@@");
-  //   console.log(res);
-  // })
-  console.log("uploadTemplate Called");
-  let data = req.body; 
-  console.log(data);
-  console.log("hi i m in");
+        console.log("uploadTemplate Called")
+        // console.log(req);
+        let data= req.body;
+   
+        console.log(req.files);
+        mergeTemplateBackground(req.files.fileImage, req.files.fileImage);
+        res.send("Hello World!");
+}
 
-// let src1 ="data:image/png;base64," + btoa(String.fromCharCode.apply(null, [data["file1"]["imageContent"]]));
- //let src2 ="data:image/png;base64," + btoa(String.fromCharCode.apply(null, [data["file2"]["imageContent"]]));
-mergeTemplateBackground(data['file1'],data['file2']);
-  res.send("Hello World!");
-};
+exports.setImageMapping = (req, res) => {
+        console.log(req);
+        res.send("Hello World! ");
+}
 
+exports.setItemMapping = (req, res) => {
 
-exports.setImageMapping = (req, res) => {};
+}
 
-exports.setItemMapping = (req, res) => {};
