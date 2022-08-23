@@ -87,15 +87,16 @@ const UploadTemplate = () => {
     console.log("i am running")
      if (file.length === 2) {
        dummy_data = file; //condition to save data
-       console.log(file);
-       let  formData = {
-        "file1":file[0][0],
-        "file2":file[1][0]
-       }
-       
+       console.log(file[0][0]['imageInfo']);
+       let  formData = new FormData();
+       formData.append("template",file[0][0]['imageInfo']);
+       formData.append("background",file[1][0]['imageInfo']);
       
       console.log(formData);
-      let response = await axios.post('http://localhost:8000/uploadTemplate', formData);
+      let response = await axios.post('http://localhost:8000/uploadTemplate', formData,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }});
         
      
     console.log(response);
