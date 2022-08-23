@@ -1,6 +1,5 @@
 
 console.log("hello world");
-console.log("hello world")
 require("dotenv").config();
 
 const express = require("express");
@@ -11,6 +10,7 @@ const mongoose = require("mongoose");
 const menu = require("./routes/menu")
 
 const app = express();
+
 
 
 app.disable('x-powered-by');
@@ -41,8 +41,9 @@ const connection = mongoose
     .then(() => console.log("Connected to MongoDB"))
     .catch(error => console.log(error));
 
-
-
+app.get("https://cafes.chaayos.com/oneIndiaBulls.jpg", (req, res)=>{
+  console.log(res);
+})
 
 app.listen(8000, function () {
     loadOpenCV();
