@@ -11,10 +11,14 @@ const {mergeTemplateBackground}= require('../services/mergeTemplateBackground')
 exports.uploadTemplate = (req, res) => {
         console.log("uploadTemplate Called")
         // console.log(req);
-        let data= req.body;
-   
+        let images =[];
+
         console.log(req.files);
-        mergeTemplateBackground(req.files.fileImage, req.files.fileImage);
+        for(var file in req.files){
+                images.push(req.files[file]);
+            }
+        console.log(images);
+        mergeTemplateBackground(images[0], images[1]);
         res.send("Hello World!");
 }
 

@@ -14,23 +14,18 @@ app.disable('x-powered-by');
 app.use(express.static("./public"))
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb'}));
-app.use(fileUpload({
-  limits: { fileSize: 50 * 1024 * 1024 },
-}));
+app.use(fileUpload());
 app.use(cors());
 app.use(menu);
 
 function loadOpenCV() {
-    return new Promise(resolve => {app.use(fileUpload({
-  limits: { fileSize: 50 * 1024 * 1024 },
-}));
-      global.Module = {
-        onRuntimeInitialized: resolve
-      };
-      global.cv = require('./services/opencv.js');
-      console.log("cv object created");
-    });
-  }
+  return new Promise(resolve => {
+    global.Module = {
+      onRuntimeInitialized: resolve
+    };
+    global.cv = require('./services/opencv.js');
+  });
+}
 
 
 const connection = mongoose
