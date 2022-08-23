@@ -44,10 +44,14 @@ const mergeTemplateBackground = async (tempImg, background) => {
          
 //     return template[key];
 // });
+console.log("hi hello");
+
 console.log(tempImg.data);
 var img = new Image();
-img.onload = () => console.log(img.width, img.height)
+
+img.onload = () => {}; // console.log(img.width, img.height)
 img.src = tempImg.data;
+console.log(img.width, img.height)
 
 
 // var reader = new FileReader();
