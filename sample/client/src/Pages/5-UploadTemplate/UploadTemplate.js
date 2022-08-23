@@ -51,7 +51,6 @@ const UploadTemplate = () => {
       imageBlob: "",
     };
 
-    //changes
     imgInfo["imageBlob"] = URL.createObjectURL(event.target.files[0]);
     for (let myfile of event.target.files) {
       let comingdata = await read(myfile);
@@ -73,7 +72,7 @@ const UploadTemplate = () => {
       temp.setAttribute("src", URL.createObjectURL(event.target.files[0]));
      // console.log(temp);
     }
-    //console.log(URL.createObjectURL(event.target.files[0]))
+    console.log(URL.createObjectURL(event.target.files[0]))
     setFile([...file, [imgInfo]]);
   };
 
@@ -87,18 +86,44 @@ const UploadTemplate = () => {
     let response;
     e.preventDefault();
     console.log("i am running")
-    console.log(file);
      if (file.length === 2) {
        dummy_data = file; //condition to save data
        console.log(file);
        let  formData = {
-        "file1":file[0][0],
-        "file2":file[1][0]
+        "file1":file[0][0]['imageInfo'],
+        "file2":file[1][0]['imageInfo']
        }
-       
+       const config={
+        headers : {
+          'Content-Type':'multipart/form-data'
+        }
+       }
       
-      //console.log(formData);
-     let response = await axios.post('http://localhost:8000/uploadTemplate', formData);
+      console.log(formData);
+      console.log(typeof(file[0][0]['imageInfo']))
+      // var data ={"formData":formData}
+    //  let response = await axios.post('http://localhost:8000/uploadTemplate', formData.
+    axios({
+      method:'post',
+      url:"http://localhost:8000/uploadTemplate",
+      data:formData,
+      headers:{
+        'Content-Type':'multipart'
+      }
+    })
+    .then((res)=>{
+        console.log("returned")
+    }).catch((e)=>{
+        console.log("Error occured")
+    })
+    //  ,{
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data'
+    //   }
+  // //   let response = await axios.post('http://localhost:8000/uploadTemplate', {
+  // //     body : formData,
+  // }
+
    // console.log(response);
        
 
