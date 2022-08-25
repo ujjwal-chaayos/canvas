@@ -93,29 +93,25 @@ const UploadTemplate = () => {
        formData.append("template",file[0][0]['imageInfo']);
        formData.append("background",file[1][0]['imageInfo']);
       
-      console.log(formData);
+    
       let response = await axios.post('http://localhost:8000/uploadTemplate', formData,{
         headers: {
           "Content-Type": "multipart/form-data",
         }});
         
-    let returnedImg ='data:image/jpeg;base64,' +response.data['backgroundWithContours'];
-    localStorage.setItem("returnedImgWithContours",returnedImg);
-  
-   
+        fetch('data:image/jpeg;base64,' +response.data['background'])
+        .then(res => res.blob())
+        .then(blob => {
+          setOriginalImg(window.URL.createObjectURL(blob));     
+        });
+    fetch('data:image/jpeg;base64,' +response.data['backgroundWithContours'])
+    .then(res => res.blob())
+    .then(blob => {
+      setResultImage(window.URL.createObjectURL(blob));     
+    });
 
-       
-
-    
-
-    //   let temp = document.getElementById("background1");
-
-    //   let link = URL.createObjectURL(blob);
-    //   let link2 = URL.createObjectURL(blob2);
-    //   console.log(link, link2);
-    //   setOriginalImg(link2);
-      setResultImage(returnedImg);
-    //   setCoordinates(sortedCoordinates);
+ 
+      setCoordinates(response.data['sortedCoordinates']);
     } else {
       alert("Insert both Images..");
     }
