@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("/uploadTemplate", uploadTemplate);
 
-router.post("/setImageMapping", setImageMapping);
+router.post("/uploadProducts", setImageMapping);
 
 router.post("/setItemMapping", setItemMapping);
 
