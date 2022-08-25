@@ -125,6 +125,7 @@ const ImageForm = ({ blockIds, proceed }) => {
   };
 
   const save = async (e) => {
+
     // e.preventDefault();
     // console.log("backgroundBlob", backgroundBlob);
     // console.log(comingData);
@@ -139,6 +140,7 @@ const ImageForm = ({ blockIds, proceed }) => {
     // console.log(formFields);
     // localStorage.setItem("productImgBlob", JSON.stringify(link));
     // proceed(leftValues);
+    
   };
 
   const removeFields = () => {
@@ -158,30 +160,21 @@ const ImageForm = ({ blockIds, proceed }) => {
   const handleUpload = async (event, value) => {
     let coming_block_id = event.target.name;
     let saved_block_id = value["block_id"];
-    let imgInfo = {
-      imageId: "",
-      imageInfo: "",
-      imageType: "",
-      imageContent: "",
-      imageBlob: "",
-    };
-    imgInfo["imageBlob"] = URL.createObjectURL(event.target.files[0]);
-    for (let myfile of event.target.files) {
-      let comingdata = await read(myfile);
-      imgInfo["imageContent"] = comingdata;
-    }
-    const files = event.target.files;
-
-    imgInfo["imageInfo"] = files[0];
-    imgInfo["imageType"] = files[0].name.split(".")[1];
-    imgInfo["imageId"] = event.target.id;
-    formFields[event.target.id]["image_info"] = imgInfo;
+    // let coming_block_id = event.target.name;
+    //let saved_block_id = value["block_id"];
+    console.log(event.target.files)
+    let formdata=[];
+    for(let i = 0 ; i<event.target.files.length; i++){
+     formdata.push(event.target.files[i])
+  
+    let imgBlob = URL.createObjectURL(event.target.files[i]);
+    formdata[i]['blob']=imgBlob;
+   } 
+     console.log(formdata);
+     formFields[event.target.id]["image_info"] = formdata;
     setFormFields(formFields);
-
-    // console.log(coming_block_id,saved_block_id,imgInfo,formFields)
-  };
-
-  console.log(formFields);
+    console.log(formFields);
+  } 
 
   return (
     <Box
@@ -206,7 +199,7 @@ const ImageForm = ({ blockIds, proceed }) => {
           backgroundColor: "primary.light",
           "& button": { m: 2 },
           overflow: "hidden",
-          overflowY: "scroll",
+          overflowY: "scroll",  
         }}
       >
         {bottomForm ? (
@@ -352,7 +345,8 @@ const ImageForm = ({ blockIds, proceed }) => {
                     <input
                       id={index}
                       type="file"
-                      hidden
+                      multiple
+                      //hidden
                       name={`${value["block_id"]}`}
                       onChange={(e) => handleUpload(e, value)}
                     />

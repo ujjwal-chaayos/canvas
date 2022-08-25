@@ -16,6 +16,7 @@ exports.uploadTemplate = (req, res) => {
                 images.push(req.files[file]);
             }
         let response =  mergeTemplateBackground(images[0], images[1]);
+
         console.log(response);
         res.send(response);
 }
