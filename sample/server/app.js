@@ -1,3 +1,5 @@
+
+console.log("hello world");
 require("dotenv").config();
 const { JSDOM } = require('jsdom');
 const { Canvas, createCanvas, Image, ImageData, loadImage } = require('canvas');
@@ -9,6 +11,7 @@ const fileUpload = require("express-fileupload");
 const menu = require("./routes/menu")
 
 const app = express();
+
 
 
 app.disable('x-powered-by');
@@ -50,11 +53,13 @@ const connection = mongoose
     .then(() => console.log("Connected to MongoDB"))
     .catch(error => console.log(error));
 
-
-
+app.get("https://cafes.chaayos.com/oneIndiaBulls.jpg", (req, res)=>{
+  console.log(res);
+})
 
 app.listen(8000, function () {
     installDOM();
     loadOpenCV();
     console.log("server running on port 8000");
   }); 
+

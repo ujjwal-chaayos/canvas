@@ -76,6 +76,7 @@ const UploadTemplate = () => {
   };
 
   const seePreview = async (e) => {
+    console.log({resultImage});
     if (resultImage !== "") {
       navigate(`/preview/${screenId}/${tempId}`);
     }
@@ -100,22 +101,25 @@ const UploadTemplate = () => {
         
     let returnedImg ='data:image/jpeg;base64,' +response.data['backgroundWithContours'];
     localStorage.setItem("returnedImgWithContours",returnedImg);
-    console.log(returnedImg);
+   
+
+       
+
     
 
-      
+    //   let temp = document.getElementById("background1");
 
     //   let link = URL.createObjectURL(blob);
     //   let link2 = URL.createObjectURL(blob2);
     //   console.log(link, link2);
-    //   setOriginalImg(link2);
-       setResultImage(returnedImg);
+    //   setOriginalImg(link2)
+      setResultImage(returnedImg);
     //   setCoordinates(sortedCoordinates);
     } else {
       alert("Insert both Images..");
     }
   };
-  console.log("hello", resultImage);
+
   return (
     <Box
       position="absolute"
