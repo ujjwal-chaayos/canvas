@@ -27,6 +27,7 @@ const UploadTemplate = () => {
 
   useEffect(() => {
     localStorage.setItem("coordinates", JSON.stringify(coordinates));
+    console.log(resultImage);
     localStorage.setItem("imageBlob", JSON.stringify(resultImage));
     localStorage.setItem("orignalImg", JSON.stringify(orignalImg));
   }, [coordinates]);
@@ -98,24 +99,13 @@ const UploadTemplate = () => {
         headers: {
           "Content-Type": "multipart/form-data",
         }});
-        
-    let returnedImg ='data:image/jpeg;base64,' +response.data['backgroundWithContours'];
-    localStorage.setItem("returnedImgWithContours",returnedImg);
-  
-   
-
-       
-
-    
-
-    //   let temp = document.getElementById("background1");
-
-    //   let link = URL.createObjectURL(blob);
-    //   let link2 = URL.createObjectURL(blob2);
-    //   console.log(link, link2);
-    //   setOriginalImg(link2);
-      setResultImage(returnedImg);
-    //   setCoordinates(sortedCoordinates);
+        let bf =response.data['backgroundWithContours'].data ;
+       let blob =  new Blob([bf],{ type: "image/png" });
+        console.log(blob);
+      //  console.log(URL.createObjectURL(bf));
+       //setOriginalImg('data:image/jpeg;base64,' +response.data['background']);
+      //setResultImage(response.data['backgroundWithContours'].data );
+       setCoordinates(response.data['sortedCoordinates']);
     } else {
       alert("Insert both Images..");
     }

@@ -70,7 +70,7 @@ sortedCoordinates.forEach((e) => {
 
 
 
-  let buffer1 = screen1canvas.toBuffer('image/png').toString('base64');
+  let buffer1 = screen1canvas.toBuffer('image/png');
   let buffer2 = screen2canvas.toBuffer('image/png').toString('base64');
   return {"backgroundWithContours":buffer1,"background":buffer2,"sortedCoordinates": sortedCoordinates};
 
