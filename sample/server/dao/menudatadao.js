@@ -1,35 +1,51 @@
-//readbyid
-function read(callback) {
-    screen.find({}).exec(function (err, result) {
-      if (err) throw err;
-      callback(result);
-    });
+const mongoose = require("mongoose");
+const Menu = require("../model/menu");
+
+function getAll() {
+  const menus = await Menu.find({});
+  try {
+    return "found"
+  } catch (error) {
+    console.log(error)
   }
-function write(screendata, callback) {
-    // var postdata = new screen({
-    //     cafe: screendata.cafe,
-    //     timing: screendata.timing,
-    //     style: screendata.style,
-    //     icons: screendata.icons,
-    //     images: screendata.images,
-    //     titles: screendata.titles,
-    //     items: screendata.items,
-    //     prices: screendata.prices,
-    //     });
-    postdata.save(function (err) {
-    if (err) throw err;
-    callback();
-    });
+  }
+
+  function getById(id) {
+    const menus = await User.findById(id, function (err, docs) {
+      if (err){
+          console.log(err);
+      }
+      else{
+          return docs;
+      }
+  });
+    }
+
+function write(data) {
+  const menu = new Menu(data);
+  try {
+    await menu.save();
+    return "data saved"
+  } catch (error) {
+    console.log(error)
+  }
 }
-//delete by id
-function del(callback) {
-    screen.deleteMany({}, function (err) {
+
+function deleteByQuery(query) {
+  screen.deleteOne({ query }, function (err) {
+    if (err) throw err;
+   
+  });
+}
+
+function deleteById(id) {
+    screen.deleteOne({ _id: id }, function (err) {
       if (err) throw err;
-      callback();
+     
     });
   }
   module.exports={  
-    readAll,
+    getAll,getById,
     write,
-    del
+    deleteByQuery,deleteById
   };

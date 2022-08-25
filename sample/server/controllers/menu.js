@@ -1,8 +1,6 @@
 
 require("dotenv").config();
 
-const mongoose = require("mongoose");
-const Menu = require("../model/menu");
 
 const {mergeTemplateBackground}= require('../services/mergeTemplateBackground')
 
@@ -18,8 +16,8 @@ exports.uploadTemplate = (req, res) => {
                 images.push(req.files[file]);
             }
         console.log(images);
-        mergeTemplateBackground(images[0], images[1]);
-        res.send("Hello World!");
+       let response =  mergeTemplateBackground(images[0], images[1]);
+        res.send(response);
 }
 
 exports.setImageMapping = (req, res) => {
