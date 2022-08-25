@@ -34,7 +34,7 @@ const Block = () => {
   const [type, setType] = useState('image');
 
 
-
+  console.log(localStorage.setItem("returnedImg"));
   const manageBlockId = (left) => {
     console.log(left);
     setIds(left);
@@ -71,7 +71,7 @@ const Block = () => {
 
       case "image":   return <ImageForm blockIds={ids} proceed={manageBlockId} />;
       case "item":   return <ItemForm blockIds={ids} proceed={manageItemId} />;
-      case "preview": return <Preview type={type} manage={manageImagePreview} />;
+      case "preview": return <Preview type={type} manage={manageImagePreview}/>;
       case "save": return <FinalPage />;
     
 
