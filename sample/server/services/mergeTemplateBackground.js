@@ -1,16 +1,16 @@
-const  cv = require('./opencv.js')
+// const  cv = require('./opencv.js')
 //const template = require("../data/templates/screen2.png")
 //const background = require("../data/templates/Meals-food Background.jpg")
 const { createCanvas, loadImage } = require('canvas');
 const { Image } = require('canvas')
-const fs = require('fs');
-var FileAPI = require('file-api')
-  , File = FileAPI.File
-  , FileList = FileAPI.FileList
-  , FileReader = FileAPI.FileReader
-  ;
+//const fs = require('fs');
+// var FileAPI = require('file-api')
+//   , File = FileAPI.File
+//   , FileList = FileAPI.FileList
+//   , FileReader = FileAPI.FileReader
+//   ;
 
-const {Blob} = require('node:buffer');
+//const {Blob} = require('node:buffer');
 const {drawText,
     drawImage,
     drawContours,
@@ -20,18 +20,18 @@ const {drawText,
 } = require("./CVServices");
 //const async = require('async');
 
-const blobToImage =async  (blob,img) => {
-  return new Promise(resolve => {
-    const url = URL.createObjectURL(blob)
-    //let img = new Image()
-    img.onload = () => {
-      console.log(url);
-      URL.revokeObjectURL(url)
-      resolve(img)
-    }
-    img.src = url
-  })
-}
+// const blobToImage =async  (blob,img) => {
+//   return new Promise(resolve => {
+//     const url = URL.createObjectURL(blob)
+//     //let img = new Image()
+//     img.onload = () => {
+//       console.log(url);
+//       URL.revokeObjectURL(url)
+//       resolve(img)
+//     }
+//     img.src = url
+//   })
+// }
 
 
 
@@ -49,10 +49,16 @@ console.log("hi hello");
 console.log(tempImg.data);
 var img = new Image();
 
-img.onload = () => {}; // console.log(img.width, img.height)
+ img.onload = () => {}; // console.log(img.width, img.height)
 img.src = tempImg.data;
 console.log(img.width, img.height)
-
+let screen1canvas= createCanvas(img.width, img.height);
+let screen1ctx = screen1canvas.getContext("2d");
+screen1ctx.drawImage(img, 0, 0, img.width, img.height)
+let templateMat = cv.imread(img);
+console.log(templateMat.size());
+let sortedCoordinates = sortCoordinates(getCoordinates(templateMat, cv));
+console.log(sortedCoordinates);
 
 // var reader = new FileReader();
 // console.log("------------------------");

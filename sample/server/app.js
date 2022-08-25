@@ -1,7 +1,8 @@
 
 console.log("hello world");
 require("dotenv").config();
-
+const { JSDOM } = require('jsdom');
+const { Canvas, createCanvas, Image, ImageData, loadImage } = require('canvas');
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -21,7 +22,18 @@ app.use(fileUpload());
 app.use(cors());
 app.use(menu);
 
+function installDOM() {
+  const dom = new JSDOM();
+  global.document = dom.window.document;
+  // The rest enables DOM image and canvas and is provided by node-canvas
+  global.Image = Image;
+  global.HTMLCanvasElement = Canvas;
+  global.ImageData = ImageData;
+  global.HTMLImageElement = Image;
+}
+
 function loadOpenCV() {
+ 
   return new Promise(resolve => {
     global.Module = {
       onRuntimeInitialized: resolve
@@ -46,7 +58,8 @@ app.get("https://cafes.chaayos.com/oneIndiaBulls.jpg", (req, res)=>{
 })
 
 app.listen(8000, function () {
+    installDOM();
     loadOpenCV();
     console.log("server running on port 8000");
-  });
+  }); 
 
