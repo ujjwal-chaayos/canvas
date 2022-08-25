@@ -76,7 +76,7 @@ const UploadTemplate = () => {
   };
 
   const seePreview = async (e) => {
-    console.log(resultImage);
+    console.log({resultImage});
     if (resultImage !== "") {
       navigate(`/preview/${screenId}/${tempId}`);
     }
