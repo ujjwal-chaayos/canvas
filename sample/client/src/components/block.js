@@ -33,8 +33,6 @@ const Block = () => {
   const [show, setShow] = useState('image');   //"image","item","preview"
   const [type, setType] = useState('image');
 
-
-  console.log(localStorage.setItem("returnedImg"));
   const manageBlockId = (left) => {
     console.log(left);
     setIds(left);
