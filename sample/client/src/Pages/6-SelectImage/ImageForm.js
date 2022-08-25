@@ -373,7 +373,7 @@ const ImageForm = ({ blockIds, proceed }) => {
         )}
       </Box>
       <Box width="60%" sx={{ p: 9 }}>
-        <img src={backgroundBlob} width="100%" height="90%" />
+        <img src={localStorage.getItem("returnedImgWithContours")} width="100%" height="90%" />
       </Box>
     </Box>
   );

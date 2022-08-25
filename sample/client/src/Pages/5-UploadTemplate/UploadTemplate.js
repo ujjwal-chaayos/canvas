@@ -27,7 +27,6 @@ const UploadTemplate = () => {
 
   useEffect(() => {
     localStorage.setItem("coordinates", JSON.stringify(coordinates));
-    console.log(resultImage);
     localStorage.setItem("imageBlob", JSON.stringify(resultImage));
     localStorage.setItem("orignalImg", JSON.stringify(orignalImg));
   }, [coordinates]);
@@ -77,7 +76,7 @@ const UploadTemplate = () => {
   };
 
   const seePreview = async (e) => {
-    console.log(resultImage);
+    console.log({resultImage});
     if (resultImage !== "") {
       navigate(`/preview/${screenId}/${tempId}`);
     }
@@ -94,18 +93,25 @@ const UploadTemplate = () => {
        formData.append("template",file[0][0]['imageInfo']);
        formData.append("background",file[1][0]['imageInfo']);
       
-      console.log(formData);
+    
       let response = await axios.post('http://localhost:8000/uploadTemplate', formData,{
         headers: {
           "Content-Type": "multipart/form-data",
         }});
-        let bf =response.data['backgroundWithContours'].data ;
-       let blob =  new Blob([bf],{ type: "image/png" });
-        console.log(blob);
-      //  console.log(URL.createObjectURL(bf));
-       //setOriginalImg('data:image/jpeg;base64,' +response.data['background']);
-      //setResultImage(response.data['backgroundWithContours'].data );
-       setCoordinates(response.data['sortedCoordinates']);
+        
+        fetch('data:image/jpeg;base64,' +response.data['background'])
+        .then(res => res.blob())
+        .then(blob => {
+          setOriginalImg(window.URL.createObjectURL(blob));     
+        });
+    fetch('data:image/jpeg;base64,' +response.data['backgroundWithContours'])
+    .then(res => res.blob())
+    .then(blob => {
+      setResultImage(window.URL.createObjectURL(blob));     
+    });
+
+ 
+      setCoordinates(response.data['sortedCoordinates']);
     } else {
       alert("Insert both Images..");
     }
