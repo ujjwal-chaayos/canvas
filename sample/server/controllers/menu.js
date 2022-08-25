@@ -20,9 +20,16 @@ exports.uploadTemplate = (req, res) => {
         res.send(response);
 }
 
-exports.setImageMapping = (req, res) => {
-        console.log(req);
-        res.send("Hello World! ");
+exports.uploadProductImages = (req, res) => {
+        let images =[];
+        console.log(req.files);
+        for(var file in req.files){
+                images.push({"block_id":"",
+                        "imageInfo":req.files[file].data});
+            }
+        let response =  mergeTemplateBackground(images[0], images[1]);
+        console.log(response);
+        res.send(response);
 }
 
 exports.setItemMapping = (req, res) => {
