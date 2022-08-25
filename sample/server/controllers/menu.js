@@ -19,7 +19,7 @@ exports.uploadTemplate = (req, res) => {
         console.log(response);
         res.send(response);
 }
-
+/*
 exports.uploadProductImages = (req, res) => {
         let images =[];
         console.log(req.files);
@@ -31,7 +31,7 @@ exports.uploadProductImages = (req, res) => {
         console.log(response);
         res.send(response);
 }
-
+*/
 exports.setItemMapping = (req, res) => {
 
 }
