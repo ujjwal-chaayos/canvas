@@ -15,6 +15,7 @@ const {drawText,
 
 
 
+
 const mergeTemplateBackground =  (template, background) => {
 
 
@@ -24,7 +25,7 @@ tempImg.src = template.data;
 let screen1canvas= createCanvas(tempImg.width, tempImg.height);
 let screen1ctx = screen1canvas.getContext("2d");
 let templateMat = cv.imread(tempImg);
-let sortedCoordinates1 = sortCoordinates(getCoordinates(templateMat, cv));
+let sortedCoordinates = sortCoordinates(getCoordinates(templateMat, cv));
 
 let bgImg = new Image();
 bgImg.onload = () => {};
@@ -35,7 +36,7 @@ drawImage(screen1ctx, bgImg,{
   w: tempImg.width,
   h: tempImg.height,
 });
-sortedCoordinates1.forEach((e) => {
+sortedCoordinates.forEach((e) => {
   drawContours(e, cv, screen1ctx);
 });
 
@@ -55,7 +56,7 @@ screen2ctx.save();
 
 screen1ctx.fillStyle = "#000000";
 screen1ctx.save();
-sortedCoordinates1.forEach((e) => {
+sortedCoordinates.forEach((e) => {
   drawText(
     screen1ctx,
     e["block_id"],
@@ -68,9 +69,12 @@ sortedCoordinates1.forEach((e) => {
 });
 
 
+
   let buffer1 = screen1canvas.toBuffer('image/png').toString('base64');
   let buffer2 = screen2canvas.toBuffer('image/png').toString('base64');
-  return {"backgroundWithContours":buffer1,"background":buffer2,"sortedCoordinates": sortedCoordinates1};
+  return {"backgroundWithContours":buffer1,"background":buffer2,"sortedCoordinates": sortedCoordinates};
+
+  
 }
 
 
