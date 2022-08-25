@@ -48,7 +48,7 @@ const drawProductImage =  (background, imageData, coordinateData) => {
       let imgBlockId = imageData[i].block_id;
      // let itemImgInfo = imageData[i].image_info.imageBlob;
 
-      let itemImgInfo = imageData[i].imageInfo;
+      let itemImgInfo = imageData[i].imageInfo[0];
       let productImg = new Image();
       productImg.onload = () => {};
       productImg.src = itemImgInfo;

@@ -98,7 +98,11 @@ const UploadTemplate = () => {
         headers: {
           "Content-Type": "multipart/form-data",
         }});
-        
+        console.log("fetching base 64");
+        fetch('data:image/jpeg;base64,' +response.data['background'])
+        .then(res =>console.log(res));
+       
+
         fetch('data:image/jpeg;base64,' +response.data['background'])
         .then(res => res.blob())
         .then(blob => {
