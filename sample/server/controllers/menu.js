@@ -10,16 +10,21 @@ const {mergeTemplateBackground}= require('../services/mergeTemplateBackground')
 
 exports.uploadTemplate = (req, res) => {
         console.log("uploadTemplate Called")
-        let data= req.body;
-     let src1 =     "data:image/png;base64,"+ btoa(String.fromCharCode.apply(null, [data['file1']['imageContent']]));
-     let src2 =     "data:image/png;base64,"+ btoa(String.fromCharCode.apply(null, [data['file2']['imageContent']]));
+        // console.log(req);
+        let images =[];
 
-        mergeTemplateBackground(data['file1']['imageInfo'],data['file2']['imageInfo']);
+        console.log(req.files);
+        for(var file in req.files){
+                images.push(req.files[file]);
+            }
+        console.log(images);
+        mergeTemplateBackground(images[0], images[1]);
         res.send("Hello World!");
 }
 
 exports.setImageMapping = (req, res) => {
-
+        console.log(req);
+        res.send("Hello World! ");
 }
 
 exports.setItemMapping = (req, res) => {
