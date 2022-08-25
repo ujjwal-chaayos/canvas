@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import { Button, MenuItem, Select, Input, Typography } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-//import { CreateGifImage } from "../Services/renderingServices";
 
 const Preview = ({ type, manage }) => {
   function downloadBlob(blob, name) {
@@ -37,8 +36,6 @@ const Preview = ({ type, manage }) => {
   // Usage
 
   console.log("Block", type);
-
-
   const proceed = () => {
     if (type === "image") {
       console.log("image-n", type);
@@ -62,7 +59,6 @@ const Preview = ({ type, manage }) => {
       manage("menu-p");
     }
   };
-
 
   return (
     <div>
@@ -101,7 +97,7 @@ const Preview = ({ type, manage }) => {
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             {type === "image" && (
               <img
-                src={"data:image/png;base64," + localStorage.getItem("returnedImg")}
+                src={JSON.parse(localStorage.getItem("productImgBlob"))}
                 id="preview-image"
                 width="776px"
                 height="436px"

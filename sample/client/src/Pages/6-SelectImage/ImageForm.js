@@ -5,6 +5,7 @@ import InputLabel from "@mui/material/InputLabel";
 import { Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import axios from "axios";
 
 //Create Route for that function---
 //import { drawProductImage } from "../Services/renderingServices";
@@ -28,11 +29,10 @@ const ImageForm = ({ blockIds, proceed }) => {
   useEffect(() => {
     console.log("i am in");
     const coordinate = JSON.parse(localStorage.getItem("coordinates"));
-    const background = JSON.parse(localStorage.getItem("imageBlob"));
-
+    const background = JSON.parse(localStorage.getItem("orignalImg"));
+   
+   
     if (coordinate && background) {
-      console.log(typeof background);
-      console.log("coordinaes", coordinate);
 
       setCoordinate(coordinate);
       setBackgroundBlob(background);
@@ -43,9 +43,8 @@ const ImageForm = ({ blockIds, proceed }) => {
 
   let img_id = ["001", "002", "003", "004", "005", "006", "007", "008", "009"]; //dummy_data coming from db for with image_id
   let comingQty = coordinate;
-  let options = [...comingQty.keys()]; //quantity of images
-  console.log(options);
-  console.log("wtf", backgroundBlob);
+  let options = [...blockIds]; //quantity of images
+ 
 
   const [formFields, setFormFields] = useState([]);
 
@@ -73,6 +72,16 @@ const ImageForm = ({ blockIds, proceed }) => {
     data[index].block_id = event.target.value;
     setFormFields(data);
     console.log(data);
+  };
+
+  const blobToBase64 = blob => {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    return new Promise(resolve => {
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+    });
   };
 
   const removeSelectValue = (value) => {
@@ -126,7 +135,29 @@ const ImageForm = ({ blockIds, proceed }) => {
 
   const save = async (e) => {
 
-    // e.preventDefault();
+     e.preventDefault();
+     let  formData = new FormData();
+     
+     console.log(formFields);
+     for(var i=0;i<formFields.length;i++)
+     {
+      for(var j=0;j<formFields[i]['image_info'].length;j++)
+      formData.append(formFields[i]['block_id']+"_"+j,formFields[i]['image_info'][j]);
+     }
+     formData.append("coordinates",JSON.stringify(coordinate));
+console.log(coordinate);
+   await  fetch(backgroundBlob)
+  .then(res => res.blob())
+  .then(blobToBase64)
+  .then(res => 
+    { console.log(res);formData.append("background",res)}
+  );
+
+
+     let response = await axios.post('http://localhost:8000/uploadProducts', formData,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }});
     // console.log("backgroundBlob", backgroundBlob);
     // console.log(comingData);
     // let comingData = await drawProductImage(
@@ -162,13 +193,12 @@ const ImageForm = ({ blockIds, proceed }) => {
     let saved_block_id = value["block_id"];
     // let coming_block_id = event.target.name;
     //let saved_block_id = value["block_id"];
-    console.log(event.target.files)
+
+    
+   // const files = event.target.files;
     let formdata=[];
     for(let i = 0 ; i<event.target.files.length; i++){
      formdata.push(event.target.files[i])
-  
-    let imgBlob = URL.createObjectURL(event.target.files[i]);
-    formdata[i]['blob']=imgBlob;
    } 
      console.log(formdata);
      formFields[event.target.id]["image_info"] = formdata;

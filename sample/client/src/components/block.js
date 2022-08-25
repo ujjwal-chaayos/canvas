@@ -8,27 +8,13 @@ import FinalPage from "../Pages/ThankPage/Final";
 const Block = () => {
   let location = useLocation();
   let navigate = useNavigate();
-
-  let all_block_id = [
-    "Select",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-  ];
-
+  let all_block_id = [];
+  all_block_id[0]="Select";
+  for(var i=1;i<JSON.parse(localStorage.getItem("coordinates")).length+1;i++)
+  {
+     all_block_id[i]=i.toString();
+  }
+  //console.log(all_block_id);
   const [ids, setIds] = useState(all_block_id);
   const [show, setShow] = useState('image');   //"image","item","preview"
   const [type, setType] = useState('image');

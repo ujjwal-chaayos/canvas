@@ -102,15 +102,17 @@ const UploadTemplate = () => {
         fetch('data:image/jpeg;base64,' +response.data['background'])
         .then(res => res.blob())
         .then(blob => {
-          setOriginalImg(window.URL.createObjectURL(blob));     
+          setOriginalImg(window.URL.createObjectURL(blob));   
+           localStorage.setItem("orignalImg",JSON.stringify(window.URL.createObjectURL(blob)));    
         });
     fetch('data:image/jpeg;base64,' +response.data['backgroundWithContours'])
     .then(res => res.blob())
     .then(blob => {
-      setResultImage(window.URL.createObjectURL(blob));     
+      setResultImage(window.URL.createObjectURL(blob));   
+      
     });
-
- 
+    
+    
       setCoordinates(response.data['sortedCoordinates']);
     } else {
       alert("Insert both Images..");
