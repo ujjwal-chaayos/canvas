@@ -35,8 +35,7 @@ const {drawText,
 
 
 
-
-const mergeTemplateBackground = (template, background) => {
+const mergeTemplateBackground =  (template, background) => {
   //console.log(template,background);
 console.log("hi hello");
 
@@ -74,8 +73,6 @@ drawImage(screen2ctx, bg2Img, {
   h: tempImg.height,
 });
 screen2ctx.save();
-console.log("hi in funtion");
-console.log(screen2canvas.toBuffer('image/png'));
 
 screen1ctx.fillStyle = "#000000";
 screen1ctx.save();
@@ -90,13 +87,12 @@ sortedCoordinates1.forEach((e) => {
     "80px Arial"
   );
 });
- let buffer1 = screen1canvas.toBuffer('image/png');
- let buffer2 = screen2canvas.toBuffer('image/png');
- return {"backgroundWithContours":buffer1,
-          "background":buffer2,
-          "sortedCoordinates":sortedCoordinates1};
-
-  }
 
 
-  module.exports = {mergeTemplateBackground};
+  let buffer1 = screen1canvas.toBuffer('image/png').toString('base64');
+  let buffer2 = screen2canvas.toBuffer('image/png').toString('base64');
+  return {"backgroundWithContours":buffer1,"background":buffer2,"sortedCoordinates": sortedCoordinates1};
+}
+
+
+module.exports = {mergeTemplateBackground};
