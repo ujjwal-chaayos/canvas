@@ -47,7 +47,7 @@ const UploadTemplate = () => {
       imageInfo: "",
       imageType: "",
       imageContent: "",
-      imageBlob: "",
+      imageBlob: ""
     };
     imgInfo["imageBlob"] = URL.createObjectURL(event.target.files[0]);
     for (let myfile of event.target.files) {
@@ -98,8 +98,10 @@ const UploadTemplate = () => {
           "Content-Type": "multipart/form-data",
         }});
         
-     
-    console.log(response);
+    let returnedImg ='data:image/jpeg;base64,' +response.data['backgroundWithContours'];
+    localStorage.setItem("returnedImgWithContours",returnedImg);
+    console.log(returnedImg);
+    //console.log(response.data['backgroundWithContours'],response.data['background'],response.data['sortedCoordinates']);
     //   console.log(dummy_data);
     //   console.log(file);
     //   let { blob, blob2, sortedCoordinates } = await mergeTemplateBackground(
