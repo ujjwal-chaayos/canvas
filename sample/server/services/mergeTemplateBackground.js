@@ -36,7 +36,7 @@ const {drawText,
 
 
 
-const mergeTemplateBackground = async (template, background) => {
+const mergeTemplateBackground = (template, background) => {
   //console.log(template,background);
 console.log("hi hello");
 
@@ -46,7 +46,7 @@ tempImg.src = template.data;
 let screen1canvas= createCanvas(tempImg.width, tempImg.height);
 let screen1ctx = screen1canvas.getContext("2d");
 let templateMat = cv.imread(tempImg);
-let sortedCoordinates = sortCoordinates(getCoordinates(templateMat, cv));
+let sortedCoordinates1 = sortCoordinates(getCoordinates(templateMat, cv));
 
 let bgImg = new Image();
 bgImg.onload = () => {};
@@ -57,7 +57,7 @@ drawImage(screen1ctx, bgImg,{
   w: tempImg.width,
   h: tempImg.height,
 });
-sortedCoordinates.forEach((e) => {
+sortedCoordinates1.forEach((e) => {
   drawContours(e, cv, screen1ctx);
 });
 
@@ -79,7 +79,7 @@ console.log(screen2canvas.toBuffer('image/png'));
 
 screen1ctx.fillStyle = "#000000";
 screen1ctx.save();
-sortedCoordinates.forEach((e) => {
+sortedCoordinates1.forEach((e) => {
   drawText(
     screen1ctx,
     e["block_id"],
@@ -90,19 +90,12 @@ sortedCoordinates.forEach((e) => {
     "80px Arial"
   );
 });
+ let buffer1 = screen1canvas.toBuffer('image/png');
+ let buffer2 = screen2canvas.toBuffer('image/png');
+ return {"backgroundWithContours":buffer1,
+          "background":buffer2,
+          "sortedCoordinates":sortedCoordinates1};
 
-////////////////////////////////////////////////////////////////////////////////////////////////
-    // let blob = await screen1canvas.convertToBlob();
-    // let arraybuffer = await blob.arrayBuffer();
-    // var uint8View = new Uint8Array(arraybuffer);
-    // blob = new Blob([uint8View], { type: "image/png" });
-  
-    // let blob2 = await screen2canvas.convertToBlob();
-    // let arraybuffer2 = await blob2.arrayBuffer();
-    // var uint8View = new Uint8Array(arraybuffer2);
-    // blob2 = new Blob([uint8View], { type: "image/png" });
-    // // returning blob with contour drawn , blob2 witrhgout contour drawn,sorted coordinates
-    // return { blob, blob2, sortedCoordinates };
   }
 
 
