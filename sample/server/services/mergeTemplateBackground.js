@@ -1,16 +1,8 @@
-// const  cv = require('./opencv.js')
-//const template = require("../data/templates/screen2.png")
-//const background = require("../data/templates/Meals-food Background.jpg")
+
 const { createCanvas, loadImage } = require('canvas');
 const { Image } = require('canvas')
-//const fs = require('fs');
-// var FileAPI = require('file-api')
-//   , File = FileAPI.File
-//   , FileList = FileAPI.FileList
-//   , FileReader = FileAPI.FileReader
-//   ;
 
-//const {Blob} = require('node:buffer');
+
 const {drawText,
     drawImage,
     drawContours,
@@ -18,30 +10,17 @@ const {drawText,
     getCoordinates,
     sortCoordinates,
 } = require("./CVServices");
-//const async = require('async');
 
-// const blobToImage =async  (blob,img) => {
-//   return new Promise(resolve => {
-//     const url = URL.createObjectURL(blob)
-//     //let img = new Image()
-//     img.onload = () => {
-//       console.log(url);
-//       URL.revokeObjectURL(url)
-//       resolve(img)
-//     }
-//     img.src = url
-//   })
-// }
+
 
 
 
 
 const mergeTemplateBackground =  (template, background) => {
-  //console.log(template,background);
-console.log("hi hello");
+
 
 var tempImg = new Image();
-tempImg.onload = () => {}; // console.log(img.width, img.height)
+tempImg.onload = () => {}; 
 tempImg.src = template.data;
 let screen1canvas= createCanvas(tempImg.width, tempImg.height);
 let screen1ctx = screen1canvas.getContext("2d");
@@ -94,6 +73,8 @@ sortedCoordinates.forEach((e) => {
   let buffer1 = screen1canvas.toBuffer('image/png').toString('base64');
   let buffer2 = screen2canvas.toBuffer('image/png').toString('base64');
   return {"backgroundWithContours":buffer1,"background":buffer2,"sortedCoordinates": sortedCoordinates};
+
+  
 }
 
 
