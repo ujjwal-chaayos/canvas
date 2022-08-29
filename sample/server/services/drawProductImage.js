@@ -28,12 +28,13 @@ const { createCanvas } = require('canvas');
 
 
 
-const drawProductImage =  (background, imageData, coordinateData) => {
+const  drawProductImage =  (background, imageData, coordinateData) => {
     //console.log(background,imageData,coordinateData)
     let bgImg = new Image();
     bgImg.onload = () => {};
     bgImg.src = background.data;
-    await loadImage(bgImg);
+    console.log(bgImg);
+   await loadImage(bgImg);
     let screen1canvas = createCanvas(bgImg.width,bgImg.height);
     let screen1ctx = screen1canvas.getContext("2d");
   

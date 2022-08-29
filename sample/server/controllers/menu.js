@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const Menu = require("../model/menu");
 
 const {mergeTemplateBackground}= require('../services/mergeTemplateBackground')
+const {drawProductImage}=require('../services/drawProductImage')
 
 
 
@@ -25,11 +26,12 @@ exports.uploadProductImages = (req, res) => {
         
        let coordinnates =JSON.parse(req.body.coordinates);
        let background =req.body.background;
+       const buffer = Buffer.from(background, "base64");
         for(var file in req.files){
                 images.push({"block_id":file,
                         "imageInfo":req.files[file].data});
             }
-       // let response =  mergeTemplateBackground(images[0], images[1]);
+        drawProductImage(buffer,images,coordinates);
         //console.log("background",background);
         console.log("images",images);
         res.send("ack");
