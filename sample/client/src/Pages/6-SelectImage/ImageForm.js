@@ -150,7 +150,8 @@ console.log(coordinate);
   .then(res => res.blob())
   .then(blobToBase64)
   .then(res => 
-    { console.log(res);formData.append("background",res)}
+    { //console.log(res);
+      formData.append("background",res)}
   );
 
 
