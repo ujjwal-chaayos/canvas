@@ -30,10 +30,8 @@ const ImageForm = ({ blockIds, proceed }) => {
     console.log("i am in");
     const coordinate = JSON.parse(localStorage.getItem("coordinates"));
     const background = JSON.parse(localStorage.getItem("orignalImg"));
-   
-   
-    if (coordinate && background) {
 
+    if (coordinate && background) {
       setCoordinate(coordinate);
       setBackgroundBlob(background);
     }
@@ -44,7 +42,6 @@ const ImageForm = ({ blockIds, proceed }) => {
   let img_id = ["001", "002", "003", "004", "005", "006", "007", "008", "009"]; //dummy_data coming from db for with image_id
   let comingQty = coordinate;
   let options = [...blockIds]; //quantity of images
- 
 
   const [formFields, setFormFields] = useState([]);
 
@@ -74,10 +71,10 @@ const ImageForm = ({ blockIds, proceed }) => {
     console.log(data);
   };
 
-  const blobToBase64 = blob => {
+  const blobToBase64 = (blob) => {
     const reader = new FileReader();
     reader.readAsDataURL(blob);
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       reader.onloadend = () => {
         resolve(reader.result);
       };
@@ -134,33 +131,60 @@ const ImageForm = ({ blockIds, proceed }) => {
   };
 
   const save = async (e) => {
+    e.preventDefault();
+    let formData = new FormData();
 
-     e.preventDefault();
-     let  formData = new FormData();
-     
-     console.log(formFields);
-     for(var i=0;i<formFields.length;i++)
-     {
-      for(var j=0;j<formFields[i]['image_info'].length;j++)
-      formData.append(formFields[i]['block_id']+"_"+j,formFields[i]['image_info'][j]);
-     }
-     formData.append("coordinates",JSON.stringify(coordinate));
-console.log(coordinate);
-   await  fetch(backgroundBlob)
-  .then(res => res.blob())
-  .then(blobToBase64)
-  .then(res => 
-    { //console.log(res);
-      formData.append("background",res)}
-  );
+    console.log(formFields);
+    for (var i = 0; i < formFields.length; i++) {
+      for (var j = 0; j < formFields[i]["image_info"].length; j++)
+        formData.append(
+          formFields[i]["block_id"] + "_" + j,
+          formFields[i]["image_info"][j]
+        );
+    }
+    formData.append("coordinates", JSON.stringify(coordinate));
+    console.log(coordinate);
+    await fetch(backgroundBlob)
+      .then((res) => res.blob())
+      .then((blob) => {
+        console.log(blob.type);
+        formData.append(
+          "background",
+          new File(
+            [
+              blob,
+              "background.png",
+              {
+                type: blob.type,
+                lastModified: new Date().getTime(),
+              },
+            ],
+            "background.png"
+          )
+        );
+      });
 
-
-     let response = await axios.post('http://localhost:8000/uploadProducts', formData,{
+    let response = await axios.post(
+      "http://localhost:8000/uploadProducts",
+      formData,
+      {
         headers: {
           "Content-Type": "multipart/form-data",
-        }});
-    // console.log("backgroundBlob", backgroundBlob);
-    // console.log(comingData);
+        },
+      }
+    );
+
+    //console.log(response.data["ImageWithProducts"]);
+
+   await fetch("data:image/jpeg;base64," + response.data["ImageWithProducts"])
+      .then((res) => res.blob())
+      .then((blob) => {
+        localStorage.setItem("ImageWithProducts",JSON.stringify(window.URL.createObjectURL(blob))
+        );
+        // setResultImage(window.URL.createObjectURL(blob));
+       console.log(JSON.parse(localStorage.getItem("ImageWithProducts")));
+      });
+
     // let comingData = await drawProductImage(
     //   JSON.parse(localStorage.getItem("orignalImg")),
     //   formFields,
@@ -171,8 +195,7 @@ console.log(coordinate);
     // console.log(typeof link);
     // console.log(formFields);
     // localStorage.setItem("productImgBlob", JSON.stringify(link));
-    // proceed(leftValues);
-    
+    proceed(leftValues);
   };
 
   const removeFields = () => {
@@ -195,17 +218,16 @@ console.log(coordinate);
     // let coming_block_id = event.target.name;
     //let saved_block_id = value["block_id"];
 
-    
-   // const files = event.target.files;
-    let formdata=[];
-    for(let i = 0 ; i<event.target.files.length; i++){
-     formdata.push(event.target.files[i])
-   } 
-     console.log(formdata);
-     formFields[event.target.id]["image_info"] = formdata;
+    // const files = event.target.files;
+    let formdata = [];
+    for (let i = 0; i < event.target.files.length; i++) {
+      formdata.push(event.target.files[i]);
+    }
+    console.log(formdata);
+    formFields[event.target.id]["image_info"] = formdata;
     setFormFields(formFields);
     console.log(formFields);
-  } 
+  };
 
   return (
     <Box
@@ -230,7 +252,7 @@ console.log(coordinate);
           backgroundColor: "primary.light",
           "& button": { m: 2 },
           overflow: "hidden",
-          overflowY: "scroll",  
+          overflowY: "scroll",
         }}
       >
         {bottomForm ? (
@@ -404,7 +426,11 @@ console.log(coordinate);
         )}
       </Box>
       <Box width="60%" sx={{ p: 9 }}>
-        <img src={localStorage.getItem("returnedImgWithContours")} width="100%" height="90%" />
+        <img
+          src={localStorage.getItem("returnedImgWithContours")}
+          width="100%"
+          height="90%"
+        />
       </Box>
     </Box>
   );

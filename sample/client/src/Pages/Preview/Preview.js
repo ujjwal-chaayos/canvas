@@ -34,7 +34,7 @@ const Preview = ({ type, manage }) => {
   }
 
   // Usage
-
+   console.log(JSON.parse(localStorage.getItem("ImageWithContours")));
   console.log("Block", type);
   const proceed = () => {
     if (type === "image") {
@@ -97,7 +97,7 @@ const Preview = ({ type, manage }) => {
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             {type === "image" && (
               <img
-                src={JSON.parse(localStorage.getItem("productImgBlob"))}
+                src={JSON.parse(localStorage.getItem("ImageWithProducts"))}
                 id="preview-image"
                 width="776px"
                 height="436px"

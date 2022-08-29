@@ -88,7 +88,7 @@ const ItemForm = ({blockIds,proceed}) => {
     <Box
     width="60%" sx={{ p: 9 }}
   >
-     <img src={JSON.parse(localStorage.getItem("imageBlob"))} width="100%" height="90%" />
+     <img src={JSON.parse(localStorage.getItem("backgroundWithContours"))} width="100%" height="90%" />
   </Box>
 
 
