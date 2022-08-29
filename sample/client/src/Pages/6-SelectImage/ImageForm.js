@@ -174,16 +174,16 @@ const ImageForm = ({ blockIds, proceed }) => {
       }
     );
 
-    //console.log(response.data["ImageWithProducts"]);
+    console.log(response.data);
 
-   await fetch("data:image/jpeg;base64," + response.data["ImageWithProducts"])
-      .then((res) => res.blob())
-      .then((blob) => {
-        localStorage.setItem("ImageWithProducts",JSON.stringify(window.URL.createObjectURL(blob))
-        );
-        // setResultImage(window.URL.createObjectURL(blob));
-       console.log(JSON.parse(localStorage.getItem("ImageWithProducts")));
-      });
+  //  await fetch("data:image/jpeg;base64," + response.data["ImageWithProducts"])
+  //     .then((res) => res.blob())
+  //     .then((blob) => {
+  //       localStorage.setItem("ImageWithProducts",JSON.stringify(window.URL.createObjectURL(blob))
+  //       );
+  //       // setResultImage(window.URL.createObjectURL(blob));
+  //      console.log(JSON.parse(localStorage.getItem("ImageWithProducts")));
+  //     });
 
     // let comingData = await drawProductImage(
     //   JSON.parse(localStorage.getItem("orignalImg")),
