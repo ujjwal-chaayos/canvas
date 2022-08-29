@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Button, MenuItem, Select, Input } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
 import { Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -125,8 +124,9 @@ const ImageForm = ({ blockIds, proceed }) => {
         block_id: "",
       });
     }
-    //console.log(newArr);
-
+    console.log(newArr);
+    // localStorage.setItem("formFields",newArr);
+    // console.log(localStorage.getItem("formFields"));
     setFormFields(newArr);
   };
 
@@ -134,7 +134,7 @@ const ImageForm = ({ blockIds, proceed }) => {
     e.preventDefault();
     let formData = new FormData();
 
-    console.log(formFields);
+    //console.log(formFields);
     for (var i = 0; i < formFields.length; i++) {
       for (var j = 0; j < formFields[i]["image_info"].length; j++)
         formData.append(

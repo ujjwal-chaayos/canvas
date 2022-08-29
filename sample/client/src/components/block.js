@@ -9,10 +9,9 @@ const Block = () => {
   let location = useLocation();
   let navigate = useNavigate();
   let all_block_id = [];
-  all_block_id[0]="Select";
-  for(var i=1;i<JSON.parse(localStorage.getItem("coordinates")).length+1;i++)
+  for(var i=0;i<JSON.parse(localStorage.getItem("coordinates")).length+1;i++)
   {
-     all_block_id[i]=i.toString();
+     all_block_id[i]=(i+1).toString();
   }
   //console.log(all_block_id);
   const [ids, setIds] = useState(all_block_id);

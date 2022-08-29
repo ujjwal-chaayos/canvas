@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Box, Button, Input, Typography } from "@mui/material";
+import { Box, Button,Typography } from "@mui/material";
 
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
@@ -113,7 +113,6 @@ const UploadTemplate = () => {
     .then(res => res.blob())
     .then(blob => {
       setResultImage(window.URL.createObjectURL(blob));   
-      
     });
     
     

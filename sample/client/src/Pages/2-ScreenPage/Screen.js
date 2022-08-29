@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import { Avatar, Button, Stack } from "@mui/material";
+import {Button} from "@mui/material";
 import { Typography } from "@mui/material";
 import {useNavigate} from 'react-router-dom';
 import "./Screen.css";
