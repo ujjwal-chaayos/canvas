@@ -146,20 +146,26 @@ const ImageForm = ({ blockIds, proceed }) => {
      }
      formData.append("coordinates",JSON.stringify(coordinate));
 console.log(coordinate);
-   await  fetch(backgroundBlob)
-  .then(res => res.blob())
-  .then(blobToBase64)
-  .then(res => 
-    { console.log(res);formData.append("background",res)}
-  );
+await  fetch(backgroundBlob)
+.then(res => res.blob() ).then(blob => {
+  console.log(blob.type);
+  formData.append("background",new File([blob,"background.png",{
+    type: blob.type,
+    lastModified: new Date().getTime()
+  } ],'background.png'))
+});
+
+
+ 
 
 
      let response = await axios.post('http://localhost:8000/uploadProducts', formData,{
         headers: {
           "Content-Type": "multipart/form-data",
         }});
-    // console.log("backgroundBlob", backgroundBlob);
-    // console.log(comingData);
+
+        console.log(response.data['ImageWithProducts']);
+
     // let comingData = await drawProductImage(
     //   JSON.parse(localStorage.getItem("orignalImg")),
     //   formFields,
