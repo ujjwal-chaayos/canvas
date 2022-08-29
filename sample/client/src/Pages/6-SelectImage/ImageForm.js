@@ -164,7 +164,7 @@ await  fetch(backgroundBlob)
           "Content-Type": "multipart/form-data",
         }});
 
-        console.log(response.data['ImageWithProducts']);
+        console.log(response[0]);
 
     // let comingData = await drawProductImage(
     //   JSON.parse(localStorage.getItem("orignalImg")),
