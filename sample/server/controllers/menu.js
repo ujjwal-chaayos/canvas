@@ -3,6 +3,7 @@ require("dotenv").config();
 
 const mongoose = require("mongoose");
 const Menu = require("../model/menu");
+const drawProductImage = require("../services/drawProductImage");
 
 const {mergeTemplateBackground}= require('../services/mergeTemplateBackground')
 
@@ -22,17 +23,21 @@ exports.uploadTemplate = (req, res) => {
 exports.uploadProductImages = (req, res) => {
         let images =[];
        console.log("uploadProductImages");
-        
+        console.log( req.files);
        let coordinnates =JSON.parse(req.body.coordinates);
-       let background =req.body.background;
         for(var file in req.files){
+                if(file === 'background'){
+                        continue;
+                }
                 images.push({"block_id":file,
                         "imageInfo":req.files[file].data});
             }
-       // let response =  mergeTemplateBackground(images[0], images[1]);
-        //console.log("background",background);
-        console.log("images",images);
-        res.send("ack");
+        console.log(images);
+        console.log(req.files.background);
+          //  console.log(background);
+      let response =  drawProductImage(req.files.background,images,coordinnates);
+
+       res.send(response);
 }
 
 exports.setItemMapping = (req, res) => {
