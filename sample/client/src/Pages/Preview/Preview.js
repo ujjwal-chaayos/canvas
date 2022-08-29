@@ -97,7 +97,7 @@ const Preview = ({ type, manage }) => {
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             {type === "image" && (
               <img
-                src={JSON.parse(localStorage.getItem("ImageWithProducts"))}
+                src={JSON.parse(localStorage.getItem("listImages"))[0]}
                 id="preview-image"
                 width="776px"
                 height="436px"

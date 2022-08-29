@@ -175,7 +175,35 @@ const ImageForm = ({ blockIds, proceed }) => {
     );
 
     console.log(response.data);
+    let listImages=[];
+    for(var b64String in response.data){
+      await fetch("data:image/jpeg;base64," + response.data[b64String])
+      .then((res) => res.blob())
+      .then((blob) => {
+        listImages.push(window.URL.createObjectURL(blob));
+        // setResultImage(window.URL.createObjectURL(blob));
+       //console.log(JSON.parse(localStorage.getItem("ImageWithProducts")));
+      });
 
+    }
+
+    console.log("fetching menu");
+    await  fetch("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000")
+    .then(async (res) =>{
+      let sample = await res.json();
+      console.log(sample);
+      let menu = sample;
+      let arr=[];
+    for(var i in menu.menuSequence.category){
+      arr.push({
+        "title_id": "t"+(i+1), "value": menu.menuSequence.category[i].name  ,"block_id":""
+      })
+    }
+    localStorage.setItem("titles",JSON.stringify(arr));
+    localStorage.setItem("menu",JSON.stringify(menu));
+    });
+    console.log(listImages);
+    localStorage.setItem("listImages",JSON.stringify(listImages));
   //  await fetch("data:image/jpeg;base64," + response.data["ImageWithProducts"])
   //     .then((res) => res.blob())
   //     .then((blob) => {

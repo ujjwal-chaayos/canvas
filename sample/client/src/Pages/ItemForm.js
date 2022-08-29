@@ -17,6 +17,7 @@ const ItemForm = ({blockIds,proceed}) => {
   ]; //dummy_data coming from db for with image_id
 
   const [titles,setTitles]=useState(dummy_data);
+  const [menu,setMenu]=useState("");
   const [imgMapValue, setImgMapValue] = useState("");
   const [leftValues, setLeftValues] = useState(all_block_id);
 
@@ -85,7 +86,7 @@ const ItemForm = ({blockIds,proceed}) => {
     <Box
     width="60%" sx={{ p: 9 }}
   >
-     <img src={localStorage.getItem("backgroundWithContours")} width="100%" height="90%" />
+     <img src={JSON.parse(localStorage.getItem("backgroundWithContours"))} width="100%" height="90%" />
   </Box>
 
 

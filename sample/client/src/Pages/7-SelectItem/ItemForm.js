@@ -21,9 +21,13 @@ const ItemForm = ({ blockIds, proceed }) => {
     { title_id: "t5", value: "MEALS", block_id: "" },
   ]; //dummy_data coming from db for with image_id
 
-  const [titles, setTitles] = useState(dummy_data);
+  const [titles,setTitles]=useState(JSON.parse(localStorage.getItem("titles")));
+  const [menu,setMenu]=useState(JSON.parse(localStorage.getItem("menu")));
   const [imgMapValue, setImgMapValue] = useState("");
   const [leftValues, setLeftValues] = useState(all_block_id);
+
+ 
+
 
   const handleFormChange = (event, index) => {
     let data = [...titles];
