@@ -172,12 +172,12 @@ const drawProductImage =  (background, imagedict, coordinateData) => {
 
   let maxImages = 0;
   for (var i = 0; i < imageData.length; i++) {
-    console.log(imageData[i].imgInfo.length);
+    
     if (maxImages < imageData[i].imgInfo.length) {
       maxImages = imageData[i].imgInfo.length;
     }
   }
-  console.log(maxImages);
+
   let finalImagesArray = [];
 
   for (var index = 0; index < maxImages; index++) {
@@ -224,18 +224,22 @@ const drawProductImage =  (background, imagedict, coordinateData) => {
       }
     }
     //let buffer = screen1canvas.toBuffer('image/png').toString('base64');
-    let buffer = screen1canvas.toBuffer('image/png')
+    let buffer = screen1canvas.toBuffer('image/png');
+
     finalImagesArray.push(buffer);
   }
   //console.log(finalImagesArray.length);
   //console.log(finalImagesArray[0]);
-  let mapping = [{block_id: 1,value :"CHAAT PAKORE"},
-  {block_id: 2,value :"SNACKS"},
-  {block_id: 7 ,value :"DESSERTS"},
-  {block_id: 10,value :"MEALS"},
-  {block_id: 5,value :"SANDWICHES"}]
-
-  drawItemText(finalImagesArray,mapping,coordinateData);
+  let dummy_data = [
+    { title_id: "t1", value: "CHAAT PAKORE", block_id: "1" },
+    { title_id: "t2", value: "SNACKS", block_id: "2" },
+    { title_id: "t3", value: "SANDWICHES", block_id: "5" },
+    { title_id: "t4", value: "DESSERTS", block_id: "7" },
+    { title_id: "t5", value: "MEALS", block_id: "10" },
+  ];
+  console.log("drawing item text");
+ drawItemText(finalImagesArray,dummy_data,coordinateData);
+  console.log("finished drawing item text");
   return finalImagesArray;
 
 
