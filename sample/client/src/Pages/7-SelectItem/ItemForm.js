@@ -94,7 +94,7 @@ const ItemForm = ({ blockIds, proceed }) => {
             height="90%"
           />
           <img
-            src={JSON.parse(localStorage.getItem("backgroundWithContours"))}
+            src={JSON.parse(localStorage.getItem("listImages"))[0]}
             width="100%"
             height="90%"
           />
