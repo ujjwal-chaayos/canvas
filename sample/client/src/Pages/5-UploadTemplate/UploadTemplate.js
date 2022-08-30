@@ -112,7 +112,8 @@ const UploadTemplate = () => {
     fetch('data:image/jpeg;base64,' +response.data['backgroundWithContours'])
     .then(res => res.blob())
     .then(blob => {
-      setResultImage(window.URL.createObjectURL(blob));   
+      setResultImage(window.URL.createObjectURL(blob));  
+      localStorage.setItem("backgroundWithContours",JSON.stringify(window.URL.createObjectURL(blob))); 
     });
     
     

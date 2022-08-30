@@ -41,6 +41,6 @@ exports.uploadProductImages = (req, res) => {
 }
 
 exports.setItemMapping = (req, res) => {
-
+    
 }
 

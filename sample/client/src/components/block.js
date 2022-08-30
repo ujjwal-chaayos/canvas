@@ -9,7 +9,7 @@ const Block = () => {
   let location = useLocation();
   let navigate = useNavigate();
   let all_block_id = [];
-  for(var i=0;i<JSON.parse(localStorage.getItem("coordinates")).length+1;i++)
+  for(var i=0;i<JSON.parse(localStorage.getItem("coordinates")).length;i++)
   {
      all_block_id[i]=(i+1).toString();
   }
