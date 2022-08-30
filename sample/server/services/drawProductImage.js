@@ -29,6 +29,7 @@ const GIFEncoder = require('gifencoder');
 
 const fs = require('fs');
 const { set } = require("mongoose");
+const drawItemText = require("./drawItemText");
 
 
 // const drawProductImage =  (background, imageData, coordinateData) => {
@@ -222,11 +223,19 @@ const drawProductImage =  (background, imagedict, coordinateData) => {
         }
       }
     }
-    let buffer = screen1canvas.toBuffer('image/png').toString('base64');
+    //let buffer = screen1canvas.toBuffer('image/png').toString('base64');
+    let buffer = screen1canvas.toBuffer('image/png')
     finalImagesArray.push(buffer);
   }
   //console.log(finalImagesArray.length);
   //console.log(finalImagesArray[0]);
+  let mapping = [{block_id: 1,value :"CHAAT PAKORE"},
+  {block_id: 2,value :"SNACKS"},
+  {block_id: 7 ,value :"DESSERTS"},
+  {block_id: 10,value :"MEALS"},
+  {block_id: 5,value :"SANDWICHES"}]
+
+  drawItemText(finalImagesArray,mapping,coordinateData);
   return finalImagesArray;
 
 

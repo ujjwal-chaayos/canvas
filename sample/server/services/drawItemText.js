@@ -43,7 +43,7 @@ const loadImage = async (img) => {
   });
 };
 
-const drawItemText = (imageArray, mapping, coordinates,menu) => {
+const drawItemText = async (imageArray, mapping, coordinates,menu) => {
   let coordinateJson = coordinateConverter(coordinates, mapping);
   let jsondata = uiJsonConverter(menu, mapping);
   const encoder = new GIFEncoder(bgImg.width, bgImg.height);
@@ -59,14 +59,25 @@ const drawItemText = (imageArray, mapping, coordinates,menu) => {
     bgImg.onload = () => {};
     bgImg.src = imageArray[i].data;
     let screen1canvas = createCanvas(bgImg.width, bgImg.height);
+    let screen2canvas = createCanvas(bgImg.width, bgImg.height);
+
     let screen = screen1canvas.getContext("2d");
+    let screen2 = screen2canvas.getContext("2d");
+
     drawImage(screen, bgImg, {
       x: 0,
       y: 0,
       w: bgImg.width,
       h: bgImg.height,
     });
+    drawImage(screen2, bgImg, {
+      x: 0,
+      y: 0,
+      w: bgImg.width,
+      h: bgImg.height,
+    });
     screen.save();
+    screen2.save();
 
     let titleCoordinate = coordinateJson;
     let titles = jsondata.titles;
@@ -79,6 +90,8 @@ const drawItemText = (imageArray, mapping, coordinates,menu) => {
         console.log("id " + id);
         let titleText = titles[id].value;
         screen.fillStyle = titleStyle.color.Title;
+        screen2.fillStyle = titleStyle.color.Title;
+
   
         let style =
           titleStyle.weight.Title +
@@ -87,8 +100,11 @@ const drawItemText = (imageArray, mapping, coordinates,menu) => {
           " " +
           titleStyle.font.Title;
         screen.font = style;
+        screen2.font = style;
+
   
         screen.save();
+        screen2.save();
         var x =
           titleCoordinate[i].x +
           Math.floor(
@@ -104,9 +120,14 @@ const drawItemText = (imageArray, mapping, coordinates,menu) => {
         points.y = y;
         //console.log(titleText);
         drawText(screen, titleText, points, style);
+        drawText(screen2, titleText, points, style);
+
+
   
         points.y = y + 10;
         drawLine(screen, points, destPoint, style);
+        drawLine(screen2, points, destPoint, style);
+
       }
     }
   
@@ -184,10 +205,17 @@ const drawItemText = (imageArray, mapping, coordinates,menu) => {
             rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
             rectpoint.h = 56 + 10;
             roundedRect(screen, rectpoint, 20, "grey");
+            roundedRect(screen2, rectpoint, 20, "grey");
+
   
             screen.fillStyle = "Black";
+            screen2.fillStyle = "Black";
+
+
           } else {
             screen.fillStyle = itemStyle.color.Items;
+            screen2.fillStyle = itemStyle.color.Items;
+
           }
   
           if (itemArray[k].new === true && itemArray[k].active) {
@@ -197,15 +225,25 @@ const drawItemText = (imageArray, mapping, coordinates,menu) => {
             rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
             rectpoint.h = 56 + 10;
             newItemRect(screen, rectpoint, 30, "yellow", "orange");
+            newItemRect(screen2, rectpoint, 30, "yellow", "orange");
+
   
             screen.fillStyle = itemStyle.color.New;
+            screen2.fillStyle = itemStyle.color.New;
+
           } else {
-            if (itemArray[k].active) screen.fillStyle = itemStyle.color.Items;
+            if (itemArray[k].active) {
+              screen.fillStyle = itemStyle.color.Items;
+              screen2.fillStyle = itemStyle.color.Items;
+
+            }
           }
   
           //screen.fillStyle = itemStyle.color.Items;
   
           drawText(screen, text, points, style);
+          drawText(screen2, text, points, style);
+
   
           for (var j = 0; j < priceArray.length; j++) {
             if (priceArray[j].item_id === item_id) {
@@ -217,8 +255,12 @@ const drawItemText = (imageArray, mapping, coordinates,menu) => {
                 pricePoints.x = priceX;
                 pricePoints.y = priceY;
                 screen.fillStyle = itemStyle.color.Prices;
+                screen2.fillStyle = itemStyle.color.Prices;
+
   
                 drawText(screen, priceText, pricePoints, style);
+                drawText(screen2, priceText, pricePoints, style);
+
               }
               if (priceList.length > 1) {
                 priceList.sort((a, b) => a.price - b.price);
@@ -230,8 +272,12 @@ const drawItemText = (imageArray, mapping, coordinates,menu) => {
                 pricePoints.x = priceX;
                 pricePoints.y = priceY;
                 screen.fillStyle = itemStyle.color.Prices;
+                screen2.fillStyle = itemStyle.color.Prices;
+
   
                 drawText(screen, priceText, pricePoints, style);
+                drawText(screen2, priceText, pricePoints, style);
+
               }
               break;
             }
@@ -250,6 +296,8 @@ const drawItemText = (imageArray, mapping, coordinates,menu) => {
               Math.floor(screen.measureText(text).fontBoundingBoxAscent) + 15;
             console.log(screen.measureText(text));
             drawImage(screen, vegicon, iconpoint);
+            drawImage(screen2, vegicon, iconpoint);
+
           } else if (itemArray[k].icons === "NON_VEG") {
             let nonvegicon = new Image();
             nonvegicon.src = nonvegIcon;
@@ -264,8 +312,11 @@ const drawItemText = (imageArray, mapping, coordinates,menu) => {
               Math.floor(screen.measureText(text).fontBoundingBoxAscent) + 15;
             console.log(screen.measureText(text));
             drawImage(screen, nonvegicon, iconpoint);
+            drawImage(screen2, nonvegicon, iconpoint);
+
   
             screen.save();
+            screen2.save();
           }
           if (itemArray[k].new === true) {
             let newicon = new Image();
@@ -288,7 +339,10 @@ const drawItemText = (imageArray, mapping, coordinates,menu) => {
       }
     }
     screen.save();
+    screen2.save();
     encoder.addFrame(screen);
+    encoder.addFrame(screen2);
+
   }
 };
 
