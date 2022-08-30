@@ -1,3 +1,4 @@
+const { createCanvas,Image,loadImage } = require("canvas");
 
 
 const heightValidation=(block,txt,font,spacing)=>{
@@ -10,7 +11,7 @@ const heightValidation=(block,txt,font,spacing)=>{
     return txtHeight<block.h?true:false;
 }
 const widthValidation=(block,txt,font)=>{
-    let screen = new OffscreenCanvas(3840,2160).getContext("2d");
+    let screen = new createCanvas(3840,2160).getContext("2d");
     screen.font = font.height + " " + font.style;
     screen.save();
     var txtWidth = 0;
@@ -26,7 +27,7 @@ const widthValidation=(block,txt,font)=>{
 const wrapValidation=(block,txt,font)=>{
     var txtHeight;
      var txtWidth;
-     let screen = new OffscreenCanvas(3840,2160).getContext("2d");
+     let screen = new createCanvas(3840,2160).getContext("2d");
     if(Array.isArray(txt)){
         txtHeight = (font.height+font.spacing)*txt.length;
     }

@@ -51,7 +51,7 @@ const uiJsonConverter = (menu, mapping) => {
   let titles = {};
   let items = {};
   let prices = {};
-  var subCategory = menu["menuSequence"]["category"];
+  var subCategory = menu.menuSequence["sub-category"];
   var products = menu["productDetail"]["products"];
   var productPrices = menu["prices"]["prices"];
   for (let i = 0; i < mapping.length; i++) {
