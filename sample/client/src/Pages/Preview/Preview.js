@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 
-import { Button, MenuItem, Select, Input, Typography } from "@mui/material";
+import { Button,Typography } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
@@ -34,7 +34,7 @@ const Preview = ({ type, manage }) => {
   }
 
   // Usage
-
+   console.log(JSON.parse(localStorage.getItem("ImageWithContours")));
   console.log("Block", type);
   const proceed = () => {
     if (type === "image") {
@@ -97,7 +97,7 @@ const Preview = ({ type, manage }) => {
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             {type === "image" && (
               <img
-                src={JSON.parse(localStorage.getItem("productImgBlob"))}
+                src={(localStorage.getItem("listImages"))[0]}
                 id="preview-image"
                 width="776px"
                 height="436px"

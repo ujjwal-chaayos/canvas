@@ -8,32 +8,15 @@ import FinalPage from "../Pages/ThankPage/Final";
 const Block = () => {
   let location = useLocation();
   let navigate = useNavigate();
-
-  let all_block_id = [
-    "Select",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-  ];
-
+  let all_block_id = [];
+  for(var i=0;i<JSON.parse(localStorage.getItem("coordinates")).length;i++)
+  {
+     all_block_id[i]=(i+1).toString();
+  }
+  //console.log(all_block_id);
   const [ids, setIds] = useState(all_block_id);
   const [show, setShow] = useState('image');   //"image","item","preview"
   const [type, setType] = useState('image');
-
-
 
   const manageBlockId = (left) => {
     console.log(left);
@@ -71,7 +54,7 @@ const Block = () => {
 
       case "image":   return <ImageForm blockIds={ids} proceed={manageBlockId} />;
       case "item":   return <ItemForm blockIds={ids} proceed={manageItemId} />;
-      case "preview": return <Preview type={type} manage={manageImagePreview} />;
+      case "preview": return <Preview type={type} manage={manageImagePreview}/>;
       case "save": return <FinalPage />;
     
 

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Box, Button, Input, Typography } from "@mui/material";
+import { Box, Button,Typography } from "@mui/material";
 
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
@@ -47,10 +47,9 @@ const UploadTemplate = () => {
       imageInfo: "",
       imageType: "",
       imageContent: "",
-      imageBlob: "",
+      imageBlob: ""
     };
     imgInfo["imageBlob"] = URL.createObjectURL(event.target.files[0]);
-
     for (let myfile of event.target.files) {
       let comingdata = await read(myfile);
       imgInfo["imageContent"] = comingdata;
@@ -77,6 +76,7 @@ const UploadTemplate = () => {
   };
 
   const seePreview = async (e) => {
+    console.log({resultImage});
     if (resultImage !== "") {
       navigate(`/preview/${screenId}/${tempId}`);
     }
@@ -88,42 +88,41 @@ const UploadTemplate = () => {
     console.log("i am running")
      if (file.length === 2) {
        dummy_data = file; //condition to save data
-       let form = {
-        "file1":file[0][0]["imageBlob"],
-        "file2":file[1][0]['imageBlob']
-      }
-      console.log(form);
-      let response = await axios({
-        method: 'post',
-        url: 'http://localhost:8000/uploadTemplate',
-        data: form
-    });
-    console.log(response);
-    //   console.log(dummy_data);
-    //   console.log(file);
-    //   let { blob, blob2, sortedCoordinates } = await mergeTemplateBackground(
-    //     file[0][0]["imageBlob"],
-    //     file[1][0]["imageBlob"]
-    //   );
+       console.log(file[0][0]['imageInfo']);
+       let  formData = new FormData();
+       formData.append("template",file[0][0]['imageInfo']);
+       formData.append("background",file[1][0]['imageInfo']);
+      
     
-
+      let response = await axios.post('http://localhost:8000/uploadTemplate', formData,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }});
+        console.log("fetching base 64");
+        fetch('data:image/jpeg;base64,' +response.data['background'])
+        .then(res =>console.log(res));
        
 
-    //   console.log(blob);
-
-    //   let temp = document.getElementById("background1");
-
-    //   let link = URL.createObjectURL(blob);
-    //   let link2 = URL.createObjectURL(blob2);
-    //   console.log(link, link2);
-    //   setOriginalImg(link2);
-    //   setResultImage(link);
-    //   setCoordinates(sortedCoordinates);
+        fetch('data:image/jpeg;base64,' +response.data['background'])
+        .then(res => res.blob())
+        .then(blob => {
+          setOriginalImg(window.URL.createObjectURL(blob));   
+           localStorage.setItem("orignalImg",JSON.stringify(window.URL.createObjectURL(blob)));    
+        });
+    fetch('data:image/jpeg;base64,' +response.data['backgroundWithContours'])
+    .then(res => res.blob())
+    .then(blob => {
+      setResultImage(window.URL.createObjectURL(blob));  
+      localStorage.setItem("backgroundWithContours",JSON.stringify(window.URL.createObjectURL(blob))); 
+    });
+    
+    
+      setCoordinates(response.data['sortedCoordinates']);
     } else {
       alert("Insert both Images..");
     }
   };
-  console.log("hello", resultImage);
+
   return (
     <Box
       position="absolute"

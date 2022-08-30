@@ -2,11 +2,56 @@
 
 const {subBlockCoordinates, sortCoordinates} = require("./CVServices");
 
+const coordinateConverter = (coordinates,mapping) =>{
+  let coordinateJson = [];
+   for(var i =0;i<mapping.length;i++){
+     let titleBlockId = mapping[i].block_id;
+     for(var j=0;j<coordinates.length;j++){
+       var coordinateBlockId = coordinates[j].block_id;
+       if(parseInt(coordinateBlockId)=== parseInt(titleBlockId)){
+         let subcoordinate = subBlockCoordinates(coordinates[j],200,coordinates[j].w*0.2);
+         let detailHeading = {};
+         detailHeading.block_id = 1;
+         detailHeading.parent_block_id = coordinateBlockId;
+         detailHeading.type = "Heading";
+         detailHeading.x = subcoordinate.title.x;
+         detailHeading.y = subcoordinate.title.y;
+         detailHeading.w = subcoordinate.title.w;
+         detailHeading.h = subcoordinate.title.h;
+ 
+ 
+         let detailItem = {};
+         detailItem.block_id = 2;
+         detailItem.parent_block_id = coordinateBlockId;
+         detailItem.type = "Items";
+         detailItem.x = subcoordinate.items.x;
+         detailItem.y = subcoordinate.items.y;
+         detailItem.w = subcoordinate.items.w;
+         detailItem.h = subcoordinate.items.h;
+ 
+         let detailPrice = {};
+         detailPrice.block_id = 3;
+         detailPrice.parent_block_id = coordinateBlockId;
+         detailPrice.type = "Prices";
+         detailPrice.x = subcoordinate.price.x;
+         detailPrice.y = subcoordinate.price.y;
+         detailPrice.w = subcoordinate.price.w;
+         detailPrice.h = subcoordinate.price.h;  
+         
+         coordinateJson.push(detailPrice);
+         coordinateJson.push(detailItem);
+         coordinateJson.push(detailHeading);
+       }
+     }
+   }
+   return coordinateJson;
+}
+
 const uiJsonConverter = (menu, mapping) => {
   let titles = {};
   let items = {};
   let prices = {};
-  var subCategory = menu["menuSequence"]["sub-category"];
+  var subCategory = menu["menuSequence"]["category"];
   var products = menu["productDetail"]["products"];
   var productPrices = menu["prices"]["prices"];
   for (let i = 0; i < mapping.length; i++) {
@@ -353,4 +398,4 @@ const createCoordinateJSON = ( templateID,  templateName,  imageBlocks,  txtBloc
 }
 
 
-module.exports = {uiJsonConverter,jsonConverter,getBestBlock,createCoordinateJSON}
+module.exports = {uiJsonConverter,jsonConverter,getBestBlock,createCoordinateJSON,coordinateConverter};
