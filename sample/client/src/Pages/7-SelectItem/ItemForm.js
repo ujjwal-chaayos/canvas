@@ -3,13 +3,15 @@ import Box from "@mui/material/Box";
 import { Button, MenuItem, Select, Input } from "@mui/material";
 import { Typography } from "@mui/material";
 
+import axios from "axios";
+import ldb from 'localdata';
 
 
 //Create route for that function---
 //import { drawItemText } from "../Services/renderingServices";
 
 const ItemForm = ({ blockIds, proceed }) => {
-  console.log("here-item ", blockIds);
+  //console.log("here-item ", blockIds);
   let all_block_id = blockIds;
   let dummy_data = [
     { title_id: "t1", value: "CHAAT PAKORE", block_id: "" },
@@ -34,7 +36,7 @@ const ItemForm = ({ blockIds, proceed }) => {
 
     data[index].block_id = event.target.value;
     setTitles(data);
-    console.log(data);
+    //console.log(data);
   };
 
   const removeSelectValue = (value) => {
@@ -44,7 +46,7 @@ const ItemForm = ({ blockIds, proceed }) => {
         data.splice(i, 1);
       }
     }
-    console.log(data);
+   // console.log(data);
     setLeftValues(data);
     //data.remove(value);
   };
@@ -53,10 +55,10 @@ const ItemForm = ({ blockIds, proceed }) => {
     //event.target.disabled = true;
     handleFormChange(event, index);
     removeSelectValue(event.target.value);
-    console.log(titles);
+   // console.log(titles);
   };
 
-  console.log(blockIds);
+ // console.log(blockIds);
   const save = async (e) => {
         // let data = await drawItemText(
     //   JSON.parse(localStorage.getItem("productImgBlob")),
@@ -65,6 +67,33 @@ const ItemForm = ({ blockIds, proceed }) => {
     // );
     // console.log(data);
     // let link = URL.createObjectURL(data["blob"]);
+    e.preventDefault();
+    let formData = new FormData();
+    let imagesList=[];
+    ldb.get("imageList", function(value,imagesList)
+    {
+      console.log(value);
+      console.log(JSON.parse(value).length);
+      for(var i=0;i<JSON.parse(value).length;i++)
+      {
+       imagesList[i]=("data:image/jpeg;base64," + JSON.parse(value[i]));
+      }
+    })
+  console.log(imagesList);
+    formData.append(imagesList);
+    formData.append(dummy_data);
+    formData.append(("coordinates", JSON.parse(localStorage.getItem("coordinates"))));
+    formData.append(("background",JSON.parse(localStorage.getItem("orignalImg"))))
+    console.log(formData);
+    let response = await axios.post(
+      "http://localhost:8000/setItemMapping",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
     // localStorage.setItem("finalMenu", JSON.stringify(link));
     // proceed(blockIds);
@@ -92,7 +121,7 @@ const ItemForm = ({ blockIds, proceed }) => {
             src={JSON.parse(localStorage.getItem("backgroundWithContours"))}
             width="100%"
             height="90%"
-          />
+          /><br />
           <img
             src={JSON.parse(localStorage.getItem("listImages"))[0]}
             width="100%"
@@ -126,7 +155,7 @@ const ItemForm = ({ blockIds, proceed }) => {
             </Typography>
             <form>
               {titles.map((title, index) => {
-                console.log(title);
+               // console.log(title);
                 return (
                   <>
                   <Box
