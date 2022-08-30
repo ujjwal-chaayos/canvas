@@ -163,7 +163,7 @@ const ImageForm = ({ blockIds, proceed }) => {
           )
         );
       });
-     console.log(formData);
+
     let response = await axios.post(
       "http://localhost:8000/uploadProducts",
       formData,
@@ -182,7 +182,8 @@ const ImageForm = ({ blockIds, proceed }) => {
       .then((blob) => {
         listImages.push(window.URL.createObjectURL(blob));
         // setResultImage(window.URL.createObjectURL(blob));
-    });
+      });
+    }
 
       
  
@@ -203,14 +204,14 @@ const ImageForm = ({ blockIds, proceed }) => {
     // console.log(listImages);
      localStorage.setItem("listImages",JSON.stringify(listImages));
    //await 
-    await fetch("data:image/jpeg;base64," + response.data["ImageWithProducts"])
-      .then((res) => res.blob())
-      .then((blob) => {
-        localStorage.setItem("ImageWithProducts",JSON.stringify(window.URL.createObjectURL(blob))
-        );
-        //setResultImage(window.URL.createObjectURL(blob));
-       console.log(JSON.parse(localStorage.getItem("ImageWithProducts")));
-      });
+    // await fetch("data:image/jpeg;base64," + response.data["ImageWithProducts"])
+    //   .then((res) => res.blob())
+    //   .then((blob) => {
+    //     localStorage.setItem("ImageWithProducts",JSON.stringify(window.URL.createObjectURL(blob))
+    //     );
+    //     //setResultImage(window.URL.createObjectURL(blob));
+    //    console.log(JSON.parse(localStorage.getItem("ImageWithProducts")));
+    //   });
 
     // let comingData = await drawProductImage(
     //   JSON.parse(localStorage.getItem("orignalImg")),
@@ -462,8 +463,7 @@ const ImageForm = ({ blockIds, proceed }) => {
     </Box>
   );
 
-  }
-}
+              }
 
 
 export default ImageForm;
