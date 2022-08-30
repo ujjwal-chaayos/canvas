@@ -36,7 +36,6 @@ exports.uploadProductImages = (req, res) => {
         console.log(req.files.background);
           //  console.log(background);
       let response =  drawProductImage(req.files.background,images,coordinnates);
-
        res.send(response);
 }
 
