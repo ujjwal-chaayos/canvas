@@ -4,9 +4,8 @@ import { Button, MenuItem, Select, Input } from "@mui/material";
 import { Typography } from "@mui/material";
 
 import axios from "axios";
-import ldb from 'localdata';
-
-
+//import ldb from 'localdata';
+ 
 //Create route for that function---
 //import { drawItemText } from "../Services/renderingServices";
 
@@ -69,21 +68,67 @@ const ItemForm = ({ blockIds, proceed }) => {
     // let link = URL.createObjectURL(data["blob"]);
     e.preventDefault();
     let formData = new FormData();
-    let imagesList=[];
-    ldb.get("imageList", function(value,imagesList)
-    {
-      console.log(value);
-      console.log(JSON.parse(value).length);
-      for(var i=0;i<JSON.parse(value).length;i++)
-      {
-       imagesList[i]=("data:image/jpeg;base64," + JSON.parse(value[i]));
-      }
-    })
-  console.log(imagesList);
-    formData.append(imagesList);
-    formData.append(dummy_data);
-    formData.append(("coordinates", JSON.parse(localStorage.getItem("coordinates"))));
-    formData.append(("background",JSON.parse(localStorage.getItem("orignalImg"))))
+    //let imagesList=[];
+    // ldb.get("imageList", function(value)
+    // {
+    //   console.log(value);
+    //   console.log(JSON.parse(value).length);
+    //   for(var i=0;i<JSON.parse(value).length;i++)
+    //   {
+    //    formData.append("data:image/jpeg;base64," + JSON.parse(value[i]));
+    //   }
+    // })
+  //console.log(imagesList);
+    //formData.append(imagesList);
+   // let data = [...titles];
+    //formData.append(data);
+    let imagesBlob = JSON.parse(localStorage.getItem("listImages"));
+    for(var i in imagesBlob){
+      await fetch(imagesBlob[i])
+      .then((res) => res.blob())
+      .then((blob) => {
+        console.log(blob.type);
+        formData.append(
+         "image"+i,
+          new File(
+            [
+              blob,
+              i+".png",
+              {
+                type: blob.type,
+                lastModified: new Date().getTime(),
+              },
+            ],
+            i+".png"
+          )
+        );
+      });
+    }
+    console.log("origImg",JSON.parse(localStorage.getItem("orignalImg")));
+    await fetch(JSON.parse(localStorage.getItem("orignalImg")))
+      .then((res) => res.blob())
+      .then((blob) => {
+        console.log(blob.type);
+        formData.append(
+          "background",
+          new File(
+            [
+              blob,
+              "background.png",
+              {
+                type: blob.type,
+                lastModified: new Date().getTime(),
+              },
+            ],
+            "background.png"
+          )
+        );
+      });
+    
+     formData.append('dummy_data',JSON.stringify([...titles]));
+     console.log('dummy_data',[...titles]);
+     formData.append("coordinates", localStorage.getItem("coordinates"));
+     console.log(JSON.parse(localStorage.getItem("coordinates")));
     console.log(formData);
     let response = await axios.post(
       "http://localhost:8000/setItemMapping",
