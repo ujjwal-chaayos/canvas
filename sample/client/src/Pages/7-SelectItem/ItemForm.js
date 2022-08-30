@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Button, MenuItem, Select, Input } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
 import { Typography } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
 
 
 //Create route for that function---
@@ -19,11 +17,14 @@ const ItemForm = ({ blockIds, proceed }) => {
     { title_id: "t3", value: "SANDWICHES", block_id: "" },
     { title_id: "t4", value: "DESSERTS", block_id: "" },
     { title_id: "t5", value: "MEALS", block_id: "" },
-  ]; //dummy_data coming from db for with image_id
-
-  const [titles, setTitles] = useState(dummy_data);
+  ];
+  //const [titles,setTitles]=useState(JSON.parse(localStorage.getItem("titles")));
+  const [titles,setTitles]=useState(dummy_data);
   const [imgMapValue, setImgMapValue] = useState("");
   const [leftValues, setLeftValues] = useState(all_block_id);
+
+ 
+
 
   const handleFormChange = (event, index) => {
     let data = [...titles];
@@ -57,9 +58,7 @@ const ItemForm = ({ blockIds, proceed }) => {
 
   console.log(blockIds);
   const save = async (e) => {
-    // console.log(titles);
-
-    // let data = await drawItemText(
+        // let data = await drawItemText(
     //   JSON.parse(localStorage.getItem("productImgBlob")),
     //   titles,
     //   JSON.parse(localStorage.getItem("coordinates"))
@@ -84,9 +83,18 @@ const ItemForm = ({ blockIds, proceed }) => {
           "& button": { m: 5 },
         }}
       >
-        <Box width="60%" sx={{ p: 9 }}>
+        <Box width="60%" sx={{ 
+          p: 9,
+          overflow: "hidden",
+          overflowY: "scroll",
+         }}>
           <img
-            src={JSON.parse(localStorage.getItem("imageBlob"))}
+            src={JSON.parse(localStorage.getItem("backgroundWithContours"))}
+            width="100%"
+            height="90%"
+          /><br />
+          <img
+            src={JSON.parse(localStorage.getItem("listImages"))[0]}
             width="100%"
             height="90%"
           />
@@ -121,6 +129,14 @@ const ItemForm = ({ blockIds, proceed }) => {
                 console.log(title);
                 return (
                   <>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      p: 1,
+                      m: 1,
+                      justifyContent: "space-evenly",
+                    }}
+                  >
                     <Typography align="center" sx={{ color: "#303030", p: 3 }}>
                       Choose Block for {`${title["value"]}`}
                       <Select
@@ -134,7 +150,15 @@ const ItemForm = ({ blockIds, proceed }) => {
                           <MenuItem value={option}>{option}</MenuItem>
                         ))}
                       </Select>
+                      <Typography
+                        variant="caption"
+                        align="center"
+                        sx={{ color: "#303030", p: 3 }}
+                      >
+                        You chose {title.block_id}
+                      </Typography>
                     </Typography>
+                    </Box>
                   </>
                 );
               })}
