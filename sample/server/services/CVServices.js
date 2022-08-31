@@ -129,7 +129,7 @@ const seFont = async (screen,style)=>{
 // This function will put Text on the screen.
 const drawText=(screen,text,points,style)=>{
     // This will define the Font to text to be showwn.
-     console.log(text);
+     console.log(text,style);
     screen.font = style;
     // Putting the text on the screen.
     screen.fillText(text,parseInt(points.x),parseInt(points.y));
