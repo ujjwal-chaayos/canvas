@@ -127,10 +127,10 @@ const uiJsonConverter = (menu, mapping) => {
     prices: prices,
     "style":{
       "font": {
-          "Title": "Helvetica, Arial, sans-serif",
-          "Items": "Helvetica, Arial, sans-serif",
-          "Prices": "Helvetica, Arial, sans-serif",
-          "New": "Helvetica, Arial, sans-serif"
+          "Title": "Helvetica",
+          "Items": "Helvetica",
+          "Prices": "Helvetica",
+          "New": "Helvetica"
       },
       "size": {
           "Title": "96px",
@@ -278,10 +278,10 @@ const jsonConverter = (menu, refrenceTemplate, font) => {
 
   refinedTemplate["style"] = {
     font: {
-      Title: "Helvetica, Arial, sans-serif",
-      Items: "Helvetica, Arial, sans-serif",
-      Prices: "Helvetica, Arial, sans-serif",
-      New: "Helvetica, Arial, sans-serif",
+      Title: "Arial",
+      Items: "Arial",
+      Prices: "Arial",
+      New: "Arial",
     },
     size: {
       Title: "96px",
