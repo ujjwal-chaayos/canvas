@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Box, Button,Typography } from "@mui/material";
 
+
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
@@ -24,10 +25,11 @@ const UploadTemplate = () => {
   let [orignalImg, setOriginalImg] = useState("");
   const [file, setFile] = useState([]);
   const [coordinates, setCoordinates] = useState([]);
+  
 
   useEffect(() => {
     localStorage.setItem("coordinates", JSON.stringify(coordinates));
-    localStorage.setItem("imageBlob", JSON.stringify(resultImage));
+    localStorage.setItem("imageBlob", JSON.stringify(resultImage)); 
     localStorage.setItem("orignalImg", JSON.stringify(orignalImg));
   }, [coordinates]);
   let dummy_data;
@@ -74,6 +76,7 @@ const UploadTemplate = () => {
     //console.log(URL.createObjectURL(event.target.files[0]))
     setFile([...file, [imgInfo]]);
   };
+  
 
   const seePreview = async (e) => {
     console.log({resultImage});
@@ -109,10 +112,11 @@ const UploadTemplate = () => {
           setOriginalImg(window.URL.createObjectURL(blob));   
            localStorage.setItem("orignalImg",JSON.stringify(window.URL.createObjectURL(blob)));    
         });
+
     fetch('data:image/jpeg;base64,' +response.data['backgroundWithContours'])
     .then(res => res.blob())
     .then(blob => {
-      setResultImage(window.URL.createObjectURL(blob));  
+      setResultImage(window.URL.createObjectURL(blob));
       localStorage.setItem("backgroundWithContours",JSON.stringify(window.URL.createObjectURL(blob))); 
     });
     

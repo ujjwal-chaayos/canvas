@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const mongoose = require("mongoose");
@@ -38,4 +37,3 @@ exports.uploadProductImages = (req, res) => {
 exports.generateGenericMenu = (req, res) => {
     
 }
-
