@@ -43,11 +43,7 @@ exports.uploadProductImages = (req, res) => {
 exports.setItemMapping = (req, res) => {
         let images =[];
         console.log("setmapping called")
-        console.log(req.files.background);
-        console.log("files");
        for(var file in req.files){
-         var text=file ;
-         console.log(file);
          if(file === 'background'){
            continue;
          }
@@ -55,6 +51,8 @@ exports.setItemMapping = (req, res) => {
            images.push(req.files[file].data);
         }
        }
+       console.log(images,req.files.background.data,req.body.dummy_data,req.body.coordinates);
         //let response=drawItemText(images,req.files.background,req.body.dummy_data,req.body.coordinates);
+        //res.send(response);
 }
 

@@ -31,10 +31,6 @@ const menu = require("../data/Menus/menu.json");
 //   let coordinateJson = coordinateConverter(coordinates,mapping);
 
 
-
-
-
-
 export async function drawItemText(background,bckgroundPlain ,mapping, coordinates) {
   let bgImg = new Image();
   bgImg2.onload =() =>{};
