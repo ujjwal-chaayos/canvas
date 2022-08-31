@@ -48,7 +48,7 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen) 
           let style =
             itemStyle.weight.Items +
             " " +
-            itemStyle.size.Items;
+            itemStyle.size.Items+
           " " +
             itemStyle.font.Items;
           screen.font = style;
@@ -387,7 +387,7 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
   encoder.createReadStream().pipe(fs.createWriteStream('./data/myanimated.gif'));
   encoder.start();
   encoder.setRepeat(0); // 0 for repeat, -1 for no-repeat
-  encoder.setDelay(500); // frame delay in ms
+  encoder.setDelay(5000); // frame delay in ms
   encoder.setQuality(10); // image quality. 10 is default.
 
 
