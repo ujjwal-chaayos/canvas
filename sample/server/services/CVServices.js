@@ -57,7 +57,7 @@ const drawContours = (points, cv, screen) => {
     // this will draw the rectangle over the provided block on canvas.
     screen.rect(parseInt(points.x),parseInt(points.y),parseInt(points.w), parseInt(points.h));
     screen.stroke();
-    screen.save();
+
 }
 
 // This function will return the resized Image matrix.
@@ -112,7 +112,7 @@ const drawImage=(screen, image, block)=>{
     // this will put the image at specified position.
     screen.drawImage(image,block['x'],block['y'],block['w'],block['h']);
     // save the screen.
-    screen.save();
+
 }
 
 // This function will put the image data onto the canvas(screen).
@@ -121,16 +121,17 @@ const drawImageData=(screen, image, points)=>{
     // this will put the image at specified position.
     screen.putImageData(image,points['x'],points['y']);
     // save the screen.
-    screen.save();
+  
 }
 
 // This function will put Text on the screen.
 const drawText=(screen,text,points,style)=>{
     // This will define the Font to text to be showwn.
+     console.log(text);
     screen.font = style;
     // Putting the text on the screen.
     screen.fillText(text,parseInt(points.x),parseInt(points.y));
-    screen.save();
+
 }
 
 // This function will draw Line below the Title.
@@ -148,7 +149,7 @@ const drawLine=(screen,sourcePoint,destinationPoint,style)=>{
     // defining the color of line and finally draw it then save it.
     screen.strokeStyle = "#376902";
     screen.stroke();
-    screen.save();
+
 }
 
 // This will download the final screen as png.
@@ -229,7 +230,7 @@ const roundedRect=(screen,point, r,style)=>{
     screen.closePath();
     screen.fillStyle = style;
     screen.fill();
-    screen.save();
+  
 }
 
 const newItemRect=(screen,point, r,style1,style2)=>{
@@ -244,7 +245,7 @@ const newItemRect=(screen,point, r,style1,style2)=>{
     screen.closePath();
     screen.fillStyle = style1;
     screen.fill();
-    screen.save();
+
 
     screen.beginPath();
     screen.moveTo(point.x+Math.ceil(point.w*0.75), point.y);
@@ -256,7 +257,7 @@ const newItemRect=(screen,point, r,style1,style2)=>{
     screen.fillStyle = style2;
     screen.fill();
     
-    screen.save();
+
 
 };
 
