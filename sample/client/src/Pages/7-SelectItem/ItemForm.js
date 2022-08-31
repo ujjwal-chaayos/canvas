@@ -83,6 +83,7 @@ const ItemForm = ({ blockIds, proceed }) => {
    // let data = [...titles];
     //formData.append(data);
     let imagesBlob = JSON.parse(localStorage.getItem("listImages"));
+    console.log(imagesBlob);
     for(var i in imagesBlob){
       await fetch(imagesBlob[i])
       .then((res) => res.blob())
