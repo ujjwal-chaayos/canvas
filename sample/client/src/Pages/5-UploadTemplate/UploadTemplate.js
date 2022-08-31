@@ -203,7 +203,7 @@ const UploadTemplate = () => {
                     <img id="template1" width="504px" height="283px" />
                   </Box>
                 </div>
-                <div style={{ width: "50%" }}>
+                <div style={{alignContent:"center", width: "50%" }}>
                   <Button
                     endIcon={<CloudUploadIcon />}
                     variant="contained"
