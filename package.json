@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "load-svg-file": "^1.0.8",
+    "localdata": "^0.1.3"
+  }
+}

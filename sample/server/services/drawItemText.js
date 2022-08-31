@@ -31,12 +31,12 @@ const GIFEncoder = require("gifencoder");
 
 const fs = require("fs");
 
+const loadSvgFile = require('load-svg-file');
+const newicon = "../data/background/New icon.svg";
+const nonvegicon = "../data/background/Non veg icon.svg";
+const vegicon = "D:/Canvas/sample/server/data/background/veg icon.svg";
 
-// const newicon = "http://localhost:8000/background/New icon.svg";
-// const nonvegicon = "http://localhost:8000/background/Non veg icon.svg";
-// const vegicon = "http://localhost:8000/background/veg icon.svg";
-
-
+console.log(loadSvgFile(newicon));
 
 
 async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen) {
