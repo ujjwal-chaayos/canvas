@@ -144,7 +144,7 @@ const drawItemText = require("./drawItemText");
 // }
 
 
-const drawProductImage =  (background, imagedict, coordinateData) => {
+const drawProductImage = async  (background, imagedict, coordinateData) => {
   let imageData = [];
   let ids = new Set();
   for(var i=0;i<imagedict.length;i++){
@@ -238,7 +238,7 @@ const drawProductImage =  (background, imagedict, coordinateData) => {
     { title_id: "t5", value: "MEALS", block_id: "10" },
   ];
   console.log("drawing item text");
- drawItemText(finalImagesArray,dummy_data,coordinateData);
+  await drawItemText(finalImagesArray,dummy_data,coordinateData);
   console.log("finished drawing item text");
   return finalImagesArray;
 

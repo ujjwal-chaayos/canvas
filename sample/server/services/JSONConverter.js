@@ -10,6 +10,8 @@ const coordinateConverter = (coordinates,mapping) =>{
        var coordinateBlockId = coordinates[j].block_id;
        if(parseInt(coordinateBlockId)=== parseInt(titleBlockId)){
          let subcoordinate = subBlockCoordinates(coordinates[j],200,coordinates[j].w*0.2);
+
+
          let detailHeading = {};
          detailHeading.block_id = 1;
          detailHeading.parent_block_id = coordinateBlockId;
@@ -29,6 +31,7 @@ const coordinateConverter = (coordinates,mapping) =>{
          detailItem.w = subcoordinate.items.w;
          detailItem.h = subcoordinate.items.h;
  
+         
          let detailPrice = {};
          detailPrice.block_id = 3;
          detailPrice.parent_block_id = coordinateBlockId;

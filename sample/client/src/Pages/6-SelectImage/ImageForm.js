@@ -5,6 +5,7 @@ import { Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import axios from "axios";
+import ldb from 'localdata';
 
 //Create Route for that function---
 //import { drawProductImage } from "../Services/renderingServices";
@@ -175,6 +176,7 @@ const ImageForm = ({ blockIds, proceed }) => {
     );
 
     console.log(response.data);
+    ldb.set("imageList",response.data);
     let listImages=[];
     for(var b64String in response.data){
       await fetch("data:image/jpeg;base64," + response.data[b64String])
@@ -455,7 +457,7 @@ const ImageForm = ({ blockIds, proceed }) => {
       </Box>
       <Box width="60%" sx={{ p: 9 }}>
         <img
-          src={localStorage.getItem("returnedImgWithContours")}
+          src={JSON.parse(localStorage.getItem("backgroundWithContours"))}
           width="100%"
           height="90%"
         />
