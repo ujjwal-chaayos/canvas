@@ -30,17 +30,16 @@ const GIFEncoder = require("gifencoder");
 
 
 const fs = require("fs");
-
-const loadSvgFile = require('load-svg-file');
-const newicon = "../data/background/New icon.svg";
-const nonvegicon = "../data/background/Non veg icon.svg";
+const newicon = "D:/Canvas/sample/server/data/background/New icon.svg";
+const nonvegicon = "D:/Canvas/sample/server/data/background/Non veg icon.svg";
 const vegicon = "D:/Canvas/sample/server/data/background/veg icon.svg";
 
-console.log(loadSvgFile(newicon));
 
 
-async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen) {
-  console.log(itemCoordinates, itemStyle, items, prices);
+
+
+async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen,screen2,vegicon,nonvegicon,newicon) {
+  //console.log(itemCoordinates, itemStyle, items, prices);
   
       for (let i = 0; i < itemCoordinates.length; i++) {
         if (itemCoordinates[i].type === "Items") {
@@ -52,6 +51,8 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen) 
           " " +
             itemStyle.font.Items;
           screen.font = style;
+          screen2.font = style;
+
        
           let itemX = itemCoordinates[i].x + 10;
           let itemY = itemCoordinates[i].y;
@@ -116,15 +117,21 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen) 
               rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
               rectpoint.h = 56 + 10;
               roundedRect(screen, rectpoint, 20, "grey");
+              roundedRect(screen2, rectpoint, 20, "grey");
+
 
 
 
               screen.fillStyle = "Black";
+              screen2.fillStyle = "Black";
+
 
 
 
             } else {
               screen.fillStyle = itemStyle.color.Items;
+              screen2.fillStyle = itemStyle.color.Items;
+
 
 
             }
@@ -137,15 +144,21 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen) 
               rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
               rectpoint.h = 56 + 10;
               newItemRect(screen, rectpoint, 30, "yellow", "orange");
+              newItemRect(screen2, rectpoint, 30, "yellow", "orange");
+
 
 
 
               screen.fillStyle = itemStyle.color.New;
+              screen2.fillStyle = itemStyle.color.New;
+
 
 
             } else {
               if (itemArray[k].active) {
                 screen.fillStyle = itemStyle.color.Items;
+                screen2.fillStyle = itemStyle.color.Items;
+
 
 
               }
@@ -154,6 +167,8 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen) 
 
 
             drawText(screen, text, points, style);
+            drawText(screen2, text, points, style);
+
             // if (parseInt(itemCoordinates[i].parent_block_id) === parseInt(10))
 
 
@@ -167,10 +182,14 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen) 
                     pricePoints.x = priceX;
                     pricePoints.y = priceY;
                     screen.fillStyle = itemStyle.color.Prices;
+                    screen2.fillStyle = itemStyle.color.Prices;
+
 
 
 
                     drawText(screen, priceText, pricePoints, style);
+                    drawText(screen2, priceText, pricePoints, style);
+
 
 
                   }
@@ -185,10 +204,14 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen) 
                     pricePoints.x = priceX;
                     pricePoints.y = priceY;
                     screen.fillStyle = itemStyle.color.Prices;
+                    screen2.fillStyle = itemStyle.color.Prices;
+
 
 
 
                     drawText(screen, priceText, pricePoints, style);
+                    drawText(screen2, priceText, pricePoints, style);
+
 
 
                   }
@@ -199,13 +222,17 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen) 
 
 
               let iconpoint = {};
+              //console.log(screen.measureText(text))
               iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
-              iconpoint.y =
-                itemY - Math.floor(screen.measureText(text).fontBoundingBoxAscent);
-              iconpoint.w =
-                Math.floor(screen.measureText(text).fontBoundingBoxAscent) + 15;
-              iconpoint.h =
-                Math.floor(screen.measureText(text).fontBoundingBoxAscent) + 15;
+              iconpoint.y = itemY - Math.floor(screen.measureText(text).actualBoundingBoxAscent);
+              iconpoint.w = Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
+              iconpoint.h  = Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
+                await loadImage(vegicon).then(image => {
+                  //console.log("veg icon printed");
+                  //console.log(iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h)
+                    screen.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
+                    screen2.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
+                 })
 
 
 
@@ -216,11 +243,15 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen) 
               let iconpoint = {};
               iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
               iconpoint.y =
-                itemY - Math.floor(screen.measureText(text).fontBoundingBoxAscent);
+                itemY - Math.floor(screen.measureText(text).actualBoundingBoxAscent);
               iconpoint.w =
-                Math.floor(screen.measureText(text).fontBoundingBoxAscent) + 15;
+                Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
               iconpoint.h =
-                Math.floor(screen.measureText(text).fontBoundingBoxAscent) + 15;
+                Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
+                await loadImage(nonvegicon).then(image => {
+                  screen.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
+                  screen2.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
+               })
 
 
             }
@@ -232,10 +263,15 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen) 
                 itemX + Math.floor(screen.measureText(text).width) + 180;
               iconpoint.y =
                 itemY -
-                Math.floor(screen.measureText(text).fontBoundingBoxAscent) -
+                Math.floor(screen.measureText(text).actualBoundingBoxAscent) -
                 45;
               iconpoint.w = 150;
               iconpoint.h = 150;
+              await loadImage(newicon).then(image => {
+                screen.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
+                //screen2.drawImage(image,iconpoint.x-20,iconpoint.y,iconpoint.w,iconpoint.h);
+
+             })
 
 
 
@@ -251,8 +287,8 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen) 
 
 
 
-async function doMyTitlePrint(titleCoordinate, titles, titleStyle, screen) {
-  console.log(titleCoordinate, titles, titleStyle);
+async function doMyTitlePrint(titleCoordinate, titles, titleStyle, screen,screen2) {
+  //console.log(titleCoordinate, titles, titleStyle);
   for (let i = 0; i < titleCoordinate.length; i++) {
     if (titleCoordinate[i].type === "Heading") {
  
@@ -261,6 +297,8 @@ async function doMyTitlePrint(titleCoordinate, titles, titleStyle, screen) {
 
       let titleText = titles[id].value;
       screen.fillStyle = titleStyle.color.Title;
+      screen2.fillStyle = titleStyle.color.Title;
+
 
 
 
@@ -272,6 +310,8 @@ async function doMyTitlePrint(titleCoordinate, titles, titleStyle, screen) {
         " " +
         titleStyle.font.Title;
       screen.font = style;
+      screen2.font = style;
+
 
 
 
@@ -293,6 +333,8 @@ async function doMyTitlePrint(titleCoordinate, titles, titleStyle, screen) {
       points.y = y;
       //console.log(titleText);
       drawText(screen, titleText, points, style);
+      drawText(screen2, titleText, points, style);
+
 
 
 
@@ -300,6 +342,8 @@ async function doMyTitlePrint(titleCoordinate, titles, titleStyle, screen) {
 
       points.y = y + 10;
       drawLine(screen, points, destPoint, style);
+      drawLine(screen2, points, destPoint, style);
+
 
 
 
@@ -329,6 +373,21 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
     w: bgImg.width,
     h: bgImg.height,
   });
+
+
+  let screen2canvas = createCanvas(bgImg.width, bgImg.height);
+  let screen2 = screen2canvas.getContext("2d");
+
+
+  drawImage(screen2, bgImg, {
+    x: 0,
+    y: 0,
+    w: bgImg.width,
+    h: bgImg.height,
+  });
+  // loadImage(vegicon).then(image => {
+  //   screen.drawImage(image,0,0,bgImg.width/2, bgImg.height/2);
+  // })
   fs.writeFileSync('./data/images' + bufferLength + '.png', screen1canvas.toBuffer('image/png'))
 
 
@@ -348,7 +407,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   //console.log(titleCoordinate,titles,titleStyle);
 
 
-  await doMyTitlePrint(titleCoordinate, titles, titleStyle, screen);
+  await doMyTitlePrint(titleCoordinate, titles, titleStyle, screen,screen2);
 
 
 
@@ -364,12 +423,13 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   let prices = jsondata.prices;
 
 
-  await doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen);
+  await doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen,screen2,vegicon,nonvegicon,newicon);
   screen.save();
+  screen2.save();
   fs.writeFileSync('./data/screen1Menu' + bufferLength + '.png', screen1canvas.toBuffer('image/png'))
 
 
-  return screen;
+  return {"1":screen,"2":screen2};
 }
 
 
@@ -387,7 +447,7 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
   encoder.createReadStream().pipe(fs.createWriteStream('./data/myanimated.gif'));
   encoder.start();
   encoder.setRepeat(0); // 0 for repeat, -1 for no-repeat
-  encoder.setDelay(5000); // frame delay in ms
+  encoder.setDelay(1000); // frame delay in ms
   encoder.setQuality(10); // image quality. 10 is default.
 
 
@@ -397,8 +457,15 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
 
 
   while (bufferLength > 0) {
-    let screen = await doMyWork(imageArray[bufferLength - 1], jsondata, coordinateJson, bufferLength);
-    encoder.addFrame(screen);
+    let result = await doMyWork(imageArray[bufferLength - 1], jsondata, coordinateJson, bufferLength);
+
+    encoder.addFrame(result["1"]);
+    encoder.addFrame(result["2"]);
+    encoder.addFrame(result["1"]);
+    encoder.addFrame(result["2"]);
+    encoder.addFrame(result["1"]);
+    encoder.addFrame(result["2"]);
+
 
 
     bufferLength--;

@@ -34,6 +34,6 @@ exports.uploadProductImages = (req, res) => {
        res.send(response);
 }
 
-exports.generateGenericMenu = (req, res) => {
+// exports.generateGenericMenu = (req, res) => {
     
-}
+// }

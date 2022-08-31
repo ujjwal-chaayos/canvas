@@ -7,6 +7,6 @@ router.post("/uploadTemplate", uploadTemplate);
 
 router.post("/uploadProducts", uploadProductImages);
 
-router.post("/generateGenericMenu", generateGenericMenu);
+//router.post("/generateGenericMenu", generateGenericMenu);
 
 module.exports = router;
