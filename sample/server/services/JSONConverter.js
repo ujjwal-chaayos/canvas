@@ -124,10 +124,10 @@ const uiJsonConverter = (menu, mapping) => {
     prices: prices,
     "style":{
       "font": {
-          "Title": "Helvetica, Arial, sans-serif",
-          "Items": "Helvetica, Arial, sans-serif",
-          "Prices": "Helvetica, Arial, sans-serif",
-          "New": "Helvetica, Arial, sans-serif"
+          "Title": "Arial, sans-serif",
+          "Items": "Arial, sans-serif",
+          "Prices": "Arial, sans-serif",
+          "New":  "Arial, sans-serif"
       },
       "size": {
           "Title": "96px",

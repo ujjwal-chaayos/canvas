@@ -57,7 +57,6 @@ const drawContours = (points, cv, screen) => {
     // this will draw the rectangle over the provided block on canvas.
     screen.rect(parseInt(points.x),parseInt(points.y),parseInt(points.w), parseInt(points.h));
     screen.stroke();
-    screen.save();
 }
 
 // This function will return the resized Image matrix.
@@ -107,12 +106,11 @@ const matrixToImgData = (image) => {
 }
 
 // This function will put the image onto the canvas(screen).
-const drawImage=(screen, image, block)=>{
+const drawImage= async (screen, image, block)=>{
     
     // this will put the image at specified position.
-    screen.drawImage(image,block['x'],block['y'],block['w'],block['h']);
+    await screen.drawImage(image,block['x'],block['y'],block['w'],block['h']);
     // save the screen.
-    screen.save();
 }
 
 // This function will put the image data onto the canvas(screen).
@@ -121,34 +119,34 @@ const drawImageData=(screen, image, points)=>{
     // this will put the image at specified position.
     screen.putImageData(image,points['x'],points['y']);
     // save the screen.
-    screen.save();
 }
-
-// This function will put Text on the screen.
-const drawText=(screen,text,points,style)=>{
-    // This will define the Font to text to be showwn.
+const setFont = async (screen,style)=>{
     screen.font = style;
+
+}
+// This function will put Text on the screen.
+const drawText=async (screen,text,points,style)=>{
+    // This will define the Font to text to be showwn.
+    await setFont(screen,style);
     // Putting the text on the screen.
     screen.fillText(text,parseInt(points.x),parseInt(points.y));
-    screen.save();
 }
 
 // This function will draw Line below the Title.
-const drawLine=(screen,sourcePoint,destinationPoint,style)=>{
+const drawLine= async (screen,sourcePoint,destinationPoint,style)=>{
 
     // defining the width of line equal to 20.
     screen.lineWidth = 10;
     
     // defining starting point of line.
-    screen.moveTo(parseInt(sourcePoint.x), parseInt(sourcePoint.y));
+    await screen.moveTo(parseInt(sourcePoint.x), parseInt(sourcePoint.y));
 
     // defining the ending point of line.
-    screen.lineTo(parseInt(destinationPoint.x), parseInt(destinationPoint.y));
+    await screen.lineTo(parseInt(destinationPoint.x), parseInt(destinationPoint.y));
 
     // defining the color of line and finally draw it then save it.
     screen.strokeStyle = "#376902";
-    screen.stroke();
-    screen.save();
+    await screen.stroke();
 }
 
 // This will download the final screen as png.
@@ -217,46 +215,43 @@ const sortCoordinates=(coordinates)=>{
     return sortedCoordinates;
 }
 
-const roundedRect=(screen,point, r,style)=>{
+const roundedRect= async (screen,point, r,style)=>{
     if (point.w < 2 * r) r = point.w / 2;
     if (point.h < 2 * r) r = point.h / 2;
-    screen.beginPath();
-    screen.moveTo(point.x+r, point.y);
-    screen.arcTo(point.x+point.w, point.y,   point.x+point.w, point.y+point.h, r);
-    screen.arcTo(point.x+point.w, point.y+point.h, point.x,   point.y+point.h, r);
-    screen.arcTo(point.x,   point.y+point.h, point.x,   point.y,   r);
-    screen.arcTo(point.x,   point.y,   point.x+point.w, point.y,   r);
-    screen.closePath();
+    await screen.beginPath();
+    await screen.moveTo(point.x+r, point.y);
+    await screen.arcTo(point.x+point.w, point.y,   point.x+point.w, point.y+point.h, r);
+    await  screen.arcTo(point.x+point.w, point.y+point.h, point.x,   point.y+point.h, r);
+    await screen.arcTo(point.x,   point.y+point.h, point.x,   point.y,   r);
+    await screen.arcTo(point.x,   point.y,   point.x+point.w, point.y,   r);
+    await screen.closePath();
     screen.fillStyle = style;
-    screen.fill();
-    screen.save();
+    await screen.fill();
 }
 
-const newItemRect=(screen,point, r,style1,style2)=>{
+const newItemRect= async (screen,point, r,style1,style2)=>{
     if (point.w < 2 * r) r = point.w / 2;
     if (point.h < 2 * r) r = point.h / 2;
-    screen.beginPath();
-    screen.moveTo(point.x+r, point.y);
-    screen.arcTo(point.x+point.w, point.y,   point.x+point.w, point.y+point.h, r);
-    screen.arcTo(point.x+point.w, point.y+point.h, point.x,   point.y+point.h, r);
-    screen.arcTo(point.x,   point.y+point.h, point.x,   point.y,   r);
-    screen.arcTo(point.x,   point.y,   point.x+point.w, point.y,   r);
-    screen.closePath();
+    await screen.beginPath();
+    await screen.moveTo(point.x+r, point.y);
+    await screen.arcTo(point.x+point.w, point.y,   point.x+point.w, point.y+point.h, r);
+    await screen.arcTo(point.x+point.w, point.y+point.h, point.x,   point.y+point.h, r);
+    await screen.arcTo(point.x,   point.y+point.h, point.x,   point.y,   r);
+    await screen.arcTo(point.x,   point.y,   point.x+point.w, point.y,   r);
+    await screen.closePath();
     screen.fillStyle = style1;
-    screen.fill();
-    screen.save();
+    await screen.fill();
 
-    screen.beginPath();
-    screen.moveTo(point.x+Math.ceil(point.w*0.75), point.y);
-    screen.arcTo(point.x+point.w, point.y,   point.x+point.w, point.y+point.h, r);
-    screen.arcTo(point.x+point.w, point.y+point.h, point.x,   point.y+point.h, r);
-    screen.arcTo(point.x+Math.ceil(point.w*0.70),   point.y+point.h, point.x,   point.y,   r);
+    await screen.beginPath();
+    await screen.moveTo(point.x+Math.ceil(point.w*0.75), point.y);
+    await screen.arcTo(point.x+point.w, point.y,   point.x+point.w, point.y+point.h, r);
+    await screen.arcTo(point.x+point.w, point.y+point.h, point.x,   point.y+point.h, r);
+    await screen.arcTo(point.x+Math.ceil(point.w*0.70),   point.y+point.h, point.x,   point.y,   r);
    
-    screen.closePath();
+    await screen.closePath();
     screen.fillStyle = style2;
-    screen.fill();
+    await screen.fill();
     
-    screen.save();
 
 };
 
