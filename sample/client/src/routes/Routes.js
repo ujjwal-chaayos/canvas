@@ -7,8 +7,6 @@ import GenOrPick from "../Pages/3-PickTemplate/GenOrPick";
 
 import ChooseTemplate from "../Pages/4-TemplatePage/ChooseTemplate";
 import UploadTemplate from "../Pages/5-UploadTemplate/UploadTemplate";
-// import ImageForm from "./Pages/ImageForm";
-// import ItemForm from "./Pages/ItemForm";
 
 import Final from "../Pages/ThankPage/Final";
 
@@ -27,9 +25,6 @@ const AllRoutes = () => {
       />
 
       <Route path="/preview/:screenId/:tempId" element={<Block />} />
-
-      {/* <Route path="/image/:screenId/:tempId" element={<ImageForm/>}/>
-          <Route path="/item/:screenId/:tempId" element={<ItemForm/>}/> */}
     </Routes>
   );
 };
