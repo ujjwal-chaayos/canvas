@@ -427,8 +427,8 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   screen.save();
   screen2.save();
   //fs.writeFileSync('./data/screen1Menu' + bufferLength + '.png', screen1canvas.toBuffer('image/png'))
-  let buffer1 = screen1canvas.toBuffer('image/png').toString('base64');
-  let buffer2 = screen1canvas.toBuffer('image/png').toString('base64');
+  let buffer1 = screen1canvas.toBuffer('image/png')//.toString('base64');
+  let buffer2 = screen1canvas.toBuffer('image/png')//.toString('base64');
 
   return {"1":buffer1,"2":buffer2};
 }
@@ -464,8 +464,6 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
     response.push(result["2"]);
     response.push(result["1"]);
     response.push(result["2"]);
-
-
 
     bufferLength--;
   }

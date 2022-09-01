@@ -45,7 +45,7 @@ exports.setItemMapping = async (req, res) => {
        }
        
        console.log(req.body.dummy_data);
-        let response=await drawItemText(images,JSON.parse(req.body.dummy_data),JSON.parse(req.body.coordinates));
-       // console.log(response);
+        let response= await drawItemText(images,JSON.parse(req.body.dummy_data),JSON.parse(req.body.coordinates));
+        console.log(response);
         res.send(response);
 }

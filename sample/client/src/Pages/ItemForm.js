@@ -129,17 +129,17 @@ const ItemForm = ({ blockIds, proceed }) => {
       }
     );
 
-    let listMenu=[];
-    for(var b64String in response.data){
-      await fetch("data:image/jpeg;base64," + response.data[b64String])
-      .then((res) => res.blob())
-      .then((blob) => {
-        listMenu.push(window.URL.createObjectURL(blob));
-        // setResultImage(window.URL.createObjectURL(blob));
-      });
-    }
-    localStorage.setItem("listMenu",JSON.stringify(listMenu));
-    console.log(listMenu);
+    // let listMenu=[];
+    // for(var b64String in response.data){
+    //   await fetch("data:image/jpeg;base64," + response.data[b64String])
+    //   .then((res) => res.blob())
+    //   .then((blob) => {
+    //     listMenu.push(window.URL.createObjectURL(blob));
+    //     // setResultImage(window.URL.createObjectURL(blob));
+    //   });
+    // }
+    // localStorage.setItem("listMenu",JSON.stringify(listMenu));'
+    console.log(response.data);
     // localStorage.setItem("finalMenu", JSON.stringify(link));
     // proceed(blockIds);
   };
