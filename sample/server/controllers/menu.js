@@ -16,8 +16,8 @@ exports.uploadTemplate = (req, res) => {
 }
 exports.uploadProductImages = (req, res) => {
         let images =[];
-       console.log("uploadProductImages");
-        console.log( req.files);
+       //console.log("uploadProductImages");
+        //console.log( req.files);
        let coordinnates =JSON.parse(req.body.coordinates);
         for(var file in req.files){
                 if(file === 'background'){
@@ -43,9 +43,12 @@ exports.setItemMapping = async (req, res) => {
            images.push(req.files[file].data);
         }
        }
-       
-       console.log(req.body.dummy_data);
-        let response= await drawItemText(images,JSON.parse(req.body.dummy_data),JSON.parse(req.body.coordinates));
-        console.log(response);
-        res.send(response);
+       //console.log(images);
+       //console.log(JSON.parse(req.body.dummy_data));
+       //console.log(JSON.parse(req.body.coordinates))
+        let response=await drawItemText(images,JSON.parse(req.body.dummy_data),JSON.parse(req.body.coordinates));
+        let mydata={};
+        mydata.value=response;
+       console.log(mydata);
+              res.send(mydata);
 }

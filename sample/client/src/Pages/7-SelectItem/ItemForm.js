@@ -131,6 +131,7 @@ const ItemForm = ({ blockIds, proceed }) => {
      formData.append("coordinates", localStorage.getItem("coordinates"));
      console.log(JSON.parse(localStorage.getItem("coordinates")));
     console.log(formData);
+    
     let response = await axios.post(
       "http://localhost:8000/setItemMapping",
       formData,
@@ -139,10 +140,35 @@ const ItemForm = ({ blockIds, proceed }) => {
           "Content-Type": "multipart/form-data",
         },
       }
-    );
+    ).catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      }
+    });
 
-    // localStorage.setItem("finalMenu", JSON.stringify(link));
-    // proceed(blockIds);
+    console.log(response);
+    let data = await response.data.value;
+    let myRes = [];
+    myRes.push(data);
+    console.log(data);
+    let listImages=[];
+    for(var b64String in myRes){
+      await fetch("data:image/jpeg;base64," + myRes[b64String])
+      .then((res) => res.blob())
+      .then((blob) => {
+        listImages.push(window.URL.createObjectURL(blob));
+        // setResultImage(window.URL.createObjectURL(blob));
+      });
+    }
+
+   
+    console.log(listImages)
+
+     localStorage.setItem("finalMenu", JSON.stringify(listImages));
+
+     proceed(blockIds);
   };
 
   return (

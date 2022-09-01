@@ -1,5 +1,5 @@
 const cv = require("./opencv.js");
-
+const path = require('path');
 
 const {
   drawText,
@@ -28,19 +28,30 @@ const menuJson = require("../data/Menus/menu.json");
 const { createCanvas, Image, loadImage } = require("canvas");
 const GIFEncoder = require("gifencoder");
 
-
+//"C:/Users/ujjwa/Documents/sample (1)/sample/server/data/background\newIcon.svg"
+//" 'C:/Users/ujjwa/Documents/sample (1)/sample/sample/server/data/background/vegIcon.svg'"
 const fs = require("fs");
-const newicon = "D:/Canvas/sample/server/data/background/New icon.svg";
-const nonvegicon = "D:/Canvas/sample/server/data/background/Non veg icon.svg";
-const vegicon = "D:/Canvas/sample/server/data/background/veg icon.svg";
+
+
+
+
+var resolvedPath = (path.join(__dirname, '../../server/data/background')).replace(/\\/g, '/');
+
+
+
+
+const vegicon = resolvedPath+"/vegIcon.svg";
+const nonvegicon = resolvedPath+"/nonVegIcon.svg";
+const newicon = resolvedPath+"/newIcon.svg";
 
 
 
 
 
-async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen,screen2,vegicon,nonvegicon,newicon) {
+
+async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen,screen2) {
   //console.log(itemCoordinates, itemStyle, items, prices);
-  
+      console.log(vegicon)
       for (let i = 0; i < itemCoordinates.length; i++) {
         if (itemCoordinates[i].type === "Items") {
           //drawContours(itemCoordinates[i],cv,screen);
@@ -100,7 +111,7 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen,s
 
 
           ////////////////////////////////////////////////////////////////
-          console.log("drawing rect for background");
+          //console.log("drawing rect for background");
           for (let k = 0; k < itemArray.length; k++) {
             let text = itemArray[k].value;
             let item_id = itemArray[k].item_id;
@@ -354,8 +365,7 @@ async function doMyTitlePrint(titleCoordinate, titles, titleStyle, screen,screen
 
 
 
-async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
-  console.log("hello", bufferLength)
+async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength){
 
 
   let bgImg = new Image();
@@ -384,6 +394,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
     y: 0,
     w: bgImg.width,
     h: bgImg.height,
+
   });
   // loadImage(vegicon).then(image => {
   //   screen.drawImage(image,0,0,bgImg.width/2, bgImg.height/2);
@@ -430,7 +441,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   let buffer1 = screen1canvas.toBuffer('image/png')//.toString('base64');
   let buffer2 = screen1canvas.toBuffer('image/png')//.toString('base64');
 
-  return {"1":buffer1,"2":buffer2};
+  return {"1":buffer1,"2":buffer2,"screen1":screen,"screen2":screen2};
 }
 
 
@@ -443,12 +454,12 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
   let jsondata = uiJsonConverter(menuJson, mapping);
 
 
-  // const encoder = new GIFEncoder(3840, 2160);
-  // encoder.createReadStream().pipe(fs.createWriteStream('./data/myanimated.gif'));
-  // encoder.start();
-  // encoder.setRepeat(0); // 0 for repeat, -1 for no-repeat
-  // encoder.setDelay(1000); // frame delay in ms
-  // encoder.setQuality(10); // image quality. 10 is default.
+  const encoder = new GIFEncoder(3840, 2160);
+  encoder.createReadStream().pipe(fs.createWriteStream('./data/myanimated.gif'));
+  encoder.start();
+  encoder.setRepeat(0); // 0 for repeat, -1 for no-repeat
+  encoder.setDelay(1000); // frame delay in ms
+  encoder.setQuality(10); // image quality. 10 is default.
 
 
 
@@ -458,18 +469,25 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
 
   while (bufferLength > 0) {
     let result = await doMyWork(imageArray[bufferLength - 1], jsondata, coordinateJson, bufferLength);
+    console.log("hello",result);
     response.push(result["1"]);
     response.push(result["2"]);
     response.push(result["1"]);
     response.push(result["2"]);
     response.push(result["1"]);
     response.push(result["2"]);
+    encoder.addFrame(result["screen1"]);
+    encoder.addFrame(result["screen2"]);
+    encoder.addFrame(result["screen1"]);
+    encoder.addFrame(result["screen2"]);
+    encoder.addFrame(result["screen1"]);
+    encoder.addFrame(result["screen2"]);
 
     bufferLength--;
   }
  // console.log(response);
-  console.log("hi hi");
-  return response;
+  //console.log("hi hi");
+  return response[0];
 
 
 
