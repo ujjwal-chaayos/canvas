@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
-import { Button,Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
@@ -27,8 +27,7 @@ const Preview = ({ type, manage }) => {
     document.body.removeChild(link);
   }
   // Usage
-   console.log(JSON.parse(localStorage.getItem("ImageWithContours")));
-  console.log("Block", type);
+
   const proceed = () => {
     if (type === "image") {
       console.log("image-n", type);

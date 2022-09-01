@@ -1,6 +1,15 @@
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
-import {Box, Select, OutlinedInput, InputLabel, MenuItem, FormControl, Chip, Typography} from "@mui/material";
+import {
+  Box,
+  Select,
+  OutlinedInput,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Chip,
+  Typography,
+} from "@mui/material";
 import "./Home.css";
 
 const ITEM_HEIGHT = 48;
@@ -84,46 +93,45 @@ const ChooseCafe = () => {
           backgroundColor: "primary.light",
         }}
       >
-        
         <Typography
-            variant="h5"
-            component="h3"
-            fontWeight="bold"
-            align="center"
-            sx={{ color: "#303030", p: 3 }}
+          variant="h5"
+          component="h3"
+          fontWeight="bold"
+          align="center"
+          sx={{ color: "#303030", p: 3 }}
+        >
+          SELECT CAFES
+        </Typography>
+        <FormControl sx={{ m: 1, width: 300 }}>
+          <InputLabel id="demo-multiple-chip-label">Select</InputLabel>
+          <Select
+            labelId="demo-multiple-chip-label"
+            id="demo-multiple-chip"
+            multiple
+            value={personName}
+            onChange={handleChange}
+            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+            renderValue={(selected) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {selected.map((value) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+            MenuProps={MenuProps}
           >
-            SELECT CAFES
-          </Typography>
-          <FormControl sx={{ m: 1, width: 300 }}>
-            <InputLabel id="demo-multiple-chip-label">Select</InputLabel>
-            <Select
-              labelId="demo-multiple-chip-label"
-              id="demo-multiple-chip"
-              multiple
-              value={personName}
-              onChange={handleChange}
-              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-              renderValue={(selected) => (
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
-                </Box>
-              )}
-              MenuProps={MenuProps}
-            >
-              {names.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
-                >
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          {/* <Box
+            {names.map((name) => (
+              <MenuItem
+                key={name}
+                value={name}
+                style={getStyles(name, personName, theme)}
+              >
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        {/* <Box
         position="fixed"
         top=
         height="50%"
