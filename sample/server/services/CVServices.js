@@ -82,25 +82,7 @@ const reSize = (image, width, height, cv) => {
 // This function will convert image matrix into image data.
 // and after converting to Imagedata return the imagedata.
 const matrixToImgData = (image) => {
-    // var tempImg = new cv.Mat(image.size().width, image.size().height, cv.CV_8UC4, new cv.Scalar(0, 0, 0, 0));
-    // var depth = image.type() % 8;
-    // var scale = depth <= cv.CV_8S ? 1 : depth <= cv.CV_32S ? 1 / 256 : 255;
-    // var shift = depth === cv.CV_8S || depth === cv.CV_16S ? 128 : 0;
-    // image.convertTo(tempImg, cv.CV_8UC4, scale, shift);
-    // switch (tempImg.type())=>{
-    //     case cv.CV_8UC1:
-    //         cv.cvtColor(tempImg, tempImg, cv.COLOR_GRAY2RGBA);
-    //         break;
-    //     case cv.CV_8UC3:
-    //         cv.cvtColor(tempImg, tempImg, cv.COLOR_RGB2RGBA);
-    //         break;
-    //     case cv.CV_8UC4:
-    //         cv.cvtColor(tempImg, tempImg, cv.COLOR_RGB2RGBA);
-    //         break;
-    //     default:
-    //         throw new Error("Bad number of channels (Source image must have 1, 3 or 4 channels)");
-    //         return;
-    // }
+
     var imgData = new ImageData(new Uint8ClampedArray(image.data), image.cols, image.rows);
     //tempImg.delete();
     return imgData;
@@ -129,7 +111,6 @@ const seFont = async (screen,style)=>{
 // This function will put Text on the screen.
 const drawText=(screen,text,points,style)=>{
     // This will define the Font to text to be showwn.
-     //console.log(text,style);
     screen.font = style;
     // Putting the text on the screen.
     screen.fillText(text,parseInt(points.x),parseInt(points.y));
