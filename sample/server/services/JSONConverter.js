@@ -51,6 +51,7 @@ const coordinateConverter = (coordinates,mapping) =>{
 }
 
 const uiJsonConverter = (menu, mapping) => {
+ 
   let titles = {};
   let items = {};
   let prices = {};
@@ -59,6 +60,7 @@ const uiJsonConverter = (menu, mapping) => {
   var productPrices = menu["prices"]["prices"];
   for (let i = 0; i < mapping.length; i++) {
     for (let j = 0; j < subCategory.length; j++) {
+      //console.log(subCategory[j].name,mapping[i]);
       if (
         subCategory[j].name.toLowerCase() === mapping[i].value.toLowerCase()
       ) {

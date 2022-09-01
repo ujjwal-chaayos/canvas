@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
-
 import { Button,Typography } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -8,17 +7,13 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 const Preview = ({ type, manage }) => {
   function downloadBlob(blob, name) {
     // Convert your blob into a Blob URL (a special url that points to an object in the browser's memory)
-
     // Create a link element
     const link = document.createElement("a");
-
     // Set link's href to point to the Blob URL
     link.href = blob;
     link.download = name;
-
     // Append link to the body
     document.body.appendChild(link);
-
     // Dispatch click event on the link
     // This is necessary as link.click() does not work on the latest firefox
     link.dispatchEvent(
@@ -28,11 +23,9 @@ const Preview = ({ type, manage }) => {
         view: window,
       })
     );
-
     // Remove link from body
     document.body.removeChild(link);
   }
-
   // Usage
    console.log(JSON.parse(localStorage.getItem("ImageWithContours")));
   console.log("Block", type);
@@ -47,11 +40,9 @@ const Preview = ({ type, manage }) => {
       manage("menu-n");
     }
   };
-
   const back = () => {
     if (type === "image") {
       console.log("image-p", type);
-
       manage("image-p");
     }
     if (type === "menu") {
@@ -59,7 +50,6 @@ const Preview = ({ type, manage }) => {
       manage("menu-p");
     }
   };
-
   return (
     <div>
       <Box
@@ -147,5 +137,4 @@ const Preview = ({ type, manage }) => {
     </div>
   );
 };
-
 export default Preview;
