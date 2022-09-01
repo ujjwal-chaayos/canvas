@@ -123,11 +123,13 @@ const drawImageData=(screen, image, points)=>{
     // save the screen.
   
 }
-
+const seFont = async (screen,style)=>{
+    screen.font = style;
+}
 // This function will put Text on the screen.
 const drawText=(screen,text,points,style)=>{
     // This will define the Font to text to be showwn.
-     console.log(text,style);
+     //console.log(text,style);
     screen.font = style;
     // Putting the text on the screen.
     screen.fillText(text,parseInt(points.x),parseInt(points.y));
@@ -269,4 +271,4 @@ const newItemRect=(screen,point, r,style1,style2)=>{
 
 
 
-  module.exports={getCoordinates,drawContours,reSize,matrixToImgData,drawImage,drawImageData,drawText,drawLine,downloadImage,subBlockCoordinates,sortCoordinates,roundedRect,newItemRect}
+  module.exports={seFont,getCoordinates,drawContours,reSize,matrixToImgData,drawImage,drawImageData,drawText,drawLine,downloadImage,subBlockCoordinates,sortCoordinates,roundedRect,newItemRect}

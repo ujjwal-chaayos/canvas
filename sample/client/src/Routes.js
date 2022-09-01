@@ -14,6 +14,7 @@ import Final from './Pages/Final'
 
 import Block from './components/block'
 import ChooseCafe from './Pages/ChooseCafe'
+import Loading from './Pages/Preview/Loading'
 
 
 
