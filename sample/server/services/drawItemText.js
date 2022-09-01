@@ -30,15 +30,13 @@ const GIFEncoder = require("gifencoder");
 
 
 const fs = require("fs");
-const newicon = "D:/Canvas/sample/server/data/background/New icon.svg";
-const nonvegicon = "D:/Canvas/sample/server/data/background/Non veg icon.svg";
-const vegicon = "D:/Canvas/sample/server/data/background/veg icon.svg";
 
 
 
 
 
-async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen,screen2,vegicon,nonvegicon,newicon) {
+
+async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen,screen2) {
   //console.log(itemCoordinates, itemStyle, items, prices);
   
       for (let i = 0; i < itemCoordinates.length; i++) {
@@ -100,7 +98,7 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen,s
 
 
           ////////////////////////////////////////////////////////////////
-          console.log("drawing rect for background");
+          //console.log("drawing rect for background");
           for (let k = 0; k < itemArray.length; k++) {
             let text = itemArray[k].value;
             let item_id = itemArray[k].item_id;
@@ -227,12 +225,12 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen,s
               iconpoint.y = itemY - Math.floor(screen.measureText(text).actualBoundingBoxAscent);
               iconpoint.w = Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
               iconpoint.h  = Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
-                await loadImage(vegicon).then(image => {
-                  //console.log("veg icon printed");
-                  //console.log(iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h)
-                    screen.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
-                    screen2.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
-                 })
+                // await loadImage(vegicon).then(image => {
+                //   //console.log("veg icon printed");
+                //   //console.log(iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h)
+                //     screen.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
+                //     screen2.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
+                //  })
 
 
 
@@ -248,10 +246,10 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen,s
                 Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
               iconpoint.h =
                 Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
-                await loadImage(nonvegicon).then(image => {
-                  screen.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
-                  screen2.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
-               })
+              //   await loadImage(nonvegicon).then(image => {
+              //     screen.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
+              //     screen2.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
+              //  })
 
 
             }
@@ -267,11 +265,11 @@ async function doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen,s
                 45;
               iconpoint.w = 150;
               iconpoint.h = 150;
-              await loadImage(newicon).then(image => {
-                screen.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
-                //screen2.drawImage(image,iconpoint.x-20,iconpoint.y,iconpoint.w,iconpoint.h);
+            //   await loadImage(newicon).then(image => {
+            //     screen.drawImage(image,iconpoint.x,iconpoint.y,iconpoint.w,iconpoint.h);
+            //     //screen2.drawImage(image,iconpoint.x-20,iconpoint.y,iconpoint.w,iconpoint.h);
 
-             })
+            //  })
 
 
 
@@ -355,7 +353,7 @@ async function doMyTitlePrint(titleCoordinate, titles, titleStyle, screen,screen
 
 
 async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
-  console.log("hello", bufferLength)
+  //console.log("hello", bufferLength)
 
 
   let bgImg = new Image();
@@ -384,6 +382,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
     y: 0,
     w: bgImg.width,
     h: bgImg.height,
+
   });
   // loadImage(vegicon).then(image => {
   //   screen.drawImage(image,0,0,bgImg.width/2, bgImg.height/2);
@@ -423,7 +422,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   let prices = jsondata.prices;
 
 
-  await doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen,screen2,vegicon,nonvegicon,newicon);
+  await doMyTextPrint(itemCoordinates, itemStyle, items, prices, screen,screen2);
   screen.save();
   screen2.save();
   //fs.writeFileSync('./data/screen1Menu' + bufferLength + '.png', screen1canvas.toBuffer('image/png'))
@@ -470,8 +469,8 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
     bufferLength--;
   }
  // console.log(response);
-  console.log("hi hi");
-  return response;
+  //console.log("hi hi");
+  return response[0];
 
 
 

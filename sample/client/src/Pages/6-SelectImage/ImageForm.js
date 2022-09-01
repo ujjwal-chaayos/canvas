@@ -186,8 +186,7 @@ const ImageForm = ({ blockIds, proceed }) => {
         // setResultImage(window.URL.createObjectURL(blob));
       });
     }
-    //localStorage.setItem("listImages",listImages);
-      
+    
  
     // await  fetch("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000")
     // .then(async (res) =>{
