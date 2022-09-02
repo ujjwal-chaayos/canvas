@@ -5,10 +5,7 @@ import { Typography } from "@mui/material";
 import "./ChooseTemplate.css";
 
 import { useNavigate, useParams } from "react-router-dom";
-// import "@fontsource/roboto/300.css";
-// import "@fontsource/roboto/400.css";
-// import "@fontsource/roboto/500.css";
-// import "@fontsource/roboto/700.css";
+
 const ChooseTemplate = () => {
   let navigate = useNavigate();
   let { screen } = useParams();
@@ -20,7 +17,6 @@ const ChooseTemplate = () => {
   return (
     <div>
       <Box
-        //position="fixed"
         top={0}
         left={0}
         height="100vh"
