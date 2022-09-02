@@ -264,7 +264,7 @@ async function doMyTextPrint(
         block1.h = itemCoordinates[i].h;
         price1x = block1.x+block1.w+5;
         price1y = priceY;
-        await wrapMyTxt(block1,price1x,price1y,itemFirst,id,priceArray,itemStyle,screen,screen2);
+        await wrapMyTxt(block1,price1x-25,price1y,itemFirst,id,priceArray,itemStyle,screen,screen2);
 
         let block2 = {};
         let price2x ;
@@ -276,7 +276,7 @@ async function doMyTextPrint(
         price2x = block2.x +  block2.w +5;
         price2y = priceY;
 
-        await wrapMyTxt(block2,price2x,price2y,itemSecond,id,priceArray,itemStyle,screen,screen2);
+        await wrapMyTxt(block2,price2x-25,price2y,itemSecond,id,priceArray,itemStyle,screen,screen2);
 
         continue;
       }
