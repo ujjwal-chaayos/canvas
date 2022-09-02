@@ -1,6 +1,7 @@
 const cv = require("./opencv.js");
 const path = require("path");
 
+const { compress } = require('compress-images/promise');
 const {
   drawText,
   drawImage,
@@ -550,9 +551,8 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
   let jsondata = uiJsonConverter(menuJson, mapping);
 
   const encoder = new GIFEncoder(3840, 2160);
-  encoder
-    .createReadStream()
-    .pipe(fs.createWriteStream("./data/myanimated.gif"));
+
+  encoder.createReadStream().pipe(fs.createWriteStream("./data/myanimated.gif"));
   encoder.start();
   encoder.setRepeat(0); // 0 for repeat, -1 for no-repeat
   encoder.setDelay(1000); // frame delay in ms
@@ -580,10 +580,28 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
     encoder.addFrame(result["screen1"]);
     encoder.addFrame(result["screen2"]);
 
+
+
+    
+
     bufferLength--;
   }
+  
+  encoder.finish();
+
+
+let res =   await compress({
+    source: "./data/myanimated.gif",
+    destination: "./data/comp.gif",
+    enginesSetup: {
+        gif: { engine: 'gif2webp', command: ['-f', '80', '-mixed', '-q', '30', '-m', '2']}  }
+});
+  
+console.log(res);
 
   return response[0];
 };
+
+
 
 module.exports = drawItemText;
