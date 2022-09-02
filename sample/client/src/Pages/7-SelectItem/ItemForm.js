@@ -103,6 +103,7 @@ const ItemForm = ({ blockIds, proceed }) => {
     let data = await response.data.value;
     let myRes = [];
     myRes.push(data);
+    console.log(myRes);
     let listImages = [];
     for (var b64String in myRes) {
       await fetch("data:image/jpeg;base64," + myRes[b64String])

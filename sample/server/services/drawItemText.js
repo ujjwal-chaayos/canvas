@@ -35,17 +35,10 @@ const vegicon = resolvedPath + "/vegIcon.svg";
 const nonvegicon = resolvedPath + "/nonVegIcon.svg";
 const newicon = resolvedPath + "/newIcon.svg";
 
-async function doMyTextPrint(
-  itemCoordinates,
-  itemStyle,
-  items,
-  prices,
-  screen,
-  screen2
-) {
-  for (let i = 0; i < itemCoordinates.length; i++) {
-    if (itemCoordinates[i].type === "Items") {
-      let style =
+
+async function writeMyTxt(itemCoordinates,priceX,priceY,itemArray,id,priceArray,itemStyle,screen,screen2){
+
+       let style =
         itemStyle.weight.Items +
         " " +
         itemStyle.size.Items +
@@ -53,23 +46,8 @@ async function doMyTextPrint(
         itemStyle.font.Items;
       screen.font = style;
       screen2.font = style;
-
-      let itemX = itemCoordinates[i].x + 10;
-      let itemY = itemCoordinates[i].y;
-      let id = itemCoordinates[i].parent_block_id;
-      let itemArray = items[id.toString()].item;
-      let priceArray = prices[id.toString()].value;
-      let priceX;
-      let priceY;
-      for (let k = 0; k < itemCoordinates.length; k++) {
-        if (
-          itemCoordinates[k].parent_block_id === id &&
-          itemCoordinates[k].type === "Prices"
-        ) {
-          priceX = itemCoordinates[k].x + 5;
-          priceY = itemCoordinates[k].y;
-        }
-      }
+      let itemX = itemCoordinates.x + 10;
+      let itemY = itemCoordinates.y;
 
       for (let k = 0; k < itemArray.length; k++) {
         let text = itemArray[k].value;
@@ -81,9 +59,9 @@ async function doMyTextPrint(
 
         if (itemArray[k].active === false) {
           let rectpoint = {};
-          rectpoint.x = itemCoordinates[i].x - 10;
+          rectpoint.x = itemCoordinates.x - 10;
           rectpoint.y = itemY - 56;
-          rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
+          rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
           rectpoint.h = 56 + 10;
           roundedRect(screen, rectpoint, 20, "grey");
           roundedRect(screen2, rectpoint, 20, "grey");
@@ -97,9 +75,9 @@ async function doMyTextPrint(
 
         if (itemArray[k].new === true && itemArray[k].active) {
           let rectpoint = {};
-          rectpoint.x = itemCoordinates[i].x - 10;
+          rectpoint.x = itemCoordinates.x - 10;
           rectpoint.y = itemY - 56;
-          rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
+          rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
           rectpoint.h = 56 + 10;
           newItemRect(screen, rectpoint, 30, "yellow", "orange");
           newItemRect(screen2, rectpoint, 30, "yellow", "orange");
@@ -224,6 +202,240 @@ async function doMyTextPrint(
           });
         }
       }
+
+
+
+}
+
+
+
+
+async function doMyTextPrint(
+  itemCoordinates,
+  itemStyle,
+  items,
+  prices,
+  screen,
+  screen2
+) {
+  for (let i = 0; i < itemCoordinates.length; i++) {
+    if (itemCoordinates[i].type === "Items") {
+      let style =
+        itemStyle.weight.Items +
+        " " +
+        itemStyle.size.Items +
+        " " +
+        itemStyle.font.Items;
+      screen.font = style;
+      screen2.font = style;
+
+      let itemX = itemCoordinates[i].x + 10;
+      let itemY = itemCoordinates[i].y;
+      let id = itemCoordinates[i].parent_block_id;
+      let itemArray = items[id.toString()].item;
+      let priceArray = prices[id.toString()].value;
+      let priceX;
+      let priceY;
+      for (let k = 0; k < itemCoordinates.length; k++) {
+        if (
+          itemCoordinates[k].parent_block_id === id &&
+          itemCoordinates[k].type === "Prices"
+        ) {
+          priceX = itemCoordinates[k].x + 5;
+          priceY = itemCoordinates[k].y;
+        }
+      }
+
+      if(wrapValidation(itemCoordinates[i],itemArray,{height: 56,spacing: 5, })){
+        console.log("item ARrAy" , itemArray);
+        console.log("i am in wrap");
+        let halfway= Math.floor(itemArray.length / 2);
+        let itemFirst = itemArray.slice(0, halfway);
+        let itemSecond = itemArray.slice(halfway+1, itemArray.length);
+        console.log("first",itemFirst);
+        console.log("second",itemSecond);
+        let blockWidth = Math.ceil((itemCoordinates[i].w*100)/80);
+        let block1 = {};
+        let price1x ;
+        let price1y;
+        block1.x = itemCoordinates[i].x;
+        block1.y = itemCoordinates[i].y;
+        block1.w = Math.ceil((blockWidth/2) - ((blockWidth/2)*0.2));
+        block1.h = itemCoordinates[i].h;
+        price1x = block1.x+block1.w+5;
+        price1y = priceY;
+        await writeMyTxt(block1,price1x-25,price1y,itemFirst,id,priceArray,itemStyle,screen,screen2);
+
+        let block2 = {};
+        let price2x ;
+        let price2y;
+        block2.x = block1.x + Math.ceil((blockWidth/2));
+        block2.y = itemCoordinates[i].y;
+        block2.w = Math.ceil((blockWidth/2) - ((blockWidth/2)*0.2));
+        block2.h = itemCoordinates[i].h;
+        price2x = block2.x +  block2.w +5;
+        price2y = priceY;
+
+        await writeMyTxt(block2,price2x-25,price2y,itemSecond,id,priceArray,itemStyle,screen,screen2);
+
+        continue;
+      }
+      await writeMyTxt(itemCoordinates[i],priceX,priceY,itemArray,id,priceArray,itemStyle,screen,screen2);
+
+      
+      // for (let k = 0; k < itemArray.length; k++) {
+      //   let text = itemArray[k].value;
+      //   let item_id = itemArray[k].item_id;
+      //   itemY = itemY + 56 + 5;
+      //   let points = {};
+      //   points.x = itemX;
+      //   points.y = itemY;
+
+      //   if (itemArray[k].active === false) {
+      //     let rectpoint = {};
+      //     rectpoint.x = itemCoordinates[i].x - 10;
+      //     rectpoint.y = itemY - 56;
+      //     rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
+      //     rectpoint.h = 56 + 10;
+      //     roundedRect(screen, rectpoint, 20, "grey");
+      //     roundedRect(screen2, rectpoint, 20, "grey");
+
+      //     screen.fillStyle = "Black";
+      //     screen2.fillStyle = "Black";
+      //   } else {
+      //     screen.fillStyle = itemStyle.color.Items;
+      //     screen2.fillStyle = itemStyle.color.Items;
+      //   }
+
+      //   if (itemArray[k].new === true && itemArray[k].active) {
+      //     let rectpoint = {};
+      //     rectpoint.x = itemCoordinates[i].x - 10;
+      //     rectpoint.y = itemY - 56;
+      //     rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
+      //     rectpoint.h = 56 + 10;
+      //     newItemRect(screen, rectpoint, 30, "yellow", "orange");
+      //     newItemRect(screen2, rectpoint, 30, "yellow", "orange");
+
+      //     screen.fillStyle = itemStyle.color.New;
+      //     screen2.fillStyle = itemStyle.color.New;
+      //   } else {
+      //     if (itemArray[k].active) {
+      //       screen.fillStyle = itemStyle.color.Items;
+      //       screen2.fillStyle = itemStyle.color.Items;
+      //     }
+      //   }
+
+      //   drawText(screen, text, points, style);
+      //   drawText(screen2, text, points, style);
+
+      //   for (let j = 0; j < priceArray.length; j++) {
+      //     if (priceArray[j].item_id === item_id) {
+      //       let priceList = priceArray[j].value;
+      //       if (priceList.length === 1) {
+      //         let priceText = priceList[0].price.toString();
+      //         priceY = priceY + 56 + 5;
+      //         let pricePoints = {};
+      //         pricePoints.x = priceX;
+      //         pricePoints.y = priceY;
+      //         screen.fillStyle = itemStyle.color.Prices;
+      //         screen2.fillStyle = itemStyle.color.Prices;
+
+      //         drawText(screen, priceText, pricePoints, style);
+      //         drawText(screen2, priceText, pricePoints, style);
+      //       }
+      //       if (priceList.length > 1) {
+      //         priceList.sort((a, b) => a.price - b.price);
+      //         let priceText = priceList[0].price.toString();
+
+      //         priceText = priceText + "|" + priceList[1].price.toString();
+      //         priceY = priceY + 56 + 5;
+      //         let pricePoints = {};
+      //         pricePoints.x = priceX;
+      //         pricePoints.y = priceY;
+      //         screen.fillStyle = itemStyle.color.Prices;
+      //         screen2.fillStyle = itemStyle.color.Prices;
+
+      //         drawText(screen, priceText, pricePoints, style);
+      //         drawText(screen2, priceText, pricePoints, style);
+      //       }
+      //       break;
+      //     }
+      //   }
+      //   if (itemArray[k].icons === "VEG") {
+      //     let iconpoint = {};
+
+      //     iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
+      //     iconpoint.y =
+      //       itemY -
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent);
+      //     iconpoint.w =
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
+      //     iconpoint.h =
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
+      //     await loadImage(vegicon).then((image) => {
+      //       screen.drawImage(
+      //         image,
+      //         iconpoint.x,
+      //         iconpoint.y,
+      //         iconpoint.w,
+      //         iconpoint.h
+      //       );
+      //       screen2.drawImage(
+      //         image,
+      //         iconpoint.x,
+      //         iconpoint.y,
+      //         iconpoint.w,
+      //         iconpoint.h
+      //       );
+      //     });
+      //   } else if (itemArray[k].icons === "NON_VEG") {
+      //     let iconpoint = {};
+      //     iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
+      //     iconpoint.y =
+      //       itemY -
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent);
+      //     iconpoint.w =
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
+      //     iconpoint.h =
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
+      //     await loadImage(nonvegicon).then((image) => {
+      //       screen.drawImage(
+      //         image,
+      //         iconpoint.x,
+      //         iconpoint.y,
+      //         iconpoint.w,
+      //         iconpoint.h
+      //       );
+      //       screen2.drawImage(
+      //         image,
+      //         iconpoint.x,
+      //         iconpoint.y,
+      //         iconpoint.w,
+      //         iconpoint.h
+      //       );
+      //     });
+      //   }
+      //   if (itemArray[k].new === true) {
+      //     let iconpoint = {};
+      //     iconpoint.x =
+      //       itemX + Math.floor(screen.measureText(text).width) + 180;
+      //     iconpoint.y =
+      //       itemY -
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent) -
+      //       45;
+      //     iconpoint.w = 150;
+      //     iconpoint.h = 150;
+      //     await loadImage(newicon).then((image) => {
+      //       screen.drawImage(
+      //         image,
+      //         iconpoint.x,
+      //         iconpoint.y,
+      //         iconpoint.w,
+      //         iconpoint.h
+      //       );
+      //     });
+      //   }
+      // }
     }
   }
 }
@@ -306,7 +518,6 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   let titleStyle = jsondata.style;
 
   await doMyTitlePrint(titleCoordinate, titles, titleStyle, screen, screen2);
-
 
   let itemCoordinates = coordinateJson;
   let itemStyle = jsondata.style;
