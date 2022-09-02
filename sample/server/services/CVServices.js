@@ -57,7 +57,7 @@ const drawContours = (points, cv, screen) => {
     // this will draw the rectangle over the provided block on canvas.
     screen.rect(parseInt(points.x),parseInt(points.y),parseInt(points.w), parseInt(points.h));
     screen.stroke();
-    screen.save();
+
 }
 
 // This function will return the resized Image matrix.
@@ -82,25 +82,7 @@ const reSize = (image, width, height, cv) => {
 // This function will convert image matrix into image data.
 // and after converting to Imagedata return the imagedata.
 const matrixToImgData = (image) => {
-    // var tempImg = new cv.Mat(image.size().width, image.size().height, cv.CV_8UC4, new cv.Scalar(0, 0, 0, 0));
-    // var depth = image.type() % 8;
-    // var scale = depth <= cv.CV_8S ? 1 : depth <= cv.CV_32S ? 1 / 256 : 255;
-    // var shift = depth === cv.CV_8S || depth === cv.CV_16S ? 128 : 0;
-    // image.convertTo(tempImg, cv.CV_8UC4, scale, shift);
-    // switch (tempImg.type())=>{
-    //     case cv.CV_8UC1:
-    //         cv.cvtColor(tempImg, tempImg, cv.COLOR_GRAY2RGBA);
-    //         break;
-    //     case cv.CV_8UC3:
-    //         cv.cvtColor(tempImg, tempImg, cv.COLOR_RGB2RGBA);
-    //         break;
-    //     case cv.CV_8UC4:
-    //         cv.cvtColor(tempImg, tempImg, cv.COLOR_RGB2RGBA);
-    //         break;
-    //     default:
-    //         throw new Error("Bad number of channels (Source image must have 1, 3 or 4 channels)");
-    //         return;
-    // }
+
     var imgData = new ImageData(new Uint8ClampedArray(image.data), image.cols, image.rows);
     //tempImg.delete();
     return imgData;
@@ -112,7 +94,7 @@ const drawImage=(screen, image, block)=>{
     // this will put the image at specified position.
     screen.drawImage(image,block['x'],block['y'],block['w'],block['h']);
     // save the screen.
-    screen.save();
+
 }
 
 // This function will put the image data onto the canvas(screen).
@@ -121,16 +103,18 @@ const drawImageData=(screen, image, points)=>{
     // this will put the image at specified position.
     screen.putImageData(image,points['x'],points['y']);
     // save the screen.
-    screen.save();
+  
 }
-
+const seFont = async (screen,style)=>{
+    screen.font = style;
+}
 // This function will put Text on the screen.
 const drawText=(screen,text,points,style)=>{
     // This will define the Font to text to be showwn.
     screen.font = style;
     // Putting the text on the screen.
     screen.fillText(text,parseInt(points.x),parseInt(points.y));
-    screen.save();
+
 }
 
 // This function will draw Line below the Title.
@@ -148,7 +132,7 @@ const drawLine=(screen,sourcePoint,destinationPoint,style)=>{
     // defining the color of line and finally draw it then save it.
     screen.strokeStyle = "#376902";
     screen.stroke();
-    screen.save();
+
 }
 
 // This will download the final screen as png.
@@ -229,7 +213,7 @@ const roundedRect=(screen,point, r,style)=>{
     screen.closePath();
     screen.fillStyle = style;
     screen.fill();
-    screen.save();
+  
 }
 
 const newItemRect=(screen,point, r,style1,style2)=>{
@@ -244,7 +228,7 @@ const newItemRect=(screen,point, r,style1,style2)=>{
     screen.closePath();
     screen.fillStyle = style1;
     screen.fill();
-    screen.save();
+
 
     screen.beginPath();
     screen.moveTo(point.x+Math.ceil(point.w*0.75), point.y);
@@ -256,7 +240,7 @@ const newItemRect=(screen,point, r,style1,style2)=>{
     screen.fillStyle = style2;
     screen.fill();
     
-    screen.save();
+
 
 };
 
@@ -268,4 +252,4 @@ const newItemRect=(screen,point, r,style1,style2)=>{
 
 
 
-  module.exports={getCoordinates,drawContours,reSize,matrixToImgData,drawImage,drawImageData,drawText,drawLine,downloadImage,subBlockCoordinates,sortCoordinates,roundedRect,newItemRect}
+  module.exports={seFont,getCoordinates,drawContours,reSize,matrixToImgData,drawImage,drawImageData,drawText,drawLine,downloadImage,subBlockCoordinates,sortCoordinates,roundedRect,newItemRect}

@@ -1,57 +1,59 @@
+const { subBlockCoordinates, sortCoordinates } = require("./CVServices");
 
-
-const {subBlockCoordinates, sortCoordinates} = require("./CVServices");
-
-const coordinateConverter = (coordinates,mapping) =>{
+const coordinateConverter = (coordinates, mapping) => {
   let coordinateJson = [];
-   for(var i =0;i<mapping.length;i++){
-     let titleBlockId = mapping[i].block_id;
-     for(var j=0;j<coordinates.length;j++){
-       var coordinateBlockId = coordinates[j].block_id;
-       if(parseInt(coordinateBlockId)=== parseInt(titleBlockId)){
-         let subcoordinate = subBlockCoordinates(coordinates[j],200,coordinates[j].w*0.2);
-         let detailHeading = {};
-         detailHeading.block_id = 1;
-         detailHeading.parent_block_id = coordinateBlockId;
-         detailHeading.type = "Heading";
-         detailHeading.x = subcoordinate.title.x;
-         detailHeading.y = subcoordinate.title.y;
-         detailHeading.w = subcoordinate.title.w;
-         detailHeading.h = subcoordinate.title.h;
- 
- 
-         let detailItem = {};
-         detailItem.block_id = 2;
-         detailItem.parent_block_id = coordinateBlockId;
-         detailItem.type = "Items";
-         detailItem.x = subcoordinate.items.x;
-         detailItem.y = subcoordinate.items.y;
-         detailItem.w = subcoordinate.items.w;
-         detailItem.h = subcoordinate.items.h;
- 
-         let detailPrice = {};
-         detailPrice.block_id = 3;
-         detailPrice.parent_block_id = coordinateBlockId;
-         detailPrice.type = "Prices";
-         detailPrice.x = subcoordinate.price.x;
-         detailPrice.y = subcoordinate.price.y;
-         detailPrice.w = subcoordinate.price.w;
-         detailPrice.h = subcoordinate.price.h;  
-         
-         coordinateJson.push(detailPrice);
-         coordinateJson.push(detailItem);
-         coordinateJson.push(detailHeading);
-       }
-     }
-   }
-   return coordinateJson;
-}
+  for (var i = 0; i < mapping.length; i++) {
+    let titleBlockId = mapping[i].block_id;
+    for (var j = 0; j < coordinates.length; j++) {
+      var coordinateBlockId = coordinates[j].block_id;
+      if (parseInt(coordinateBlockId) === parseInt(titleBlockId)) {
+        let subcoordinate = subBlockCoordinates(
+          coordinates[j],
+          200,
+          coordinates[j].w * 0.2
+        );
+
+        let detailHeading = {};
+        detailHeading.block_id = 1;
+        detailHeading.parent_block_id = coordinateBlockId;
+        detailHeading.type = "Heading";
+        detailHeading.x = subcoordinate.title.x;
+        detailHeading.y = subcoordinate.title.y;
+        detailHeading.w = subcoordinate.title.w;
+        detailHeading.h = subcoordinate.title.h;
+
+        let detailItem = {};
+        detailItem.block_id = 2;
+        detailItem.parent_block_id = coordinateBlockId;
+        detailItem.type = "Items";
+        detailItem.x = subcoordinate.items.x;
+        detailItem.y = subcoordinate.items.y;
+        detailItem.w = subcoordinate.items.w;
+        detailItem.h = subcoordinate.items.h;
+
+        let detailPrice = {};
+        detailPrice.block_id = 3;
+        detailPrice.parent_block_id = coordinateBlockId;
+        detailPrice.type = "Prices";
+        detailPrice.x = subcoordinate.price.x;
+        detailPrice.y = subcoordinate.price.y;
+        detailPrice.w = subcoordinate.price.w;
+        detailPrice.h = subcoordinate.price.h;
+
+        coordinateJson.push(detailPrice);
+        coordinateJson.push(detailItem);
+        coordinateJson.push(detailHeading);
+      }
+    }
+  }
+  return coordinateJson;
+};
 
 const uiJsonConverter = (menu, mapping) => {
   let titles = {};
   let items = {};
   let prices = {};
-  var subCategory = menu["menuSequence"]["category"];
+  var subCategory = menu.menuSequence["sub-category"];
   var products = menu["productDetail"]["products"];
   var productPrices = menu["prices"]["prices"];
   for (let i = 0; i < mapping.length; i++) {
@@ -66,7 +68,7 @@ const uiJsonConverter = (menu, mapping) => {
           block_id: id,
           title_id: subCategory[j].id,
         };
-        
+
         let item = [];
         let value = [];
         for (let k = 0; k < pids.length; k++) {
@@ -96,25 +98,12 @@ const uiJsonConverter = (menu, mapping) => {
           qty: item.length,
           item: item,
         };
-        // items.push({
-        //   id: {
-        //     block_id: id,
-        //     qty: item.length,
-        //     item: item,
-        //   },
-        // });
+
         prices[id] = {
           block_id: id,
           qty: value.length,
           value: value,
         };
-        // prices.push({
-        //   id: {
-        //     block_id: id,
-        //     qty: value.length,
-        //     value: value,
-        //   },
-        // });
       }
     }
   }
@@ -122,34 +111,34 @@ const uiJsonConverter = (menu, mapping) => {
     titles: titles,
     items: items,
     prices: prices,
-    "style":{
-      "font": {
-          "Title": "Helvetica, Arial, sans-serif",
-          "Items": "Helvetica, Arial, sans-serif",
-          "Prices": "Helvetica, Arial, sans-serif",
-          "New": "Helvetica, Arial, sans-serif"
+    style: {
+      font: {
+        Title: "Helvetica",
+        Items: "Helvetica",
+        Prices: "Helvetica",
+        New: "Helvetica",
       },
-      "size": {
-          "Title": "96px",
-          "Items": "56px",
-          "Prices": "56px",
-          "New": "60px"
+      size: {
+        Title: "96px",
+        Items: "56px",
+        Prices: "56px",
+        New: "60px",
       },
-      "color": {
-          "Title": "#376902",
-          "Items": "#827311",
-          "Prices": "#000000",
-          "New": "red"
+      color: {
+        Title: "#376902",
+        Items: "#827311",
+        Prices: "#000000",
+        New: "red",
       },
-      "weight": {
-          "Title": "Bold",
-          "Items": "Bold",
-          "Prices": "Bold",
-          "New": "Bold"
-      }
-  }
+      weight: {
+        Title: "Bold",
+        Items: "Bold",
+        Prices: "Bold",
+        New: "Bold",
+      },
+    },
   };
-}
+};
 
 const jsonConverter = (menu, refrenceTemplate, font) => {
   var imageBlocks = [];
@@ -185,9 +174,6 @@ const jsonConverter = (menu, refrenceTemplate, font) => {
   var products = menu["productDetail"]["products"];
   var productPrices = menu["prices"]["prices"];
   var productImages = menu["productImages"];
-
-  // var images = {};
-  //var titles = [];
   refinedTemplate["images"] = { qty: "" };
   refinedTemplate["titles"] = { qty: subCategory.length - 1 };
   refinedTemplate["items"] = {};
@@ -208,7 +194,6 @@ const jsonConverter = (menu, refrenceTemplate, font) => {
           template_id: imageBlocks[j]["template_id"],
         };
       }
-      //refinedTemplate["images"].push = images;
     } else {
       var item = [];
       var value = [];
@@ -268,17 +253,13 @@ const jsonConverter = (menu, refrenceTemplate, font) => {
       textBlocks.splice(c, 1);
     }
   }
-  // refinedTemplate["titles"]["title"] = titles;
-
-  //default style from db
-  //avilable icons from db
 
   refinedTemplate["style"] = {
     font: {
-      Title: "Helvetica, Arial, sans-serif",
-      Items: "Helvetica, Arial, sans-serif",
-      Prices: "Helvetica, Arial, sans-serif",
-      New: "Helvetica, Arial, sans-serif",
+      Title: "Arial",
+      Items: "Arial",
+      Prices: "Arial",
+      New: "Arial",
     },
     size: {
       Title: "96px",
@@ -301,7 +282,7 @@ const jsonConverter = (menu, refrenceTemplate, font) => {
   }; //default
 
   return refinedTemplate;
-}
+};
 
 const getBestBlock = (blocks, data, font) => {
   let index;
@@ -318,30 +299,24 @@ const getBestBlock = (blocks, data, font) => {
     let height = parseInt(blocks[i].h) - parseInt(font.h1);
     let textArea = width * textheight;
     let blockArea = width * height;
-    console.log(
-      "blockarea " +
-        blockArea +
-        " textarea " +
-        textArea +
-        " id " +
-        blocks[i].block_id +
-        " qty " +
-        quantity
-    );
     if (blockArea > textArea) {
-      console.log("in if");
       if (difference > blockArea - textArea) {
         difference = blockArea - textArea;
         index = i;
-        console.log("index " + i);
       }
     }
   }
-  console.log("final index " + index);
-  return index;
-}
 
-const createCoordinateJSON = ( templateID,  templateName,  imageBlocks,  txtBlocks,  font) => {
+  return index;
+};
+
+const createCoordinateJSON = (
+  templateID,
+  templateName,
+  imageBlocks,
+  txtBlocks,
+  font
+) => {
   var coordinates = {
     id: templateID,
     name: templateName,
@@ -395,7 +370,12 @@ const createCoordinateJSON = ( templateID,  templateName,  imageBlocks,  txtBloc
   coordinates.image_blocks = imageBlocks;
   coordinates.text_blocks = txtBlocks;
   return coordinates;
-}
+};
 
-
-module.exports = {uiJsonConverter,jsonConverter,getBestBlock,createCoordinateJSON,coordinateConverter};
+module.exports = {
+  uiJsonConverter,
+  jsonConverter,
+  getBestBlock,
+  createCoordinateJSON,
+  coordinateConverter,
+};

@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
+
 import Box from "@mui/material/Box";
 import { Button, MenuItem, Select, Input } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
 import { Typography } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
-
-//Create route for that function---
-//import { drawItemText } from "../Services/renderingServices";
+import axios from "axios";
 
 const ItemForm = ({ blockIds, proceed }) => {
-  console.log("here-item ", blockIds);
   let all_block_id = blockIds;
   let dummy_data = [
     { title_id: "t1", value: "CHAAT PAKORE", block_id: "" },
@@ -19,7 +14,7 @@ const ItemForm = ({ blockIds, proceed }) => {
     { title_id: "t3", value: "SANDWICHES", block_id: "" },
     { title_id: "t4", value: "DESSERTS", block_id: "" },
     { title_id: "t5", value: "MEALS", block_id: "" },
-  ]; //dummy_data coming from db for with image_id
+  ];
 
   const [titles, setTitles] = useState(dummy_data);
   const [imgMapValue, setImgMapValue] = useState("");
@@ -27,13 +22,8 @@ const ItemForm = ({ blockIds, proceed }) => {
 
   const handleFormChange = (event, index) => {
     let data = [...titles];
-
-    // console.log(data);
-    // console.log(data[index].block_id);
-
     data[index].block_id = event.target.value;
     setTitles(data);
-    console.log(data);
   };
 
   const removeSelectValue = (value) => {
@@ -43,32 +33,87 @@ const ItemForm = ({ blockIds, proceed }) => {
         data.splice(i, 1);
       }
     }
-    console.log(data);
     setLeftValues(data);
-    //data.remove(value);
   };
 
   const handleMappedValueChange = (event, index) => {
-    //event.target.disabled = true;
     handleFormChange(event, index);
     removeSelectValue(event.target.value);
-    console.log(titles);
   };
 
-  console.log(blockIds);
   const save = async (e) => {
-    // console.log(titles);
+    e.preventDefault();
+    let formData = new FormData();
+    let imagesBlob = JSON.parse(localStorage.getItem("listImages"));
+    for (var i in imagesBlob) {
+      await fetch(imagesBlob[i])
+        .then((res) => res.blob())
+        .then((blob) => {
+          formData.append(
+            "image" + i,
+            new File(
+              [
+                blob,
+                i + ".png",
+                {
+                  type: blob.type,
+                  lastModified: new Date().getTime(),
+                },
+              ],
+              i + ".png"
+            )
+          );
+        });
+    }
+    await fetch(JSON.parse(localStorage.getItem("orignalImg")))
+      .then((res) => res.blob())
+      .then((blob) => {
+        formData.append(
+          "background",
+          new File(
+            [
+              blob,
+              "background.png",
+              {
+                type: blob.type,
+                lastModified: new Date().getTime(),
+              },
+            ],
+            "background.png"
+          )
+        );
+      });
 
-    // let data = await drawItemText(
-    //   JSON.parse(localStorage.getItem("productImgBlob")),
-    //   titles,
-    //   JSON.parse(localStorage.getItem("coordinates"))
-    // );
-    // console.log(data);
-    // let link = URL.createObjectURL(data["blob"]);
+    formData.append("dummy_data", JSON.stringify([...titles]));
+    formData.append("coordinates", localStorage.getItem("coordinates"));
+    let response = await axios
+      .post("http://localhost:8000/setItemMapping", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .catch(function(error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
 
-    // localStorage.setItem("finalMenu", JSON.stringify(link));
-    // proceed(blockIds);
+    let data = await response.data.value;
+    let myRes = [];
+    myRes.push(data);
+    let listImages = [];
+    for (var b64String in myRes) {
+      await fetch("data:image/jpeg;base64," + myRes[b64String])
+        .then((res) => res.blob())
+        .then((blob) => {
+          listImages.push(window.URL.createObjectURL(blob));
+        });
+    }
+    localStorage.setItem("finalMenu", JSON.stringify(listImages));
+
+    proceed(blockIds);
   };
 
   return (
@@ -84,9 +129,22 @@ const ItemForm = ({ blockIds, proceed }) => {
           "& button": { m: 5 },
         }}
       >
-        <Box width="60%" sx={{ p: 9 }}>
+        <Box
+          width="60%"
+          sx={{
+            p: 9,
+            overflow: "hidden",
+            overflowY: "scroll",
+          }}
+        >
           <img
-            src={JSON.parse(localStorage.getItem("imageBlob"))}
+            src={JSON.parse(localStorage.getItem("backgroundWithContours"))}
+            width="100%"
+            height="90%"
+          />
+          <br />
+          <img
+            src={JSON.parse(localStorage.getItem("listImages"))[0]}
             width="100%"
             height="90%"
           />
@@ -118,23 +176,41 @@ const ItemForm = ({ blockIds, proceed }) => {
             </Typography>
             <form>
               {titles.map((title, index) => {
-                console.log(title);
                 return (
                   <>
-                    <Typography align="center" sx={{ color: "#303030", p: 3 }}>
-                      Choose Block for {`${title["value"]}`}
-                      <Select
-                        disabled={title["block_id"] !== ""}
-                        value={imgMapValue}
-                        onChange={(event) =>
-                          handleMappedValueChange(event, index)
-                        }
+                    <Box
+                      sx={{
+                        display: "flex",
+                        p: 1,
+                        m: 1,
+                        justifyContent: "space-evenly",
+                      }}
+                    >
+                      <Typography
+                        align="center"
+                        sx={{ color: "#303030", p: 3 }}
                       >
-                        {leftValues.map((option, index) => (
-                          <MenuItem value={option}>{option}</MenuItem>
-                        ))}
-                      </Select>
-                    </Typography>
+                        Choose Block for {`${title["value"]}`}
+                        <Select
+                          disabled={title["block_id"] !== ""}
+                          value={imgMapValue}
+                          onChange={(event) =>
+                            handleMappedValueChange(event, index)
+                          }
+                        >
+                          {leftValues.map((option, index) => (
+                            <MenuItem value={option}>{option}</MenuItem>
+                          ))}
+                        </Select>
+                        <Typography
+                          variant="caption"
+                          align="center"
+                          sx={{ color: "#303030", p: 3 }}
+                        >
+                          You chose {title.block_id}
+                        </Typography>
+                      </Typography>
+                    </Box>
                   </>
                 );
               })}

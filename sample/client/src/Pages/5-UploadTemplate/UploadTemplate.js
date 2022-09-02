@@ -1,21 +1,12 @@
-import React from "react";
-
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
-
-import { Box, Button, Input, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-import axios from 'axios';
-
-
-//Create route for that function--
-//import { mergeTemplateBackground } from "../Services/renderingServices";
-
-//import data from '../data/';
+import axios from "axios";
 
 const UploadTemplate = () => {
   let navigate = useNavigate();
@@ -30,13 +21,10 @@ const UploadTemplate = () => {
     localStorage.setItem("imageBlob", JSON.stringify(resultImage));
     localStorage.setItem("orignalImg", JSON.stringify(orignalImg));
   }, [coordinates]);
+
   let dummy_data;
 
   async function read(file) {
-    // Read the file as text
-    //console.log(await file.text())
-    // Read the file as ArrayBuffer to handle binary data
-    //console.log(new Uint8Array(await file.arrayBuffer()));
     let finalData = new Uint8Array(await file.arrayBuffer());
     return finalData;
   }
@@ -47,13 +35,16 @@ const UploadTemplate = () => {
       imageInfo: "",
       imageType: "",
       imageContent: "",
-      imageBlob: ""
+      imageBlob: "",
     };
+
     imgInfo["imageBlob"] = URL.createObjectURL(event.target.files[0]);
+
     for (let myfile of event.target.files) {
       let comingdata = await read(myfile);
       imgInfo["imageContent"] = comingdata;
     }
+
     const files = event.target.files;
 
     imgInfo["imageInfo"] = files[0];
@@ -63,20 +54,17 @@ const UploadTemplate = () => {
     if (event.target.id === "template") {
       let temp = document.getElementById("template1");
       temp.setAttribute("src", URL.createObjectURL(event.target.files[0]));
-      console.log(temp);
     }
+
     if (event.target.id === "background") {
       let temp = document.getElementById("background1");
       temp.setAttribute("src", URL.createObjectURL(event.target.files[0]));
-      console.log(temp);
     }
 
-    //console.log(URL.createObjectURL(event.target.files[0]))
     setFile([...file, [imgInfo]]);
   };
 
   const seePreview = async (e) => {
-    console.log({resultImage});
     if (resultImage !== "") {
       navigate(`/preview/${screenId}/${tempId}`);
     }
@@ -85,39 +73,47 @@ const UploadTemplate = () => {
   const handleSubmit = async (e) => {
     let response;
     e.preventDefault();
-    console.log("i am running")
-     if (file.length === 2) {
-       dummy_data = file; //condition to save data
-       console.log(file[0][0]['imageInfo']);
-       let  formData = new FormData();
-       formData.append("template",file[0][0]['imageInfo']);
-       formData.append("background",file[1][0]['imageInfo']);
-      
-    
-      let response = await axios.post('http://localhost:8000/uploadTemplate', formData,{
-        headers: {
-          "Content-Type": "multipart/form-data",
-        }});
-        console.log("fetching base 64");
-        fetch('data:image/jpeg;base64,' +response.data['background'])
-        .then(res =>console.log(res));
-       
+    console.log("i am running");
+    if (file.length === 2) {
+      dummy_data = file;
+      let formData = new FormData();
+      formData.append("template", file[0][0]["imageInfo"]);
+      formData.append("background", file[1][0]["imageInfo"]);
 
-        fetch('data:image/jpeg;base64,' +response.data['background'])
-        .then(res => res.blob())
-        .then(blob => {
-          setOriginalImg(window.URL.createObjectURL(blob));   
-           localStorage.setItem("orignalImg",JSON.stringify(window.URL.createObjectURL(blob)));    
+      let response = await axios.post(
+        "http://localhost:8000/uploadTemplate",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      fetch(
+        "data:image/jpeg;base64," + response.data["background"]
+      ).then((res) => console.log(res));
+
+      fetch("data:image/jpeg;base64," + response.data["background"])
+        .then((res) => res.blob())
+        .then((blob) => {
+          setOriginalImg(window.URL.createObjectURL(blob));
+          localStorage.setItem(
+            "orignalImg",
+            JSON.stringify(window.URL.createObjectURL(blob))
+          );
         });
-    fetch('data:image/jpeg;base64,' +response.data['backgroundWithContours'])
-    .then(res => res.blob())
-    .then(blob => {
-      setResultImage(window.URL.createObjectURL(blob));   
-      
-    });
-    
-    
-      setCoordinates(response.data['sortedCoordinates']);
+
+      fetch("data:image/jpeg;base64," + response.data["backgroundWithContours"])
+        .then((res) => res.blob())
+        .then((blob) => {
+          setResultImage(window.URL.createObjectURL(blob));
+          localStorage.setItem(
+            "backgroundWithContours",
+            JSON.stringify(window.URL.createObjectURL(blob))
+          );
+        });
+
+      setCoordinates(response.data["sortedCoordinates"]);
     } else {
       alert("Insert both Images..");
     }
@@ -199,7 +195,7 @@ const UploadTemplate = () => {
                     <img id="template1" width="504px" height="283px" />
                   </Box>
                 </div>
-                <div style={{ width: "50%" }}>
+                <div style={{ alignContent: "center", width: "50%" }}>
                   <Button
                     endIcon={<CloudUploadIcon />}
                     variant="contained"

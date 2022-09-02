@@ -1,39 +1,30 @@
 import React, { useState, useEffect } from "react";
+
 import Box from "@mui/material/Box";
 import { Button, MenuItem, Select, Input } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
 import { Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
 import axios from "axios";
 
-//Create Route for that function---
-//import { drawProductImage } from "../Services/renderingServices";
-
 const ImageForm = ({ blockIds, proceed }) => {
-  console.log("here-image ", blockIds);
   let all_block_id = blockIds;
 
   const [qty, setQty] = useState("");
   const [imgMapValue, setImgMapValue] = useState("");
   const [saveQty, setSaveQty] = useState(false);
-
   const [isDisabled, setDisabled] = useState(false);
   const [bottomForm, setBottomForm] = useState(true);
-
   const [leftValues, setLeftValues] = useState(all_block_id);
-
   const [coordinate, setCoordinate] = useState([]);
   const [backgroundBlob, setBackgroundBlob] = useState("");
 
   useEffect(() => {
-    console.log("i am in");
     const coordinate = JSON.parse(localStorage.getItem("coordinates"));
     const background = JSON.parse(localStorage.getItem("orignalImg"));
-   
-   
-    if (coordinate && background) {
 
+    if (coordinate && background) {
       setCoordinate(coordinate);
       setBackgroundBlob(background);
     }
@@ -44,7 +35,6 @@ const ImageForm = ({ blockIds, proceed }) => {
   let img_id = ["001", "002", "003", "004", "005", "006", "007", "008", "009"]; //dummy_data coming from db for with image_id
   let comingQty = coordinate;
   let options = [...blockIds]; //quantity of images
- 
 
   const [formFields, setFormFields] = useState([]);
 
@@ -65,19 +55,14 @@ const ImageForm = ({ blockIds, proceed }) => {
 
   const handleFormChange = (event, index) => {
     let data = [...formFields];
-
-    // console.log(data);
-    // console.log(data[index].block_id);
-
     data[index].block_id = event.target.value;
     setFormFields(data);
-    console.log(data);
   };
 
-  const blobToBase64 = blob => {
+  const blobToBase64 = (blob) => {
     const reader = new FileReader();
     reader.readAsDataURL(blob);
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       reader.onloadend = () => {
         resolve(reader.result);
       };
@@ -91,13 +76,10 @@ const ImageForm = ({ blockIds, proceed }) => {
         data.splice(i, 1);
       }
     }
-    console.log(data);
     setLeftValues(data);
-    //data.remove(value);
   };
 
   const handleMappedValueChange = (event, index) => {
-    // event.target.disabled = true;
     handleFormChange(event, index);
     removeSelectValue(event.target.value);
     setImgMapValue(event.target.value);
@@ -110,11 +92,8 @@ const ImageForm = ({ blockIds, proceed }) => {
         count += 1;
       }
     }
-    //console.log(count,qty);
-
     if (count === parseInt(qty)) {
       setBottomForm(false);
-      console.log(formFields);
     } else {
       alert("Fill all values...");
     }
@@ -128,56 +107,59 @@ const ImageForm = ({ blockIds, proceed }) => {
         block_id: "",
       });
     }
-    //console.log(newArr);
-
     setFormFields(newArr);
   };
 
   const save = async (e) => {
+    e.preventDefault();
+    let formData = new FormData();
+    for (var i = 0; i < formFields.length; i++) {
+      for (var j = 0; j < formFields[i]["image_info"].length; j++)
+        formData.append(
+          formFields[i]["block_id"] + "_" + j,
+          formFields[i]["image_info"][j]
+        );
+    }
+    formData.append("coordinates", JSON.stringify(coordinate));
+    await fetch(backgroundBlob)
+      .then((res) => res.blob())
+      .then((blob) => {
+        formData.append(
+          "background",
+          new File(
+            [
+              blob,
+              "background.png",
+              {
+                type: blob.type,
+                lastModified: new Date().getTime(),
+              },
+            ],
+            "background.png"
+          )
+        );
+      });
 
-     e.preventDefault();
-     let  formData = new FormData();
-     
-     console.log(formFields);
-     for(var i=0;i<formFields.length;i++)
-     {
-      for(var j=0;j<formFields[i]['image_info'].length;j++)
-      formData.append(formFields[i]['block_id']+"_"+j,formFields[i]['image_info'][j]);
-     }
-     formData.append("coordinates",JSON.stringify(coordinate));
-console.log(coordinate);
-await  fetch(backgroundBlob)
-.then(res => res.blob() ).then(blob => {
-  console.log(blob.type);
-  formData.append("background",new File([blob,"background.png",{
-    type: blob.type,
-    lastModified: new Date().getTime()
-  } ],'background.png'))
-});
-
-
- 
-
-
-     let response = await axios.post('http://localhost:8000/uploadProducts', formData,{
+    let response = await axios.post(
+      "http://localhost:8000/uploadProducts",
+      formData,
+      {
         headers: {
           "Content-Type": "multipart/form-data",
-        }});
+        },
+      }
+    );
+    let listImages = [];
+    for (var b64String in response.data) {
+      await fetch("data:image/jpeg;base64," + response.data[b64String])
+        .then((res) => res.blob())
+        .then((blob) => {
+          listImages.push(window.URL.createObjectURL(blob));
+        });
+    }
 
-        console.log(response.data['ImageWithProducts']);
-
-    // let comingData = await drawProductImage(
-    //   JSON.parse(localStorage.getItem("orignalImg")),
-    //   formFields,
-    //   coordinate
-    // );
-    // let link = URL.createObjectURL(comingData["blob"]);
-    // //console.log(link);
-    // console.log(typeof link);
-    // console.log(formFields);
-    // localStorage.setItem("productImgBlob", JSON.stringify(link));
-    // proceed(leftValues);
-    
+    localStorage.setItem("listImages", JSON.stringify(listImages));
+    proceed(leftValues);
   };
 
   const removeFields = () => {
@@ -186,10 +168,6 @@ await  fetch(backgroundBlob)
   };
 
   async function read(file) {
-    // Read the file as text
-    //console.log(await file.text())
-    // Read the file as ArrayBuffer to handle binary data
-    //console.log(new Uint8Array(await file.arrayBuffer()));
     let finalData = new Uint8Array(await file.arrayBuffer());
     return finalData;
   }
@@ -197,20 +175,13 @@ await  fetch(backgroundBlob)
   const handleUpload = async (event, value) => {
     let coming_block_id = event.target.name;
     let saved_block_id = value["block_id"];
-    // let coming_block_id = event.target.name;
-    //let saved_block_id = value["block_id"];
-
-    
-   // const files = event.target.files;
-    let formdata=[];
-    for(let i = 0 ; i<event.target.files.length; i++){
-     formdata.push(event.target.files[i])
-   } 
-     console.log(formdata);
-     formFields[event.target.id]["image_info"] = formdata;
+    let formdata = [];
+    for (let i = 0; i < event.target.files.length; i++) {
+      formdata.push(event.target.files[i]);
+    }
+    formFields[event.target.id]["image_info"] = formdata;
     setFormFields(formFields);
-    console.log(formFields);
-  } 
+  };
 
   return (
     <Box
@@ -235,7 +206,7 @@ await  fetch(backgroundBlob)
           backgroundColor: "primary.light",
           "& button": { m: 2 },
           overflow: "hidden",
-          overflowY: "scroll",  
+          overflowY: "scroll",
         }}
       >
         {bottomForm ? (
@@ -282,7 +253,6 @@ await  fetch(backgroundBlob)
               </Box>
 
               {formFields.map((form, index) => {
-                console.log(form["block_id"] !== "");
                 return (
                   <Box
                     sx={{
@@ -409,7 +379,11 @@ await  fetch(backgroundBlob)
         )}
       </Box>
       <Box width="60%" sx={{ p: 9 }}>
-        <img src={localStorage.getItem("returnedImgWithContours")} width="100%" height="90%" />
+        <img
+          src={JSON.parse(localStorage.getItem("backgroundWithContours"))}
+          width="100%"
+          height="90%"
+        />
       </Box>
     </Box>
   );
