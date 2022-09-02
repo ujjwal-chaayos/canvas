@@ -1,6 +1,7 @@
 const cv = require("./opencv.js");
 const path = require("path");
 
+
 const {
   drawText,
   drawImage,
@@ -26,6 +27,10 @@ const menuJson = require("../data/Menus/menu.json");
 const { createCanvas, Image, loadImage } = require("canvas");
 const GIFEncoder = require("gifencoder");
 const fs = require("fs");
+
+
+
+
 
 var resolvedPath = path
   .join(__dirname, "../../server/data/background")
@@ -582,6 +587,8 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
 
     bufferLength--;
   }
+  encoder.finish();
+  
 
   return response[0];
 };

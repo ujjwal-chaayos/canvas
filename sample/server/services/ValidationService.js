@@ -43,7 +43,6 @@ const widthValidation = (block, txt, font) => {
 
 
 const wrapValidation = (block, txt, font) => {
-  console.log("i m in validation");
   var txtWidth = 0;
   let screen = new createCanvas(3840, 2160).getContext("2d");
   var blockWidth =  Math.ceil((block.w*100)/80) - 0.4*Math.ceil((block.w*100)/80);
@@ -51,18 +50,14 @@ const wrapValidation = (block, txt, font) => {
   var txtHeight = font.height + font.spacing;
   var totatNumberitem = Math.floor(blockHeight/txtHeight);
 
-  console.log("hi" ,totatNumberitem,blockHeight,txtHeight)
   for (let i = 0; i < txt.length; i++) {
     txtWidth = Math.max(txtWidth, Math.floor(screen.measureText(txt[i].value).width));
   }
-  console.log(txt.length,totatNumberitem+1,txtWidth*2,blockWidth);
 
   if((txt.length > totatNumberitem+1)  && ((txtWidth*2)<=blockWidth)){
-    console.log("i m true");
     return true;
   }
   else {
-    console.log("i am false");
     return false
   };
 
