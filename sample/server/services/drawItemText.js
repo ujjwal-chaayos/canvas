@@ -12,7 +12,7 @@ const {
   subBlockCoordinates,
   roundedRect,
   newItemRect,
-  drawLine,
+  drawLine,reSize
 } = require("./CVServices");
 
 const {
@@ -35,6 +35,14 @@ var resolvedPath = path
 const vegicon = resolvedPath + "/vegIcon.svg";
 const nonvegicon = resolvedPath + "/nonVegIcon.svg";
 const newicon = resolvedPath + "/newIcon.svg";
+
+
+const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
+const ffprobe = require("@ffprobe-installer/ffprobe");
+
+const ffmpeg = require("fluent-ffmpeg")()
+  .setFfprobePath(ffprobe.path)
+  .setFfmpegPath(ffmpegInstaller.path);
 
 
 async function writeMyTxt(itemCoordinates,priceX,priceY,itemArray,id,priceArray,itemStyle,screen,screen2){
@@ -580,8 +588,6 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
     encoder.addFrame(result["screen1"]);
     encoder.addFrame(result["screen2"]);
 
-
-
     
 
     bufferLength--;
@@ -590,14 +596,28 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
   encoder.finish();
 
 
-let res =   await compress({
-    source: "./data/myanimated.gif",
-    destination: "./data/comp.gif",
-    enginesSetup: {
-        gif: { engine: 'gif2webp', command: ['-f', '80', '-mixed', '-q', '30', '-m', '2']}  }
-});
+// let res =   await compress({
+//     source: "./data/myanimated.gif",
+//     destination: "./data/comp.gif",
+//     enginesSetup: {
+//         gif: { engine: 'gif2webp', command: ['-f', '80', '-mixed', '-q', '30', '-m', '2']}  }
+// });
   
-console.log(res);
+await ffmpeg
+  .input(`./data/myanimated.gif`)
+  .outputOptions([
+    "-pix_fmt yuv420p",
+    "-c:v libx264",
+    "-movflags +faststart",
+    "-filter:v crop='floor(in_w/2)*2:floor(in_h/2)*2'",
+  ])
+  .noAudio()
+  .output(`./data/vidgif.mp4`)
+  .on("end", () => {
+    console.log("Ended");
+  })
+  .on("error", (e) => console.log(e))
+  .run();
 
   return response[0];
 };
