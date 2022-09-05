@@ -40,9 +40,7 @@ const newicon = resolvedPath + "/newIcon.svg";
 const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
 const ffprobe = require("@ffprobe-installer/ffprobe");
 
-const ffmpeg = require("fluent-ffmpeg")()
-  .setFfprobePath(ffprobe.path)
-  .setFfmpegPath(ffmpegInstaller.path);
+const ffmpeg = require("fluent-ffmpeg")().setFfprobePath(ffprobe.path).setFfmpegPath(ffmpegInstaller.path);
 
 
 async function writeMyTxt(itemCoordinates,priceX,priceY,itemArray,id,priceArray,itemStyle,screen,screen2){
@@ -610,8 +608,8 @@ await ffmpeg
     "-c:v libx264",
     "-movflags +faststart",
     "-filter:v crop='floor(in_w/2)*2:floor(in_h/2)*2'",
+    "-filter:v fps=fps=60",
   ])
-  .noAudio()
   .output(`./data/vidgif.mp4`)
   .on("end", () => {
     console.log("Ended");
