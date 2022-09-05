@@ -1,7 +1,7 @@
 const cv = require("./opencv.js");
 const path = require("path");
 
-
+const { compress } = require('compress-images/promise');
 const {
   drawText,
   drawImage,
@@ -12,7 +12,7 @@ const {
   subBlockCoordinates,
   roundedRect,
   newItemRect,
-  drawLine,
+  drawLine,reSize
 } = require("./CVServices");
 
 const {
@@ -27,11 +27,18 @@ const menuJson = require("../data/Menus/menu.json");
 const { createCanvas, Image, loadImage } = require("canvas");
 const GIFEncoder = require("gifencoder");
 const fs = require("fs");
-
-
-
-
-
+const videoshow = require('videoshow')
+const videoOptions = {
+  fps: 25,
+  loop:1,
+  transition: false,
+  transitionDuration: 0, // seconds
+  size:'1920x1080',
+  videoBitrate: 1024,
+  videoCodec: 'libx264',
+  format: 'mp4',
+  pixelFormat: 'yuv420p'
+}
 var resolvedPath = path
   .join(__dirname, "../../server/data/background")
   .replace(/\\/g, "/");
@@ -40,37 +47,14 @@ const vegicon = resolvedPath + "/vegIcon.svg";
 const nonvegicon = resolvedPath + "/nonVegIcon.svg";
 const newicon = resolvedPath + "/newIcon.svg";
 
-async  function drawRandF(priceX,priceY,priceW,itemStyle,screen,screen2){
-  let style =
-        itemStyle.weight.Items +
-        " " +
-        itemStyle.size.Items/4 +
-        " " +
-        itemStyle.font.Items;
-        screen.font = style;
-        screen2.font = style;
-        screen.fillStyle = itemStyle.color.Title;
-        screen2.fillStyle = itemStyle.color.Title;
-        let rpoints={};
-        rpoints.x = priceX + Math.ceil((priceW/2)/2)-10;
-        rpoints.y = priceY - 5;
-        let fpoints={};
-        fpoints.x = priceX + Math.ceil(priceW/2) + Math.ceil((priceW/2)/2)-10;
-        fpoints.y = priceY - 5;
-        let linep = {};
-        linep.x = priceX + Math.ceil(priceW/2)
-        linep.y = fpoints.y = priceY - 5;
-        drawText(screen, "R", rpoints, style);
-        drawText(screen, "F", fpoints, style);
-        drawText(screen, "|", linep, style);
-        
+
+const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
+const ffprobe = require("@ffprobe-installer/ffprobe");
+
+const ffmpeg = require("fluent-ffmpeg")().setFfprobePath(ffprobe.path).setFfmpegPath(ffmpegInstaller.path);
 
 
-      
-
-}
-
-async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,priceArray,itemStyle,screen,screen2){
+async function writeMyTxt(itemCoordinates,priceX,priceY,itemArray,id,priceArray,itemStyle,screen,screen2){
 
        let style =
         itemStyle.weight.Items +
@@ -82,8 +66,6 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
       screen2.font = style;
       let itemX = itemCoordinates.x + 10;
       let itemY = itemCoordinates.y;
-      let RandFpointX = priceX;
-      let RandFpointY = priceY;
 
       for (let k = 0; k < itemArray.length; k++) {
         let text = itemArray[k].value;
@@ -159,8 +141,6 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
 
               drawText(screen, priceText, pricePoints, style);
               drawText(screen2, priceText, pricePoints, style);
-
-              await drawRandF(RandFpointX,RandFpointY,priceW,itemStyle,screen,screen2);
             }
             break;
           }
@@ -274,7 +254,6 @@ async function doMyTextPrint(
       let priceArray = prices[id.toString()].value;
       let priceX;
       let priceY;
-      let priceW;
       for (let k = 0; k < itemCoordinates.length; k++) {
         if (
           itemCoordinates[k].parent_block_id === id &&
@@ -282,7 +261,6 @@ async function doMyTextPrint(
         ) {
           priceX = itemCoordinates[k].x + 5;
           priceY = itemCoordinates[k].y;
-          priceW = itemCoordinates[k].w;
         }
       }
 
@@ -304,8 +282,7 @@ async function doMyTextPrint(
         block1.h = itemCoordinates[i].h;
         price1x = block1.x+block1.w+5;
         price1y = priceY;
-        let price1w = block1.w*0.2;
-        await writeMyTxt(block1,price1x-25,price1y,price1w-25,itemFirst,id,priceArray,itemStyle,screen,screen2);
+        await writeMyTxt(block1,price1x-25,price1y,itemFirst,id,priceArray,itemStyle,screen,screen2);
 
         let block2 = {};
         let price2x ;
@@ -316,15 +293,167 @@ async function doMyTextPrint(
         block2.h = itemCoordinates[i].h;
         price2x = block2.x +  block2.w +5;
         price2y = priceY;
-        let price2w = block2.w*0.2;
-        await writeMyTxt(block2,price2x-25,price2y,price2w-25,itemSecond,id,priceArray,itemStyle,screen,screen2);
+
+        await writeMyTxt(block2,price2x-25,price2y,itemSecond,id,priceArray,itemStyle,screen,screen2);
 
         continue;
       }
-      await writeMyTxt(itemCoordinates[i],priceX,priceY,priceW,itemArray,id,priceArray,itemStyle,screen,screen2);
+      await writeMyTxt(itemCoordinates[i],priceX,priceY,itemArray,id,priceArray,itemStyle,screen,screen2);
 
       
-      
+      // for (let k = 0; k < itemArray.length; k++) {
+      //   let text = itemArray[k].value;
+      //   let item_id = itemArray[k].item_id;
+      //   itemY = itemY + 56 + 5;
+      //   let points = {};
+      //   points.x = itemX;
+      //   points.y = itemY;
+
+      //   if (itemArray[k].active === false) {
+      //     let rectpoint = {};
+      //     rectpoint.x = itemCoordinates[i].x - 10;
+      //     rectpoint.y = itemY - 56;
+      //     rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
+      //     rectpoint.h = 56 + 10;
+      //     roundedRect(screen, rectpoint, 20, "grey");
+      //     roundedRect(screen2, rectpoint, 20, "grey");
+
+      //     screen.fillStyle = "Black";
+      //     screen2.fillStyle = "Black";
+      //   } else {
+      //     screen.fillStyle = itemStyle.color.Items;
+      //     screen2.fillStyle = itemStyle.color.Items;
+      //   }
+
+      //   if (itemArray[k].new === true && itemArray[k].active) {
+      //     let rectpoint = {};
+      //     rectpoint.x = itemCoordinates[i].x - 10;
+      //     rectpoint.y = itemY - 56;
+      //     rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
+      //     rectpoint.h = 56 + 10;
+      //     newItemRect(screen, rectpoint, 30, "yellow", "orange");
+      //     newItemRect(screen2, rectpoint, 30, "yellow", "orange");
+
+      //     screen.fillStyle = itemStyle.color.New;
+      //     screen2.fillStyle = itemStyle.color.New;
+      //   } else {
+      //     if (itemArray[k].active) {
+      //       screen.fillStyle = itemStyle.color.Items;
+      //       screen2.fillStyle = itemStyle.color.Items;
+      //     }
+      //   }
+
+      //   drawText(screen, text, points, style);
+      //   drawText(screen2, text, points, style);
+
+      //   for (let j = 0; j < priceArray.length; j++) {
+      //     if (priceArray[j].item_id === item_id) {
+      //       let priceList = priceArray[j].value;
+      //       if (priceList.length === 1) {
+      //         let priceText = priceList[0].price.toString();
+      //         priceY = priceY + 56 + 5;
+      //         let pricePoints = {};
+      //         pricePoints.x = priceX;
+      //         pricePoints.y = priceY;
+      //         screen.fillStyle = itemStyle.color.Prices;
+      //         screen2.fillStyle = itemStyle.color.Prices;
+
+      //         drawText(screen, priceText, pricePoints, style);
+      //         drawText(screen2, priceText, pricePoints, style);
+      //       }
+      //       if (priceList.length > 1) {
+      //         priceList.sort((a, b) => a.price - b.price);
+      //         let priceText = priceList[0].price.toString();
+
+      //         priceText = priceText + "|" + priceList[1].price.toString();
+      //         priceY = priceY + 56 + 5;
+      //         let pricePoints = {};
+      //         pricePoints.x = priceX;
+      //         pricePoints.y = priceY;
+      //         screen.fillStyle = itemStyle.color.Prices;
+      //         screen2.fillStyle = itemStyle.color.Prices;
+
+      //         drawText(screen, priceText, pricePoints, style);
+      //         drawText(screen2, priceText, pricePoints, style);
+      //       }
+      //       break;
+      //     }
+      //   }
+      //   if (itemArray[k].icons === "VEG") {
+      //     let iconpoint = {};
+
+      //     iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
+      //     iconpoint.y =
+      //       itemY -
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent);
+      //     iconpoint.w =
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
+      //     iconpoint.h =
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
+      //     await loadImage(vegicon).then((image) => {
+      //       screen.drawImage(
+      //         image,
+      //         iconpoint.x,
+      //         iconpoint.y,
+      //         iconpoint.w,
+      //         iconpoint.h
+      //       );
+      //       screen2.drawImage(
+      //         image,
+      //         iconpoint.x,
+      //         iconpoint.y,
+      //         iconpoint.w,
+      //         iconpoint.h
+      //       );
+      //     });
+      //   } else if (itemArray[k].icons === "NON_VEG") {
+      //     let iconpoint = {};
+      //     iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
+      //     iconpoint.y =
+      //       itemY -
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent);
+      //     iconpoint.w =
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
+      //     iconpoint.h =
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15;
+      //     await loadImage(nonvegicon).then((image) => {
+      //       screen.drawImage(
+      //         image,
+      //         iconpoint.x,
+      //         iconpoint.y,
+      //         iconpoint.w,
+      //         iconpoint.h
+      //       );
+      //       screen2.drawImage(
+      //         image,
+      //         iconpoint.x,
+      //         iconpoint.y,
+      //         iconpoint.w,
+      //         iconpoint.h
+      //       );
+      //     });
+      //   }
+      //   if (itemArray[k].new === true) {
+      //     let iconpoint = {};
+      //     iconpoint.x =
+      //       itemX + Math.floor(screen.measureText(text).width) + 180;
+      //     iconpoint.y =
+      //       itemY -
+      //       Math.floor(screen.measureText(text).actualBoundingBoxAscent) -
+      //       45;
+      //     iconpoint.w = 150;
+      //     iconpoint.h = 150;
+      //     await loadImage(newicon).then((image) => {
+      //       screen.drawImage(
+      //         image,
+      //         iconpoint.x,
+      //         iconpoint.y,
+      //         iconpoint.w,
+      //         iconpoint.h
+      //       );
+      //     });
+      //   }
+      // }
     }
   }
 }
@@ -428,7 +557,8 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   screen2.save();
   let buffer1 = screen1canvas.toBuffer("image/png").toString("base64");
   let buffer2 = screen1canvas.toBuffer("image/png").toString("base64");
-  return { 1: buffer1, 2: buffer2, screen1: screen, screen2: screen2 };
+
+  return { 1: buffer1, 2: buffer2, screen1: screen, screen2: screen2 ,data1:screen1canvas.toBuffer("image/png"),data2:screen2canvas.toBuffer("image/png")};
 }
 
 const drawItemText = async (imageArray, mapping, coordinates) => {
@@ -438,16 +568,16 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
   let jsondata = uiJsonConverter(menuJson, mapping);
 
   const encoder = new GIFEncoder(3840, 2160);
-  encoder
-    .createReadStream()
-    .pipe(fs.createWriteStream("./data/myanimated.gif"));
+
+  encoder.createReadStream().pipe(fs.createWriteStream("./data/myanimated.gif"));
   encoder.start();
   encoder.setRepeat(0); // 0 for repeat, -1 for no-repeat
   encoder.setDelay(1000); // frame delay in ms
   encoder.setQuality(10); // image quality. 10 is default.
 
   let response = [];
-
+  let names=[];
+let c=0;
   while (bufferLength > 0) {
     let result = await doMyWork(
       imageArray[bufferLength - 1],
@@ -461,18 +591,80 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
     response.push(result["2"]);
     response.push(result["1"]);
     response.push(result["2"]);
+
+    names.push('./data/tmp/screen1'+c+'.png');
+    fs.writeFileSync('./data/tmp/screen1'+c+'.png',result["data1"]);
+    names.push('./data/tmp/screen2'+c+'.png');
+    fs.writeFileSync('./data/tmp/screen2'+c+'.png',result["data2"]);
+    names.push('./data/tmp/screen11'+c+'.png');
+    fs.writeFileSync('./data/tmp/screen11'+c+'.png',result["data1"]);
+    names.push('./data/tmp/screen21'+c+'.png');
+    fs.writeFileSync('./data/tmp/screen21'+c+'.png',result["data2"]);
+    names.push('./data/tmp/screen12'+c+'.png');
+    fs.writeFileSync('./data/tmp/screen12'+c+'.png',result["data1"]);
+    names.push('./data/tmp/screen22'+c+'.png');
+    fs.writeFileSync('./data/tmp/screen22'+c+'.png',result["data2"]);
+
     encoder.addFrame(result["screen1"]);
     encoder.addFrame(result["screen2"]);
     encoder.addFrame(result["screen1"]);
     encoder.addFrame(result["screen2"]);
     encoder.addFrame(result["screen1"]);
     encoder.addFrame(result["screen2"]);
-   
+
+    
 
     bufferLength--;
+    c++;
   }
+  
   encoder.finish();
+
+  videoshow(names, videoOptions)
+  .save('testvideo.mp4')
+  .on('start', function (command) {
+    console.log('ffmpeg process started:', command)
+  })
+  .on('error', function (err, stdout, stderr) {
+    console.error('Error:', err)
+    console.error('ffmpeg stderr:', stderr)
+  })
+  .on('end', function (output) {
+    console.error('Video created in:', output)
+  })
+
+
+
+// let res =   await compress({
+//     source: "./data/myanimated.gif",
+//     destination: "./data/comp.gif",
+//     enginesSetup: {
+//         gif: { engine: 'gif2webp', command: ['-f', '80', '-mixed', '-q', '30', '-m', '2']}  }
+// });
+  
+// await ffmpeg
+//   .input(`./data/myanimated.gif`).videoCodec('libx264').fps(25)
+//   .output(`./data/output.mp4`)
+//   .on("end", () => {
+//     console.log("Ended");
+//   })
+//   .on("error", (e) => console.log(e))
+//   .run();
+//console.log(names);
+// 
+
+// await ffmpeg.input('./data/tmp/screen%d.png').videoCodec('libx264')
+//   .output(`./data/output.mp4`)
+//   .on("end", () => {
+//     console.log("Ended");
+//   })
+//   .on("error", (e) => console.log(e))
+//   .run();
+
   return response[0];
-};
+ };
+
+
 
 module.exports = drawItemText;
+

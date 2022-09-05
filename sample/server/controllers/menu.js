@@ -30,6 +30,7 @@ exports.uploadProductImages = (req, res) => {
   res.send(response);
 };
 exports.setItemMapping = async (req, res) => {
+
   console.log("setmapping called");
   let images = [];
   for (var file in req.files) {
