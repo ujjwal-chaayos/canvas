@@ -643,16 +643,8 @@ let c=0;
 // });
   
 // await ffmpeg
-//   .input(`./data/myanimated.gif`)
-//   .outputOptions([
-//     "-pix_fmt yuv420p",
-//     "-c:v  libvpx-vp9",
-//     "-c:a libvorbis",
-//     "-movflags +faststart",
-//     "-filter:v crop='floor(in_w/2)*2:floor(in_h/2)*2'",
-//     "-filter:v fps=fps=60",
-//   ])
-//   .output(`./data/output.webm`)
+//   .input(`./data/myanimated.gif`).videoCodec('libx264').fps(25)
+//   .output(`./data/output.mp4`)
 //   .on("end", () => {
 //     console.log("Ended");
 //   })
