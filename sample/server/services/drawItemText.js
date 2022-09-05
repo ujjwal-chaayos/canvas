@@ -27,7 +27,18 @@ const menuJson = require("../data/Menus/menu.json");
 const { createCanvas, Image, loadImage } = require("canvas");
 const GIFEncoder = require("gifencoder");
 const fs = require("fs");
-
+const videoshow = require('videoshow')
+const videoOptions = {
+  fps: 25,
+  loop:1,
+  transition: false,
+  transitionDuration: 0, // seconds
+  size:'1920x1080',
+  videoBitrate: 1024,
+  videoCodec: 'libx264',
+  format: 'mp4',
+  pixelFormat: 'yuv420p'
+}
 var resolvedPath = path
   .join(__dirname, "../../server/data/background")
   .replace(/\\/g, "/");
@@ -609,6 +620,20 @@ let c=0;
   
   encoder.finish();
 
+  videoshow(names, videoOptions)
+  .save('testvideo.mp4')
+  .on('start', function (command) {
+    console.log('ffmpeg process started:', command)
+  })
+  .on('error', function (err, stdout, stderr) {
+    console.error('Error:', err)
+    console.error('ffmpeg stderr:', stderr)
+  })
+  .on('end', function (output) {
+    console.error('Video created in:', output)
+  })
+
+
 
 // let res =   await compress({
 //     source: "./data/myanimated.gif",
@@ -636,16 +661,16 @@ let c=0;
 //console.log(names);
 // 
 
-await ffmpeg.input('./data/tmp/screen%d.png').videoCodec('libx264')
-  .output(`./data/output.mp4`)
-  .on("end", () => {
-    console.log("Ended");
-  })
-  .on("error", (e) => console.log(e))
-  .run();
+// await ffmpeg.input('./data/tmp/screen%d.png').videoCodec('libx264')
+//   .output(`./data/output.mp4`)
+//   .on("end", () => {
+//     console.log("Ended");
+//   })
+//   .on("error", (e) => console.log(e))
+//   .run();
 
   return response[0];
-};
+ };
 
 
 

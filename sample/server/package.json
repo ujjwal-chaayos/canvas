@@ -20,7 +20,8 @@
     "nodemon": "^2.0.19",
     "opencv.js": "^1.2.1",
     "path": "^0.12.7",
-    "socket.io": "^4.5.1"
+    "socket.io": "^4.5.1",
+    "videoshow": "^0.1.12"
   },
   "description": "server of clippy",
   "main": "app.js",
