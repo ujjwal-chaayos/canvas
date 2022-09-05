@@ -547,7 +547,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   let buffer1 = screen1canvas.toBuffer("image/png").toString("base64");
   let buffer2 = screen1canvas.toBuffer("image/png").toString("base64");
 
-  return { 1: buffer1, 2: buffer2, screen1: screen, screen2: screen2 };
+  return { 1: buffer1, 2: buffer2, screen1: screen, screen2: screen2 ,data1:screen1canvas.toBuffer("image/png"),data2:screen2canvas.toBuffer("image/png")};
 }
 
 const drawItemText = async (imageArray, mapping, coordinates) => {
@@ -565,7 +565,8 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
   encoder.setQuality(10); // image quality. 10 is default.
 
   let response = [];
-
+  let names=[];
+let c=0;
   while (bufferLength > 0) {
     let result = await doMyWork(
       imageArray[bufferLength - 1],
@@ -579,6 +580,20 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
     response.push(result["2"]);
     response.push(result["1"]);
     response.push(result["2"]);
+
+    names.push('./data/tmp/screen1'+c+'.png');
+    fs.writeFileSync('./data/tmp/screen1'+c+'.png',result["data1"]);
+    names.push('./data/tmp/screen2'+c+'.png');
+    fs.writeFileSync('./data/tmp/screen2'+c+'.png',result["data2"]);
+    names.push('./data/tmp/screen11'+c+'.png');
+    fs.writeFileSync('./data/tmp/screen11'+c+'.png',result["data1"]);
+    names.push('./data/tmp/screen21'+c+'.png');
+    fs.writeFileSync('./data/tmp/screen21'+c+'.png',result["data2"]);
+    names.push('./data/tmp/screen12'+c+'.png');
+    fs.writeFileSync('./data/tmp/screen12'+c+'.png',result["data1"]);
+    names.push('./data/tmp/screen22'+c+'.png');
+    fs.writeFileSync('./data/tmp/screen22'+c+'.png',result["data2"]);
+
     encoder.addFrame(result["screen1"]);
     encoder.addFrame(result["screen2"]);
     encoder.addFrame(result["screen1"]);
@@ -589,6 +604,7 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
     
 
     bufferLength--;
+    c++;
   }
   
   encoder.finish();
@@ -601,16 +617,27 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
 //         gif: { engine: 'gif2webp', command: ['-f', '80', '-mixed', '-q', '30', '-m', '2']}  }
 // });
   
-await ffmpeg
-  .input(`./data/myanimated.gif`)
-  .outputOptions([
-    "-pix_fmt yuv420p",
-    "-c:v libx264",
-    "-movflags +faststart",
-    "-filter:v crop='floor(in_w/2)*2:floor(in_h/2)*2'",
-    "-filter:v fps=fps=60",
-  ])
-  .output(`./data/vidgif.mp4`)
+// await ffmpeg
+//   .input(`./data/myanimated.gif`)
+//   .outputOptions([
+//     "-pix_fmt yuv420p",
+//     "-c:v  libvpx-vp9",
+//     "-c:a libvorbis",
+//     "-movflags +faststart",
+//     "-filter:v crop='floor(in_w/2)*2:floor(in_h/2)*2'",
+//     "-filter:v fps=fps=60",
+//   ])
+//   .output(`./data/output.webm`)
+//   .on("end", () => {
+//     console.log("Ended");
+//   })
+//   .on("error", (e) => console.log(e))
+//   .run();
+//console.log(names);
+// 
+
+await ffmpeg.input('./data/tmp/screen%d.png').videoCodec('libx264')
+  .output(`./data/output.mp4`)
   .on("end", () => {
     console.log("Ended");
   })
@@ -623,3 +650,4 @@ await ffmpeg
 
 
 module.exports = drawItemText;
+
