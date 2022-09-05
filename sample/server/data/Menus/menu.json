@@ -591,6 +591,12 @@
                         "price": 199.00,
                         "originalPrice": null,
                         "check": true
+                    },
+                    {
+                        "id": "None",
+                        "price": 200.00,
+                        "originalPrice": null,
+                        "check": true
                     }
                 ]
             },
@@ -5789,12 +5795,12 @@
                     "id": 1000050,
                     "parentId": 1000
                 },
-                "name": "Kala Khatta",
+                "name": "abcd 123456",
                 "desc": "Your favourite Chuski flavour in a new avtar",
                 "active": true,
                 "classification": "MENU",
                 "inventory": true,
-                "attr": "VEG",
+                "attr": "NON_VEG",
                 "taxCode": "996331",
                 "billType": "NET_PRICE",
                 "customize": true,
@@ -6104,7 +6110,7 @@
                 "active": true,
                 "classification": "MENU",
                 "inventory": false,
-                "attr": null,
+                "attr": "VEG",
                 "taxCode": "996331",
                 "billType": "NET_PRICE",
                 "customize": true,
