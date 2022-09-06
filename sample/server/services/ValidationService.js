@@ -57,7 +57,7 @@ const wrapValidation = (block, txt, font,style) => {
   console.log(txtWidth);
   console.log(txtWidth*2);
   console.log(blockWidth);
-  if((txt.length > totatNumberitem+1)  && ((txtWidth*2)<=blockWidth)){
+  if((txt.length > totatNumberitem+1)  && ((txtWidth*2)<=Math.ceil(blockWidth))){
     return true;
   }
   else {
