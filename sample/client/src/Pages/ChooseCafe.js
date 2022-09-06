@@ -174,22 +174,28 @@ const ChooseCafe = () => {
             ))}
           </Select>
         </FormControl>
-        {/* <Box
-        position="fixed"
-        top=
-        height="50%"
-        width="50%"
+      </Box>
+      <Box
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          backgroundColor: "primary.dark",
-          overflow: "hidden",
-          overflowY: "scroll",
+          display: 'flex',
+          flexWrap: 'wrap',
+         
+          p: 1,
+          m: 1,
+          bgcolor: 'background.paper',
+          maxWidth: 380,
+          height: 200,
+          borderRadius: 1,
         }}
       >
-
-      </Box> */}
-      </Box>
+        <Box>Item 1</Box>
+        <Box>Item 2</Box>
+        <Box>Item 3</Box>
+        <Box>Item 4</Box>
+        <Box>Item 5</Box>
+        <Box>Item 6</Box>
+        <Box>Item 7</Box>
+        </Box>
     </div>
   );
 };

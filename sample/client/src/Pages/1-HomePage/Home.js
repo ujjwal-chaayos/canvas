@@ -24,6 +24,8 @@ const Home = () => {
   const [userId,setUserId]=useState('');
   const navigate= useNavigate();
 
+
+
   const login = (e) => {
       e.preventDefault();
       let payload=userId;
@@ -35,6 +37,7 @@ const Home = () => {
           localStorage.setItem("userId",response.data)
           localStorage.setItem("userIdValue",userId)
           navigate("/screen")
+          window.location.reload(false);
         }
         else{
           navigate("/")
