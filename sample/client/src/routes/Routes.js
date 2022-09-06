@@ -3,10 +3,12 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "../Pages/1-HomePage/Home";
 import Screen from "../Pages/2-ScreenPage/Screen";
+import ChooseCafe from "../Pages/ChooseCafe"
 import GenOrPick from "../Pages/3-PickTemplate/GenOrPick";
 
 import ChooseTemplate from "../Pages/4-TemplatePage/ChooseTemplate";
 import UploadTemplate from "../Pages/5-UploadTemplate/UploadTemplate";
+
 
 import Final from "../Pages/ThankPage/Final";
 
@@ -56,6 +58,8 @@ const AllRoutes = () => {
       ) : (
         <Route path="*" element={<Navigate to="/" replace />} />
       )}
+        <Route path="/chooseCafe" element={<ChooseCafe />} />
+
     </Routes>
   );
 };

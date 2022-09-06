@@ -33,6 +33,7 @@ const Home = () => {
       .then(function (response) {
         if(response.data==='Pass'){
           localStorage.setItem("userId",response.data)
+          localStorage.setItem("userIdValue",userId)
           navigate("/screen")
         }
         else{
