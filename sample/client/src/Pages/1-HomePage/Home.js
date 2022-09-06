@@ -35,6 +35,7 @@ const Home = () => {
           localStorage.setItem("userId",response.data)
           localStorage.setItem("userIdValue",userId)
           navigate("/screen")
+          window.location.reload(false);
         }
         else{
           navigate("/")
