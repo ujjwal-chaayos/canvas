@@ -1,0 +1,7 @@
+File from: [./data/myanimated.gif]
+
+File to: [./data/comp.gifmyanimated.gif]
+
+Compression algorithm: [-]
+
+Description: File does not exist!

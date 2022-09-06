@@ -591,6 +591,12 @@
                         "price": 199.00,
                         "originalPrice": null,
                         "check": true
+                    },
+                    {
+                        "id": "None",
+                        "price": 200.00,
+                        "originalPrice": null,
+                        "check": true
                     }
                 ]
             },
@@ -4764,11 +4770,7 @@
                     1028,
                     1200,
                     1000043,
-                    1000050,
-                    992,
-                    992,
-                    130,
-                    1064
+                    1000050
                 ]
             },
             {
@@ -4785,10 +4787,7 @@
                     1064,
                     1201,
                     1065,
-                    150,
-                    1109,
-                    60,
-                    1000080
+                    150
                 ]
             },
             {
@@ -4805,10 +4804,8 @@
                     1296,
                     620,
                     868,
-                    530,
-                    500,
-                    610,
-                    1297
+                    530
+                
                 ]
             },
             {
@@ -4981,7 +4978,7 @@
                     "id": 1296,
                     "parentId": 1000
                 },
-                "name": "Kasundi Paneer Sandwich",
+                "name": "Kasundi Paneer ",
                 "desc": "Paneer cubes in our secret Kasundi sauce served with cheese in a sandwich bread ",
                 "active": true,
                 "classification": "MENU",
@@ -5017,7 +5014,7 @@
                     "id": 1297,
                     "parentId": 1000
                 },
-                "name": "Patiala Chicken Sandwich",
+                "name": "Patiala Chicken",
                 "desc": "Spicy Patiala chicken chunks in a cheesy Sandwich",
                 "active": true,
                 "classification": "MENU",
@@ -5035,7 +5032,7 @@
                     "id": 530,
                     "parentId": 1000
                 },
-                "name": "Italian Cheese Mushroom Sandwich",
+                "name": "Italian Cheese",
                 "desc": "Cheesy garlic roasted mushrooms with Italian herbs in a Focaccia bread",
                 "active": true,
                 "classification": "MENU",
@@ -5108,7 +5105,7 @@
                     "id": 540,
                     "parentId": 1000
                 },
-                "name": "Spinach Corn Cheese Sandwich",
+                "name": "Spinach Corn Cheese",
                 "desc": "Fresh Spinach & crispy Corn sandwiched with melted cheese!",
                 "active": true,
                 "classification": "MENU",
@@ -5432,7 +5429,7 @@
                     "id": 1111,
                     "parentId": 1000
                 },
-                "name": "Paneer Loaded Open Paratha",
+                "name": "Paneer Loaded Paratha",
                 "desc": "Cottage cheese & gravy spread on a Paratha topped with oozing Cheese!",
                 "active": true,
                 "classification": "MENU",
@@ -5600,7 +5597,7 @@
                     "id": 868,
                     "parentId": 1000
                 },
-                "name": "Garden Fresh Sandwich",
+                "name": "Garden Fresh",
                 "desc": "Ultimate healthy sandwich with fresh & crunchy veggies ",
                 "active": true,
                 "classification": "MENU",
@@ -5690,7 +5687,7 @@
                     "id": 620,
                     "parentId": 1000
                 },
-                "name": "Homestyle Aloo Sandwich",
+                "name": "Homestyle Aloo",
                 "desc": "Nostalgic aloo sandwich, stuffed with love and lots of flavors",
                 "active": true,
                 "classification": "MENU",
@@ -5798,12 +5795,12 @@
                     "id": 1000050,
                     "parentId": 1000
                 },
-                "name": "Kala Khatta",
+                "name": "abcd 123456",
                 "desc": "Your favourite Chuski flavour in a new avtar",
                 "active": true,
                 "classification": "MENU",
                 "inventory": true,
-                "attr": "VEG",
+                "attr": "NON_VEG",
                 "taxCode": "996331",
                 "billType": "NET_PRICE",
                 "customize": true,
@@ -6113,7 +6110,7 @@
                 "active": true,
                 "classification": "MENU",
                 "inventory": false,
-                "attr": null,
+                "attr": "VEG",
                 "taxCode": "996331",
                 "billType": "NET_PRICE",
                 "customize": true,
@@ -6588,7 +6585,7 @@
                     "id": 1238,
                     "parentId": 1000
                 },
-                "name": "Choco-Chip Cookies - Chai Time Pack",
+                "name": "Choco-Chip Cookies",
                 "desc": "Baked chocolate chip cookies with ultimate crispy edges & chewy middles. (2pc pack, 25g)",
                 "active": true,
                 "classification": "MENU",
@@ -6732,7 +6729,7 @@
                     "id": 500,
                     "parentId": 1000
                 },
-                "name": "Sicilian Chicken Sandwich",
+                "name": "Sicilian Chicken",
                 "desc": "Spicy Italian style grilled chicken in a Focaccia bread",
                 "active": true,
                 "classification": "MENU",
