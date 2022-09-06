@@ -1,5 +1,6 @@
-import * as React from "react";
+import React,{useEffect} from "react";
 import { useTheme } from "@mui/material/styles";
+import axios from 'axios';
 import {
   Box,
   Select,
@@ -10,7 +11,7 @@ import {
   Chip,
   Typography,
 } from "@mui/material";
-import "./Home.css";
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -65,7 +66,49 @@ function getStyles(name, personName, theme) {
   };
 }
 
+
+
 const ChooseCafe = () => {
+
+  useEffect(()=>{
+
+    function checkCafe(cafe) {
+       return cafe['category']==='CAFE';
+    }
+
+    function checkActive(cafe) {
+      return cafe['status']==='ACTIVE';
+    }
+
+    function checkLive(cafe) {
+      return cafe['live']===true;
+    }
+
+    let payload={
+      "employeeId":parseInt(localStorage.getItem("userIdValue")),
+      "onlyActive":true
+    }
+    let customConfig = {
+      headers: {
+      'Content-Type': 'application/json'
+      }
+  };
+    axios.post('http://dev.kettle.chaayos.com:9595/master-service/rest/v1/user-management/user/units', payload, customConfig)
+  .then(function (response) {
+    console.log(response.data);
+    let data= response.data;
+    let cafes = data.filter(checkCafe);
+    let active = cafes.filter(checkActive);
+    let isLive = active.filter(checkLive);
+    console.log(isLive);
+  
+   
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  },[]);
+
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
 
