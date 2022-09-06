@@ -6,7 +6,6 @@ const drawProductImage = require("../services/drawProductImage");
 const {mergeTemplateBackground}= require('../services/mergeTemplateBackground')
 exports.uploadTemplate = (req, res) => {
         console.log("uploadTemplate Called")
-        // console.log(req);
         let images =[];
         for(var file in req.files){
                 images.push(req.files[file]);
