@@ -32,10 +32,12 @@ const Home = () => {
       })
       .then(function (response) {
         if(response.data==='Pass'){
+          localStorage.setItem("userId",response.data)
           navigate("/screen")
         }
         else{
           navigate("/")
+          alert("Wrong Credentials..")
         }
       })
       .catch(function (error) {
