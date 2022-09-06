@@ -1,5 +1,6 @@
 const cv = require("./opencv.js");
 const path = require("path");
+const fs = require('fs');
 
 const { compress } = require('compress-images/promise');
 const {
@@ -25,8 +26,6 @@ const { uiJsonConverter } = require("./JSONConverter");
 const { coordinateConverter } = require("./JSONConverter");
 const menuJson = require("../data/Menus/menu.json");
 const { createCanvas, Image, loadImage } = require("canvas");
-const GIFEncoder = require("gifencoder");
-const fs = require("fs");
 const videoshow = require('videoshow')
 const videoOptions = {
   fps: 25,
@@ -618,14 +617,6 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
 
   let jsondata = uiJsonConverter(menuJson, mapping);
 
-  const encoder = new GIFEncoder(3840, 2160);
-
-  encoder.createReadStream().pipe(fs.createWriteStream("./data/myanimated.gif"));
-  encoder.start();
-  encoder.setRepeat(0); // 0 for repeat, -1 for no-repeat
-  encoder.setDelay(1000); // frame delay in ms
-  encoder.setQuality(10); // image quality. 10 is default.
-
   let response = [];
   let names=[];
 let c=0;
@@ -643,46 +634,35 @@ let c=0;
     response.push(result["1"]);
     response.push(result["2"]);
 
-    names.push('./data/tmp/screen1'+c+'.png');
-    fs.writeFileSync('./data/tmp/screen1'+c+'.png',result["data1"]);
-    names.push('./data/tmp/screen2'+c+'.png');
-    fs.writeFileSync('./data/tmp/screen2'+c+'.png',result["data2"]);
-    names.push('./data/tmp/screen11'+c+'.png');
-    fs.writeFileSync('./data/tmp/screen11'+c+'.png',result["data1"]);
-    names.push('./data/tmp/screen21'+c+'.png');
-    fs.writeFileSync('./data/tmp/screen21'+c+'.png',result["data2"]);
-    names.push('./data/tmp/screen12'+c+'.png');
-    fs.writeFileSync('./data/tmp/screen12'+c+'.png',result["data1"]);
-    names.push('./data/tmp/screen22'+c+'.png');
-    fs.writeFileSync('./data/tmp/screen22'+c+'.png',result["data2"]);
-
-    encoder.addFrame(result["screen1"]);
-    encoder.addFrame(result["screen2"]);
-    encoder.addFrame(result["screen1"]);
-    encoder.addFrame(result["screen2"]);
-    encoder.addFrame(result["screen1"]);
-    encoder.addFrame(result["screen2"]);
-
-    
-
+    names.push({
+      name:'./data/tmp/screen1'+c+'.png',
+      data:result["data1"]
+    });
+    names.push({
+      name:'./data/tmp/screen2'+c+'.png',
+      data:result["data2"]
+    });
+    names.push({
+      name:'./data/tmp/screen11'+c+'.png',
+      data:result["data1"]
+    });
+    names.push({
+      name:'./data/tmp/screen21'+c+'.png',
+      data:result["data2"]
+    });
+    names.push({
+      name:'./data/tmp/screen12'+c+'.png',
+      data:result["data1"]
+    });
+    names.push({
+      name:'./data/tmp/screen22'+c+'.png',
+      data:result["data2"]
+    });
     bufferLength--;
     c++;
   }
-  
-  encoder.finish();
+  img2vid(names);
 
-  videoshow(names, videoOptions)
-  .save('testvideo.mp4')
-  .on('start', function (command) {
-    console.log('ffmpeg process started:', command)
-  })
-  .on('error', function (err, stdout, stderr) {
-    console.error('Error:', err)
-    console.error('ffmpeg stderr:', stderr)
-  })
-  .on('end', function (output) {
-    console.error('Video created in:', output)
-  })
 
 
 
@@ -714,6 +694,37 @@ let c=0;
 
   return response[0];
  };
+
+ const img2vid = async(names)=>{
+let data=[];
+  for(var name in names){
+    fs.writeFileSync(names[name].name,names[name].data);
+    data.push(names[name].name);
+  }
+  console.log(data);
+  videoshow(data, videoOptions)
+  .save('testvideo'+Date.now()+'.mp4')
+  .on('start', function (command) {
+    console.log('ffmpeg process started:', command)
+  })
+  .on('error', function (err, stdout, stderr) {
+    console.error('Error:', err)
+    console.error('ffmpeg stderr:', stderr)
+  })
+  .on('end', function (output) {
+    console.error('Video created in:', output)
+    var folder ='./data/tmp/';
+    fs.readdir(folder, (err, files) => {
+      if (err) throw err;
+      
+      for (const file of files) {
+          console.log(file + ' : File Deleted Successfully.');
+          fs.unlinkSync(folder+file);
+      }
+      
+    });
+  })
+ } 
 
 
 
