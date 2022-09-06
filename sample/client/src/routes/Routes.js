@@ -12,16 +12,22 @@ import Final from "../Pages/ThankPage/Final";
 
 import Block from "../components/block";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const AllRoutes = () => {
+
   const [authenticated, setAuthenticated] = useState(
     localStorage.getItem("userId")
   );
 
+  useEffect(()=>{
+    setAuthenticated(localStorage.getItem("userId"));
+  },[]);
+
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={  <Home />  } />
+      
       {authenticated === "Pass" ? (
         <Route path="/screen" element={<Screen />} />
       ) : (
