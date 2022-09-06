@@ -1,4 +1,5 @@
-import React from "react";
+import React ,{useState} from "react";
+import axios from 'axios';
 import {
   Box,
   Select,
@@ -13,15 +14,39 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./Home.css";
+import {useNavigate} from 'react-router-dom';
 
 
 
 
 const Home = () => {
 
+  const [userId,setUserId]=useState('');
+  const navigate= useNavigate();
 
   const login = (e) => {
       e.preventDefault();
+      let payload=userId;
+      axios.post('http://localhost:8000/auth', {
+          userId:payload
+      })
+      .then(function (response) {
+        if(response.data==='Pass'){
+          navigate("/screen")
+        }
+        else{
+          navigate("/")
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const getUserId=(e)=>{
+    console.log(e.target.value);
+    let value=e.target.value;
+    setUserId(value);
   }
   return (
     <div>
@@ -75,16 +100,12 @@ const Home = () => {
                   id="outlined-required"
                   label="User Id"
                   placeholder="User Id"
+                  value={userId}
+                  onChange={(e)=>getUserId(e)}
                 />
-                <TextField
-                  id="outlined-password-input"
-                  label="Password"
-                  type="password"
-                  autoComplete="current-password"
-                  sx={{py:1}}
-                />
+               
               
-              <Button type="submit" variant="contained" size="large" >Login</Button>
+              <Button type="submit" variant="contained" size="large" onClick={(e)=>login(e)}>Login</Button>
 
            
               </div>
