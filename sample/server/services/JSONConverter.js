@@ -126,7 +126,7 @@ const uiJsonConverter = (menu, mapping) => {
       },
       color: {
         Title: "#376902",
-        Items: "#188001",
+        Items: "#827311",
         Prices: "#000000",
         New: "red",
       },

@@ -53,8 +53,7 @@ const ffprobe = require("@ffprobe-installer/ffprobe");
 const ffmpeg = require("fluent-ffmpeg")().setFfprobePath(ffprobe.path).setFfmpegPath(ffmpegInstaller.path);
 
 async  function drawRandF(priceX,priceY,priceW,itemStyle,screen,screen2){
-  console.log("hi",parseInt(itemStyle.size.Items));
-  console.log("hey",parseInt(itemStyle.size.Items)/2);
+  
   let size = parseInt(itemStyle.size.Items)/1.5;
   let style =
         "bold" +
@@ -67,13 +66,13 @@ async  function drawRandF(priceX,priceY,priceW,itemStyle,screen,screen2){
         screen.fillStyle = itemStyle.color.Title;
         screen2.fillStyle = itemStyle.color.Title;
         let rpoints={};
-        rpoints.x = priceX + Math.ceil((priceW/2)/2)-10;
+        rpoints.x = priceX + Math.ceil((priceW/2)/2)-20;
         rpoints.y = priceY+10;
         let fpoints={};
-        fpoints.x = priceX + Math.ceil(priceW/2) + Math.ceil((priceW/2)/2)-10;
+        fpoints.x = priceX + Math.ceil(priceW/2) + Math.ceil((priceW/2)/2)-20;
         fpoints.y = priceY+10;
         let linep = {};
-        linep.x = priceX + Math.ceil(priceW/2)
+        linep.x = priceX + Math.ceil(priceW/2)-10
         linep.y = fpoints.y = priceY+10;
         drawText(screen, "R", rpoints, style);
         drawText(screen2, "R", rpoints, style);
@@ -247,13 +246,13 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         if (itemArray[k].new === true) {
           let iconpoint = {};
           iconpoint.x =
-            itemX + itemWidth + 180;
+            itemX + itemWidth + 120;
           iconpoint.y =
             itemY -
            itemHeight -
-            45;
-          iconpoint.w = 150;
-          iconpoint.h = 150;
+            70;
+          iconpoint.w = 180;
+          iconpoint.h = 180;
           console.log("new",iconpoint);
           await loadImage(newicon).then((image) => {
             screen.drawImage(
@@ -724,9 +723,6 @@ let data=[];
       
     });
   })
- } 
-
-
-
+ }
 module.exports = drawItemText;
 
