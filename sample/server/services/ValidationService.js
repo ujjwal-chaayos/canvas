@@ -42,9 +42,10 @@ const widthValidation = (block, txt, font) => {
 // };
 
 
-const wrapValidation = (block, txt, font) => {
+const wrapValidation = (block, txt, font,style) => {
   var txtWidth = 0;
   let screen = new createCanvas(3840, 2160).getContext("2d");
+  screen.font = style;
   var blockWidth =  Math.ceil((block.w*100)/80) - 0.4*Math.ceil((block.w*100)/80);
   var blockHeight = block.h;
   var txtHeight = font.height + font.spacing;
@@ -53,7 +54,9 @@ const wrapValidation = (block, txt, font) => {
   for (let i = 0; i < txt.length; i++) {
     txtWidth = Math.max(txtWidth, Math.floor(screen.measureText(txt[i].value).width));
   }
-
+  console.log(txtWidth);
+  console.log(txtWidth*2);
+  console.log(blockWidth);
   if((txt.length > totatNumberitem+1)  && ((txtWidth*2)<=blockWidth)){
     return true;
   }

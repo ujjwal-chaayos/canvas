@@ -1,6 +1,8 @@
 const cv = require("./opencv.js");
 const path = require("path");
 const fs = require('fs');
+//import axios from 'axios';
+const axios = require('axios');
 
 const { compress } = require('compress-images/promise');
 const {
@@ -53,6 +55,15 @@ const ffprobe = require("@ffprobe-installer/ffprobe");
 
 const ffmpeg = require("fluent-ffmpeg")().setFfprobePath(ffprobe.path).setFfmpegPath(ffmpegInstaller.path);
 
+let menu=axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000").
+then(response =>{
+  console.log("hi");
+  console.log(response.data);
+}).catch(function(error) {
+  //console.log(error);
+})
+
+
 async  function drawRandF(priceX,priceY,priceW,itemStyle,screen,screen2){
   
   let size = parseInt(itemStyle.size.Items)/1.5;
@@ -88,7 +99,7 @@ async  function drawRandF(priceX,priceY,priceW,itemStyle,screen,screen2){
 
 }
 
-async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,priceArray,itemStyle,screen,screen2){
+async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,priceArray,itemStyle,limitItem,screen,screen2){
 
        let style =
         itemStyle.weight.Items +
@@ -105,7 +116,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
       let RandFpointX = priceX;
       let RandFpointY = priceY;
 
-      for (let k = 0; k < itemArray.length; k++) {
+      for (let k = 0; k < itemArray.length && k < limitItem ; k++) {
         screen.fillStyle = itemStyle.color.Items;
         screen2.fillStyle = itemStyle.color.Items;
         let text = itemArray[k].value;
@@ -309,12 +320,14 @@ async function doMyTextPrint(
         }
       }
 
-      if(wrapValidation(itemCoordinates[i],itemArray,{height: parseInt(itemStyle.size.Items),spacing: 5, })){
+      if(wrapValidation(itemCoordinates[i],itemArray,{height: parseInt(itemStyle.size.Items),spacing: 5, },style)){
         console.log("item ARrAy" , itemArray);
         console.log("i am in wrap");
-        let halfway= Math.floor(itemArray.length / 2);
-        let itemFirst = itemArray.slice(0, halfway);
-        let itemSecond = itemArray.slice(halfway+1, itemArray.length);
+        var txtHeight =  parseInt(itemStyle.size.Items)+5;
+        let numberofItemWrap=Math.floor(itemCoordinates[i].h/txtHeight);
+        //let halfway= Math.floor(itemArray.length / 2);
+        let itemFirst = itemArray.slice(0, numberofItemWrap);
+        let itemSecond = itemArray.slice(numberofItemWrap+1, itemArray.length);
         console.log("first",itemFirst);
         console.log("second",itemSecond);
         let blockWidth = Math.ceil((itemCoordinates[i].w*100)/80);
@@ -328,7 +341,7 @@ async function doMyTextPrint(
         price1x = block1.x+block1.w+5;
         price1y = priceY;
         let price1w = (blockWidth/2)*0.2;
-        await writeMyTxt(block1,price1x-30,price1y,price1w,itemFirst,id,priceArray,itemStyle,screen,screen2);
+        await writeMyTxt(block1,price1x-30,price1y,price1w,itemFirst,id,priceArray,itemStyle,numberofItemWrap,screen,screen2);
 
         let block2 = {};
         let price2x ;
@@ -341,11 +354,13 @@ async function doMyTextPrint(
         price2y = priceY;
 
         let price2w = (blockWidth/2)*0.2;
-        await writeMyTxt(block2,price2x-25,price2y,price2w,itemSecond,id,priceArray,itemStyle,screen,screen2);
+        await writeMyTxt(block2,price2x-25,price2y,price2w,itemSecond,id,priceArray,itemStyle,numberofItemWrap,screen,screen2);
 
         continue;
       }
-      await writeMyTxt(itemCoordinates[i],priceX,priceY,priceW,itemArray,id,priceArray,itemStyle,screen,screen2);
+      var txtHeight =  parseInt(itemStyle.size.Items)+5;
+      let numberofItem =  Math.floor(itemCoordinates[i].h/txtHeight);
+      await writeMyTxt(itemCoordinates[i],priceX,priceY,priceW,itemArray,id,priceArray,itemStyle,numberofItem,screen,screen2);
 
       
       // for (let k = 0; k < itemArray.length; k++) {
