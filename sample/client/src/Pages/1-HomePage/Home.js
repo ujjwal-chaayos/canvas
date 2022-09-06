@@ -61,12 +61,6 @@ const Home = () => {
           label="User Id"
           placeholder="User Id"
         />
-        <TextField
-          id="outlined-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-        />
       </div>
       </Box>
             </Box>
