@@ -193,11 +193,11 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
           //iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
           iconpoint.x = itemX + itemWidth + 10;
           iconpoint.y =
-            itemY - itemHeight;
+            itemY - itemHeight-10;
           iconpoint.w =
-           Math.max(56, Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
+           Math.max(65, Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
           iconpoint.h =
-            Math.max(56,Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
+            Math.max(65,Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
             console.log("veg",iconpoint,screen.measureText(text).width);
           await loadImage(vegicon).then((image) => {
             screen.drawImage(
@@ -220,11 +220,11 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
           //iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
           iconpoint.x = itemX + itemWidth + 10;
           iconpoint.y =
-            itemY - itemHeight;
+            itemY - itemHeight-10;
           iconpoint.w =
-            Math.max(56,Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
+            Math.max(65,Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
           iconpoint.h =
-            Math.max(56,Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
+            Math.max(65,Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
             console.log("non-veg",iconpoint,screen.measureText(text).width);
           await loadImage(nonvegicon).then((image) => {
             screen.drawImage(
