@@ -1,7 +1,15 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
-import { Button } from "@mui/material";
+import {
+  Box,
+  Select,
+  OutlinedInput,
+  InputLabel,
+  TextField,
+  MenuItem,
+  FormControl,
+  Chip,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import "./Home.css";
 
@@ -21,17 +29,8 @@ const Home = () => {
         }}
       >
         <div class="help">
-          <Button
-            style={{ minWidth: "50%", minHeight: "5%", borderRadius: 10 }}
-            size="large"
-            variant="outlined"
-            sx={{ color: "white", backgroundColor: "primary.main" }}
-          >
-            <Link
-              to={`/screen`}
-              style={{ "text-decoration": "none", color: "#FFF" }}
-            >
-              <Typography variant="h4" component="h2">
+            <Box sx={{ border: 1, py:5,px:15, borderRadius: 3, borderColor: 'primary.main' }}>
+            <Typography variant="h4" component="h2">
                 WELCOME TO{" "}
                 <Typography
                   variant="h2"
@@ -41,8 +40,44 @@ const Home = () => {
                   CLIPPY
                 </Typography>
               </Typography>
+              <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <div
+      style={{
+        "justifyContent": "center",
+        "backgroundColor": "primary.light",
+        "display": "grid",
+      }}
+       >
+        <TextField
+          required
+          id="outlined-required"
+          label="User Id"
+          placeholder="User Id"
+        />
+        <TextField
+          id="outlined-password-input"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+        />
+      </div>
+      </Box>
+            </Box>
+
+            <Link
+              to={`/screen`}
+              style={{ "text-decoration": "none", color: "#FFF" }}
+            >
+             
             </Link>
-          </Button>
+            
         </div>
       </Box>
     </div>
