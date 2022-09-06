@@ -46,7 +46,8 @@ const vegicon = resolvedPath + "/vegIcon.svg";
 const nonvegicon = resolvedPath + "/nonVegIcon.svg";
 const newicon = resolvedPath + "/newIcon.svg";
 
-
+const menuid = ["1","2"];
+let globalid ;
 const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
 const ffprobe = require("@ffprobe-installer/ffprobe");
 
@@ -86,8 +87,6 @@ async  function drawRandF(priceX,priceY,priceW,itemStyle,screen,screen2){
       
 
 }
-
-
 
 async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,priceArray,itemStyle,screen,screen2){
 
@@ -182,7 +181,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
 
               drawText(screen, priceText, pricePoints, style);
               drawText(screen2, priceText, pricePoints, style);
-              await drawRandF(RandFpointX,RandFpointY,priceW,itemStyle,screen,screen2);
+              await drawRandF(RandFpointX+5,RandFpointY,priceW,itemStyle,screen,screen2);
             }
             break;
           }
@@ -270,9 +269,6 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
 
 }
 
-
-
-
 async function doMyTextPrint(
   itemCoordinates,
   itemStyle,
@@ -329,8 +325,8 @@ async function doMyTextPrint(
         block1.h = itemCoordinates[i].h;
         price1x = block1.x+block1.w+5;
         price1y = priceY;
-        let price1w = block1.w*0.2;
-        await writeMyTxt(block1,price1x-25,price1y,price1w-25,itemFirst,id,priceArray,itemStyle,screen,screen2);
+        let price1w = (blockWidth/2)*0.2;
+        await writeMyTxt(block1,price1x-30,price1y,price1w,itemFirst,id,priceArray,itemStyle,screen,screen2);
 
         let block2 = {};
         let price2x ;
@@ -342,8 +338,8 @@ async function doMyTextPrint(
         price2x = block2.x +  block2.w +5;
         price2y = priceY;
 
-        let price2w = block2.w*0.2;
-        await writeMyTxt(block2,price2x-25,price2y,price2w-25,itemSecond,id,priceArray,itemStyle,screen,screen2);
+        let price2w = (blockWidth/2)*0.2;
+        await writeMyTxt(block2,price2x-25,price2y,price2w,itemSecond,id,priceArray,itemStyle,screen,screen2);
 
         continue;
       }
@@ -611,14 +607,18 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
 }
 
 const drawItemText = async (imageArray, mapping, coordinates) => {
-  let bufferLength = imageArray.length;
+  //let bufferLength = imageArray.length;
   let coordinateJson = coordinateConverter(coordinates, mapping);
-
-  let jsondata = uiJsonConverter(menuJson, mapping);
-
   let response = [];
+  for (var i in menuid){
+    let bufferLength = imageArray.length;
+    let menureq = menuJson[menuid[i]];
+    globalid = menuid[i];
+    let jsondata = uiJsonConverter(menureq, mapping);
+
+  //let response = [];
   let names=[];
-let c=0;
+  let c=0;
   while (bufferLength > 0) {
     let result = await doMyWork(
       imageArray[bufferLength - 1],
@@ -634,7 +634,7 @@ let c=0;
     response.push(result["2"]);
 
     names.push({
-      name:'./data/tmp/screen1'+c+'.png',
+      name:'./data/tmp/screen1'+c+globalid+'.png',
       data:result["data1"]
     });
     names.push({
@@ -662,7 +662,7 @@ let c=0;
   }
   img2vid(names);
 
-
+  }
 
 
 // let res =   await compress({
@@ -692,7 +692,7 @@ let c=0;
 //   .run();
 
   return response[0];
- };
+};
 
  const img2vid = async(names)=>{
 let data=[];
@@ -702,7 +702,7 @@ let data=[];
   }
   console.log(data);
   videoshow(data, videoOptions)
-  .save('testvideo'+Date.now()+'.mp4')
+  .save('testvideo'+globalid+Date.now()+'.mp4')
   .on('start', function (command) {
     console.log('ffmpeg process started:', command)
   })
@@ -723,6 +723,6 @@ let data=[];
       
     });
   })
- }
+}
 module.exports = drawItemText;
 
