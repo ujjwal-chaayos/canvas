@@ -133,7 +133,7 @@ const uiJsonConverter = (menu, mapping) => {
       weight: {
         Title: "bold",
         Items: "normal",
-        Prices: "bold",
+        Prices: "Bold",
         New: "bold",
       },
     },

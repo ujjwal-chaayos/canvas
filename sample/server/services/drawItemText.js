@@ -98,6 +98,8 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         itemStyle.font.Items;
       screen.font = style;
       screen2.font = style;
+      console.log("hey",itemStyle.size.Items);
+      console.log("hello" , parseInt(itemStyle.size.Items)+5);
       let itemX = itemCoordinates.x + 10;
       let itemY = itemCoordinates.y;
       let RandFpointX = priceX;
@@ -108,7 +110,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         screen2.fillStyle = itemStyle.color.Items;
         let text = itemArray[k].value;
         let item_id = itemArray[k].item_id;
-        itemY = itemY + 56 + 5;
+        itemY = itemY + parseInt(itemStyle.size.Items) + 5;
         let points = {};
         points.x = itemX;
         points.y = itemY;
@@ -116,9 +118,9 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         if (itemArray[k].active === false) {
           let rectpoint = {};
           rectpoint.x = itemCoordinates.x - 10;
-          rectpoint.y = itemY - 56;
+          rectpoint.y = itemY - parseInt(itemStyle.size.Items);
           rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
-          rectpoint.h = 56 + 10;
+          rectpoint.h = parseInt(itemStyle.size.Items) + 10;
           roundedRect(screen, rectpoint, 20, "grey");
           roundedRect(screen2, rectpoint, 20, "grey");
 
@@ -132,9 +134,9 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         if (itemArray[k].new === true && itemArray[k].active) {
           let rectpoint = {};
           rectpoint.x = itemCoordinates.x - 10;
-          rectpoint.y = itemY - 56;
+          rectpoint.y = itemY - parseInt(itemStyle.size.Items);
           rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
-          rectpoint.h = 56 + 10;
+          rectpoint.h = parseInt(itemStyle.size.Items) + 10;
           newItemRect(screen, rectpoint, 30, "yellow", "orange");
           newItemRect(screen2, rectpoint, 30, "yellow", "orange");
 
@@ -157,7 +159,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
             let priceList = priceArray[j].value;
             if (priceList.length === 1) {
               let priceText = priceList[0].price.toString();
-              priceY = priceY + 56 + 5;
+              priceY = priceY + parseInt(itemStyle.size.Items) + 5;
               let pricePoints = {};
               pricePoints.x = priceX;
               pricePoints.y = priceY;
@@ -172,7 +174,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
               let priceText = priceList[0].price.toString();
 
               priceText = priceText + "|" + priceList[1].price.toString();
-              priceY = priceY + 56 + 5;
+              priceY = priceY + parseInt(itemStyle.size.Items) + 5;
               let pricePoints = {};
               pricePoints.x = priceX;
               pricePoints.y = priceY;
@@ -194,9 +196,9 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
           iconpoint.y =
             itemY - itemHeight-10;
           iconpoint.w =
-           Math.max(65, Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
+           Math.max(parseInt(itemStyle.size.Items), Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
           iconpoint.h =
-            Math.max(65,Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
+            Math.max(parseInt(itemStyle.size.Items),Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
             console.log("veg",iconpoint,screen.measureText(text).width);
           await loadImage(vegicon).then((image) => {
             screen.drawImage(
@@ -221,9 +223,9 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
           iconpoint.y =
             itemY - itemHeight-10;
           iconpoint.w =
-            Math.max(65,Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
+            Math.max(parseInt(itemStyle.size.Items),Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
           iconpoint.h =
-            Math.max(65,Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
+            Math.max(parseInt(itemStyle.size.Items),Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
             console.log("non-veg",iconpoint,screen.measureText(text).width);
           await loadImage(nonvegicon).then((image) => {
             screen.drawImage(
@@ -307,7 +309,7 @@ async function doMyTextPrint(
         }
       }
 
-      if(wrapValidation(itemCoordinates[i],itemArray,{height: 56,spacing: 5, })){
+      if(wrapValidation(itemCoordinates[i],itemArray,{height: parseInt(itemStyle.size.Items),spacing: 5, })){
         console.log("item ARrAy" , itemArray);
         console.log("i am in wrap");
         let halfway= Math.floor(itemArray.length / 2);
@@ -349,7 +351,7 @@ async function doMyTextPrint(
       // for (let k = 0; k < itemArray.length; k++) {
       //   let text = itemArray[k].value;
       //   let item_id = itemArray[k].item_id;
-      //   itemY = itemY + 56 + 5;
+      //   itemY = itemY + parseInt(itemStyle.size.Items) + 5;
       //   let points = {};
       //   points.x = itemX;
       //   points.y = itemY;
@@ -357,9 +359,9 @@ async function doMyTextPrint(
       //   if (itemArray[k].active === false) {
       //     let rectpoint = {};
       //     rectpoint.x = itemCoordinates[i].x - 10;
-      //     rectpoint.y = itemY - 56;
+      //     rectpoint.y = itemY - parseInt(itemStyle.size.Items);
       //     rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
-      //     rectpoint.h = 56 + 10;
+      //     rectpoint.h = parseInt(itemStyle.size.Items) + 10;
       //     roundedRect(screen, rectpoint, 20, "grey");
       //     roundedRect(screen2, rectpoint, 20, "grey");
 
@@ -373,9 +375,9 @@ async function doMyTextPrint(
       //   if (itemArray[k].new === true && itemArray[k].active) {
       //     let rectpoint = {};
       //     rectpoint.x = itemCoordinates[i].x - 10;
-      //     rectpoint.y = itemY - 56;
+      //     rectpoint.y = itemY - parseInt(itemStyle.size.Items);
       //     rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
-      //     rectpoint.h = 56 + 10;
+      //     rectpoint.h = parseInt(itemStyle.size.Items) + 10;
       //     newItemRect(screen, rectpoint, 30, "yellow", "orange");
       //     newItemRect(screen2, rectpoint, 30, "yellow", "orange");
 
@@ -396,7 +398,7 @@ async function doMyTextPrint(
       //       let priceList = priceArray[j].value;
       //       if (priceList.length === 1) {
       //         let priceText = priceList[0].price.toString();
-      //         priceY = priceY + 56 + 5;
+      //         priceY = priceY + parseInt(itemStyle.size.Items) + 5;
       //         let pricePoints = {};
       //         pricePoints.x = priceX;
       //         pricePoints.y = priceY;
@@ -411,7 +413,7 @@ async function doMyTextPrint(
       //         let priceText = priceList[0].price.toString();
 
       //         priceText = priceText + "|" + priceList[1].price.toString();
-      //         priceY = priceY + 56 + 5;
+      //         priceY = priceY + parseInt(itemStyle.size.Items) + 5;
       //         let pricePoints = {};
       //         pricePoints.x = priceX;
       //         pricePoints.y = priceY;
