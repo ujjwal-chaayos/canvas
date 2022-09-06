@@ -10,6 +10,8 @@
     "express-fileupload": "^1.4.0",
     "file-api": "^0.10.4",
     "gifencoder": "^2.0.1",
+    "gifsicle": "^5.2.1",
+    "imagemin-gifsicle": "^7.0.0",
     "jsdom": "^20.0.0",
     "mongodb": "^4.9.0",
     "mongoose": "^6.5.2",
@@ -18,7 +20,8 @@
     "nodemon": "^2.0.19",
     "opencv.js": "^1.2.1",
     "path": "^0.12.7",
-    "socket.io": "^4.5.1"
+    "socket.io": "^4.5.1",
+    "videoshow": "^0.1.12"
   },
   "description": "server of clippy",
   "main": "app.js",
@@ -27,5 +30,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/ffprobe": "^1.4.1",
+    "compress-images": "^2.0.5",
+    "fluent-ffmpeg": "^2.1.2"
+  }
 }

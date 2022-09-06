@@ -26,19 +26,43 @@ const widthValidation = (block, txt, font) => {
   }
   return txtWidth < block.w ? true : false;
 };
+// const wrapValidation = (block, txt, font) => {
+//   var txtHeight;
+//   var txtWidth;
+//   let screen = new createCanvas(3840, 2160).getContext("2d");
+//   if (Array.isArray(txt)) {
+//     txtHeight = (font.height + font.spacing) * txt.length;
+//   }
+//   for (let i = 0; i < txt.length; i++) {
+//     txtWidth = Math.max(txtWidth, Math.floor(screen.measureText(txt[i]).width));
+//   }
+//   if (txtHeight / 2 < block.height && txtWidth * 2 < block.width * 0.2)
+//     return true;
+//   else return false;
+// };
+
+
 const wrapValidation = (block, txt, font) => {
-  var txtHeight;
-  var txtWidth;
+  var txtWidth = 0;
   let screen = new createCanvas(3840, 2160).getContext("2d");
-  if (Array.isArray(txt)) {
-    txtHeight = (font.height + font.spacing) * txt.length;
-  }
+  var blockWidth =  Math.ceil((block.w*100)/80) - 0.4*Math.ceil((block.w*100)/80);
+  var blockHeight = block.h;
+  var txtHeight = font.height + font.spacing;
+  var totatNumberitem = Math.floor(blockHeight/txtHeight);
+
   for (let i = 0; i < txt.length; i++) {
-    txtWidth = Math.max(txtWidth, Math.floor(screen.measureText(txt[i]).width));
+    txtWidth = Math.max(txtWidth, Math.floor(screen.measureText(txt[i].value).width));
   }
-  if (txtHeight / 2 < block.height && txtWidth * 2 < block.width * 0.2)
+
+  if((txt.length > totatNumberitem+1)  && ((txtWidth*2)<=blockWidth)){
     return true;
-  else return false;
+  }
+  else {
+    return false
+  };
+
+
+  
 };
 
 module.exports = { heightValidation, widthValidation, wrapValidation };
