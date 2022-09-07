@@ -23,7 +23,7 @@ const ChooseCafe = () => {
   let navigate = useNavigate();
 
   const choose = () => {
-    navigate(`/select-template/${screen}`);
+    navigate(`/pick/${screen}`);
   };
 
   const [cafe, setCafe] = useState([]);
@@ -77,7 +77,6 @@ const ChooseCafe = () => {
 
   //console.log(cafe)
   const selectAll = () => {
-    alert("All Cafes Selected...");
     let temp_cafe = [...cafe];
     let value = allSelect;
     temp_cafe.forEach(function(item, index) {
