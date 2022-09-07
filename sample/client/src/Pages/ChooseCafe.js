@@ -77,6 +77,7 @@ const ChooseCafe = () => {
 
   //console.log(cafe)
   const selectAll = () => {
+   
     let temp_cafe = [...cafe];
     let value = allSelect;
     temp_cafe.forEach(function(item, index) {
