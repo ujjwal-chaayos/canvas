@@ -8,6 +8,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
 const menu = require("./routes/menu");
+const auth = require('./routes/auth');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(
 );
 app.use(cors());
 app.use(menu);
+app.use(auth);
 
 function installDOM() {
   const dom = new JSDOM();
@@ -50,9 +52,7 @@ const connection = mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((error) => console.log(error));
 
-app.get("https://cafes.chaayos.com/oneIndiaBulls.jpg", (req, res) => {
-  console.log(res);
-});
+
 
 app.listen(8000, function () {
   installDOM();
