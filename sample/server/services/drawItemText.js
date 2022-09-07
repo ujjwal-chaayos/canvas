@@ -55,13 +55,22 @@ const ffprobe = require("@ffprobe-installer/ffprobe");
 
 const ffmpeg = require("fluent-ffmpeg")().setFfprobePath(ffprobe.path).setFfmpegPath(ffmpegInstaller.path);
 
-let menu=axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000").
-then(response =>{
-  console.log("hi");
-  console.log(response.data);
-}).catch(function(error) {
-  //console.log(error);
-})
+// let {menu}=axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000").
+// then(response =>{
+//   console.log("hi");
+//   console.log(response.data);
+// }).catch(function(error) {
+//   //console.log(error);
+// })
+// console.log("hello",menu);
+
+
+async function getMenu(url) {
+  const response = await axios.get(url)
+  return response.data
+}
+
+
 
 
 async  function drawRandF(priceX,priceY,priceW,itemStyle,screen,screen2){
@@ -626,6 +635,9 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
 const drawItemText = async (imageArray, mapping, coordinates) => {
   //let bufferLength = imageArray.length;
   let coordinateJson = coordinateConverter(coordinates, mapping);
+  let menu=await getMenu("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000");
+
+
   let response = [];
   for (var i in menuid){
     let bufferLength = imageArray.length;
@@ -723,8 +735,7 @@ let data=[];
   .on('start', function (command) {
     console.log('ffmpeg process started:', command)
   })
-  .on('error', function (err, stdout, stderr) {
-    console.error('Error:', err)
+  .on('error', function (err, stdout, stderr) {    console.error('Error:', err)
     console.error('ffmpeg stderr:', stderr)
   })
   .on('end', function (output) {
