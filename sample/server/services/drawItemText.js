@@ -632,8 +632,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   return { 1: buffer1, 2: buffer2, screen1: screen, screen2: screen2 ,data1:screen1canvas.toBuffer("image/png"),data2:screen2canvas.toBuffer("image/png")};
 }
 
-const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
-  console.log(cafeIds)
+const drawItemText = async (imageArray, mapping, coordinates) => {
   //let bufferLength = imageArray.length;
   let coordinateJson = coordinateConverter(coordinates, mapping);
   let menu=await getMenu("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000");
@@ -645,7 +644,6 @@ const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
     let menureq = menuJson[menuid[i]];
     globalid = menuid[i];
     let jsondata = uiJsonConverter(menureq, mapping);
-
   //let response = [];
   let names=[];
   let c=0;
