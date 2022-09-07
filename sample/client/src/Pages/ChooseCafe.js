@@ -5,6 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {
   Box,
   Select,
+  Button,
   OutlinedInput,
   InputLabel,
   MenuItem,
@@ -21,6 +22,9 @@ import {
 const ChooseCafe = () => {
 
   const [cafe, setCafe]=useState([]);
+  const [allSelect, setAllSelect] = useState(false);
+
+
 
   useEffect(()=>{
 
@@ -33,6 +37,9 @@ const ChooseCafe = () => {
     }
 
     function checkLive(cafe) {
+    
+      cafe['select']=false;
+      
       return cafe['live']===true;
     }
 
@@ -48,43 +55,70 @@ const ChooseCafe = () => {
     axios.post('http://dev.kettle.chaayos.com:9595/master-service/rest/v1/user-management/user/units', payload, customConfig)
     //axios.get('https://3fcf3b97-9107-4c99-a0ff-48a114bfe535.mock.pstmn.io/data')
   .then(function (response) {
-    console.log(response.data);
+    //console.log(response.data);
     let data= response.data;
     let cafes = data.filter(checkCafe);
     let active = cafes.filter(checkActive);
     let isLive = active.filter(checkLive);
-    console.log(isLive);
+    console.log("i am running again and again")
+   // console.log(isLive);
     setCafe(isLive);
    
   })
   .catch(function (error) {
     console.log(error);
   });
+
   },[]);
 
-  console.log(cafe)
+  //console.log(cafe)
+  const selectAll = () =>{
+    alert("All Cafes Selected...");
+    let temp_cafe=[...cafe];
+    let value=allSelect;
+    temp_cafe.forEach(function (item, index) {
+        item['select']=!value;
 
-
-  const selectCafe = (e,k) =>{
-     let temp_cafe=cafe;
-
+    });
+    setAllSelect(!allSelect);
+    setCafe(temp_cafe);
   }
 
+  const selectCafe = (e,k) =>{
+    console.log(k);
+    let temp_cafe=[...cafe];
+   console.log(temp_cafe)
+    let cafe_detail=temp_cafe.find((cafe)=>cafe['id']===k)
+    let cafe_detail_index=temp_cafe.findIndex((cafe)=>cafe['id']===k)
+    console.log(cafe_detail,cafe_detail_index);
+    cafe_detail['select']=!(cafe_detail['select']);
+    //console.log(cafe_detail);
+    temp_cafe[cafe_detail_index]=cafe_detail;
+    //console.log(temp_cafe)
+    setCafe(temp_cafe);
+  }
+  
 
 
   return (
     <Box position="fixed" width="100%" height="100%" sx={{backgroundColor: 'primary.light', overflow:"hidden",overflowY:"scroll"}} >
-        <Box width="100%" sx={{ justifyContent: "center", backgroundColor: 'primary.light'}} >
-          <Typography
+        <Box width="100%" sx={{ display: 'flex',justifyContent: "space-around", backgroundColor: 'primary.light'}} >
+        <Box><Button size="large" variant="contained" sx={{m:3}} onClick={(e)=>selectAll()}>Select All</Button></Box>
+          <Box sx={{ flexGrow: 1, }}> <Typography
             variant="h5"
             component="h3"
             fontWeight="bold"
             align="center"
-            sx={{ color: "#303030", p: 3 }}
+            sx={{ color: "#303030", p: 2,mx:9,my:2, backgroundColor:'primary.main',borderRadius: 1 }}
           >
             SELECT CAFES
-          </Typography>
+          </Typography></Box>
+          <Box><Button size="large" variant="contained" sx={{m:3}}>Procced</Button></Box>
+         
         </Box>
+         
+
+
         <Box
               sx={{
                 display: 'flex',
@@ -97,10 +131,12 @@ const ChooseCafe = () => {
                 borderRadius: 1,
               }}
             >
-
+             
             { cafe.length===0 ? ( <CircularProgress />) : (
             
             cafe.map((data,key) => (
+
+             
               <Typography
               variant="h6"
               component="h3"
@@ -108,10 +144,13 @@ const ChooseCafe = () => {
               align="center"
               sx={{ color: "#303030"}}
             >
-        <Box key={data['id']} sx={{p:2,m:1,backgroundColor: 'primary.light',cursor: "pointer",borderRadius: 1,
+              
+        <Box   style={{
+          backgroundColor: `${data['select']===true?'#E9B44C':'#E4D6A7'}` 
+        }} key={data['id']} sx={{p:2,m:1 ,cursor: "pointer",borderRadius: 1,border:1,
         '&:hover': {
           backgroundColor: 'primary.main',
-          color: 'white',
+          
           opacity: [0.9, 0.8, 0.7],
         }, }} onClick={(e)=>selectCafe(e,data['id'])}> {data['name']} ({data['region']})
      
