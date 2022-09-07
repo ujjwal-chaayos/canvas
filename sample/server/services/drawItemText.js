@@ -611,7 +611,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
 }
 
 const drawItemText = async (imageArray, mapping, coordinates, cafeIds) => {
-  console.log(cafeIds);
+ // console.log(cafeIds);
   let bufferLength = imageArray.length;
   let coordinateJson = coordinateConverter(coordinates, mapping);
 
