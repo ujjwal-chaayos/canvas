@@ -1,6 +1,8 @@
 const cv = require("./opencv.js");
 const path = require("path");
 const fs = require('fs');
+//import axios from 'axios';
+const axios = require('axios');
 
 const { compress } = require('compress-images/promise');
 const {
@@ -46,11 +48,29 @@ const vegicon = resolvedPath + "/vegIcon.svg";
 const nonvegicon = resolvedPath + "/nonVegIcon.svg";
 const newicon = resolvedPath + "/newIcon.svg";
 
-
+let globalid ;
 const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
 const ffprobe = require("@ffprobe-installer/ffprobe");
 
 const ffmpeg = require("fluent-ffmpeg")().setFfprobePath(ffprobe.path).setFfmpegPath(ffmpegInstaller.path);
+
+// let {menu}=axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000").
+// then(response =>{
+//   console.log("hi");
+//   console.log(response.data);
+// }).catch(function(error) {
+//   //console.log(error);
+// })
+// console.log("hello",menu);
+
+
+async function getMenu(url) {
+  const response = await axios.get(url)
+  return response.data
+}
+
+
+
 
 async  function drawRandF(priceX,priceY,priceW,itemStyle,screen,screen2){
   
@@ -87,9 +107,7 @@ async  function drawRandF(priceX,priceY,priceW,itemStyle,screen,screen2){
 
 }
 
-
-
-async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,priceArray,itemStyle,screen,screen2){
+async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,priceArray,itemStyle,limitItem,screen,screen2){
 
        let style =
         itemStyle.weight.Items +
@@ -99,17 +117,19 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         itemStyle.font.Items;
       screen.font = style;
       screen2.font = style;
+      console.log("hey",itemStyle.size.Items);
+      console.log("hello" , parseInt(itemStyle.size.Items)+5);
       let itemX = itemCoordinates.x + 10;
       let itemY = itemCoordinates.y;
       let RandFpointX = priceX;
       let RandFpointY = priceY;
 
-      for (let k = 0; k < itemArray.length; k++) {
+      for (let k = 0; k < itemArray.length && k < limitItem ; k++) {
         screen.fillStyle = itemStyle.color.Items;
         screen2.fillStyle = itemStyle.color.Items;
         let text = itemArray[k].value;
         let item_id = itemArray[k].item_id;
-        itemY = itemY + 56 + 5;
+        itemY = itemY + parseInt(itemStyle.size.Items) + 5;
         let points = {};
         points.x = itemX;
         points.y = itemY;
@@ -117,9 +137,9 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         if (itemArray[k].active === false) {
           let rectpoint = {};
           rectpoint.x = itemCoordinates.x - 10;
-          rectpoint.y = itemY - 56;
+          rectpoint.y = itemY - parseInt(itemStyle.size.Items);
           rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
-          rectpoint.h = 56 + 10;
+          rectpoint.h = parseInt(itemStyle.size.Items) + 10;
           roundedRect(screen, rectpoint, 20, "grey");
           roundedRect(screen2, rectpoint, 20, "grey");
 
@@ -133,9 +153,9 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         if (itemArray[k].new === true && itemArray[k].active) {
           let rectpoint = {};
           rectpoint.x = itemCoordinates.x - 10;
-          rectpoint.y = itemY - 56;
+          rectpoint.y = itemY - parseInt(itemStyle.size.Items);
           rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
-          rectpoint.h = 56 + 10;
+          rectpoint.h = parseInt(itemStyle.size.Items) + 10;
           newItemRect(screen, rectpoint, 30, "yellow", "orange");
           newItemRect(screen2, rectpoint, 30, "yellow", "orange");
 
@@ -158,7 +178,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
             let priceList = priceArray[j].value;
             if (priceList.length === 1) {
               let priceText = priceList[0].price.toString();
-              priceY = priceY + 56 + 5;
+              priceY = priceY + parseInt(itemStyle.size.Items) + 5;
               let pricePoints = {};
               pricePoints.x = priceX;
               pricePoints.y = priceY;
@@ -173,7 +193,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
               let priceText = priceList[0].price.toString();
 
               priceText = priceText + "|" + priceList[1].price.toString();
-              priceY = priceY + 56 + 5;
+              priceY = priceY + parseInt(itemStyle.size.Items) + 5;
               let pricePoints = {};
               pricePoints.x = priceX;
               pricePoints.y = priceY;
@@ -182,7 +202,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
 
               drawText(screen, priceText, pricePoints, style);
               drawText(screen2, priceText, pricePoints, style);
-              await drawRandF(RandFpointX,RandFpointY,priceW,itemStyle,screen,screen2);
+              await drawRandF(RandFpointX+5,RandFpointY,priceW,itemStyle,screen,screen2);
             }
             break;
           }
@@ -195,9 +215,9 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
           iconpoint.y =
             itemY - itemHeight-10;
           iconpoint.w =
-           Math.max(65, Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
+           Math.max(parseInt(itemStyle.size.Items), Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
           iconpoint.h =
-            Math.max(65,Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
+            Math.max(parseInt(itemStyle.size.Items),Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
             console.log("veg",iconpoint,screen.measureText(text).width);
           await loadImage(vegicon).then((image) => {
             screen.drawImage(
@@ -222,9 +242,9 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
           iconpoint.y =
             itemY - itemHeight-10;
           iconpoint.w =
-            Math.max(65,Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
+            Math.max(parseInt(itemStyle.size.Items),Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
           iconpoint.h =
-            Math.max(65,Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
+            Math.max(parseInt(itemStyle.size.Items),Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
             console.log("non-veg",iconpoint,screen.measureText(text).width);
           await loadImage(nonvegicon).then((image) => {
             screen.drawImage(
@@ -270,9 +290,6 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
 
 }
 
-
-
-
 async function doMyTextPrint(
   itemCoordinates,
   itemStyle,
@@ -311,12 +328,14 @@ async function doMyTextPrint(
         }
       }
 
-      if(wrapValidation(itemCoordinates[i],itemArray,{height: 56,spacing: 5, })){
+      if(wrapValidation(itemCoordinates[i],itemArray,{height: parseInt(itemStyle.size.Items),spacing: 5, },style)){
         console.log("item ARrAy" , itemArray);
         console.log("i am in wrap");
-        let halfway= Math.floor(itemArray.length / 2);
-        let itemFirst = itemArray.slice(0, halfway);
-        let itemSecond = itemArray.slice(halfway+1, itemArray.length);
+        var txtHeight =  parseInt(itemStyle.size.Items)+5;
+        let numberofItemWrap=Math.floor(itemCoordinates[i].h/txtHeight);
+        //let halfway= Math.floor(itemArray.length / 2);
+        let itemFirst = itemArray.slice(0, numberofItemWrap);
+        let itemSecond = itemArray.slice(numberofItemWrap+1, itemArray.length);
         console.log("first",itemFirst);
         console.log("second",itemSecond);
         let blockWidth = Math.ceil((itemCoordinates[i].w*100)/80);
@@ -329,8 +348,8 @@ async function doMyTextPrint(
         block1.h = itemCoordinates[i].h;
         price1x = block1.x+block1.w+5;
         price1y = priceY;
-        let price1w = block1.w*0.2;
-        await writeMyTxt(block1,price1x-25,price1y,price1w-25,itemFirst,id,priceArray,itemStyle,screen,screen2);
+        let price1w = (blockWidth/2)*0.2;
+        await writeMyTxt(block1,price1x-30,price1y,price1w,itemFirst,id,priceArray,itemStyle,numberofItemWrap,screen,screen2);
 
         let block2 = {};
         let price2x ;
@@ -342,18 +361,20 @@ async function doMyTextPrint(
         price2x = block2.x +  block2.w +5;
         price2y = priceY;
 
-        let price2w = block2.w*0.2;
-        await writeMyTxt(block2,price2x-25,price2y,price2w-25,itemSecond,id,priceArray,itemStyle,screen,screen2);
+        let price2w = (blockWidth/2)*0.2;
+        await writeMyTxt(block2,price2x-25,price2y,price2w,itemSecond,id,priceArray,itemStyle,numberofItemWrap,screen,screen2);
 
         continue;
       }
-      await writeMyTxt(itemCoordinates[i],priceX,priceY,priceW,itemArray,id,priceArray,itemStyle,screen,screen2);
+      var txtHeight =  parseInt(itemStyle.size.Items)+5;
+      let numberofItem =  Math.floor(itemCoordinates[i].h/txtHeight);
+      await writeMyTxt(itemCoordinates[i],priceX,priceY,priceW,itemArray,id,priceArray,itemStyle,numberofItem,screen,screen2);
 
       
       // for (let k = 0; k < itemArray.length; k++) {
       //   let text = itemArray[k].value;
       //   let item_id = itemArray[k].item_id;
-      //   itemY = itemY + 56 + 5;
+      //   itemY = itemY + parseInt(itemStyle.size.Items) + 5;
       //   let points = {};
       //   points.x = itemX;
       //   points.y = itemY;
@@ -361,9 +382,9 @@ async function doMyTextPrint(
       //   if (itemArray[k].active === false) {
       //     let rectpoint = {};
       //     rectpoint.x = itemCoordinates[i].x - 10;
-      //     rectpoint.y = itemY - 56;
+      //     rectpoint.y = itemY - parseInt(itemStyle.size.Items);
       //     rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
-      //     rectpoint.h = 56 + 10;
+      //     rectpoint.h = parseInt(itemStyle.size.Items) + 10;
       //     roundedRect(screen, rectpoint, 20, "grey");
       //     roundedRect(screen2, rectpoint, 20, "grey");
 
@@ -377,9 +398,9 @@ async function doMyTextPrint(
       //   if (itemArray[k].new === true && itemArray[k].active) {
       //     let rectpoint = {};
       //     rectpoint.x = itemCoordinates[i].x - 10;
-      //     rectpoint.y = itemY - 56;
+      //     rectpoint.y = itemY - parseInt(itemStyle.size.Items);
       //     rectpoint.w = Math.ceil(itemCoordinates[i].w * (10 / 8)) + 10;
-      //     rectpoint.h = 56 + 10;
+      //     rectpoint.h = parseInt(itemStyle.size.Items) + 10;
       //     newItemRect(screen, rectpoint, 30, "yellow", "orange");
       //     newItemRect(screen2, rectpoint, 30, "yellow", "orange");
 
@@ -400,7 +421,7 @@ async function doMyTextPrint(
       //       let priceList = priceArray[j].value;
       //       if (priceList.length === 1) {
       //         let priceText = priceList[0].price.toString();
-      //         priceY = priceY + 56 + 5;
+      //         priceY = priceY + parseInt(itemStyle.size.Items) + 5;
       //         let pricePoints = {};
       //         pricePoints.x = priceX;
       //         pricePoints.y = priceY;
@@ -415,7 +436,7 @@ async function doMyTextPrint(
       //         let priceText = priceList[0].price.toString();
 
       //         priceText = priceText + "|" + priceList[1].price.toString();
-      //         priceY = priceY + 56 + 5;
+      //         priceY = priceY + parseInt(itemStyle.size.Items) + 5;
       //         let pricePoints = {};
       //         pricePoints.x = priceX;
       //         pricePoints.y = priceY;
@@ -610,16 +631,21 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   return { 1: buffer1, 2: buffer2, screen1: screen, screen2: screen2 ,data1:screen1canvas.toBuffer("image/png"),data2:screen2canvas.toBuffer("image/png")};
 }
 
-const drawItemText = async (imageArray, mapping, coordinates, cafeIds) => {
- // console.log(cafeIds);
-  let bufferLength = imageArray.length;
+const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
+  //let bufferLength = imageArray.length;
   let coordinateJson = coordinateConverter(coordinates, mapping);
-
-  let jsondata = uiJsonConverter(menuJson, mapping);
+  let menu=await getMenu("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000");
 
   let response = [];
+  for (var i in cafeIds){
+    let bufferLength = imageArray.length;
+    let menureq = menuJson[cafeIds[i].toString()];
+    globalid = cafeIds[i].toString();
+    let jsondata = uiJsonConverter(menureq, mapping);
+
+  //let response = [];
   let names=[];
-let c=0;
+  let c=0;
   while (bufferLength > 0) {
     let result = await doMyWork(
       imageArray[bufferLength - 1],
@@ -635,7 +661,7 @@ let c=0;
     response.push(result["2"]);
 
     names.push({
-      name:'./data/tmp/screen1'+c+'.png',
+      name:'./data/tmp/screen1'+c+globalid+'.png',
       data:result["data1"]
     });
     names.push({
@@ -663,7 +689,7 @@ let c=0;
   }
   img2vid(names);
 
-
+  }
 
 
 // let res =   await compress({
@@ -693,7 +719,7 @@ let c=0;
 //   .run();
 
   return response[0];
- };
+};
 
  const img2vid = async(names)=>{
 let data=[];
@@ -703,12 +729,11 @@ let data=[];
   }
   console.log(data);
   videoshow(data, videoOptions)
-  .save('testvideo'+Date.now()+'.mp4')
+  .save('testvideo'+globalid+Date.now()+'.mp4')
   .on('start', function (command) {
     console.log('ffmpeg process started:', command)
   })
-  .on('error', function (err, stdout, stderr) {
-    console.error('Error:', err)
+  .on('error', function (err, stdout, stderr) {    console.error('Error:', err)
     console.error('ffmpeg stderr:', stderr)
   })
   .on('end', function (output) {
@@ -724,6 +749,5 @@ let data=[];
       
     });
   })
- }
+}
 module.exports = drawItemText;
-

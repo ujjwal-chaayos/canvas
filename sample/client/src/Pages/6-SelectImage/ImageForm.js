@@ -23,7 +23,7 @@ const ImageForm = ({ blockIds, proceed }) => {
   useEffect(() => {
     const coordinate = JSON.parse(localStorage.getItem("coordinates"));
     const background = JSON.parse(localStorage.getItem("orignalImg"));
-    const cafeIds = JSON.parse(localStorage.getItem("cafe_ids"));
+  
 
     if (coordinate && background) {
       setCoordinate(coordinate);
