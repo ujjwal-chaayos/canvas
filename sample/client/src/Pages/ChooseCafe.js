@@ -1,6 +1,7 @@
-import React,{useEffect} from "react";
+import React,{useEffect,useState} from "react";
 import { useTheme } from "@mui/material/styles";
 import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
 import {
   Box,
   Select,
@@ -13,28 +14,10 @@ import {
 } from "@mui/material";
 
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 
 const ChooseCafe = () => {
+
+  const [cafe, setCafe]=useState([]);
 
   useEffect(()=>{
 
@@ -60,6 +43,7 @@ const ChooseCafe = () => {
       }
   };
     axios.post('http://dev.kettle.chaayos.com:9595/master-service/rest/v1/user-management/user/units', payload, customConfig)
+    //axios.get('https://3fcf3b97-9107-4c99-a0ff-48a114bfe535.mock.pstmn.io/data')
   .then(function (response) {
     console.log(response.data);
     let data= response.data;
@@ -67,98 +51,80 @@ const ChooseCafe = () => {
     let active = cafes.filter(checkActive);
     let isLive = active.filter(checkLive);
     console.log(isLive);
-   
+    setCafe(isLive);   
   })
   .catch(function (error) {
     console.log(error);
   });
   },[]);
 
-  let names=["vjcgfjnbc","jhgcghxgf"];
+  console.log(cafe)
 
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
+  const selectCafe = (e,k) =>{
+     let temp_cafe=cafe;
+
+  }
+
 
   return (
-    <div>
-      <Box
-        position="fixed"
-        top={0}
-        left={0}
-        height="100%"
-        width="100%"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          backgroundColor: "primary.light",
-        }}
-      >
-        <Typography
-          variant="h5"
-          component="h3"
-          fontWeight="bold"
-          align="center"
-          sx={{ color: "#303030", p: 3 }}
-        >
-          SELECT CAFES
-        </Typography>
-        <FormControl sx={{ m: 1, width: 300 }}>
-          <InputLabel id="demo-multiple-chip-label">Select</InputLabel>
-          <Select
-            labelId="demo-multiple-chip-label"
-            id="demo-multiple-chip"
-            multiple
-            value={personName}
-            onChange={handleChange}
-            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value) => (
-                  <Chip key={value} label={value} />
-                ))}
-              </Box>
-            )}
-            MenuProps={MenuProps}
+    <Box position="fixed" width="100%" height="100%" sx={{backgroundColor: 'primary.light', overflow:"hidden",overflowY:"scroll"}} >
+        <Box width="100%" sx={{ justifyContent: "center", backgroundColor: 'primary.light'}} >
+          <Typography
+            variant="h5"
+            component="h3"
+            fontWeight="bold"
+            align="center"
+            sx={{ color: "#303030", p: 3 }}
           >
-            {names.map((name) => (
-              <MenuItem
-                key={name}
-                value={name}
-                style={getStyles(name, personName, theme)}
-              >
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-     
-        {/* <Box
-        position="fixed"
-        top=
-        height="50%"
-        width="50%"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          backgroundColor: "primary.dark",
-          overflow: "hidden",
-          overflowY: "scroll",
-        }}
-      >
+            SELECT CAFES
+          </Typography>
+        </Box>
+        <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap', 
+                justifyContent: 'space-evenly',   
+                p: 1,
+                m: 1,
+                bgcolor: 'background.main',     
+                height: 200,
+                borderRadius: 1,
+              }}
+            >
 
-      </Box> */}
+            { cafe.length===0 ? ( <CircularProgress />) : (
+            
+            cafe.map((data,key) => (
+              <Typography
+              variant="h6"
+              component="h3"
+              
+              align="center"
+              sx={{ color: "#303030"}}
+            >
+        <Box key={data['id']} sx={{p:2,m:1,backgroundColor: 'primary.light',cursor: "pointer",borderRadius: 1,
+        '&:hover': {
+          backgroundColor: 'primary.main',
+          color: 'white',
+          opacity: [0.9, 0.8, 0.7],
+        }, }} onClick={(e)=>selectCafe(e,data['id'])}> {data['name']} ({data['region']})
+     
       </Box>
-    </div>
+      </Typography>
+        
+      )))
+    }
+        </Box>
+    </Box>
+      
+  
+
+        
+          
+       
+      
+  
   );
 };
 

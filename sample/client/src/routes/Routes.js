@@ -23,9 +23,10 @@ const AllRoutes = () => {
   );
 
   useEffect(()=>{
+    console.log(localStorage.getItem("userId"))
     setAuthenticated(localStorage.getItem("userId"));
   },[]);
-
+  console.log("i am called")
   return (
     <Routes>
       <Route path="/" element={  <Home />  } />
