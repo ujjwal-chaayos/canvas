@@ -9,7 +9,7 @@ const Screen = () => {
   const navigate = useNavigate();
 
   const getScreenId = (id) => {
-    navigate(`/pick/${id}`);
+    navigate(`/chooseCafe/${id}`);
   };
   return (
     <div>

@@ -86,6 +86,7 @@ const ItemForm = ({ blockIds, proceed }) => {
 
     formData.append("dummy_data", JSON.stringify([...titles]));
     formData.append("coordinates", localStorage.getItem("coordinates"));
+    formData.append("cafeIds",  localStorage.getItem("cafe_ids"));
     let response = await axios
       .post("http://localhost:8000/setItemMapping", formData, {
         headers: {
