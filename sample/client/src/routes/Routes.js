@@ -37,6 +37,11 @@ const AllRoutes = () => {
         <Route path="*" element={<Navigate to="/" replace />} />
       )}
       {authenticated === "Pass" ? (
+        <Route path="/chooseCafe/:screen" element={<ChooseCafe />} />
+      ) : (
+        <Route path="*" element={<Navigate to="/" replace />} />
+      )}
+      {authenticated === "Pass" ? (
         <Route path="/pick/:screen" element={<GenOrPick />} />
       ) : (
         <Route path="*" element={<Navigate to="/" replace />} />
