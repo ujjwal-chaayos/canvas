@@ -610,7 +610,8 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   return { 1: buffer1, 2: buffer2, screen1: screen, screen2: screen2 ,data1:screen1canvas.toBuffer("image/png"),data2:screen2canvas.toBuffer("image/png")};
 }
 
-const drawItemText = async (imageArray, mapping, coordinates) => {
+const drawItemText = async (imageArray, mapping, coordinates, cafeIds) => {
+  console.log(cafeIds);
   let bufferLength = imageArray.length;
   let coordinateJson = coordinateConverter(coordinates, mapping);
 
