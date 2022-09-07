@@ -48,7 +48,6 @@ const vegicon = resolvedPath + "/vegIcon.svg";
 const nonvegicon = resolvedPath + "/nonVegIcon.svg";
 const newicon = resolvedPath + "/newIcon.svg";
 
-const menuid = ["1","2"];
 let globalid ;
 const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
 const ffprobe = require("@ffprobe-installer/ffprobe");
@@ -637,12 +636,11 @@ const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
   let coordinateJson = coordinateConverter(coordinates, mapping);
   let menu=await getMenu("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000");
 
-
   let response = [];
-  for (var i in menuid){
+  for (var i in cafeIds){
     let bufferLength = imageArray.length;
-    let menureq = menuJson[menuid[i]];
-    globalid = menuid[i];
+    let menureq = menuJson[cafeIds[i].toString()];
+    globalid = cafeIds[i].toString();
     let jsondata = uiJsonConverter(menureq, mapping);
 
   //let response = [];
