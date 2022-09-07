@@ -644,7 +644,6 @@ const drawItemText = async (imageArray, mapping, coordinates) => {
     let menureq = menuJson[menuid[i]];
     globalid = menuid[i];
     let jsondata = uiJsonConverter(menureq, mapping);
-
   //let response = [];
   let names=[];
   let c=0;
