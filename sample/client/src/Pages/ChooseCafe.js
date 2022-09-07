@@ -191,7 +191,7 @@ const ChooseCafe = () => {
         ) : (
           cafe.map((data, key) => (
             <Typography
-              variant="h6"
+              variant="body1"
               component="h3"
               align="center"
               sx={{ color: "#303030" }}
