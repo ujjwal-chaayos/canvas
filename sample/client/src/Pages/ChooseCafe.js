@@ -24,38 +24,6 @@ const MenuProps = {
   },
 };
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-  "Oliver Hanse",
-  "Van Henr",
-  "April Tuckr",
-  "Ralph Hubbrd",
-  "Omar Alexnder",
-  "Carlos Abbtt",
-  "MiriaWagner",
-  "Bradley Wilkrson",
-  "Virginia Anrews",
-  "Kelly Snyer",
-  "Over Hansen",
-  "n Henry",
-  "Ail Tucker",
-  "lph Hubbard",
-  "Omar Alander",
-  "rlos Abbott",
-  "Mim Wagner",
-  "Bradley Werson",
-  "Virginia Aews",
-  "Kly Snyder",
-];
 
 function getStyles(name, personName, theme) {
   return {
@@ -65,8 +33,6 @@ function getStyles(name, personName, theme) {
         : theme.typography.fontWeightMedium,
   };
 }
-
-
 
 const ChooseCafe = () => {
 
@@ -101,13 +67,14 @@ const ChooseCafe = () => {
     let active = cafes.filter(checkActive);
     let isLive = active.filter(checkLive);
     console.log(isLive);
-  
    
   })
   .catch(function (error) {
     console.log(error);
   });
   },[]);
+
+  let names=["vjcgfjnbc","jhgcghxgf"];
 
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
@@ -174,6 +141,7 @@ const ChooseCafe = () => {
             ))}
           </Select>
         </FormControl>
+     
         {/* <Box
         position="fixed"
         top=
