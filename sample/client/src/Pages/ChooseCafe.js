@@ -23,7 +23,7 @@ const ChooseCafe = () => {
   let navigate = useNavigate();
 
   const choose = () => {
-    navigate(`/select-template/${screen}`);
+    navigate(`/pick/${screen}`);
   };
 
   const [cafe, setCafe] = useState([]);
@@ -77,7 +77,7 @@ const ChooseCafe = () => {
 
   //console.log(cafe)
   const selectAll = () => {
-    alert("All Cafes Selected...");
+   
     let temp_cafe = [...cafe];
     let value = allSelect;
     temp_cafe.forEach(function(item, index) {
@@ -191,7 +191,7 @@ const ChooseCafe = () => {
         ) : (
           cafe.map((data, key) => (
             <Typography
-              variant="h6"
+              variant="body1"
               component="h3"
               align="center"
               sx={{ color: "#303030" }}
