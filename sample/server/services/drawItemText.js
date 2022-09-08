@@ -76,7 +76,7 @@ async  function drawRandF(priceX,priceY,priceW,itemStyle,screen,screen2){
   
   let size = parseInt(itemStyle.size.Items)/1.5;
   let style =
-        "bold" +
+        "900" +
         " " +
         size.toString()+"px"+
         " " +
