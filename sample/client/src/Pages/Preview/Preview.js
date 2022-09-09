@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import { Button, Typography } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import axios from 'axios';
 
 const Preview = ({ type, manage }) => {
   function downloadBlob(blob, name) {
@@ -28,9 +29,20 @@ const Preview = ({ type, manage }) => {
   }
   // Usage
 
-  const proceed = () => {
+  const proceed = async () => {
     if (type === "image") {
       console.log("image-n", type);
+      let cafes=JSON.parse(localStorage.getItem("cafe_ids"));
+      console.log(cafes);
+      let response = await axios.post(
+        "http://localhost:8000/getUnitMenu",
+        cafes,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       manage("image-n");
     }
     if (type === "menu") {
