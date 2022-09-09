@@ -107,7 +107,9 @@ const uiJsonConverter = (menu, mapping) => {
 
           });
           let values = [];
+          
           for (let h = 0; h < productPrices[id].prices.length; h++) {
+            console.log(products[id].name);
             let obj = productPrices[id].prices[h];
             values.push({
               id: obj.id,

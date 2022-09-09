@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require('fs');
 //import axios from 'axios';
 const axios = require('axios');
-
+const tempMenu = require("../data/Menus/menu.json");
 const { compress } = require('compress-images/promise');
 const {
   drawText,
@@ -17,7 +17,6 @@ const {
   newItemRect,
   drawLine,reSize
 } = require("./CVServices");
-
 const {
   heightValidation,
   widthValidation,
@@ -26,7 +25,6 @@ const {
 
 const { uiJsonConverter } = require("./JSONConverter");
 const { coordinateConverter } = require("./JSONConverter");
-const menuJson = require("../data/Menus/menu.json");
 const { createCanvas, Image, loadImage } = require("canvas");
 const videoshow = require('videoshow')
 const videoOptions = {
@@ -675,9 +673,19 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
 const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
   //let bufferLength = imageArray.length;
   let coordinateJson = coordinateConverter(coordinates, mapping);
-  console.log("rawItemText = async (imageArray, mapping, coordin",cafeIds);
-  let menu=await getMenu("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000");
+  var resolvedPath = path
+  .join(__dirname, "../../server/data/Menus/tempMenu.txt")
+  .replace(/\\/g, "/");
 
+  let menuJson;
+  try {
+    const data = fs.readFileSync(resolvedPath, 'utf8');
+    console.log(data);
+    menuJson=data;
+  } catch (err) {
+    console.error(err);
+  }
+  menuJson = JSON.parse(menuJson);
   let response = [];
   for (var i in cafeIds){
     let bufferLength = imageArray.length;

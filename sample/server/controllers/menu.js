@@ -59,7 +59,7 @@ exports.setItemMapping = async (req, res) => {
   let mydata = {};
   mydata.value = response;
   console.log(mydata);
-  res.send(mydata);
+ res.send(mydata);
 };
 exports.setAllItemMapping = async (req, res) => {
 
