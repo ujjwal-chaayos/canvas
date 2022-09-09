@@ -18,13 +18,13 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const ChooseCafe = () => {
 
-  let { screen } = useParams();
-
-  let navigate = useNavigate();
-
-  const choose = () => {
-    navigate(`/pick/${screen}`);
-  };
+  
+    let navigate = useNavigate();
+    let { screenId, tempId } = useParams();
+  
+    const choose = () => {
+      navigate(`/upload-template/${screenId}/${tempId}`);
+    };
 
   const [cafe, setCafe] = useState([]);
   const [allSelect, setAllSelect] = useState(false);
@@ -173,7 +173,7 @@ const ChooseCafe = () => {
           </Button>
         </Box>
       </Box>
-
+      
       <Box
         sx={{
           display: "flex",
@@ -191,7 +191,7 @@ const ChooseCafe = () => {
         ) : (
           cafe.map((data, key) => (
             <Typography
-              variant="h6"
+              variant="body1"
               component="h3"
               align="center"
               sx={{ color: "#303030" }}
@@ -204,8 +204,8 @@ const ChooseCafe = () => {
                 }}
                 key={data["id"]}
                 sx={{
-                  p: 2,
-                  m: 1,
+                  p: 1.5,
+                  m: 0.5,
                   cursor: "pointer",
                   borderRadius: 1,
                   border: 1,

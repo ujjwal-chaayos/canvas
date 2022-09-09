@@ -37,7 +37,7 @@ const AllRoutes = () => {
         <Route path="*" element={<Navigate to="/" replace />} />
       )}
       {authenticated === "Pass" ? (
-        <Route path="/chooseCafe/:screen" element={<ChooseCafe />} />
+        <Route path="/chooseCafe/:screenId/:tempId" element={<ChooseCafe />} />
       ) : (
         <Route path="*" element={<Navigate to="/" replace />} />
       )}
