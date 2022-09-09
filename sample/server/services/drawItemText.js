@@ -76,7 +76,7 @@ async  function drawRandF(priceX,priceY,priceW,itemStyle,screen,screen2){
   
   let size = parseInt(itemStyle.size.Items)/1.5;
   let style =
-        "bold" +
+        "900" +
         " " +
         size.toString()+"px"+
         " " +
@@ -284,6 +284,48 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
             );
           });
         }
+        else if (itemArray[k].trendingNow === true) {
+          let iconpoint = {};
+          iconpoint.x =
+            itemX + itemWidth + 120;
+          iconpoint.y =
+            itemY -
+           itemHeight -
+            70;
+          iconpoint.w = 180;
+          iconpoint.h = 180;
+          console.log("new",iconpoint);
+          await loadImage(newicon).then((image) => {
+            screen.drawImage(
+              image,
+              iconpoint.x,
+              iconpoint.y,
+              iconpoint.w,
+              iconpoint.h
+            );
+          });
+        }
+        else if (itemArray[k].chaayosSpecial === true) {
+          let iconpoint = {};
+          iconpoint.x =
+            itemX + itemWidth + 120;
+          iconpoint.y =
+            itemY -
+           itemHeight -
+            70;
+          iconpoint.w = 180;
+          iconpoint.h = 180;
+          console.log("new",iconpoint);
+          await loadImage(newicon).then((image) => {
+            screen.drawImage(
+              image,
+              iconpoint.x,
+              iconpoint.y,
+              iconpoint.w,
+              iconpoint.h
+            );
+          });
+        }
       }
 
 
@@ -308,7 +350,6 @@ async function doMyTextPrint(
         itemStyle.font.Items;
       screen.font = style;
       screen2.font = style;
-
       let itemX = itemCoordinates[i].x + 10;
       let itemY = itemCoordinates[i].y;
       let id = itemCoordinates[i].parent_block_id;
@@ -634,6 +675,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
 const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
   //let bufferLength = imageArray.length;
   let coordinateJson = coordinateConverter(coordinates, mapping);
+  console.log("rawItemText = async (imageArray, mapping, coordin",cafeIds);
   let menu=await getMenu("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000");
 
   let response = [];

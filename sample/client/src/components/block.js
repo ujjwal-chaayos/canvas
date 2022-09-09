@@ -16,14 +16,16 @@ const Block = () => {
   const [ids, setIds] = useState(all_block_id);
   const [show, setShow] = useState('image');   //"image","item","preview"
   const [type, setType] = useState('image');
+  const [data, setData] = useState([]);
   const manageBlockId = (left) => {
     console.log(left);
     setIds(left);
     setShow('preview');
   };
-  const manageItemId = (left) => {
-    console.log(left);
+  const manageItemId = (left,formData) => {
+    console.log(left,formData);
     setIds(left);
+    setData(formData);
     setType('menu');
     setShow('preview');
   };
@@ -45,7 +47,7 @@ const Block = () => {
     switch(show) {
       case "image":   return <ImageForm blockIds={ids} proceed={manageBlockId} />;
       case "item":   return <ItemForm blockIds={ids} proceed={manageItemId} />;
-      case "preview": return <Preview type={type} manage={manageImagePreview}/>;
+      case "preview": return <Preview type={type} manage={manageImagePreview} allData={data} />;
       case "save": return <FinalPage />;
    
       default:      return <h1>No project match</h1>
