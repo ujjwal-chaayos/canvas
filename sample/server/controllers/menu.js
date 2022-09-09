@@ -63,7 +63,7 @@ exports.setItemMapping = async (req, res) => {
 exports.getUnitMenu = async (req,res) => {
   //console.log(req.body);
   let requestLength=req.body.length;
-  let cafeMenuArr=[];
+  
   let tempData = {};
   for(let i=0;i<requestLength;i++){
     let response = await axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/"+req.body[i]);
@@ -72,9 +72,9 @@ exports.getUnitMenu = async (req,res) => {
     console.log(key);
     tempData[key] = response.data;
   }
-  cafeMenuArr.push(tempData);
+
   let filepath=__dirname+'../../data/Menus/tempMenu.txt';
-  let myData= await JSON.stringify(cafeMenuArr);
+  let myData= await JSON.stringify(tempData);
   fs.writeFile(filepath, myData, function (err) {
     if (err) return console.log(err);
     console.log('Hello World > helloworld.txt');
