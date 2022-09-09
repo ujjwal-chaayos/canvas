@@ -46,6 +46,32 @@ exports.setItemMapping = async (req, res) => {
       images.push(req.files[file].data);
     }
   }
+  let data=JSON.parse(req.body.cafeIds)
+  let myId=[];
+  myId.push(data[0])
+  let response = await drawItemText(
+    images,
+    JSON.parse(req.body.dummy_data),
+    JSON.parse(req.body.coordinates),
+    myId
+
+  );
+  let mydata = {};
+  mydata.value = response;
+  console.log(mydata);
+  res.send(mydata);
+};
+exports.setAllItemMapping = async (req, res) => {
+
+  console.log("setallmapping called");
+  let images = [];
+  for (var file in req.files) {
+    if (file === "background") {
+      continue;
+    } else {
+      images.push(req.files[file].data);
+    }
+  }
 
   let response = await drawItemText(
     images,
@@ -76,17 +102,13 @@ exports.getUnitMenu = async (req,res) => {
   let filepath=__dirname+'../../data/Menus/tempMenu.txt';
   let myData= await JSON.stringify(tempData);
   fs.writeFile(filepath, myData, function (err) {
-    if (err) return console.log(err);
+    if (err) {
+      res.send("error");
+      return console.log(err);
+    }
     console.log('Hello World > helloworld.txt');
+     res.send("success");
   });
-  //console.log(JSON.stringify(cafeMenuArr)); 
-//await fs.writeFileSync('./tmMenu/temp.txt', JSON.stringify(cafeMenuArr))
-//   console.log(typeof(JSON.stringify(cafeMenuArr)))
-// fs.writeFileSync("/tmpMenu/file.json", JSON.stringify(cafeMenuArr), function(err) {
-//   if(err) {
-//       return console.log("err");
-//   }
-//   console.log("The file was saved!");
-// }); 
-  //res.send("success");
+  
+ 
 }
