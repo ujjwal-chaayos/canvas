@@ -11,7 +11,7 @@ const ChooseTemplate = () => {
   let { screen } = useParams();
 
   const handleTempId = (id) => {
-    navigate(`/upload-template/${screen}/${id}`);
+    navigate(`/chooseCafe/${screen}/${id}`);
   };
 
   return (
