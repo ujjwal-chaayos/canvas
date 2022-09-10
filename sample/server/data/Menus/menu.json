@@ -4722,7 +4722,7 @@
             "token": "DAY_SLOT_LUNCH"
         },
         "menu": "Lunch - Chaayos App All regions",
-        "sub-category": [
+        "category": [
             {
                 "id": 1444,
                 "name": "Images",
