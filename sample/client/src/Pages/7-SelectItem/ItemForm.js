@@ -135,7 +135,7 @@ const ItemForm = ({ blockIds, proceed }) => {
     localStorage.setItem("finalMenu", JSON.stringify(listImages));
 
     proceed(blockIds,formData);
-  };
+   };
 
   return (
     <div>

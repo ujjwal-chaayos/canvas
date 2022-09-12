@@ -29,7 +29,7 @@ const Final = () => {
         align="center"
         sx={{ color: "#303030", p: 30 }}
       >
-        YHEA! YOUR MENU HAS BEEN DOWNLOADED...
+       YOUR MENU HAS BEEN DOWNLOADED...!!!
       </Typography>
       <Button
         variant="contained"

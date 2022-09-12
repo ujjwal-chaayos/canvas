@@ -716,23 +716,23 @@ const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
       data:result["data1"]
     });
     names.push({
-      name:'./data/tmp/screen2'+c+'.png',
+      name:'./data/tmp/screen2'+c+globalid+'.png',
       data:result["data2"]
     });
     names.push({
-      name:'./data/tmp/screen11'+c+'.png',
+      name:'./data/tmp/screen11'+c+globalid+'.png',
       data:result["data1"]
     });
     names.push({
-      name:'./data/tmp/screen21'+c+'.png',
+      name:'./data/tmp/screen21'+c+globalid+'.png',
       data:result["data2"]
     });
     names.push({
-      name:'./data/tmp/screen12'+c+'.png',
+      name:'./data/tmp/screen12'+c+globalid+'.png',
       data:result["data1"]
     });
     names.push({
-      name:'./data/tmp/screen22'+c+'.png',
+      name:'./data/tmp/screen22'+c+globalid+'.png',
       data:result["data2"]
     });
     bufferLength--;
@@ -773,7 +773,7 @@ const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
 };
 
  const img2vid = async(names)=>{
-let data=[];
+  let data=[];
   for(var name in names){
     fs.writeFileSync(names[name].name,names[name].data);
     data.push(names[name].name);
@@ -798,7 +798,7 @@ let data=[];
           fs.unlinkSync(folder+file);
       }
       
-    });
-  })
+   });
+ })
 }
 module.exports = drawItemText;
