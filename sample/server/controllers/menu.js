@@ -90,7 +90,6 @@ exports.setAllItemMapping = async (req, res) => {
 exports.getUnitMenu = async (req,res) => {
   //console.log(req.body);
   let requestLength=req.body.length;
-  
   let tempData = {};
   for(let i=0;i<requestLength;i++){
     let response = await axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/"+req.body[i]);
