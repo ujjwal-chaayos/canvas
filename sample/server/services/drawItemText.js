@@ -133,16 +133,17 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         points.y = itemY;
 
         if (itemArray[k].active === false) {
-          let rectpoint = {};
-          rectpoint.x = itemCoordinates.x - 10;
-          rectpoint.y = itemY - parseInt(itemStyle.size.Items);
-          rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
-          rectpoint.h = parseInt(itemStyle.size.Items) + 10;
-          roundedRect(screen, rectpoint, 20, "grey");
-          roundedRect(screen2, rectpoint, 20, "grey");
+          continue;
+          // let rectpoint = {};
+          // rectpoint.x = itemCoordinates.x - 10;
+          // rectpoint.y = itemY - parseInt(itemStyle.size.Items);
+          // rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
+          // rectpoint.h = parseInt(itemStyle.size.Items) + 10;
+          // roundedRect(screen, rectpoint, 20, "grey");
+          // roundedRect(screen2, rectpoint, 20, "grey");
 
-          screen.fillStyle = "Black";
-          screen2.fillStyle = "Black";
+          // screen.fillStyle = "Black";
+          // screen2.fillStyle = "Black";
         } else {
           screen.fillStyle = itemStyle.color.Items;
           screen2.fillStyle = itemStyle.color.Items;
@@ -154,8 +155,8 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
           rectpoint.y = itemY - parseInt(itemStyle.size.Items);
           rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
           rectpoint.h = parseInt(itemStyle.size.Items) + 10;
-          newItemRect(screen, rectpoint, 30, "yellow", "orange");
-          newItemRect(screen2, rectpoint, 30, "yellow", "orange");
+          newItemRect(screen, rectpoint, 30, "#DDEDC6", "#CC5827");
+          newItemRect(screen2, rectpoint, 30, "#DDEDC6", "#CC5827");
 
           screen.fillStyle = itemStyle.color.New;
           screen2.fillStyle = itemStyle.color.New;
@@ -264,7 +265,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         if (itemArray[k].new === true) {
           let iconpoint = {};
           iconpoint.x =
-            itemX + itemWidth + 120;
+            itemX + itemWidth + 100;
           iconpoint.y =
             itemY -
            itemHeight -
@@ -285,7 +286,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         else if (itemArray[k].trendingNow === true) {
           let iconpoint = {};
           iconpoint.x =
-            itemX + itemWidth + 120;
+            itemX + itemWidth + 100;
           iconpoint.y =
             itemY -
            itemHeight -
@@ -306,7 +307,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         else if (itemArray[k].chaayosSpecial === true) {
           let iconpoint = {};
           iconpoint.x =
-            itemX + itemWidth + 120;
+            itemX + itemWidth + 100;
           iconpoint.y =
             itemY -
            itemHeight -
