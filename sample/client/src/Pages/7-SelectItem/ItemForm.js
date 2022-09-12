@@ -8,15 +8,33 @@ import axios from "axios";
 
 const ItemForm = ({ blockIds, proceed }) => {
   let all_block_id = blockIds;
-  let dummy_data = [
-    { title_id: "t1", value: "CHAAT PAKORE", block_id: "" },
-    { title_id: "t2", value: "SNACKS", block_id: "" },
-    { title_id: "t3", value: "SANDWICHES", block_id: "" },
-    { title_id: "t4", value: "DESSERTS", block_id: "" },
-    { title_id: "t5", value: "MEALS", block_id: "" },
-  ];
+  const [titles, setTitles] = useState([]);
 
-  const [titles, setTitles] = useState(dummy_data);
+  const getData = async () => {
+    let localData=JSON.parse(localStorage.getItem("cafe_ids"));
+    let id=localData[0];
+    const { data } = await axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/"+id);
+    console.log(data['menuSequence']['category']);
+    let category_data=[...data['menuSequence']['category']];
+
+    let new_data=[];
+    for(let i in category_data){
+      let item_data={"title_id":"","value":"","block_id":""}
+      item_data['title_id']='t'+(i+1);
+      item_data['value']=category_data[i]['name'];
+      if(category_data[i]['name'] !== 'Chaayos Select' && category_data[i]['name'] !== 'Trending Now' && category_data[i]['name'] !== 'Chaayos Special' && category_data[i]['name'] !== 'New'){
+        new_data.push(item_data)
+      }
+    }
+    
+    setTitles(new_data);
+  };
+
+  useEffect(()=>{
+    getData();
+  },[]);
+
+ 
   const [imgMapValue, setImgMapValue] = useState("");
   const [leftValues, setLeftValues] = useState(all_block_id);
 
