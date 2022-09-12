@@ -60,23 +60,20 @@ const uiJsonConverter = (menu, mapping) => {
   let tt = {};
   let cs = {};
   let np = {};
-  for(let i=0;i<subCategory.length; i++){
-    if(subCategory[i].name.toLowerCase() === "new"){
-      for(let j=0;j<subCategory[i].pids.length;j++){
-        np[subCategory[i].pids[j].toString()]="New";
+  for (let i = 0; i < subCategory.length; i++) {
+    if (subCategory[i].name.toLowerCase() === "new") {
+      for (let j = 0; j < subCategory[i].pids.length; j++) {
+        np[subCategory[i].pids[j].toString()] = "New";
+      }
+    } else if (subCategory[i].name.toLowerCase() === "trending now") {
+      for (let j = 0; j < subCategory[i].pids.length; j++) {
+        tt[subCategory[i].pids[j].toString()] = "TT";
+      }
+    } else if (subCategory[i].name.toLowerCase() === "chaayos special") {
+      for (let j = 0; j < subCategory[i].pids.length; j++) {
+        cs[subCategory[i].pids[j].toString()] = "SP";
       }
     }
-    else if(subCategory[i].name.toLowerCase() === "trending now"){
-      for(let j=0;j<subCategory[i].pids.length;j++){
-        tt[subCategory[i].pids[j].toString()]="TT";
-      }
-    }
-    else if(subCategory[i].name.toLowerCase() === "chaayos special"){
-      for(let j=0;j<subCategory[i].pids.length;j++){
-        cs[subCategory[i].pids[j].toString()]="SP";
-      }
-    }
-
   }
 
   for (let i = 0; i < mapping.length; i++) {
@@ -96,28 +93,31 @@ const uiJsonConverter = (menu, mapping) => {
         let value = [];
         for (let k = 0; k < pids.length; k++) {
           let id = pids[k].toString();
-          item.push({
-            item_id: id,
-            value: products[id].name,
-            icons: products[id].attr,
-            active: products[id].active,
-            new: id.toString() in np ? true : false,
-            trendingNow : id.toString() in tt ? true : false,
-            chaayosSpecial : id.toString() in cs ? true : false
+          if (id in productPrices) {
+            item.push({
+              item_id: id,
+              value: products[id].name,
+              icons: products[id].attr,
+              active: products[id].active,
+              new: id.toString() in np ? true : false,
+              trendingNow: id.toString() in tt ? true : false,
+              chaayosSpecial: id.toString() in cs ? true : false,
+            });
+            let values = [];
+            for (let h = 0; h < productPrices[id].prices.length; h++) {
+              console.log(id);
+              let obj = productPrices[id].prices[h];
+              values.push({
+                id: obj.id,
+                price: obj.price,
+              });
+            }
 
-          });
-          let values = [];
-          for (let h = 0; h < productPrices[id].prices.length; h++) {
-            let obj = productPrices[id].prices[h];
-            values.push({
-              id: obj.id,
-              price: obj.price,
+            value.push({
+              item_id: id,
+              value: values,
             });
           }
-          value.push({
-            item_id: id,
-            value: values,
-          });
         }
         items[id] = {
           block_id: id,
@@ -164,7 +164,6 @@ const uiJsonConverter = (menu, mapping) => {
       },
     },
   };
- 
 };
 
 const jsonConverter = (menu, refrenceTemplate, font) => {

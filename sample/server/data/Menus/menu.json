@@ -1,4 +1,4 @@
-[{"10000":{
+{"10000":{
     "id": {
         "id": 10000,
         "parentId": 1000,
@@ -4722,7 +4722,7 @@
             "token": "DAY_SLOT_LUNCH"
         },
         "menu": "Lunch - Chaayos App All regions",
-        "sub-category": [
+        "category": [
             {
                 "id": 1444,
                 "name": "Images",
@@ -51558,4 +51558,4 @@
         }
     }
 }
-}]
+}
