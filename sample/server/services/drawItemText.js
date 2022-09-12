@@ -716,23 +716,23 @@ const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
       data:result["data1"]
     });
     names.push({
-      name:'./data/tmp/screen2'+c+'.png',
+      name:'./data/tmp/screen2'+c+globalid+'.png',
       data:result["data2"]
     });
     names.push({
-      name:'./data/tmp/screen11'+c+'.png',
+      name:'./data/tmp/screen11'+c+globalid+'.png',
       data:result["data1"]
     });
     names.push({
-      name:'./data/tmp/screen21'+c+'.png',
+      name:'./data/tmp/screen21'+c+globalid+'.png',
       data:result["data2"]
     });
     names.push({
-      name:'./data/tmp/screen12'+c+'.png',
+      name:'./data/tmp/screen12'+c+globalid+'.png',
       data:result["data1"]
     });
     names.push({
-      name:'./data/tmp/screen22'+c+'.png',
+      name:'./data/tmp/screen22'+c+globalid+'.png',
       data:result["data2"]
     });
     bufferLength--;
