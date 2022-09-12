@@ -47,6 +47,7 @@ exports.setItemMapping = async (req, res) => {
     }
   }
   let data=JSON.parse(req.body.cafeIds)
+  console.log(JSON.parse(req.body.dummy_data));
   let myId=[];
   myId.push(data[0])
   let response = await drawItemText(
