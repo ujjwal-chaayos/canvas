@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require('fs');
 //import axios from 'axios';
 const axios = require('axios');
-
+const tempMenu = require("../data/Menus/menu.json");
 const { compress } = require('compress-images/promise');
 const {
   drawText,
@@ -17,7 +17,6 @@ const {
   newItemRect,
   drawLine,reSize
 } = require("./CVServices");
-
 const {
   heightValidation,
   widthValidation,
@@ -26,7 +25,6 @@ const {
 
 const { uiJsonConverter } = require("./JSONConverter");
 const { coordinateConverter } = require("./JSONConverter");
-const menuJson = require("../data/Menus/menu.json");
 const { createCanvas, Image, loadImage } = require("canvas");
 const videoshow = require('videoshow')
 const videoOptions = {
@@ -135,16 +133,17 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         points.y = itemY;
 
         if (itemArray[k].active === false) {
-          let rectpoint = {};
-          rectpoint.x = itemCoordinates.x - 10;
-          rectpoint.y = itemY - parseInt(itemStyle.size.Items);
-          rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
-          rectpoint.h = parseInt(itemStyle.size.Items) + 10;
-          roundedRect(screen, rectpoint, 20, "grey");
-          roundedRect(screen2, rectpoint, 20, "grey");
+          continue;
+          // let rectpoint = {};
+          // rectpoint.x = itemCoordinates.x - 10;
+          // rectpoint.y = itemY - parseInt(itemStyle.size.Items);
+          // rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
+          // rectpoint.h = parseInt(itemStyle.size.Items) + 10;
+          // roundedRect(screen, rectpoint, 20, "grey");
+          // roundedRect(screen2, rectpoint, 20, "grey");
 
-          screen.fillStyle = "Black";
-          screen2.fillStyle = "Black";
+          // screen.fillStyle = "Black";
+          // screen2.fillStyle = "Black";
         } else {
           screen.fillStyle = itemStyle.color.Items;
           screen2.fillStyle = itemStyle.color.Items;
@@ -156,8 +155,8 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
           rectpoint.y = itemY - parseInt(itemStyle.size.Items);
           rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
           rectpoint.h = parseInt(itemStyle.size.Items) + 10;
-          newItemRect(screen, rectpoint, 30, "yellow", "orange");
-          newItemRect(screen2, rectpoint, 30, "yellow", "orange");
+          newItemRect(screen, rectpoint, 30, "#DDEDC6", "#CC5827");
+          newItemRect(screen2, rectpoint, 30, "#DDEDC6", "#CC5827");
 
           screen.fillStyle = itemStyle.color.New;
           screen2.fillStyle = itemStyle.color.New;
@@ -266,7 +265,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         if (itemArray[k].new === true) {
           let iconpoint = {};
           iconpoint.x =
-            itemX + itemWidth + 120;
+            itemX + itemWidth + 100;
           iconpoint.y =
             itemY -
            itemHeight -
@@ -287,7 +286,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         else if (itemArray[k].trendingNow === true) {
           let iconpoint = {};
           iconpoint.x =
-            itemX + itemWidth + 120;
+            itemX + itemWidth + 100;
           iconpoint.y =
             itemY -
            itemHeight -
@@ -308,7 +307,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         else if (itemArray[k].chaayosSpecial === true) {
           let iconpoint = {};
           iconpoint.x =
-            itemX + itemWidth + 120;
+            itemX + itemWidth + 100;
           iconpoint.y =
             itemY -
            itemHeight -
@@ -675,9 +674,19 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
 const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
   //let bufferLength = imageArray.length;
   let coordinateJson = coordinateConverter(coordinates, mapping);
-  console.log("rawItemText = async (imageArray, mapping, coordin",cafeIds);
-  let menu=await getMenu("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000");
+  var resolvedPath = path
+  .join(__dirname, "../../server/data/Menus/tempMenu.txt")
+  .replace(/\\/g, "/");
 
+  let menuJson;
+  try {
+    const data = fs.readFileSync(resolvedPath, 'utf8');
+    console.log(data);
+    menuJson=data;
+  } catch (err) {
+    console.error(err);
+  }
+  menuJson = JSON.parse(menuJson);
   let response = [];
   for (var i in cafeIds){
     let bufferLength = imageArray.length;
