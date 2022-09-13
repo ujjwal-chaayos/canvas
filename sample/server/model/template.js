@@ -6,7 +6,8 @@ const templateSchema = new mongoose.Schema(
   {
 
     templateDetail:{
-        type: Object
+        slot_detail:String,
+        screen_detail:String
     },
     templateId:{
         type:String
@@ -20,17 +21,15 @@ const templateSchema = new mongoose.Schema(
     cafeTemplate:{
         type:Buffer
     },
-    cafeImgOnlyMenu:{  
-        type:Buffer
-    },
-    cafeFinalMenu:{
-        type:Buffer
+    cafeImgOnlyMenuArray: [Buffer],
+    cafeFinalMenuVideo:{
+        type:String
     },
     cafeTempCoordinates:{
-        type:Object
+        type:Array
     },
     cafeMenuMapping:{
-        type:Object
+        type:Array
     }
 },
 

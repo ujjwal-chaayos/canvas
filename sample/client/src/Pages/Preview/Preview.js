@@ -4,11 +4,13 @@ import { Button, Typography } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import axios from 'axios';
+import {useParams} from 'react-router-dom';
 
 const Preview = ({ type, manage , allData}) => {
 
   let [loading,setLoading] = useState(true);
-
+  let {screenId,tempId} = useParams();
+  console.log(screenId,tempId);
 
   function downloadBlob(blob, name) {
     // Convert your blob into a Blob URL (a special url that points to an object in the browser's memory)
@@ -50,6 +52,9 @@ const Preview = ({ type, manage , allData}) => {
       manage("image-n");
     }
     if (type === "menu") {
+     allData.append("screenId",screenId);
+     allData.append("templateId",tempId);
+
       let response = await axios
       .post("http://localhost:8000/setAllItemMapping", allData, {
         headers: {
