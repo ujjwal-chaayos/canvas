@@ -39,8 +39,10 @@ exports.uploadProductImages = (req, res) => {
 exports.setItemMapping = async (req, res) => {
   console.log("setmapping called");
   let images = [];
+  console.log(req.files);
+  console.log(req.body);
   for (var file in req.files) {
-    if (file === "background") {
+    if (file === "background" || file === "template") {
       continue;
     } else {
       images.push(req.files[file].data);
@@ -63,15 +65,17 @@ exports.setItemMapping = async (req, res) => {
 };
 exports.setAllItemMapping = async (req, res) => {
   console.log("setallmapping called");
+  //console.log(req.files);
+  //console.log(req.body);
   let images = [];
   for (var file in req.files) {
-    if (file === "background") {
+    if (file === "background" || file==="template") {
       continue;
     } else {
       images.push(req.files[file].data);
     }
   }
-
+  //console.log(req.body.screenId,req.body.templateId)
   let response = await drawItemText(
     images,
     JSON.parse(req.body.dummy_data),
@@ -96,6 +100,59 @@ exports.setAllItemMapping = async (req, res) => {
   console.log("all process done by me");
   console.log("all process done by me");
   console.log("all process done by me");
+
+    let slot_details={
+      't0':'DEFAULT',
+      't1':'DAY_SLOT_BREAKFAST',
+      't2':'DAY_SLOT_LUNCH',
+      't3':'DAY_SLOT_EVENING',
+      't4':'DAY_SLOT_DINNER',
+      't5':'DAY_SLOT_POST_DINNER',
+      't6':'DAY_SLOT_OVERNIGHT'
+    }
+    let screen_details={
+      's1':'MAIN',
+      's2':'OFFERS',
+      's3':'CHAI',
+      's4':'MEAL'
+    }
+    //console.log(req.body.templateId);
+    let templateId=req.body.templateId;
+    let screenId=req.body.screenId;
+    let cafeIds=JSON.parse(req.body.cafeIds);
+    let cafeTemplate=req.files.template.data;
+    let cafeImgOnlyMenuArray=images;
+    let cafeTempCoordinates=JSON.parse(req.body.coordinates);
+    let cafeMenuMapping=JSON.parse(req.body.dummy_data);
+    console.log(cafeImgOnlyMenuArray);
+    //console.log(typeof(templateId),typeof(screenId),typeof(cafeIds),typeof(cafeTemplate),typeof(cafeImgOnlyMenuArray),typeof(cafeTempCoordinates),typeof(cafeMenuMapping));
+
+    //console.log(slot_details[templateId],screen_details[screenId])
+   // console.log(req.body.templateId,req.body.screenId,req.body.cafeIds[0],req.files.template,images,req.body.coordinates,req.body.dummy_data)
+  for(let i in cafeIds){
+    let template=new Template({
+        templateId:templateId,
+        screenId:screenId,
+        cafeId:cafeIds[i],
+        cafeTemplate:cafeTemplate,
+        cafeTempCoordinates:cafeTempCoordinates,
+        cafeImgOnlyMenuArray:cafeImgOnlyMenuArray,
+        cafeMenuMapping:cafeMenuMapping,
+        templateDetail:{
+          slot_detail:slot_details[templateId],
+          screen_detail:screen_details[screenId]
+        }
+    })
+    template.save((err, template) => {
+      if (err) {
+        res.status(500).json({
+          error: err,
+        });
+      }
+      console.log("template saved in db for cafe id",cafeIds[i]);
+    });
+
+  }
   res.send(mydata);
   
 };
