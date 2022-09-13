@@ -732,7 +732,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   };
 }
 
-const drawItemText = async (imageArray, mapping, coordinates,  cafeIds) => {
+const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFlag) => {
   //let bufferLength = imageArray.length;
   console.log("DrawItemText is called...");
 
@@ -802,9 +802,12 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds) => {
       bufferLength--;
       c++;
     }
-    console.log("calling img to video convertor for cafe id", cafeIds[i]);
-    await img2vid(names,cafeIds[i]);
-    console.log("ended img to video convertor for cafe id", cafeIds[i]);
+
+    if(videoFlag){
+      console.log("calling img to video convertor for cafe id", cafeIds[i]);
+      await img2vid(names,cafeIds[i]);
+      console.log("ended img to video convertor for cafe id", cafeIds[i]);
+    }
 
     
   }
