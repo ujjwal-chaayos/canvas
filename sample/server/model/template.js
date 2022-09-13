@@ -30,6 +30,12 @@ const templateSchema = new mongoose.Schema(
     },
     cafeMenuMapping:{
         type:Array
+    },
+    cafeObjectId:{
+        type: ObjectId, default: undefined, ref: "cafe"
+    },
+    screenObjectId:{
+        type: ObjectId, default: undefined, ref: "screen"
     }
 },
 
