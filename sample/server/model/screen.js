@@ -6,7 +6,7 @@ const screenSchema = new mongoose.Schema(
   {
 
     screenDetail:{
-        type: Object
+        screen_detail:String
     },
     screenId:{
         type:String
@@ -37,7 +37,11 @@ const screenSchema = new mongoose.Schema(
     },
     screenBackground:{
         type:Buffer
+    },
+    cafeObjectId:{
+        type: ObjectId, default: undefined, ref: "cafe"
     }
+    
 },
 
   { timestamps: true }

@@ -39,8 +39,6 @@ exports.uploadProductImages = (req, res) => {
 exports.setItemMapping = async (req, res) => {
   console.log("setmapping called");
   let images = [];
-  console.log(req.files);
-  console.log(req.body);
   for (var file in req.files) {
     if (file === "background" || file === "template") {
       continue;
@@ -49,7 +47,7 @@ exports.setItemMapping = async (req, res) => {
     }
   }
   let data = JSON.parse(req.body.cafeIds);
-  //console.log(JSON.parse(req.body.dummy_data));
+ 
   let myId = [];
   myId.push(data[0]);
   let response = await drawItemText(
@@ -60,13 +58,11 @@ exports.setItemMapping = async (req, res) => {
   );
   let mydata = {};
   mydata.value = response;
-  //console.log(mydata);
+
   res.send(mydata);
 };
 exports.setAllItemMapping = async (req, res) => {
   console.log("setallmapping called");
-  //console.log(req.files);
-  //console.log(req.body);
   let images = [];
   for (var file in req.files) {
     if (file === "background" || file==="template") {
@@ -75,7 +71,7 @@ exports.setAllItemMapping = async (req, res) => {
       images.push(req.files[file].data);
     }
   }
-  //console.log(req.body.screenId,req.body.templateId)
+
   let response = await drawItemText(
     images,
     JSON.parse(req.body.dummy_data),
@@ -84,22 +80,6 @@ exports.setAllItemMapping = async (req, res) => {
   );
   let mydata = {};
   mydata.value = response;
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
 
     let slot_details={
       't0':'DEFAULT',
@@ -116,7 +96,6 @@ exports.setAllItemMapping = async (req, res) => {
       's3':'CHAI',
       's4':'MEAL'
     }
-    //console.log(req.body.templateId);
     let templateId=req.body.templateId;
     let screenId=req.body.screenId;
     let cafeIds=JSON.parse(req.body.cafeIds);
@@ -124,33 +103,74 @@ exports.setAllItemMapping = async (req, res) => {
     let cafeImgOnlyMenuArray=images;
     let cafeTempCoordinates=JSON.parse(req.body.coordinates);
     let cafeMenuMapping=JSON.parse(req.body.dummy_data);
-    console.log(cafeImgOnlyMenuArray);
-    //console.log(typeof(templateId),typeof(screenId),typeof(cafeIds),typeof(cafeTemplate),typeof(cafeImgOnlyMenuArray),typeof(cafeTempCoordinates),typeof(cafeMenuMapping));
+    let screenBackground=req.files.background.data;
 
-    //console.log(slot_details[templateId],screen_details[screenId])
-   // console.log(req.body.templateId,req.body.screenId,req.body.cafeIds[0],req.files.template,images,req.body.coordinates,req.body.dummy_data)
+   
+
+
   for(let i in cafeIds){
-    let template=new Template({
-        templateId:templateId,
-        screenId:screenId,
-        cafeId:cafeIds[i],
-        cafeTemplate:cafeTemplate,
-        cafeTempCoordinates:cafeTempCoordinates,
-        cafeImgOnlyMenuArray:cafeImgOnlyMenuArray,
-        cafeMenuMapping:cafeMenuMapping,
-        templateDetail:{
-          slot_detail:slot_details[templateId],
-          screen_detail:screen_details[screenId]
-        }
-    })
-    template.save((err, template) => {
-      if (err) {
-        res.status(500).json({
-          error: err,
+   
+
+    
+    Cafe.findOne({cafeId:cafeIds[i]},(err,cafeFound)=>{
+      if(cafeFound){
+        let cafeObjectId=cafeFound._id;
+        let screen=new Screen({
+          screenId:screenId,
+          cafeId:cafeIds[i],
+          screenBackground:screenBackground,
+          screenDetail:{
+            screen_detail:screen_details[screenId]
+          },
+          cafeObjectId:cafeObjectId
         });
+        screen.save((err, screen) => {
+          if (err) {
+            res.status(500).json({
+              error: err,
+            });
+          }
+          let screenObjectId=screen._id;
+          let template=new Template({
+            templateId:templateId,
+            screenId:screenId,
+            cafeId:cafeIds[i],
+            cafeTemplate:cafeTemplate,
+            cafeTempCoordinates:cafeTempCoordinates,
+            cafeImgOnlyMenuArray:cafeImgOnlyMenuArray,
+            cafeMenuMapping:cafeMenuMapping,
+            templateDetail:{
+              slot_detail:slot_details[templateId],
+              screen_detail:screen_details[screenId]
+            },
+            cafeObjectId:cafeObjectId,
+            screenObjectId:screenObjectId
+        });
+          template.save((err, template) => {
+            if (err) {
+              res.status(500).json({
+                error: err,
+              });
+            }
+
+            console.log("template saved in db for cafe id",cafeIds[i]);
+      
+          });
+          console.log("screen saved in db for cafe id",cafeIds[i]);     
+        });
+
+       
+    
+      
+
+
+
+      }else{
+        console.log("cafe is not available in database!!!")
       }
-      console.log("template saved in db for cafe id",cafeIds[i]);
     });
+
+   
 
   }
   res.send(mydata);
@@ -158,7 +178,7 @@ exports.setAllItemMapping = async (req, res) => {
 };
 
 exports.getUnitMenu = async (req, res) => {
-  //console.log(req.body);
+
   let requestLength = req.body.length;
 
   let tempData = {};
@@ -173,7 +193,7 @@ exports.getUnitMenu = async (req, res) => {
     let cafeDetail = response.data["detail"];
     Cafe.findOne({cafeId:cafeDetail['id']['id']},(err,cafeFound)=>{
       if(cafeFound){
-          console.log("Cafe with id ",cafeDetail['id']['id'], " already exists", cafeFound)
+          console.log("Cafe with id ",cafeDetail['id']['id'], " already exists!!!");
       }
       else{
         const cafe = new Cafe({
@@ -186,8 +206,8 @@ exports.getUnitMenu = async (req, res) => {
               error: err,
             });
           }
-          console.log(cafe);
-          console.log("cafe saved in db...");
+          
+          console.log("New Cafe created in db with id",cafe['cafeId']);
         });
       }
     });
@@ -201,7 +221,7 @@ exports.getUnitMenu = async (req, res) => {
       res.send("error");
       return console.log(err);
     }
-    console.log("Hello World > helloworld.txt");
+    console.log("Menu saved successfully!!");
     res.send("success");
   });
 };
