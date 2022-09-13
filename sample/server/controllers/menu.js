@@ -142,38 +142,46 @@ exports.setAllItemMapping = async (req, res) => {
 };
 
 exports.getUnitMenu = async (req, res) => {
-  let requestLength = req.body.length;
-
+let cafes =JSON.parse( req.body.cafes);
+let dummyData = JSON.parse(req.body.dummy_data);
+console.log(req.body);
   let tempData = {};
-  for (let i = 0; i < requestLength; i++) {
+  for (let i = 0; i < cafes.length; i++) {
     let response = await axios.get(
-      "https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/" + req.body[i]
+      "https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/" + cafes[i]
     );
-    //console.log("getting response for cafeid", req.body[i]);
-    let key = req.body[i];
+    //console.log("getting response for cafeid", cafes[i]);
+    let key = cafes[i];
     //console.log(key);
     tempData[key] = response.data;
     let cafeDetail = response.data["detail"];
-    Cafe.findOne({cafeId:cafeDetail['id']['id']},(err,cafeFound)=>{
-      if(cafeFound){
-          console.log("Cafe with id ",cafeDetail['id']['id'], " already exists", cafeFound)
-      }
-      else{
-        const cafe = new Cafe({
-                  cafeId: cafeDetail['id']['id'],
-                  cafeDetail: cafeDetail
-                });
-        cafe.save((err, cafe) => {
-          if (err) {
-            res.status(500).json({
-              error: err,
-            });
-          }
-          console.log(cafe);
-          console.log("cafe saved in db...");
-        });
-      }
-    });
+    let categories = response.data["menuSequence"]["category"];
+    for(let j=0;j<categories.length;j++){
+    if(!dummyData.includes(categories[j])){
+      flag=false;
+      break;
+    }
+    }
+    if(flag){
+      Cafe.findOne({cafeId:cafeDetail['id']['id']},(err,cafeFound)=>{
+        if(cafeFound){
+            console.log("Cafe with id ",cafeDetail['id']['id'], " already exists", cafeFound)
+        }
+        else{
+          const cafe = new Cafe({
+                    cafeId: cafeDetail['id']['id'],
+                    cafeDetail: cafeDetail
+                  });
+          cafe.save((err, cafe) => {
+            if (err) {
+              console.log(err);
+            }
+            console.log(cafe);
+            console.log("cafe saved in db...");
+          });
+        }
+      });
+    }
   }
 
   let filepath = __dirname + "../../data/Menus/tempMenu.txt";

@@ -8,6 +8,28 @@ import {useParams} from 'react-router-dom';
 
 const Preview = ({ type, manage , allData}) => {
 
+  useEffect(()=>{
+    getData();
+  },[]);
+
+  const getData = async () => {
+    let localData=JSON.parse(localStorage.getItem("cafe_ids"));
+    let id=localData[0];   
+    const { data } = await axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/"+id);
+    let category_data=[...data['menuSequence']['category']];
+    let new_data=[];
+    for(let i in category_data){
+      let item_data={"title_id":"","value":"","block_id":""}
+      item_data['title_id']='t'+(i+1);
+      item_data['value']=category_data[i]['name'];
+      if(category_data[i]['name'] !== 'Chaayos Select' && category_data[i]['name'] !== 'Trending Now' && category_data[i]['name'] !== 'Chaayos Special' && category_data[i]['name'] !== 'New'){
+        new_data.push(item_data)
+      }
+    }
+    localStorage.setItem("dummy_data", JSON.stringify([...new_data]));
+  };
+
+
   let [loading,setLoading] = useState(true);
   let {screenId,tempId} = useParams();
   console.log(screenId,tempId);
@@ -38,11 +60,13 @@ const Preview = ({ type, manage , allData}) => {
   const proceed = async () => {
     if (type === "image") {
       console.log("image-n", type);
-      let cafes=JSON.parse(localStorage.getItem("cafe_ids"));
-      console.log(cafes);
+      let formData = new FormData();
+      formData.append("cafes", localStorage.getItem("cafe_ids"));
+      console.log(localStorage.getItem("dummy_data"))
+      formData.append("dummy_data", localStorage.getItem("dummy_data"));
       let response = await axios.post(
         "http://localhost:8000/getUnitMenu",
-        cafes,
+        formData,
         {
           headers: {
             "Content-Type": "application/json",

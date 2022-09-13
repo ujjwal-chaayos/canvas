@@ -13,25 +13,9 @@ const ItemForm = ({ blockIds, proceed }) => {
   const [titles, setTitles] = useState([]);
 
   const getData = async () => {
-    let localData=JSON.parse(localStorage.getItem("cafe_ids"));
-    let id=localData[0];
-    const { data } = await axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/"+id);
-    console.log(data['menuSequence']['category']);
-    let category_data=[...data['menuSequence']['category']];
-
-    let new_data=[];
-    for(let i in category_data){
-      let item_data={"title_id":"","value":"","block_id":""}
-      item_data['title_id']='t'+(i+1);
-      item_data['value']=category_data[i]['name'];
-      if(category_data[i]['name'] !== 'Chaayos Select' && category_data[i]['name'] !== 'Trending Now' && category_data[i]['name'] !== 'Chaayos Special' && category_data[i]['name'] !== 'New'){
-        new_data.push(item_data)
-      }
-    }
-    
-    setTitles(new_data);
+   
+    setTitles(JSON.parse(localStorage.getItem("dummy_data")));
   };
-
   useEffect(()=>{
     getData();
   },[]);
@@ -122,7 +106,7 @@ const ItemForm = ({ blockIds, proceed }) => {
         );
       });
 
-    formData.append("dummy_data", JSON.stringify([...titles]));
+    formData.append("dummy_data", JSON.stringify(localStorage.getItem("dummy_data")));
     formData.append("coordinates", localStorage.getItem("coordinates"));
     formData.append("cafeIds",  localStorage.getItem("cafe_ids"));
     formData.append("screenId",screenId);
