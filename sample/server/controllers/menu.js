@@ -54,7 +54,8 @@ exports.setItemMapping = async (req, res) => {
     images,
     JSON.parse(req.body.dummy_data),
     JSON.parse(req.body.coordinates),
-    myId
+    myId,
+    false
   );
   let mydata = {};
   mydata.value = response;
@@ -76,7 +77,8 @@ exports.setAllItemMapping = async (req, res) => {
     images,
     JSON.parse(req.body.dummy_data),
     JSON.parse(req.body.coordinates),
-    JSON.parse(req.body.cafeIds)
+    JSON.parse(req.body.cafeIds),
+    true
   );
   let mydata = {};
   mydata.value = response;
@@ -126,9 +128,7 @@ exports.setAllItemMapping = async (req, res) => {
         });
         screen.save((err, screen) => {
           if (err) {
-            res.status(500).json({
-              error: err,
-            });
+            console.log("err",err);
           }
           let screenObjectId=screen._id;
           let template=new Template({
@@ -148,9 +148,7 @@ exports.setAllItemMapping = async (req, res) => {
         });
           template.save((err, template) => {
             if (err) {
-              res.status(500).json({
-                error: err,
-              });
+              console.log("err",err);
             }
 
             console.log("template saved in db for cafe id",cafeIds[i]);
