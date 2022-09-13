@@ -11,6 +11,12 @@ const templateSchema = new mongoose.Schema(
     templateId:{
         type:String
     },
+    screenId:{
+        type:String
+    },
+    cafeId:{
+        type:String
+    },
     cafeTemplate:{
         type:Buffer
     },

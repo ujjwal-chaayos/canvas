@@ -11,6 +11,9 @@ const screenSchema = new mongoose.Schema(
     screenId:{
         type:String
     },
+    cafeId:{
+        type:String
+    },
     t0:{
         type: ObjectId, default: undefined, ref: "template"
     },
