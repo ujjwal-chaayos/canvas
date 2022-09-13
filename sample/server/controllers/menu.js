@@ -103,28 +103,74 @@ exports.setAllItemMapping = async (req, res) => {
     let cafeImgOnlyMenuArray=images;
     let cafeTempCoordinates=JSON.parse(req.body.coordinates);
     let cafeMenuMapping=JSON.parse(req.body.dummy_data);
+    let screenBackground=req.files.background.data;
+
+   
+
+
   for(let i in cafeIds){
-    let template=new Template({
-        templateId:templateId,
-        screenId:screenId,
-        cafeId:cafeIds[i],
-        cafeTemplate:cafeTemplate,
-        cafeTempCoordinates:cafeTempCoordinates,
-        cafeImgOnlyMenuArray:cafeImgOnlyMenuArray,
-        cafeMenuMapping:cafeMenuMapping,
-        templateDetail:{
-          slot_detail:slot_details[templateId],
-          screen_detail:screen_details[screenId]
-        }
-    })
-    template.save((err, template) => {
-      if (err) {
-        res.status(500).json({
-          error: err,
+   
+
+    
+    Cafe.findOne({cafeId:cafeIds[i]},(err,cafeFound)=>{
+      if(cafeFound){
+        let cafeObjectId=cafeFound._id;
+        let screen=new Screen({
+          screenId:screenId,
+          cafeId:cafeIds[i],
+          screenBackground:screenBackground,
+          screenDetail:{
+            screen_detail:screen_details[screenId]
+          },
+          cafeObjectId:cafeObjectId
         });
+        screen.save((err, screen) => {
+          if (err) {
+            res.status(500).json({
+              error: err,
+            });
+          }
+          let screenObjectId=screen._id;
+          let template=new Template({
+            templateId:templateId,
+            screenId:screenId,
+            cafeId:cafeIds[i],
+            cafeTemplate:cafeTemplate,
+            cafeTempCoordinates:cafeTempCoordinates,
+            cafeImgOnlyMenuArray:cafeImgOnlyMenuArray,
+            cafeMenuMapping:cafeMenuMapping,
+            templateDetail:{
+              slot_detail:slot_details[templateId],
+              screen_detail:screen_details[screenId]
+            },
+            cafeObjectId:cafeObjectId,
+            screenObjectId:screenObjectId
+        });
+          template.save((err, template) => {
+            if (err) {
+              res.status(500).json({
+                error: err,
+              });
+            }
+
+            console.log("template saved in db for cafe id",cafeIds[i]);
+      
+          });
+          console.log("screen saved in db for cafe id",cafeIds[i]);     
+        });
+
+       
+    
+      
+
+
+
+      }else{
+        console.log("cafe is not available in database!!!")
       }
-      console.log("template saved in db for cafe id",cafeIds[i]);
     });
+
+   
 
   }
   res.send(mydata);
