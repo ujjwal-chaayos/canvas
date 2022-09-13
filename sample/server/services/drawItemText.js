@@ -5,6 +5,11 @@ const fs = require("fs");
 const axios = require("axios");
 const tempMenu = require("../data/Menus/menu.json");
 const { compress } = require("compress-images/promise");
+const mongoose = require("mongoose");
+const Cafe = require("../model/cafe");
+const Screen = require("../model/screen");
+const Template = require("../model/template");
+
 const {
   drawText,
   drawImage,
@@ -798,7 +803,7 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds) => {
       c++;
     }
     console.log("calling img to video convertor for cafe id", cafeIds[i]);
-    await img2vid(names);
+    await img2vid(names,cafeIds[i]);
     console.log("ended img to video convertor for cafe id", cafeIds[i]);
 
     
@@ -833,7 +838,7 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds) => {
   return response[0];
 };
 
-const img2vid = async (names) => {
+const img2vid = async (names,cafeId) => {
   console.log("inside img to vid convertor!");
   let data = [];
   for (var name in names) {
@@ -841,7 +846,7 @@ const img2vid = async (names) => {
     data.push(names[name].name);
     console.log("image file saved...")
   }
-  //console.log(data);
+  console.log(data);
   await videoshow(data, videoOptions)
     .save("testvideo" + globalid + Date.now() + ".mp4")
     .on("start", function (command) {
@@ -862,6 +867,16 @@ const img2vid = async (names) => {
           fs.unlinkSync(folder + file);
         }
       });
+      var fileBuffer=Buffer.from(output,'base64');
+      console.log(fileBuffer);
+      Template.findOneAndUpdate({cafeId: cafeId}, {$set:{cafeFinalMenuVideo:fileBuffer}},function(err, doc){
+        if(err){
+            console.log("Something wrong when updating data!");
+        }
+    
+        console.log("Video updated in DB with cafeid : ",cafeId);
+    });
+
     });
 
   console.log("img to vid return back...");

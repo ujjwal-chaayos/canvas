@@ -23,7 +23,7 @@ const templateSchema = new mongoose.Schema(
     },
     cafeImgOnlyMenuArray: [Buffer],
     cafeFinalMenuVideo:{
-        type:String
+        type:Buffer
     },
     cafeTempCoordinates:{
         type:Array
