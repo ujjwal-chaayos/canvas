@@ -1,4 +1,4 @@
-console.log("hello world");
+//console.log("hello world");
 require("dotenv").config();
 const { JSDOM } = require("jsdom");
 const { Canvas, createCanvas, Image, ImageData, loadImage } = require("canvas");

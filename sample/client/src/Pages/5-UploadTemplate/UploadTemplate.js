@@ -191,7 +191,7 @@ const UploadTemplate = () => {
                       hidden
                     />
                   </Button>
-                  <Box sx={{ display: "flex", p: 1, m: 1 }}>
+                  <Box sx={{ display: "flex", p: 1, m: 1 ,justifyContent:"space-evenly"}}>
                     <img id="template1" width="504px" height="283px" />
                   </Box>
                 </div>
@@ -215,7 +215,7 @@ const UploadTemplate = () => {
                       hidden
                     />
                   </Button>
-                  <Box sx={{ display: "flex", p: 1, m: 1 }}>
+                  <Box sx={{ display: "flex", p: 1, m: 1 ,justifyContent:"space-evenly"}}>
                     <img id="background1" width="504px" height="283px" />
                   </Box>
                 </div>
