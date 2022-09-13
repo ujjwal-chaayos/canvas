@@ -115,8 +115,8 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         itemStyle.font.Items;
       screen.font = style;
       screen2.font = style;
-      console.log("hey",itemStyle.size.Items);
-      console.log("hello" , parseInt(itemStyle.size.Items)+5);
+      //console.log("hey",itemStyle.size.Items);
+      //console.log("hello" , parseInt(itemStyle.size.Items)+5);
       let itemX = itemCoordinates.x + 10;
       let itemY = itemCoordinates.y;
       let RandFpointX = priceX;
@@ -169,7 +169,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
 
         drawText(screen, text, points, style);
         drawText(screen2, text, points, style);
-        console.log(text);
+        //console.log(text);
         let itemWidth = Math.floor(screen.measureText(text).width);
         let itemHeight = Math.floor(screen.measureText(text).actualBoundingBoxAscent);
         for (let j = 0; j < priceArray.length; j++) {
@@ -217,7 +217,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
            Math.max(parseInt(itemStyle.size.Items), Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
           iconpoint.h =
             Math.max(parseInt(itemStyle.size.Items),Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
-            console.log("veg",iconpoint,screen.measureText(text).width);
+            //console.log("veg",iconpoint,screen.measureText(text).width);
           await loadImage(vegicon).then((image) => {
             screen.drawImage(
               image,
@@ -244,7 +244,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
             Math.max(parseInt(itemStyle.size.Items),Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
           iconpoint.h =
             Math.max(parseInt(itemStyle.size.Items),Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
-            console.log("non-veg",iconpoint,screen.measureText(text).width);
+            //console.log("non-veg",iconpoint,screen.measureText(text).width);
           await loadImage(nonvegicon).then((image) => {
             screen.drawImage(
               image,
@@ -272,7 +272,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
             70;
           iconpoint.w = 180;
           iconpoint.h = 180;
-          console.log("new",iconpoint);
+          //console.log("new",iconpoint);
           await loadImage(newicon).then((image) => {
             screen.drawImage(
               image,
@@ -293,7 +293,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
             70;
           iconpoint.w = 180;
           iconpoint.h = 180;
-          console.log("new",iconpoint);
+          //console.log("new",iconpoint);
           await loadImage(newicon).then((image) => {
             screen.drawImage(
               image,
@@ -314,7 +314,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
             70;
           iconpoint.w = 180;
           iconpoint.h = 180;
-          console.log("new",iconpoint);
+          //console.log("new",iconpoint);
           await loadImage(newicon).then((image) => {
             screen.drawImage(
               image,
@@ -369,15 +369,15 @@ async function doMyTextPrint(
       }
 
       if(wrapValidation(itemCoordinates[i],itemArray,{height: parseInt(itemStyle.size.Items),spacing: 5, },style)){
-        console.log("item ARrAy" , itemArray);
-        console.log("i am in wrap");
+       // console.log("item ARrAy" , itemArray);
+       // console.log("i am in wrap");
         var txtHeight =  parseInt(itemStyle.size.Items)+5;
         let numberofItemWrap=Math.floor(itemCoordinates[i].h/txtHeight);
         //let halfway= Math.floor(itemArray.length / 2);
         let itemFirst = itemArray.slice(0, numberofItemWrap);
         let itemSecond = itemArray.slice(numberofItemWrap+1, itemArray.length);
-        console.log("first",itemFirst);
-        console.log("second",itemSecond);
+        //console.log("first",itemFirst);
+        //console.log("second",itemSecond);
         let blockWidth = Math.ceil((itemCoordinates[i].w*100)/80);
         let block1 = {};
         let price1x ;
@@ -681,10 +681,10 @@ const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
   let menuJson;
   try {
     const data = fs.readFileSync(resolvedPath, 'utf8');
-    console.log(data);
+    //console.log(data);
     menuJson=data;
   } catch (err) {
-    console.error(err);
+    //console.error(err);
   }
   menuJson = JSON.parse(menuJson);
   let response = [];
@@ -738,7 +738,7 @@ const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
     bufferLength--;
     c++;
   }
-  img2vid(names);
+  await img2vid(names);
 
   }
 
@@ -778,7 +778,7 @@ let data=[];
     fs.writeFileSync(names[name].name,names[name].data);
     data.push(names[name].name);
   }
-  console.log(data);
+  //console.log(data);
   videoshow(data, videoOptions)
   .save('testvideo'+globalid+Date.now()+'.mp4')
   .on('start', function (command) {

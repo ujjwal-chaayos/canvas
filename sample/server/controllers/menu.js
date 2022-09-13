@@ -19,6 +19,7 @@ exports.uploadTemplate = (req, res) => {
   }
   let response = mergeTemplateBackground(images[0], images[1]);
   res.send(response);
+
 };
 exports.uploadProductImages = (req, res) => {
   console.log("uploadProductImages called");
@@ -46,7 +47,7 @@ exports.setItemMapping = async (req, res) => {
     }
   }
   let data = JSON.parse(req.body.cafeIds);
-  console.log(JSON.parse(req.body.dummy_data));
+  //console.log(JSON.parse(req.body.dummy_data));
   let myId = [];
   myId.push(data[0]);
   let response = await drawItemText(
@@ -57,7 +58,7 @@ exports.setItemMapping = async (req, res) => {
   );
   let mydata = {};
   mydata.value = response;
-  console.log(mydata);
+  //console.log(mydata);
   res.send(mydata);
 };
 exports.setAllItemMapping = async (req, res) => {
@@ -79,8 +80,24 @@ exports.setAllItemMapping = async (req, res) => {
   );
   let mydata = {};
   mydata.value = response;
-  console.log(mydata);
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
   res.send(mydata);
+  
 };
 
 exports.getUnitMenu = async (req, res) => {
@@ -92,9 +109,9 @@ exports.getUnitMenu = async (req, res) => {
     let response = await axios.get(
       "https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/" + req.body[i]
     );
-    console.log("getting response for cafeid", req.body[i]);
+    //console.log("getting response for cafeid", req.body[i]);
     let key = req.body[i];
-    console.log(key);
+    //console.log(key);
     tempData[key] = response.data;
     let cafeDetail = response.data["detail"];
     Cafe.findOne({cafeId:cafeDetail['id']['id']},(err,cafeFound)=>{
@@ -124,10 +141,10 @@ exports.getUnitMenu = async (req, res) => {
 
   fs.writeFile(filepath, myData, function (err) {
     if (err) {
-      //res.send("error");
+      res.send("error");
       return console.log(err);
     }
     console.log("Hello World > helloworld.txt");
-    //res.send("success");
+    res.send("success");
   });
 };
