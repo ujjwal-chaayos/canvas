@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require('fs');
 //import axios from 'axios';
 const axios = require('axios');
-
+const tempMenu = require("../data/Menus/menu.json");
 const { compress } = require('compress-images/promise');
 const {
   drawText,
@@ -17,7 +17,6 @@ const {
   newItemRect,
   drawLine,reSize
 } = require("./CVServices");
-
 const {
   heightValidation,
   widthValidation,
@@ -26,7 +25,6 @@ const {
 
 const { uiJsonConverter } = require("./JSONConverter");
 const { coordinateConverter } = require("./JSONConverter");
-const menuJson = require("../data/Menus/menu.json");
 const { createCanvas, Image, loadImage } = require("canvas");
 const videoshow = require('videoshow')
 const videoOptions = {
@@ -76,7 +74,7 @@ async  function drawRandF(priceX,priceY,priceW,itemStyle,screen,screen2){
   
   let size = parseInt(itemStyle.size.Items)/1.5;
   let style =
-        "bold" +
+        "900" +
         " " +
         size.toString()+"px"+
         " " +
@@ -117,8 +115,8 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         itemStyle.font.Items;
       screen.font = style;
       screen2.font = style;
-      console.log("hey",itemStyle.size.Items);
-      console.log("hello" , parseInt(itemStyle.size.Items)+5);
+      //console.log("hey",itemStyle.size.Items);
+      //console.log("hello" , parseInt(itemStyle.size.Items)+5);
       let itemX = itemCoordinates.x + 10;
       let itemY = itemCoordinates.y;
       let RandFpointX = priceX;
@@ -135,16 +133,17 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         points.y = itemY;
 
         if (itemArray[k].active === false) {
-          let rectpoint = {};
-          rectpoint.x = itemCoordinates.x - 10;
-          rectpoint.y = itemY - parseInt(itemStyle.size.Items);
-          rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
-          rectpoint.h = parseInt(itemStyle.size.Items) + 10;
-          roundedRect(screen, rectpoint, 20, "grey");
-          roundedRect(screen2, rectpoint, 20, "grey");
+          continue;
+          // let rectpoint = {};
+          // rectpoint.x = itemCoordinates.x - 10;
+          // rectpoint.y = itemY - parseInt(itemStyle.size.Items);
+          // rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
+          // rectpoint.h = parseInt(itemStyle.size.Items) + 10;
+          // roundedRect(screen, rectpoint, 20, "grey");
+          // roundedRect(screen2, rectpoint, 20, "grey");
 
-          screen.fillStyle = "Black";
-          screen2.fillStyle = "Black";
+          // screen.fillStyle = "Black";
+          // screen2.fillStyle = "Black";
         } else {
           screen.fillStyle = itemStyle.color.Items;
           screen2.fillStyle = itemStyle.color.Items;
@@ -156,8 +155,8 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
           rectpoint.y = itemY - parseInt(itemStyle.size.Items);
           rectpoint.w = Math.ceil(itemCoordinates.w * (10 / 8)) + 10;
           rectpoint.h = parseInt(itemStyle.size.Items) + 10;
-          newItemRect(screen, rectpoint, 30, "yellow", "orange");
-          newItemRect(screen2, rectpoint, 30, "yellow", "orange");
+          newItemRect(screen, rectpoint, 30, "#DDEDC6", "#CC5827");
+          newItemRect(screen2, rectpoint, 30, "#DDEDC6", "#CC5827");
 
           screen.fillStyle = itemStyle.color.New;
           screen2.fillStyle = itemStyle.color.New;
@@ -170,7 +169,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
 
         drawText(screen, text, points, style);
         drawText(screen2, text, points, style);
-        console.log(text);
+        //console.log(text);
         let itemWidth = Math.floor(screen.measureText(text).width);
         let itemHeight = Math.floor(screen.measureText(text).actualBoundingBoxAscent);
         for (let j = 0; j < priceArray.length; j++) {
@@ -218,7 +217,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
            Math.max(parseInt(itemStyle.size.Items), Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
           iconpoint.h =
             Math.max(parseInt(itemStyle.size.Items),Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
-            console.log("veg",iconpoint,screen.measureText(text).width);
+            //console.log("veg",iconpoint,screen.measureText(text).width);
           await loadImage(vegicon).then((image) => {
             screen.drawImage(
               image,
@@ -245,7 +244,7 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
             Math.max(parseInt(itemStyle.size.Items),Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
           iconpoint.h =
             Math.max(parseInt(itemStyle.size.Items),Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15);
-            console.log("non-veg",iconpoint,screen.measureText(text).width);
+            //console.log("non-veg",iconpoint,screen.measureText(text).width);
           await loadImage(nonvegicon).then((image) => {
             screen.drawImage(
               image,
@@ -266,14 +265,56 @@ async function writeMyTxt(itemCoordinates,priceX,priceY,priceW,itemArray,id,pric
         if (itemArray[k].new === true) {
           let iconpoint = {};
           iconpoint.x =
-            itemX + itemWidth + 120;
+            itemX + itemWidth + 100;
           iconpoint.y =
             itemY -
            itemHeight -
             70;
           iconpoint.w = 180;
           iconpoint.h = 180;
-          console.log("new",iconpoint);
+          //console.log("new",iconpoint);
+          await loadImage(newicon).then((image) => {
+            screen.drawImage(
+              image,
+              iconpoint.x,
+              iconpoint.y,
+              iconpoint.w,
+              iconpoint.h
+            );
+          });
+        }
+        else if (itemArray[k].trendingNow === true) {
+          let iconpoint = {};
+          iconpoint.x =
+            itemX + itemWidth + 100;
+          iconpoint.y =
+            itemY -
+           itemHeight -
+            70;
+          iconpoint.w = 180;
+          iconpoint.h = 180;
+          //console.log("new",iconpoint);
+          await loadImage(newicon).then((image) => {
+            screen.drawImage(
+              image,
+              iconpoint.x,
+              iconpoint.y,
+              iconpoint.w,
+              iconpoint.h
+            );
+          });
+        }
+        else if (itemArray[k].chaayosSpecial === true) {
+          let iconpoint = {};
+          iconpoint.x =
+            itemX + itemWidth + 100;
+          iconpoint.y =
+            itemY -
+           itemHeight -
+            70;
+          iconpoint.w = 180;
+          iconpoint.h = 180;
+          //console.log("new",iconpoint);
           await loadImage(newicon).then((image) => {
             screen.drawImage(
               image,
@@ -308,7 +349,6 @@ async function doMyTextPrint(
         itemStyle.font.Items;
       screen.font = style;
       screen2.font = style;
-
       let itemX = itemCoordinates[i].x + 10;
       let itemY = itemCoordinates[i].y;
       let id = itemCoordinates[i].parent_block_id;
@@ -329,15 +369,15 @@ async function doMyTextPrint(
       }
 
       if(wrapValidation(itemCoordinates[i],itemArray,{height: parseInt(itemStyle.size.Items),spacing: 5, },style)){
-        console.log("item ARrAy" , itemArray);
-        console.log("i am in wrap");
+       // console.log("item ARrAy" , itemArray);
+       // console.log("i am in wrap");
         var txtHeight =  parseInt(itemStyle.size.Items)+5;
         let numberofItemWrap=Math.floor(itemCoordinates[i].h/txtHeight);
         //let halfway= Math.floor(itemArray.length / 2);
         let itemFirst = itemArray.slice(0, numberofItemWrap);
         let itemSecond = itemArray.slice(numberofItemWrap+1, itemArray.length);
-        console.log("first",itemFirst);
-        console.log("second",itemSecond);
+        //console.log("first",itemFirst);
+        //console.log("second",itemSecond);
         let blockWidth = Math.ceil((itemCoordinates[i].w*100)/80);
         let block1 = {};
         let price1x ;
@@ -634,8 +674,19 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
 const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
   //let bufferLength = imageArray.length;
   let coordinateJson = coordinateConverter(coordinates, mapping);
-  let menu=await getMenu("https://app.chaayos.com/app-cache/unit/overall/1000/CHAAYOS/10000");
+  var resolvedPath = path
+  .join(__dirname, "../../server/data/Menus/tempMenu.txt")
+  .replace(/\\/g, "/");
 
+  let menuJson;
+  try {
+    const data = fs.readFileSync(resolvedPath, 'utf8');
+    //console.log(data);
+    menuJson=data;
+  } catch (err) {
+    //console.error(err);
+  }
+  menuJson = JSON.parse(menuJson);
   let response = [];
   for (var i in cafeIds){
     let bufferLength = imageArray.length;
@@ -665,29 +716,29 @@ const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
       data:result["data1"]
     });
     names.push({
-      name:'./data/tmp/screen2'+c+'.png',
+      name:'./data/tmp/screen2'+c+globalid+'.png',
       data:result["data2"]
     });
     names.push({
-      name:'./data/tmp/screen11'+c+'.png',
+      name:'./data/tmp/screen11'+c+globalid+'.png',
       data:result["data1"]
     });
     names.push({
-      name:'./data/tmp/screen21'+c+'.png',
+      name:'./data/tmp/screen21'+c+globalid+'.png',
       data:result["data2"]
     });
     names.push({
-      name:'./data/tmp/screen12'+c+'.png',
+      name:'./data/tmp/screen12'+c+globalid+'.png',
       data:result["data1"]
     });
     names.push({
-      name:'./data/tmp/screen22'+c+'.png',
+      name:'./data/tmp/screen22'+c+globalid+'.png',
       data:result["data2"]
     });
     bufferLength--;
     c++;
   }
-  img2vid(names);
+  await img2vid(names);
 
   }
 
@@ -727,7 +778,7 @@ let data=[];
     fs.writeFileSync(names[name].name,names[name].data);
     data.push(names[name].name);
   }
-  console.log(data);
+  //console.log(data);
   videoshow(data, videoOptions)
   .save('testvideo'+globalid+Date.now()+'.mp4')
   .on('start', function (command) {

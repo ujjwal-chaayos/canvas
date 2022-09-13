@@ -1,10 +1,12 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-const Menu = require("../model/menu");
 const drawItemText = require("../services/drawItemText");
 const drawProductImage = require("../services/drawProductImage");
-const fs=require('fs');
-const axios=require('axios');
+const fs = require("fs");
+const axios = require("axios");
+const Cafe = require("../model/cafe");
+const Screen = require("../model/screen");
+const Template = require("../model/template");
 
 const {
   mergeTemplateBackground,
@@ -17,6 +19,7 @@ exports.uploadTemplate = (req, res) => {
   }
   let response = mergeTemplateBackground(images[0], images[1]);
   res.send(response);
+
 };
 exports.uploadProductImages = (req, res) => {
   console.log("uploadProductImages called");
@@ -33,11 +36,33 @@ exports.uploadProductImages = (req, res) => {
   res.send(response);
 };
 
-
-
 exports.setItemMapping = async (req, res) => {
-
   console.log("setmapping called");
+  let images = [];
+  for (var file in req.files) {
+    if (file === "background") {
+      continue;
+    } else {
+      images.push(req.files[file].data);
+    }
+  }
+  let data = JSON.parse(req.body.cafeIds);
+  //console.log(JSON.parse(req.body.dummy_data));
+  let myId = [];
+  myId.push(data[0]);
+  let response = await drawItemText(
+    images,
+    JSON.parse(req.body.dummy_data),
+    JSON.parse(req.body.coordinates),
+    myId
+  );
+  let mydata = {};
+  mydata.value = response;
+  //console.log(mydata);
+  res.send(mydata);
+};
+exports.setAllItemMapping = async (req, res) => {
+  console.log("setallmapping called");
   let images = [];
   for (var file in req.files) {
     if (file === "background") {
@@ -55,38 +80,71 @@ exports.setItemMapping = async (req, res) => {
   );
   let mydata = {};
   mydata.value = response;
-  console.log(mydata);
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
+  console.log("all process done by me");
   res.send(mydata);
+  
 };
 
-
-exports.getUnitMenu = async (req,res) => {
+exports.getUnitMenu = async (req, res) => {
   //console.log(req.body);
-  let requestLength=req.body.length;
-  
+  let requestLength = req.body.length;
+
   let tempData = {};
-  for(let i=0;i<requestLength;i++){
-    let response = await axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/"+req.body[i]);
-    console.log("getting response for cafeid",req.body[i]);
-    let key=req.body[i];
-    console.log(key);
+  for (let i = 0; i < requestLength; i++) {
+    let response = await axios.get(
+      "https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/" + req.body[i]
+    );
+    //console.log("getting response for cafeid", req.body[i]);
+    let key = req.body[i];
+    //console.log(key);
     tempData[key] = response.data;
+    let cafeDetail = response.data["detail"];
+    Cafe.findOne({cafeId:cafeDetail['id']['id']},(err,cafeFound)=>{
+      if(cafeFound){
+          console.log("Cafe with id ",cafeDetail['id']['id'], " already exists", cafeFound)
+      }
+      else{
+        const cafe = new Cafe({
+                  cafeId: cafeDetail['id']['id'],
+                  cafeDetail: cafeDetail
+                });
+        cafe.save((err, cafe) => {
+          if (err) {
+            res.status(500).json({
+              error: err,
+            });
+          }
+          console.log(cafe);
+          console.log("cafe saved in db...");
+        });
+      }
+    });
   }
 
-  let filepath=__dirname+'../../data/Menus/tempMenu.txt';
-  let myData= await JSON.stringify(tempData);
+  let filepath = __dirname + "../../data/Menus/tempMenu.txt";
+  let myData = await JSON.stringify(tempData);
+
   fs.writeFile(filepath, myData, function (err) {
-    if (err) return console.log(err);
-    console.log('Hello World > helloworld.txt');
+    if (err) {
+      res.send("error");
+      return console.log(err);
+    }
+    console.log("Hello World > helloworld.txt");
+    res.send("success");
   });
-  //console.log(JSON.stringify(cafeMenuArr)); 
-//await fs.writeFileSync('./tmMenu/temp.txt', JSON.stringify(cafeMenuArr))
-//   console.log(typeof(JSON.stringify(cafeMenuArr)))
-// fs.writeFileSync("/tmpMenu/file.json", JSON.stringify(cafeMenuArr), function(err) {
-//   if(err) {
-//       return console.log("err");
-//   }
-//   console.log("The file was saved!");
-// }); 
-  //res.send("success");
-}
+};

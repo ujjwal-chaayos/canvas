@@ -83,6 +83,7 @@ const Home = () => {
               <Typography variant="h2" component="h2" sx={{ color: "#0f0f0f" }}>
                 CLIPPY
               </Typography>
+
             </Typography>
             <form oneSubmit={login}>
             <Box
@@ -108,12 +109,8 @@ const Home = () => {
                   placeholder="User Id"
                   value={userId}
                   onChange={(e)=>getUserId(e)}
-                />
-               
-              
-              <Button type="submit" variant="contained" size="large" onClick={(e)=>login(e)}>Login</Button>
-
-           
+                />        
+              <Button type="submit" variant="contained" size="large" onClick={(e)=>login(e)}>Login</Button>       
               </div>
             </Box>
 

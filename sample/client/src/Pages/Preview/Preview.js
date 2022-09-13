@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import Box from "@mui/material/Box";
 import { Button, Typography } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import axios from 'axios';
 
-const Preview = ({ type, manage }) => {
+const Preview = ({ type, manage , allData}) => {
+
+  let [loading,setLoading] = useState(true);
+
+
   function downloadBlob(blob, name) {
     // Convert your blob into a Blob URL (a special url that points to an object in the browser's memory)
     // Create a link element
@@ -46,6 +50,23 @@ const Preview = ({ type, manage }) => {
       manage("image-n");
     }
     if (type === "menu") {
+      let response = await axios
+      .post("http://localhost:8000/setAllItemMapping", allData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .catch(function(error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+
+    let data = await response.data.value;
+    console.log(data);
+
       console.log("menu-n", type);
       downloadBlob(JSON.parse(localStorage.getItem("finalMenu")), "myfile.png");
       manage("menu-n");
@@ -63,6 +84,7 @@ const Preview = ({ type, manage }) => {
   };
   return (
     <div>
+      <p>Waiting for Response</p>
       <Box
         position="fixed"
         top={0}
