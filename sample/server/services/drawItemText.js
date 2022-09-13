@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require('fs');
 //import axios from 'axios';
 const axios = require('axios');
-const tempMenu = require("../data/Menus/menu.json");
+//const tempMenu = require("../data/Menus/menu.json");
 const { compress } = require('compress-images/promise');
 const {
   drawText,
@@ -49,6 +49,7 @@ const newicon = resolvedPath + "/newIcon.svg";
 let globalid ;
 const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
 const ffprobe = require("@ffprobe-installer/ffprobe");
+const menu = require("../model/menu.js");
 
 const ffmpeg = require("fluent-ffmpeg")().setFfprobePath(ffprobe.path).setFfmpegPath(ffmpegInstaller.path);
 
@@ -773,7 +774,7 @@ const drawItemText = async (imageArray, mapping, coordinates,cafeIds) => {
 };
 
  const img2vid = async(names)=>{
-let data=[];
+  let data=[];
   for(var name in names){
     fs.writeFileSync(names[name].name,names[name].data);
     data.push(names[name].name);
@@ -798,7 +799,7 @@ let data=[];
           fs.unlinkSync(folder+file);
       }
       
-    });
-  })
+   });
+ })
 }
 module.exports = drawItemText;
