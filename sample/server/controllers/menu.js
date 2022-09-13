@@ -48,15 +48,17 @@ exports.setItemMapping = async (req, res) => {
       images.push(req.files[file].data);
     }
   }
-  let data = JSON.parse(req.body.cafeIds);
-  //console.log(JSON.parse(req.body.dummy_data));
-  let myId = [];
-  myId.push(data[0]);
+  let cafeId = [];
+  cafeId.push( (JSON.parse(req.body.cafeIds))[0]);
+  let templateId = [];
+  templateId.push(req.body.templateId);
+  let screenId = [];
+  screenId.push( req.body.screenId);
   let response = await drawItemText(
     images,
     JSON.parse(req.body.dummy_data),
     JSON.parse(req.body.coordinates),
-    myId
+    cafeId,screenId,templateId,false
   );
   let mydata = {};
   mydata.value = response;
@@ -75,61 +77,42 @@ exports.setAllItemMapping = async (req, res) => {
       images.push(req.files[file].data);
     }
   }
-  //console.log(req.body.screenId,req.body.templateId)
-  let response = await drawItemText(
-    images,
-    JSON.parse(req.body.dummy_data),
-    JSON.parse(req.body.coordinates),
-    JSON.parse(req.body.cafeIds)
-  );
-  let mydata = {};
-  mydata.value = response;
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
-  console.log("all process done by me");
+  
+  let slot_details={
+    't0':'DEFAULT',
+    't1':'DAY_SLOT_BREAKFAST',
+    't2':'DAY_SLOT_LUNCH',
+    't3':'DAY_SLOT_EVENING',
+    't4':'DAY_SLOT_DINNER',
+    't5':'DAY_SLOT_POST_DINNER',
+    't6':'DAY_SLOT_OVERNIGHT'
+  }
+  let screen_details={
+    's1':'MAIN',
+    's2':'OFFERS',
+    's3':'CHAI',
+    's4':'MEAL'
+  }
 
-    let slot_details={
-      't0':'DEFAULT',
-      't1':'DAY_SLOT_BREAKFAST',
-      't2':'DAY_SLOT_LUNCH',
-      't3':'DAY_SLOT_EVENING',
-      't4':'DAY_SLOT_DINNER',
-      't5':'DAY_SLOT_POST_DINNER',
-      't6':'DAY_SLOT_OVERNIGHT'
-    }
-    let screen_details={
-      's1':'MAIN',
-      's2':'OFFERS',
-      's3':'CHAI',
-      's4':'MEAL'
-    }
-    //console.log(req.body.templateId);
-    let templateId=req.body.templateId;
+  let templateId=req.body.templateId;
     let screenId=req.body.screenId;
     let cafeIds=JSON.parse(req.body.cafeIds);
     let cafeTemplate=req.files.template.data;
     let cafeImgOnlyMenuArray=images;
     let cafeTempCoordinates=JSON.parse(req.body.coordinates);
     let cafeMenuMapping=JSON.parse(req.body.dummy_data);
-    console.log(cafeImgOnlyMenuArray);
-    //console.log(typeof(templateId),typeof(screenId),typeof(cafeIds),typeof(cafeTemplate),typeof(cafeImgOnlyMenuArray),typeof(cafeTempCoordinates),typeof(cafeMenuMapping));
 
-    //console.log(slot_details[templateId],screen_details[screenId])
-   // console.log(req.body.templateId,req.body.screenId,req.body.cafeIds[0],req.files.template,images,req.body.coordinates,req.body.dummy_data)
-  for(let i in cafeIds){
+  let response = await drawItemText(
+    images,
+    cafeMenuMapping,
+    cafeTempCoordinates,
+    cafeIds,screenId,templateId,true
+  );
+  
+  let mydata = {};
+  mydata.value = response;
+   
+     for(let i in cafeIds){
     let template=new Template({
         templateId:templateId,
         screenId:screenId,
@@ -145,9 +128,10 @@ exports.setAllItemMapping = async (req, res) => {
     })
     template.save((err, template) => {
       if (err) {
-        res.status(500).json({
-          error: err,
-        });
+        // res.status(500).json({
+        //   error: err,
+        // });
+        console.log(err);
       }
       console.log("template saved in db for cafe id",cafeIds[i]);
     });
@@ -158,7 +142,6 @@ exports.setAllItemMapping = async (req, res) => {
 };
 
 exports.getUnitMenu = async (req, res) => {
-  //console.log(req.body);
   let requestLength = req.body.length;
 
   let tempData = {};

@@ -3,10 +3,12 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Button, MenuItem, Select, Input } from "@mui/material";
 import { Typography } from "@mui/material";
+import {useParams} from 'react-router-dom';
 
 import axios from "axios";
 
 const ItemForm = ({ blockIds, proceed }) => {
+  let {screenId,tempId} = useParams();
   let all_block_id = blockIds;
   const [titles, setTitles] = useState([]);
 
@@ -123,6 +125,8 @@ const ItemForm = ({ blockIds, proceed }) => {
     formData.append("dummy_data", JSON.stringify([...titles]));
     formData.append("coordinates", localStorage.getItem("coordinates"));
     formData.append("cafeIds",  localStorage.getItem("cafe_ids"));
+    formData.append("screenId",screenId);
+    formData.append("templateId",tempId);
 
     let response = await axios
       .post("http://localhost:8000/setItemMapping", formData, {
