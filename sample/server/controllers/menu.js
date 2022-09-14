@@ -11,6 +11,49 @@ const Template = require("../model/template");
 const {
   mergeTemplateBackground,
 } = require("../services/mergeTemplateBackground");
+
+
+exports.cafeGenerated =async  (req,res)=>{
+  let screenId=req.body.screenId;
+  let templateId=req.body.templateId;
+  console.log(screenId,templateId)
+  let data=await Cafe.find({},screenId)
+  let screenIds=[];
+  for(let i in data){
+    screenIds.push(data[i][screenId].toString())
+  }
+  //console.log(screenIds)
+  let screen=await Screen.find({
+    '_id': { $in: screenIds}
+}, templateId );
+//console.log("scren",screen);
+let templateIds=[];
+for(let i in screen){
+  if(screen[i][templateId]){
+    templateIds.push(screen[i][templateId]?.toString())
+  }
+}
+//console.log(templateIds)
+let template=await Template.find({
+  '_id': { $in: templateIds}
+}, "cafeId" );
+//console.log(template)
+let cafeIds=[];
+for(let i in template){
+  if(template[i]['cafeId']){
+    cafeIds.push(template[i]['cafeId']?.toString())
+  }
+}
+console.log(cafeIds);
+
+
+
+
+
+  res.send(cafeIds)
+}
+
+
 exports.uploadTemplate = (req, res) => {
   console.log("uploadTemplate Called");
   let images = [];
