@@ -101,6 +101,24 @@ const ItemForm = ({ blockIds, proceed }) => {
           )
         );
       });
+    await fetch(JSON.parse(localStorage.getItem("imageBlob")))
+      .then((res) => res.blob())
+      .then((blob) => {
+        formData.append(
+          "template",
+          new File(
+            [
+              blob,
+              "template.png",
+              {
+                type: blob.type,
+                lastModified: new Date().getTime(),
+              },
+            ],
+            "template.png"
+          )
+        );
+      });
 
     formData.append("dummy_data", JSON.stringify([...titles]));
     formData.append("coordinates", localStorage.getItem("coordinates"));
