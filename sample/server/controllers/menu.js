@@ -176,39 +176,90 @@ exports.setAllItemMapping = async (req, res) => {
 };
 
 exports.getUnitMenu = async (req, res) => {
-
-  let requestLength = req.body.length;
+  
+  let cafes = req.body.cafes;
+  let slot= req.body.slot;
+  //console.log(cafes);
+  let slot_details={
+    't0':'DEFAULT',
+    't1':'DAY_SLOT_BREAKFAST',
+    't2':'DAY_SLOT_LUNCH',
+    't3':'DAY_SLOT_EVENING',
+    't4':'DAY_SLOT_DINNER',
+    't5':'DAY_SLOT_POST_DINNER',
+    't6':'DAY_SLOT_OVERNIGHT'
+  }
+ 
+  let data=[];
+  let daySlot=slot_details[slot];
+  
+  let dummy_data_response = await axios.get("http://15.206.45.59:8787/app-cache/unit/overall/1000/cafe/"+cafes[0]+"/"+daySlot+"?partnerId=1&brandId=1");
+  let dummyData = dummy_data_response.data["menuSequence"]["category"];
+  
+  //console.log(dummyData);
+  for(let i = 0; i < dummyData.length; i++){
+    data.push(dummyData[i].name.toLowerCase());
+  }
+  
 
   let tempData = {};
-  for (let i = 0; i < requestLength; i++) {
-    let response = await axios.get(
-      "https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/" + req.body[i]
-    );
+  let validIds = [];
+  //console.log("1");
+  console.log(data);
+  //console.log(cafes);
+  for (let i = 0; i <= cafes.length; i++) {
+    //console.log("1");
+ 
+
+      let response = await axios.get("http://15.206.45.59:8787/app-cache/unit/overall/1000/cafe/10000/DEFAULT?partnerId=1&brandId=1");
+    
+    
     //console.log("getting response for cafeid", req.body[i]);
-    let key = req.body[i];
+    let key = cafes[i];
     //console.log(key);
     tempData[key] = response.data;
     let cafeDetail = response.data["detail"];
-    Cafe.findOne({cafeId:cafeDetail['id']['id']},(err,cafeFound)=>{
-      if(cafeFound){
-          console.log("Cafe with id ",cafeDetail['id']['id'], " already exists!!!");
-      }
-      else{
-        const cafe = new Cafe({
-                  cafeId: cafeDetail['id']['id'],
-                  cafeDetail: cafeDetail
-                });
-        cafe.save((err, cafe) => {
-          if (err) {
-            res.status(500).json({
-              error: err,
-            });
-          }
+    let categories = response.data["menuSequence"]["category"];
+   console.log(categories.length)
+   
+    for(var j=0;j<parseInt(categories.length);j++){
+      //console.log(categories[j])
+      console.log(j)
+      var catName = categories[j]['name'].toLowerCase();
+      //console.log(catName);
+      if(catName !== 'chaayos select' && catName !== 'treniding now' && catName !== 'chaayos special' && catName !== 'new'){
+        if(data.includes(catName)){
           
-          console.log("New Cafe created in db with id",cafe['cafeId']);
-        });
+          console.log("here")
+          flag=false;
+
+          break;
+        }
       }
-    });
+    }
+
+    if(flag){
+      validIds.push(cafes[i]);
+      console.log(validIds);
+      Cafe.findOne({cafeId:cafeDetail['id']['id']},(err,cafeFound)=>{
+        if(cafeFound){
+            console.log("Cafe with id ",cafeDetail['id']['id'], " already exists!!!");
+        }
+        else{
+          const cafe = new Cafe({
+                    cafeId: cafeDetail['id']['id'],
+                    cafeDetail: cafeDetail
+                  });
+          cafe.save((err, cafe) => {
+            if (err) {
+             console.log("cafe not saved...")
+            }
+            
+            console.log("New Cafe created in db with id",cafe['cafeId']);
+          });
+        }
+      });
+    }  
   }
 
   let filepath = __dirname + "../../data/Menus/tempMenu.txt";
@@ -216,10 +267,10 @@ exports.getUnitMenu = async (req, res) => {
 
   fs.writeFile(filepath, myData, function (err) {
     if (err) {
-      res.send("error");
+      //res.send("error");
       return console.log(err);
     }
     console.log("Menu saved successfully!!");
-    res.send("success");
+    //res.send("success");
   });
 };

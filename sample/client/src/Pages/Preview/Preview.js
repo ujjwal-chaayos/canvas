@@ -40,9 +40,13 @@ const Preview = ({ type, manage , allData}) => {
       console.log("image-n", type);
       let cafes=JSON.parse(localStorage.getItem("cafe_ids"));
       console.log(cafes);
+      let data={
+        'cafes':cafes,
+        'slot':tempId
+      }
       let response = await axios.post(
         "http://localhost:8000/getUnitMenu",
-        cafes,
+        data,
         {
           headers: {
             "Content-Type": "application/json",
