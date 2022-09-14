@@ -29,7 +29,17 @@ const ChooseCafe = () => {
   const [cafe, setCafe] = useState([]);
   const [allSelect, setAllSelect] = useState(false);
 
+  const getMenuFromDB = async() =>{
+    let formData=new FormData();
+    formData.append("templateId",tempId);
+    formData.append("screenId",screenId);
+    let response = await axios.post("http://localhost:8000/cafeGenerated",formData);
+    localStorage.setItem("generatedCafes",JSON.stringify(response.data));
+  }
+
   useEffect(() => {
+    getMenuFromDB();
+
     function checkCafe(cafe) {
       return cafe["category"] === "CAFE";
     }
@@ -42,6 +52,10 @@ const ChooseCafe = () => {
       cafe["select"] = false;
 
       return cafe["live"] === true;
+    }
+
+    function checkfinal(cafe) {
+      return !(JSON.parse(localStorage.getItem("generatedCafes")).includes(cafe['id'].toString()))
     }
 
     let payload = {
@@ -66,9 +80,10 @@ const ChooseCafe = () => {
         let cafes = data.filter(checkCafe);
         let active = cafes.filter(checkActive);
         let isLive = active.filter(checkLive);
+        let final = isLive.filter(checkfinal);
         console.log("i am running again and again");
         // console.log(isLive);
-        setCafe(isLive);
+        setCafe(final);
       })
       .catch(function(error) {
         console.log(error);
