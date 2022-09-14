@@ -70,6 +70,7 @@ exports.setItemMapping = async (req, res) => {
 
 exports.getCafeGenerated = async (req,res) =>{
   console.log("get generated cafes called");
+  console.log(req.body);
   let cafe_generated_object=[{ }];
    cafe_generated_object = await Cafe.find({});
   //console.log(cafe_generated_object);
@@ -80,7 +81,7 @@ exports.getCafeGenerated = async (req,res) =>{
   });
   console.log("iiiiiiiiiiiiiiiiiiiiii");
   console.log(cafe_generated);
-  res.send(cafe_generated);
+  //res.send(cafe_generated);
 }
 exports.setAllItemMapping = async (req, res) => {
   console.log("setallmapping called");

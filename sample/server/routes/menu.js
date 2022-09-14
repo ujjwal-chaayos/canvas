@@ -13,6 +13,6 @@ router.post("/getUnitMenu", getUnitMenu);
 
 router.post("/setAllItemMapping", setAllItemMapping);
 
-router.get("/cafeGenerated",getCafeGenerated);
+router.post("/cafeGenerated",getCafeGenerated);
 
 module.exports = router;

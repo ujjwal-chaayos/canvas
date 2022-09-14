@@ -85,10 +85,12 @@ const ChooseCafe = () => {
 
   //console.log(cafe)
   const getGeneratedCafe = async() =>{
-    let response = await axios.get("http://localhost:8000/cafeGenerated");
+    let formData=new FormData();
+    formData.append("templateId",tempId);
+    formData.append("screenId",screenId);
+    let response = await axios.post("http://localhost:8000/cafeGenerated",formData);
     localStorage.setItem("generatedCafes",JSON.stringify(response.data));
   }
-  //console.log(localStorage.getItem("generatedCafes"));
   //console.log(typeof(localStorage.getItem("generatedCafes")));
   const selectAll = () => {
    
