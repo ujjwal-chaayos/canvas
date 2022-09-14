@@ -51,6 +51,10 @@ var resolvedPath = path
 const vegicon = resolvedPath + "/vegIcon.svg";
 const nonvegicon = resolvedPath + "/nonVegIcon.svg";
 const newicon = resolvedPath + "/newIcon.svg";
+const spicyicon = resolvedPath + "/Spicy.svg";
+const Healthyicon = resolvedPath + "/Healthy.svg";
+const Immunityicon = resolvedPath + "/ImmunityIcon.svg";
+const chaayosicon = resolvedPath + "/ChaayosSpecial.svg";
 
 let globalid;
 const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
@@ -220,12 +224,14 @@ async function writeMyTxt(
         break;
       }
     }
+    var iconX = itemX + itemWidth;
+    var iconY = itemY - itemHeight;
     if (itemArray[k].icons === "VEG") {
       let iconpoint = {};
 
       //iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
-      iconpoint.x = itemX + itemWidth + 10;
-      iconpoint.y = itemY - itemHeight - 10;
+      iconpoint.x = iconX + 10;
+      iconpoint.y = iconY - 10;
       iconpoint.w = Math.max(
         parseInt(itemStyle.size.Items),
         Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
@@ -251,11 +257,12 @@ async function writeMyTxt(
           iconpoint.h
         );
       });
+      iconX = iconpoint.w + 10;
     } else if (itemArray[k].icons === "NON_VEG") {
       let iconpoint = {};
       //iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
-      iconpoint.x = itemX + itemWidth + 10;
-      iconpoint.y = itemY - itemHeight - 10;
+      iconpoint.x = iconX + 10;
+      iconpoint.y = iconY - 10;
       iconpoint.w = Math.max(
         parseInt(itemStyle.size.Items),
         Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
@@ -281,11 +288,107 @@ async function writeMyTxt(
           iconpoint.h
         );
       });
+      iconX = iconpoint.w+10;
+    }
+    if(itemArray[k].spicy=== true){
+      let iconpoint = {};
+      iconpoint.x = iconX + 10;
+      iconpoint.y = iconY - 10;
+      iconpoint.w = Math.max(
+        parseInt(itemStyle.size.Items),
+        Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
+      );
+      iconpoint.h = Math.max(
+        parseInt(itemStyle.size.Items),
+        Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
+      );
+      //console.log("veg",iconpoint,screen.measureText(text).width);
+      await loadImage(spicyicon).then((image) => {
+        screen.drawImage(
+          image,
+          iconpoint.x,
+          iconpoint.y,
+          iconpoint.w,
+          iconpoint.h
+        );
+        screen2.drawImage(
+          image,
+          iconpoint.x,
+          iconpoint.y,
+          iconpoint.w,
+          iconpoint.h
+        );
+      });
+      iconX = iconpoint.w + 10;
+
+    }
+    if(itemArray[k].healty===true){
+      let iconpoint = {};
+      iconpoint.x = iconX + 10;
+      iconpoint.y = iconY - 10;
+      iconpoint.w = Math.max(
+        parseInt(itemStyle.size.Items),
+        Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
+      );
+      iconpoint.h = Math.max(
+        parseInt(itemStyle.size.Items),
+        Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
+      );
+      //console.log("veg",iconpoint,screen.measureText(text).width);
+      await loadImage(Healthyicon).then((image) => {
+        screen.drawImage(
+          image,
+          iconpoint.x,
+          iconpoint.y,
+          iconpoint.w,
+          iconpoint.h
+        );
+        screen2.drawImage(
+          image,
+          iconpoint.x,
+          iconpoint.y,
+          iconpoint.w,
+          iconpoint.h
+        );
+      });
+      iconX = iconpoint.w + 10;
+
+    }
+    if(itemArray[k].immunityBooster === true){
+      let iconpoint = {};
+      iconpoint.x = iconX + 10;
+      iconpoint.y = iconY - 10;
+      iconpoint.w = Math.max(
+        parseInt(itemStyle.size.Items),
+        Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
+      );
+      iconpoint.h = Math.max(
+        parseInt(itemStyle.size.Items),
+        Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
+      );
+      //console.log("veg",iconpoint,screen.measureText(text).width);
+      await loadImage(Immunityicon).then((image) => {
+        screen.drawImage(
+          image,
+          iconpoint.x,
+          iconpoint.y,
+          iconpoint.w,
+          iconpoint.h
+        );
+        screen2.drawImage(
+          image,
+          iconpoint.x,
+          iconpoint.y,
+          iconpoint.w,
+          iconpoint.h
+        );
+      });
+      iconX = iconpoint.w + 10;
     }
     if (itemArray[k].new === true) {
       let iconpoint = {};
-      iconpoint.x = itemX + itemWidth + 100;
-      iconpoint.y = itemY - itemHeight - 70;
+      iconpoint.x = iconX + 40;
+      iconpoint.y = iconY - 60;
       iconpoint.w = 180;
       iconpoint.h = 180;
       //console.log("new",iconpoint);
@@ -299,29 +402,29 @@ async function writeMyTxt(
         );
       });
     } else if (itemArray[k].trendingNow === true) {
-      let iconpoint = {};
-      iconpoint.x = itemX + itemWidth + 100;
-      iconpoint.y = itemY - itemHeight - 70;
-      iconpoint.w = 180;
-      iconpoint.h = 180;
-      //console.log("new",iconpoint);
-      await loadImage(newicon).then((image) => {
-        screen.drawImage(
-          image,
-          iconpoint.x,
-          iconpoint.y,
-          iconpoint.w,
-          iconpoint.h
-        );
-      });
+      // let iconpoint = {};
+      // iconpoint.x = iconX + 40;
+      // iconpoint.y = iconY - 50;
+      // iconpoint.w = 180;
+      // iconpoint.h = 180;
+      // //console.log("new",iconpoint);
+      // await loadImage(newicon).then((image) => {
+      //   screen.drawImage(
+      //     image,
+      //     iconpoint.x,
+      //     iconpoint.y,
+      //     iconpoint.w,
+      //     iconpoint.h
+      //   );
+      // });
     } else if (itemArray[k].chaayosSpecial === true) {
       let iconpoint = {};
-      iconpoint.x = itemX + itemWidth + 100;
-      iconpoint.y = itemY - itemHeight - 70;
+      iconpoint.x = iconX + 40;
+      iconpoint.y = iconY - 30;
       iconpoint.w = 180;
       iconpoint.h = 180;
       //console.log("new",iconpoint);
-      await loadImage(newicon).then((image) => {
+      await loadImage(chaayosicon).then((image) => {
         screen.drawImage(
           image,
           iconpoint.x,
