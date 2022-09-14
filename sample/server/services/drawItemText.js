@@ -5,6 +5,11 @@ const fs = require("fs");
 const axios = require("axios");
 const tempMenu = require("../data/Menus/menu.json");
 const { compress } = require("compress-images/promise");
+const mongoose = require("mongoose");
+const Cafe = require("../model/cafe");
+const Screen = require("../model/screen");
+const Template = require("../model/template");
+
 const {
   drawText,
   drawImage,
@@ -727,7 +732,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   };
 }
 
-const drawItemText = async (imageArray, mapping, coordinates,  cafeIds,screenId,templateId,makeVideo) => {
+const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFlag) => {
   //let bufferLength = imageArray.length;
   console.log("DrawItemText is called...");
 
@@ -752,8 +757,6 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds,screenId,
     let bufferLength = imageArray.length;
     let menureq = menuJson[cafeIds[i].toString()];
     globalid = cafeIds[i].toString();
-    let sID =  screenId[i].toString();
-    let tID = templateId[i].toString();
     let jsondata = uiJsonConverter(menureq, mapping);
     let names = [];
     let c = 0;
@@ -772,42 +775,41 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds,screenId,
       response.push(result["1"]);
       response.push(result["2"]);
 
-        if(makeVideo){
-        names.push({
-        name: "./data/tmp/screen1_" + c +"_"+ globalid+"_" +sID+"_"+tID+ ".png",
+      names.push({
+        name: "./data/tmp/screen1" + c + globalid + ".png",
         data: result["data1"],
       });
       names.push({
-        name: "./data/tmp/screen2_" + c +"_"+ globalid+"_" +sID+"_"+tID+  ".png",
+        name: "./data/tmp/screen2" + c + globalid + ".png",
         data: result["data2"],
       });
       names.push({
-        name: "./data/tmp/screen11_" + c +"_"+ globalid+"_" +sID+"_"+tID+  ".png",
+        name: "./data/tmp/screen11" + c + globalid + ".png",
         data: result["data1"],
       });
       names.push({
-        name: "./data/tmp/screen21_" + c +"_"+ globalid+"_" +sID+"_"+tID+  ".png",
+        name: "./data/tmp/screen21" + c + globalid + ".png",
         data: result["data2"],
       });
       names.push({
-        name: "./data/tmp/screen12_" + c +"_"+ globalid+"_" +sID+"_"+tID+  ".png",
+        name: "./data/tmp/screen12" + c + globalid + ".png",
         data: result["data1"],
       });
       names.push({
-        name: "./data/tmp/screen22_" + c +"_"+ globalid+"_" +sID+"_"+tID+  ".png",
+        name: "./data/tmp/screen22" + c + globalid + ".png",
         data: result["data2"],
       });
+      bufferLength--;
       c++;
     }
-    bufferLength--;
-  }
-  
-  if(makeVideo){
-    console.log("calling img to video convertor for cafe id", cafeIds[i]);
-      await img2vid(names);
-      console.log("ended img to video convertor for cafe id", cafeIds[i]);
-  }
 
+    if(videoFlag){
+      console.log("calling img to video convertor for cafe id", cafeIds[i]);
+      await img2vid(names,cafeIds[i]);
+      console.log("ended img to video convertor for cafe id", cafeIds[i]);
+    }
+
+    
   }
 
   // let res =   await compress({
@@ -827,6 +829,7 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds,screenId,
   //   .run();
   //console.log(names);
   //
+
   // await ffmpeg.input('./data/tmp/screen%d.png').videoCodec('libx264')
   //   .output(`./data/output.mp4`)
   //   .on("end", () => {
@@ -838,7 +841,7 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds,screenId,
   return response[0];
 };
 
-const img2vid = async (names) => {
+const img2vid = async (names,cafeId) => {
   console.log("inside img to vid convertor!");
   let data = [];
   for (var name in names) {
@@ -846,8 +849,9 @@ const img2vid = async (names) => {
     data.push(names[name].name);
     console.log("image file saved...")
   }
-   await videoshow(data, videoOptions)
-    .save("menu_" + globalid +"_"+ Date.now() + ".mp4")
+  console.log(data);
+  await videoshow(data, videoOptions)
+    .save("testvideo" + globalid + Date.now() + ".mp4")
     .on("start", function (command) {
       console.log("ffmpeg process started:", command);
     })
@@ -858,10 +862,24 @@ const img2vid = async (names) => {
     .on("end", function (output) {
       console.error("Video created in:", output);
       var folder = "./data/tmp/";
-      for (var name in names) {
-        fs.unlinkSync(names[name].name);
-        console.log(" file "+names[name].name+" deleted...")
-      }
+      fs.readdir(folder, (err, files) => {
+        if (err) throw err;
+
+        for (const file of files) {
+          console.log(file + " : File Deleted Successfully.");
+          fs.unlinkSync(folder + file);
+        }
+      });
+      var fileBuffer=Buffer.from(output,'base64');
+      console.log(fileBuffer);
+      Template.findOneAndUpdate({cafeId: cafeId}, {$set:{cafeFinalMenuVideo:fileBuffer}},function(err, doc){
+        if(err){
+            console.log("Something wrong when updating data!");
+        }
+    
+        console.log("Video updated in DB with cafeid : ",cafeId);
+    });
+
     });
 
   console.log("img to vid return back...");
