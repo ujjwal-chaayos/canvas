@@ -184,6 +184,7 @@ exports.getUnitMenu = async (req, res) => {
   let tempData = {};
   let validIds = [];
   for (let i = 0; i < cafes.length; i++) {
+    console.log(cafes[i])
     let response = await axios.get(
       "http://15.206.45.59:8787/app-cache/unit/overall/1000/cafe/" +
         cafes[i] +
