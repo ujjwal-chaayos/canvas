@@ -144,25 +144,36 @@ exports.setAllItemMapping = async (req, res) => {
 exports.getUnitMenu = async (req, res) => {
 let cafes =JSON.parse( req.body.cafes);
 let dummyData = JSON.parse(req.body.dummy_data);
+let data =[];
+for(let i = 0; i < dummyData.length; i++){
+  data.push(dummyData[i].value);
+}
 console.log(req.body);
   let tempData = {};
+  let validIds = [];
   for (let i = 0; i < cafes.length; i++) {
+    let flag = true;
     let response = await axios.get(
       "https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/" + cafes[i]
     );
-    //console.log("getting response for cafeid", cafes[i]);
-    let key = cafes[i];
-    //console.log(key);
+
+    let key = cafes[i]; 
+
     tempData[key] = response.data;
     let cafeDetail = response.data["detail"];
     let categories = response.data["menuSequence"]["category"];
     for(let j=0;j<categories.length;j++){
-    if(!dummyData.includes(categories[j])){
-      flag=false;
-      break;
+      if(categories[j]['name'] !== 'Chaayos Select' && categories[j]['name'] !== 'Trending Now' && categories[j]['name'] !== 'Chaayos Special' && categories[j]['name'] !== 'New'){
+        if(!data.includes(categories[j].name)){
+          flag=false;
+          break;
+        }
+      }
+    
     }
-    }
+    
     if(flag){
+      validIds.push(cafes[i]);
       Cafe.findOne({cafeId:cafeDetail['id']['id']},(err,cafeFound)=>{
         if(cafeFound){
             console.log("Cafe with id ",cafeDetail['id']['id'], " already exists", cafeFound)
@@ -189,10 +200,10 @@ console.log(req.body);
 
   fs.writeFile(filepath, myData, function (err) {
     if (err) {
-      res.send("error");
       return console.log(err);
     }
     console.log("Hello World > helloworld.txt");
-    res.send("success");
   });
+  console.log(validIds);
+  res.send(validIds);
 };

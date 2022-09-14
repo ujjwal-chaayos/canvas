@@ -73,6 +73,7 @@ const Preview = ({ type, manage , allData}) => {
           },
         }
       );
+      localStorage.setItem("cafe_ids",JSON.parse(response.data));
       manage("image-n");
     }
     if (type === "menu") {
