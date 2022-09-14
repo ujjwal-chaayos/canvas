@@ -16,6 +16,7 @@ import {
 
 import { useNavigate, useParams } from "react-router-dom";
 
+
 const ChooseCafe = () => {
 
   
@@ -30,12 +31,18 @@ const ChooseCafe = () => {
   const [allSelect, setAllSelect] = useState(false);
 
   useEffect(() => {
+
+    getGeneratedCafe();
     function checkCafe(cafe) {
       return cafe["category"] === "CAFE";
     }
 
     function checkActive(cafe) {
       return cafe["status"] === "ACTIVE";
+    }
+
+    function checkfinal(cafe) {
+      return !(JSON.parse(localStorage.getItem("generatedCafes")).includes(cafe['id'].toString()))
     }
 
     function checkLive(cafe) {
@@ -53,8 +60,8 @@ const ChooseCafe = () => {
         "Content-Type": "application/json",
       },
     };
-    axios
-      .post(
+
+    axios.post(
         "http://dev.kettle.chaayos.com:9595/master-service/rest/v1/user-management/user/units",
         payload,
         customConfig
@@ -66,9 +73,10 @@ const ChooseCafe = () => {
         let cafes = data.filter(checkCafe);
         let active = cafes.filter(checkActive);
         let isLive = active.filter(checkLive);
+        let final = isLive.filter(checkfinal);
         console.log("i am running again and again");
-        // console.log(isLive);
-        setCafe(isLive);
+         console.log(final);
+        setCafe(final);
       })
       .catch(function(error) {
         console.log(error);
@@ -76,6 +84,12 @@ const ChooseCafe = () => {
   }, []);
 
   //console.log(cafe)
+  const getGeneratedCafe = async() =>{
+    let response = await axios.get("http://localhost:8000/cafeGenerated");
+    localStorage.setItem("generatedCafes",JSON.stringify(response.data));
+  }
+  //console.log(localStorage.getItem("generatedCafes"));
+  //console.log(typeof(localStorage.getItem("generatedCafes")));
   const selectAll = () => {
    
     let temp_cafe = [...cafe];
@@ -91,7 +105,6 @@ const ChooseCafe = () => {
 
     return cafe['select']===true;
   }
-
 
 
   const proceed = () => {

@@ -732,11 +732,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   };
 }
 
-<<<<<<< HEAD
-const drawItemText = async (imageArray, mapping, coordinates,  cafeIds,screenId,templateId,makeVideo) => {
-=======
 const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFlag) => {
->>>>>>> pre-dev
   //let bufferLength = imageArray.length;
   console.log("DrawItemText is called...");
 
@@ -808,23 +804,12 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFla
       });
       c++;
     }
-<<<<<<< HEAD
-    bufferLength--;
-  }
-  
-  if(makeVideo){
-    console.log("calling img to video convertor for cafe id", cafeIds[i]);
-      await img2vid(names);
-      console.log("ended img to video convertor for cafe id", cafeIds[i]);
-  }
-=======
 
     if(videoFlag){
       console.log("calling img to video convertor for cafe id", cafeIds[i]);
       await img2vid(names,cafeIds[i]);
       console.log("ended img to video convertor for cafe id", cafeIds[i]);
     }
->>>>>>> pre-dev
 
   }
 
@@ -864,14 +849,9 @@ const img2vid = async (names,cafeId) => {
     data.push(names[name].name);
     console.log("image file saved...")
   }
-<<<<<<< HEAD
-   await videoshow(data, videoOptions)
-    .save("menu_" + globalid +"_"+ Date.now() + ".mp4")
-=======
   console.log(data);
   await videoshow(data, videoOptions)
     .save("testvideo" + globalid + Date.now() + ".mp4")
->>>>>>> pre-dev
     .on("start", function (command) {
       console.log("ffmpeg process started:", command);
     })
@@ -882,12 +862,6 @@ const img2vid = async (names,cafeId) => {
     .on("end", function (output) {
       console.error("Video created in:", output);
       var folder = "./data/tmp/";
-<<<<<<< HEAD
-      for (var name in names) {
-        fs.unlinkSync(names[name].name);
-        console.log(" file "+names[name].name+" deleted...")
-      }
-=======
       fs.readdir(folder, (err, files) => {
         if (err) throw err;
 
@@ -898,23 +872,49 @@ const img2vid = async (names,cafeId) => {
       });
       var fileBuffer=Buffer.from(output,'base64');
       console.log(fileBuffer);
-      Template.findOneAndUpdate({cafeId: cafeId}, {$set:{cafeFinalMenuVideo:fileBuffer}},function(err, doc){
+      Template.findOneAndUpdate({cafeId: cafeId}, {$set:{cafeFinalMenuVideo:fileBuffer}},function(err, template){
         if(err){
-            console.log("Something wrong when updating data!");
+            console.log("Something wrong when updating data of Template!");
         }
-    
+        let templateObjectId=template._id;
+        let templateId=template.templateId;
+        let screenObjectId=template.screenObjectId;
+        let dynSet = {$set: {}};
+        dynSet.$set[templateId] = templateObjectId;
+        console.log("templateObjectId ",templateObjectId);
+        console.log("templateId ",templateId);
+        console.log("screenObjectId ",screenObjectId);
+        console.log("dynSet ",dynSet);
+
+        Screen.findOneAndUpdate({_id:screenObjectId},dynSet,function(err,screen){
+          if(err){
+            console.log("Something wrong when updating data of Screen!");
+          }
+          let screenObjectId=screen._id;
+          let screenId=screen.screenId;
+          let cafeObjectId=screen.cafeObjectId;
+          let dynSet = {$set: {}};
+          dynSet.$set[screenId] = screenObjectId;
+          console.log("screenObjectId ",screenObjectId);
+          console.log("screenId ",screenId);
+          console.log("cafeObjectId ",cafeObjectId);
+          console.log("dynSet ",dynSet);
+          Cafe.findOneAndUpdate({_id:cafeObjectId},dynSet,function(err,cafe){
+            if(err){
+              console.log("Something wrong when updating data of Cafe!");
+            }
+            console.log("Cafe updated in DB...",cafe)
+          })
+          console.log("Screen updated in DB...")
+        })  
         console.log("Video updated in DB with cafeid : ",cafeId);
     });
+      
 
->>>>>>> pre-dev
     });
 
   console.log("img to vid return back...");
 };
-
-
-
-
-
+}
 
 module.exports = drawItemText;

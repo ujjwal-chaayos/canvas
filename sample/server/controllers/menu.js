@@ -11,6 +11,7 @@ const Template = require("../model/template");
 const {
   mergeTemplateBackground,
 } = require("../services/mergeTemplateBackground");
+const cafe = require("../model/cafe");
 exports.uploadTemplate = (req, res) => {
   console.log("uploadTemplate Called");
   let images = [];
@@ -66,6 +67,21 @@ exports.setItemMapping = async (req, res) => {
   //console.log(mydata);
   res.send(mydata);
 };
+
+exports.getCafeGenerated = async (req,res) =>{
+  console.log("get generated cafes called");
+  let cafe_generated_object=[{ }];
+   cafe_generated_object = await Cafe.find({});
+  //console.log(cafe_generated_object);
+  let cafe_generated=[];
+  Object.entries(cafe_generated_object).forEach(([_, value]) => {
+  console.log(value['cafeId'])
+  cafe_generated.push(value['cafeId'])
+  });
+  console.log("iiiiiiiiiiiiiiiiiiiiii");
+  console.log(cafe_generated);
+  res.send(cafe_generated);
+}
 exports.setAllItemMapping = async (req, res) => {
   console.log("setallmapping called");
   //console.log(req.files);
