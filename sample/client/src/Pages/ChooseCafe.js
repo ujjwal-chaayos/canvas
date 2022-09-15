@@ -28,6 +28,7 @@ const ChooseCafe = () => {
   const [cafe, setCafe] = useState([]);
   const [allSelect, setAllSelect] = useState(false);
   const [category, setCategory] = useState([]);
+  const [block, setBlock] = useState([]);
 
   const getMenuFromDB = async () => {
     let formData = new FormData();
@@ -63,6 +64,8 @@ const ChooseCafe = () => {
       );
     }
 
+    
+
 
    async function doSomething (cafeIds,final) {
     const fetchData = async (id) => {
@@ -85,7 +88,18 @@ const ChooseCafe = () => {
       return { cafeId: id, categoryArray: names };
     };
 
-
+      function dothis (cafe) {
+        console.log(cafe)
+        let tempCafe={...cafe};
+        console.log(final)
+        let obj = final.find(data => data.id.toString() === cafe['cafeId']);
+        console.log(obj)
+        tempCafe['cafeName']=obj['name']
+        tempCafe['region']=obj['region']
+        cafe=tempCafe;
+        console.log(tempCafe)
+        return cafe=tempCafe; 
+      }
 
       let cafeMenu=[]
       for (let i in cafeIds) {
@@ -95,8 +109,40 @@ const ChooseCafe = () => {
         
       }
 
+      const newArr = cafeMenu.map(object => {
+        let obj = final.find(data => data.id.toString() === object['cafeId']);
+        
+        if (object['cafeId']=== obj.id.toString()) {
+          
+          return {...object, cafeName: obj.name, cafeArea: obj.region, categoryLen: object.categoryArray.length};
+        }
+        return object;
+      });
+      console.log(newArr);
+      
+      const groupByElement = arr => {
+        const hash = Object.create(null),
+        result = [];
+        arr.forEach(el => {
+           if (!hash[el.categoryLen]) {
+              hash[el.categoryLen] = [];
+              result.push(hash[el.categoryLen]);
+           };
+           hash[el.categoryLen].push(el);
+        });
 
-      console.log(cafeMenu)
+        
+        return result;
+     };
+
+      let result=groupByElement(newArr);
+      console.log(result)
+      setBlock(result);
+      //let data=cafeMenu.filter(dothis);
+      //console.log(data);
+     
+      
+      
       setCafe(final)
     }
 
@@ -290,6 +336,14 @@ const ChooseCafe = () => {
         {cafe.length === 0 ? (
           <CircularProgress />
         ) : (
+          // block.map(data, key) => (
+          //   <Box sx={{ p: 1,
+          //     m: 1,
+          //     bgcolor: "background.main",}}>
+
+
+          //   </Box>
+          // )
           cafe.map((data, key) => (
             <Typography
               variant="body1"
