@@ -114,7 +114,7 @@ const ChooseCafe = () => {
         
         if (object['cafeId']=== obj.id.toString()) {
           
-          return {...object, cafeName: obj.name, cafeArea: obj.region, categoryLen: object.categoryArray.length};
+          return {...object, cafeName: obj.name, cafeArea: obj.region, categoryLen: object.categoryArray.length, select:object.select};
         }
         return object;
       });
@@ -220,6 +220,7 @@ const ChooseCafe = () => {
 
   //console.log(cafe)
   const selectAll = () => {
+
     let temp_cafe = [...cafe];
     let value = allSelect;
     temp_cafe.forEach(function(item, index) {
@@ -234,27 +235,60 @@ const ChooseCafe = () => {
   };
 
   const proceed = () => {
-    let temp_cafe = [...cafe];
-    let filtered_cafe = temp_cafe.filter(selected_cafe);
     let id_arr = [];
+    for(let i in block){
+      let newCafe=[...block[i]];
+      console.log(newCafe)
+      let temp_cafe = [...newCafe];
+      console.log(temp_cafe)
+    let filtered_cafe = temp_cafe.filter(selected_cafe);
+    console.log(filtered_cafe);
     filtered_cafe.forEach(function(item, index) {
-      id_arr.push(item["id"]);
+      if(item["cafeId"]){
+        id_arr.push(parseInt(item["cafeId"]));
+      }
+
     });
+    }
+    
+   
+    console.log(id_arr)
     localStorage.setItem("cafe_ids", JSON.stringify(id_arr));
-    choose();
+  
+  choose();
+    
   };
 
-  const selectCafe = (e, k) => {
+  const selectCafe = (e, k,check) => {
+    console.log(e,k,check);
     console.log(k);
-    let temp_cafe = [...cafe];
+    let newCafes=[];
+    let index;
+    for(let i in block){
+      if(block[i][0]['categoryLen']===check){
+        index=i;
+      }
+    }
+    console.log(block[index])
+    newCafes=[...block[index]]
+    console.log(newCafes)
+    let temp_cafe = [...newCafes];
+    //console.log(temp_cafe)
     console.log(temp_cafe);
-    let cafe_detail = temp_cafe.find((cafe) => cafe["id"] === k);
-    let cafe_detail_index = temp_cafe.findIndex((cafe) => cafe["id"] === k);
-    console.log(cafe_detail, cafe_detail_index);
+    let cafe_detail = temp_cafe.find((cafe) => cafe["cafeId"] === k);
+    console.log(cafe_detail)
+    let cafe_detail_index = temp_cafe.findIndex((cafe) => cafe["cafeId"] === k);
+    console.log(cafe_detail_index)
+    //console.log(cafe_detail, cafe_detail_index);
     cafe_detail["select"] = !cafe_detail["select"];
     //console.log(cafe_detail);
     temp_cafe[cafe_detail_index] = cafe_detail;
     //console.log(temp_cafe)
+    let faultArr=[...block];
+    
+    faultArr[index]=temp_cafe;
+
+    setBlock(faultArr);
     setCafe(temp_cafe);
   };
 
@@ -330,53 +364,57 @@ const ChooseCafe = () => {
           borderRadius: 1,
         }}
       >
-        {
-          //console.log(category)
-        }
+       
         {cafe.length === 0 ? (
           <CircularProgress />
-        ) : (
-          // block.map(data, key) => (
-          //   <Box sx={{ p: 1,
-          //     m: 1,
-          //     bgcolor: "background.main",}}>
+        ) : ( 
+          block.map((blockData, key) => (
+            <Box sx={{ p: 1,
+              m: 1,
+              bgcolor: "background.main"}}>
+                <Typography variant="h4"
+                        component="h3"
+                        align="center"
+                        sx={{ color: "#303030",p:2 }}>Group {blockData[0]['categoryLen']}</Typography>
+                {
+                    blockData.map((data, key) => (
+                      <Typography
+                        variant="body1"
+                        component="h3"
+                        align="center"
+                        sx={{ color: "#303030" }}
+                      >
+                        <Box
+                          style={{
+                            backgroundColor: `${
+                              data["select"] === true ? "#E9B44C" : "#E4D6A7"
+                            }`,
+                          }}
+                          key={data["cafeId"]}
+                          sx={{
+                            p: 1.5,
+                            m: 0.5,
+                            cursor: "pointer",
+                            borderRadius: 1,
+                            border: 1,
+                            "&:hover": {
+                              backgroundColor: "primary.main",
+          
+                              opacity: [0.9, 0.8, 0.7],
+                            },
+                          }}
+                          onClick={(e) => selectCafe(e, data["cafeId"], data["categoryLen"])}
+                        >
+                          {" "}
+                          {data["cafeName"]} ({data["cafeArea"]})
+                        </Box>
+                      </Typography>
+                    ))
+                }
 
-
-          //   </Box>
-          // )
-          cafe.map((data, key) => (
-            <Typography
-              variant="body1"
-              component="h3"
-              align="center"
-              sx={{ color: "#303030" }}
-            >
-              <Box
-                style={{
-                  backgroundColor: `${
-                    data["select"] === true ? "#E9B44C" : "#E4D6A7"
-                  }`,
-                }}
-                key={data["id"]}
-                sx={{
-                  p: 1.5,
-                  m: 0.5,
-                  cursor: "pointer",
-                  borderRadius: 1,
-                  border: 1,
-                  "&:hover": {
-                    backgroundColor: "primary.main",
-
-                    opacity: [0.9, 0.8, 0.7],
-                  },
-                }}
-                onClick={(e) => selectCafe(e, data["id"])}
-              >
-                {" "}
-                {data["name"]} ({data["region"]})
-              </Box>
-            </Typography>
+            </Box>
           ))
+        
         )}
       </Box>
     </Box>
