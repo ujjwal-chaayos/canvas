@@ -37,8 +37,18 @@ exports.uploadProductImages = (req, res) => {
 };
 
 exports.getCafeGenerated = async(req,res) => {
-  console.log("getting generated cafe details");
-  console.log(req.body);
+  console.log("get generated cafes called");
+  let cafe_generated_object=[{ }];
+   cafe_generated_object = await Cafe.find({});
+  //console.log(cafe_generated_object);
+  let cafe_generated=[];
+  Object.entries(cafe_generated_object).forEach(([_, value]) => {
+  console.log(value['cafeId'])
+  cafe_generated.push(value['cafeId'])
+  });
+  console.log("iiiiiiiiiiiiiiiiiiiiii");
+  console.log(cafe_generated);
+  res.send(cafe_generated);
 }
 
 exports.setItemMapping = async (req, res) => {

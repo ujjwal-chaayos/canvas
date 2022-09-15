@@ -5,7 +5,7 @@ import Home from "../Pages/1-HomePage/Home";
 import Screen from "../Pages/2-ScreenPage/Screen";
 import ChooseCafe from "../Pages/ChooseCafe"
 import GenOrPick from "../Pages/3-PickTemplate/GenOrPick";
-
+import ImageForm from "../Pages/6-SelectImage/ImageForm";
 import ChooseTemplate from "../Pages/4-TemplatePage/ChooseTemplate";
 import UploadTemplate from "../Pages/5-UploadTemplate/UploadTemplate";
 

@@ -69,6 +69,7 @@ const ChooseCafe = () => {
         let active = cafes.filter(checkActive);
         let isLive = active.filter(checkLive);
         console.log("i am running again and again");
+        getSameCafeCategory(isLive);
         // console.log(isLive);
         setCafe(isLive);
       })
@@ -99,7 +100,47 @@ const ChooseCafe = () => {
     formData.append("screenId",screenId);
     formData.append("templateId",tempId);
     let response = await axios.post("http://localhost:8000/getCafeGenerated",formData);
-    console.log(response.data);
+    //console.log(response.data);
+    localStorage.setItem("cafeGenerated",JSON.stringify(response.data));
+  }
+
+  const getSameCafeCategory = async(isLive) =>{
+    // console.log(isLive);
+    // console.log(isLive.length);
+    // console.log(isLive[0]['id'])
+    let cafeobj13={},cafeobj10={};
+    console.log("i am called")
+    for(var i=0;i<isLive.length;i++){
+      if(isLive[i]['id']===26304)
+        continue;
+      let res = await axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/"+isLive[i]['id']);
+      //console.log(isLive[i]['id']);
+       let len= res.data.menuSequence.category.length;
+       if(len===13){
+       let cafeobj13={
+         "id": isLive[i]['id'],
+         "category" : res.data.menuSequence.category
+       };
+      }
+      if(len===10){
+        let cafeobj10={
+          "id": isLive[i]['id'],
+          "category" : res.data.menuSequence.category
+        };
+       }
+       //console.log(cafeobj);
+       //console.log(cafeobj10);
+       //console.log(cafeobj13);
+      
+      //  console.log("for 10");
+      //  if(res.data.menuSequence.category.length === 10)
+      //    console.log(res.data.id)
+      //    cafeId10.push(res.data.id);
+      // }
+      // if(res.data.menuSequence.category.length === 13){
+      //   console.log(res.data.id);
+      //   cafeId13.push(res.data.id);
+       }
   }
 
   const proceed = () => {
