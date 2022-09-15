@@ -15,27 +15,30 @@ import {
 } from "@mui/material";
 
 import { useNavigate, useParams } from "react-router-dom";
+let cafeSetData = {};
 
 const ChooseCafe = () => {
+  let navigate = useNavigate();
+  let { screenId, tempId } = useParams();
 
-  
-    let navigate = useNavigate();
-    let { screenId, tempId } = useParams();
-  
-    const choose = () => {
-      navigate(`/upload-template/${screenId}/${tempId}`);
-    };
+  const choose = () => {
+    navigate(`/upload-template/${screenId}/${tempId}`);
+  };
 
   const [cafe, setCafe] = useState([]);
   const [allSelect, setAllSelect] = useState(false);
+  const [category, setCategory] = useState([]);
 
-  const getMenuFromDB = async() =>{
-    let formData=new FormData();
-    formData.append("templateId",tempId);
-    formData.append("screenId",screenId);
-    let response = await axios.post("http://localhost:8000/cafeGenerated",formData);
-    localStorage.setItem("generatedCafes",JSON.stringify(response.data));
-  }
+  const getMenuFromDB = async () => {
+    let formData = new FormData();
+    formData.append("templateId", tempId);
+    formData.append("screenId", screenId);
+    let response = await axios.post(
+      "http://localhost:8000/cafeGenerated",
+      formData
+    );
+    localStorage.setItem("generatedCafes", JSON.stringify(response.data));
+  };
 
   useEffect(() => {
     getMenuFromDB();
@@ -55,7 +58,46 @@ const ChooseCafe = () => {
     }
 
     function checkfinal(cafe) {
-      return !(JSON.parse(localStorage.getItem("generatedCafes")).includes(cafe['id'].toString()))
+      return !JSON.parse(localStorage.getItem("generatedCafes")).includes(
+        cafe["id"].toString()
+      );
+    }
+
+
+   async function doSomething (cafeIds,final) {
+    const fetchData = async (id) => {
+      let response = await axios.get(
+        "https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/" + id
+      );
+      let category = response.data.menuSequence.category;
+      //console.log(category);
+      let names = [];
+      for (let i in category) {
+        names.push(category[i].name);
+      }
+      if (names) {
+        console.log("running");
+        setCategory((category) => [
+          ...category,
+          { cafeId: id, categoryArray: names },
+        ]);
+      }
+      return { cafeId: id, categoryArray: names };
+    };
+
+
+
+      let cafeMenu=[]
+      for (let i in cafeIds) {
+        if (cafeIds[i] === "26304") continue;
+        let data=await fetchData(cafeIds[i])
+        cafeMenu.push(data);
+        
+      }
+
+
+      console.log(cafeMenu)
+      setCafe(final)
     }
 
     let payload = {
@@ -73,26 +115,65 @@ const ChooseCafe = () => {
         payload,
         customConfig
       )
-      //axios.get('https://3fcf3b97-9107-4c99-a0ff-48a114bfe535.mock.pstmn.io/data')
+      // axios.get('https://3fcf3b97-9107-4c99-a0ff-48a114bfe535.mock.pstmn.io/data')
       .then(function(response) {
-        //console.log(response.data);
+        console.log(response.data);
         let data = response.data;
         let cafes = data.filter(checkCafe);
         let active = cafes.filter(checkActive);
         let isLive = active.filter(checkLive);
         let final = isLive.filter(checkfinal);
         console.log("i am running again and again");
-        // console.log(isLive);
-        setCafe(final);
+
+        let cafeIds = [];
+        for (let i in final) {
+          cafeIds.push(final[i]["id"].toString());
+        }
+        console.log(cafeIds);
+        // let cafeIds=[]
+        // for(let i in data){
+        //   cafeIds.push(data[i].UNIT_ID.toString());
+        // }
+        //console.log(cafeIds)
+
+        let menuCategoryArr = [];
+
+
+        doSomething(cafeIds,final);
+
+
+
+       
+
+        
+
+           
+
+        
+                  
+
+           
+
+
+         
+
+     
+        
+        // console.log(cafeMenu)
+       
+        // setCafe(final);
       })
       .catch(function(error) {
         console.log(error);
       });
+
+
+
+   
   }, []);
 
   //console.log(cafe)
   const selectAll = () => {
-   
     let temp_cafe = [...cafe];
     let value = allSelect;
     temp_cafe.forEach(function(item, index) {
@@ -102,23 +183,20 @@ const ChooseCafe = () => {
     setCafe(temp_cafe);
   };
 
-  const selected_cafe=(cafe)=>{
-
-    return cafe['select']===true;
-  }
-
-
+  const selected_cafe = (cafe) => {
+    return cafe["select"] === true;
+  };
 
   const proceed = () => {
-    let temp_cafe=[...cafe];
-    let filtered_cafe=temp_cafe.filter(selected_cafe);
-    let id_arr=[];
-    filtered_cafe.forEach(function (item, index) {
-        id_arr.push(item['id']);
+    let temp_cafe = [...cafe];
+    let filtered_cafe = temp_cafe.filter(selected_cafe);
+    let id_arr = [];
+    filtered_cafe.forEach(function(item, index) {
+      id_arr.push(item["id"]);
     });
-    localStorage.setItem("cafe_ids",JSON.stringify(id_arr));
+    localStorage.setItem("cafe_ids", JSON.stringify(id_arr));
     choose();
-  }
+  };
 
   const selectCafe = (e, k) => {
     console.log(k);
@@ -183,12 +261,17 @@ const ChooseCafe = () => {
           </Typography>
         </Box>
         <Box>
-          <Button size="large" variant="contained" sx={{ m: 3 }} onClick={()=>proceed()}>
+          <Button
+            size="large"
+            variant="contained"
+            sx={{ m: 3 }}
+            onClick={() => proceed()}
+          >
             Procced
           </Button>
         </Box>
       </Box>
-      
+
       <Box
         sx={{
           display: "flex",
@@ -201,6 +284,9 @@ const ChooseCafe = () => {
           borderRadius: 1,
         }}
       >
+        {
+          //console.log(category)
+        }
         {cafe.length === 0 ? (
           <CircularProgress />
         ) : (
