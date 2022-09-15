@@ -1,5 +1,5 @@
 const express = require("express");
-const {uploadTemplate, uploadProductImages, setItemMapping, getUnitMenu, setAllItemMapping,getCafeGenerated } = require("../controllers/menu");
+const {uploadTemplate, uploadProductImages, setItemMapping, getUnitMenu, setAllItemMapping, cafeGenerated } = require("../controllers/menu");
 
 const router = express.Router();
 
@@ -13,6 +13,6 @@ router.post("/getUnitMenu", getUnitMenu);
 
 router.post("/setAllItemMapping", setAllItemMapping);
 
-router.post("/getCafeGenerated",getCafeGenerated);
+router.post("/cafeGenerated", cafeGenerated)
 
 module.exports = router;

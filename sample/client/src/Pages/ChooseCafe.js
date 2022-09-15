@@ -15,23 +15,35 @@ import {
 } from "@mui/material";
 
 import { useNavigate, useParams } from "react-router-dom";
+let cafeSetData = {};
 
 const ChooseCafe = () => {
+  let navigate = useNavigate();
+  let { screenId, tempId } = useParams();
 
-  
-    let navigate = useNavigate();
-    let { screenId, tempId } = useParams();
-  
-    const choose = () => {
-      navigate(`/upload-template/${screenId}/${tempId}`);
-    };
+  const choose = () => {
+    navigate(`/upload-template/${screenId}/${tempId}`);
+  };
 
   const [cafe, setCafe] = useState([]);
   const [allSelect, setAllSelect] = useState(false);
+  const [category, setCategory] = useState([]);
+  const [block, setBlock] = useState([]);
+
+  const getMenuFromDB = async () => {
+    let formData = new FormData();
+    formData.append("templateId", tempId);
+    formData.append("screenId", screenId);
+    let response = await axios.post(
+      "http://localhost:8000/cafeGenerated",
+      formData
+    );
+    localStorage.setItem("generatedCafes", JSON.stringify(response.data));
+  };
 
   useEffect(() => {
+    getMenuFromDB();
 
-    getGeneratedCafe();
     function checkCafe(cafe) {
       return cafe["category"] === "CAFE";
     }
@@ -44,6 +56,94 @@ const ChooseCafe = () => {
       cafe["select"] = false;
 
       return cafe["live"] === true;
+    }
+
+    function checkfinal(cafe) {
+      return !JSON.parse(localStorage.getItem("generatedCafes")).includes(
+        cafe["id"].toString()
+      );
+    }
+
+    
+
+
+   async function doSomething (cafeIds,final) {
+    const fetchData = async (id) => {
+      let response = await axios.get(
+        "https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/" + id
+      );
+      let category = response.data.menuSequence.category;
+      //console.log(category);
+      let names = [];
+      for (let i in category) {
+        names.push(category[i].name);
+      }
+      if (names) {
+        console.log("running");
+        setCategory((category) => [
+          ...category,
+          { cafeId: id, categoryArray: names },
+        ]);
+      }
+      return { cafeId: id, categoryArray: names };
+    };
+
+      function dothis (cafe) {
+        console.log(cafe)
+        let tempCafe={...cafe};
+        console.log(final)
+        let obj = final.find(data => data.id.toString() === cafe['cafeId']);
+        console.log(obj)
+        tempCafe['cafeName']=obj['name']
+        tempCafe['region']=obj['region']
+        cafe=tempCafe;
+        console.log(tempCafe)
+        return cafe=tempCafe; 
+      }
+
+      let cafeMenu=[]
+      for (let i in cafeIds) {
+        if (cafeIds[i] === "26304") continue;
+        let data=await fetchData(cafeIds[i])
+        cafeMenu.push(data);
+        
+      }
+
+      const newArr = cafeMenu.map(object => {
+        let obj = final.find(data => data.id.toString() === object['cafeId']);
+        
+        if (object['cafeId']=== obj.id.toString()) {
+          
+          return {...object, cafeName: obj.name, cafeArea: obj.region, categoryLen: object.categoryArray.length};
+        }
+        return object;
+      });
+      console.log(newArr);
+      
+      const groupByElement = arr => {
+        const hash = Object.create(null),
+        result = [];
+        arr.forEach(el => {
+           if (!hash[el.categoryLen]) {
+              hash[el.categoryLen] = [];
+              result.push(hash[el.categoryLen]);
+           };
+           hash[el.categoryLen].push(el);
+        });
+
+        
+        return result;
+     };
+
+      let result=groupByElement(newArr);
+      console.log(result)
+      setBlock(result);
+      //let data=cafeMenu.filter(dothis);
+      //console.log(data);
+     
+      
+      
+      setCafe(final)
     }
 
     let payload = {
@@ -61,26 +161,65 @@ const ChooseCafe = () => {
         payload,
         customConfig
       )
-      //axios.get('https://3fcf3b97-9107-4c99-a0ff-48a114bfe535.mock.pstmn.io/data')
+      // axios.get('https://3fcf3b97-9107-4c99-a0ff-48a114bfe535.mock.pstmn.io/data')
       .then(function(response) {
-        //console.log(response.data);
+        console.log(response.data);
         let data = response.data;
         let cafes = data.filter(checkCafe);
         let active = cafes.filter(checkActive);
         let isLive = active.filter(checkLive);
+        let final = isLive.filter(checkfinal);
         console.log("i am running again and again");
-        getSameCafeCategory(isLive);
-        // console.log(isLive);
-        setCafe(isLive);
+
+        let cafeIds = [];
+        for (let i in final) {
+          cafeIds.push(final[i]["id"].toString());
+        }
+        console.log(cafeIds);
+        // let cafeIds=[]
+        // for(let i in data){
+        //   cafeIds.push(data[i].UNIT_ID.toString());
+        // }
+        //console.log(cafeIds)
+
+        let menuCategoryArr = [];
+
+
+        doSomething(cafeIds,final);
+
+
+
+       
+
+        
+
+           
+
+        
+                  
+
+           
+
+
+         
+
+     
+        
+        // console.log(cafeMenu)
+       
+        // setCafe(final);
       })
       .catch(function(error) {
         console.log(error);
       });
+
+
+
+   
   }, []);
 
   //console.log(cafe)
   const selectAll = () => {
-   
     let temp_cafe = [...cafe];
     let value = allSelect;
     temp_cafe.forEach(function(item, index) {
@@ -90,69 +229,20 @@ const ChooseCafe = () => {
     setCafe(temp_cafe);
   };
 
-  const selected_cafe=(cafe)=>{
-
-    return cafe['select']===true;
-  }
-
-  const getGeneratedCafe = async() =>{
-    let formData = new FormData();
-    formData.append("screenId",screenId);
-    formData.append("templateId",tempId);
-    let response = await axios.post("http://localhost:8000/getCafeGenerated",formData);
-    //console.log(response.data);
-    localStorage.setItem("cafeGenerated",JSON.stringify(response.data));
-  }
-
-  const getSameCafeCategory = async(isLive) =>{
-    // console.log(isLive);
-    // console.log(isLive.length);
-    // console.log(isLive[0]['id'])
-    let cafeobj13={},cafeobj10={};
-    console.log("i am called")
-    for(var i=0;i<isLive.length;i++){
-      if(isLive[i]['id']===26304)
-        continue;
-      let res = await axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/"+isLive[i]['id']);
-      //console.log(isLive[i]['id']);
-       let len= res.data.menuSequence.category.length;
-       if(len===13){
-       let cafeobj13={
-         "id": isLive[i]['id'],
-         "category" : res.data.menuSequence.category
-       };
-      }
-      if(len===10){
-        let cafeobj10={
-          "id": isLive[i]['id'],
-          "category" : res.data.menuSequence.category
-        };
-       }
-       //console.log(cafeobj);
-       //console.log(cafeobj10);
-       //console.log(cafeobj13);
-      
-      //  console.log("for 10");
-      //  if(res.data.menuSequence.category.length === 10)
-      //    console.log(res.data.id)
-      //    cafeId10.push(res.data.id);
-      // }
-      // if(res.data.menuSequence.category.length === 13){
-      //   console.log(res.data.id);
-      //   cafeId13.push(res.data.id);
-       }
-  }
+  const selected_cafe = (cafe) => {
+    return cafe["select"] === true;
+  };
 
   const proceed = () => {
-    let temp_cafe=[...cafe];
-    let filtered_cafe=temp_cafe.filter(selected_cafe);
-    let id_arr=[];
-    filtered_cafe.forEach(function (item, index) {
-        id_arr.push(item['id']);
+    let temp_cafe = [...cafe];
+    let filtered_cafe = temp_cafe.filter(selected_cafe);
+    let id_arr = [];
+    filtered_cafe.forEach(function(item, index) {
+      id_arr.push(item["id"]);
     });
-    localStorage.setItem("cafe_ids",JSON.stringify(id_arr));
+    localStorage.setItem("cafe_ids", JSON.stringify(id_arr));
     choose();
-  }
+  };
 
   const selectCafe = (e, k) => {
     console.log(k);
@@ -217,12 +307,17 @@ const ChooseCafe = () => {
           </Typography>
         </Box>
         <Box>
-          <Button size="large" variant="contained" sx={{ m: 3 }} onClick={()=>proceed()}>
+          <Button
+            size="large"
+            variant="contained"
+            sx={{ m: 3 }}
+            onClick={() => proceed()}
+          >
             Procced
           </Button>
         </Box>
       </Box>
-      
+
       <Box
         sx={{
           display: "flex",
@@ -235,9 +330,20 @@ const ChooseCafe = () => {
           borderRadius: 1,
         }}
       >
+        {
+          //console.log(category)
+        }
         {cafe.length === 0 ? (
           <CircularProgress />
         ) : (
+          // block.map(data, key) => (
+          //   <Box sx={{ p: 1,
+          //     m: 1,
+          //     bgcolor: "background.main",}}>
+
+
+          //   </Box>
+          // )
           cafe.map((data, key) => (
             <Typography
               variant="body1"

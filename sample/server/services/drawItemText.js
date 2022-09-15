@@ -732,7 +732,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   };
 }
 
-const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFlag) => {
+const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFlag, tempId) => {
   //let bufferLength = imageArray.length;
   console.log("DrawItemText is called...");
 
@@ -805,7 +805,7 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFla
 
     if(videoFlag){
       console.log("calling img to video convertor for cafe id", cafeIds[i]);
-      await img2vid(names,cafeIds[i]);
+      await img2vid(names,cafeIds[i],tempId);
       console.log("ended img to video convertor for cafe id", cafeIds[i]);
     }
 
@@ -841,7 +841,7 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFla
   return response[0];
 };
 
-const img2vid = async (names,cafeId) => {
+const img2vid = async (names,cafeId,tempId) => {
   console.log("inside img to vid convertor!");
   let data = [];
   for (var name in names) {
@@ -872,7 +872,7 @@ const img2vid = async (names,cafeId) => {
       });
       var fileBuffer=Buffer.from(output,'base64');
       console.log(fileBuffer);
-      Template.findOneAndUpdate({cafeId: cafeId}, {$set:{cafeFinalMenuVideo:fileBuffer}},function(err, template){
+      Template.findOneAndUpdate({$and:[{cafeId: cafeId},{templateId:tempId}]}, {$set:{cafeFinalMenuVideo:fileBuffer}},function(err, template){
         if(err){
             console.log("Something wrong when updating data of Template!");
         }
