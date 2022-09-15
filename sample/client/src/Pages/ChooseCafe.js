@@ -364,9 +364,7 @@ const ChooseCafe = () => {
           borderRadius: 1,
         }}
       >
-        {
-          console.log(block)
-        }
+       
         {cafe.length === 0 ? (
           <CircularProgress />
         ) : ( 
