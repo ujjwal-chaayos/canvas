@@ -835,7 +835,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   };
 }
 
-const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFlag) => {
+const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFlag, tempId) => {
   //let bufferLength = imageArray.length;
   console.log("DrawItemText is called...");
 
@@ -908,7 +908,7 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFla
 
     if(videoFlag){
       console.log("calling img to video convertor for cafe id", cafeIds[i]);
-      await img2vid(names,cafeIds[i]);
+      await img2vid(names,cafeIds[i],tempId);
       console.log("ended img to video convertor for cafe id", cafeIds[i]);
     }
 
@@ -944,7 +944,7 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFla
   return response[0];
 };
 
-const img2vid = async (names,cafeId) => {
+const img2vid = async (names,cafeId,tempId) => {
   console.log("inside img to vid convertor!");
   let data = [];
   for (var name in names) {
@@ -975,13 +975,44 @@ const img2vid = async (names,cafeId) => {
       });
       var fileBuffer=Buffer.from(output,'base64');
       console.log(fileBuffer);
-      Template.findOneAndUpdate({cafeId: cafeId}, {$set:{cafeFinalMenuVideo:fileBuffer}},function(err, doc){
+      Template.findOneAndUpdate({$and:[{cafeId: cafeId},{templateId:tempId}]}, {$set:{cafeFinalMenuVideo:fileBuffer}},function(err, template){
         if(err){
-            console.log("Something wrong when updating data!");
+            console.log("Something wrong when updating data of Template!");
         }
-    
+        let templateObjectId=template._id;
+        let templateId=template.templateId;
+        let screenObjectId=template.screenObjectId;
+        let dynSet = {$set: {}};
+        dynSet.$set[templateId] = templateObjectId;
+        console.log("templateObjectId ",templateObjectId);
+        console.log("templateId ",templateId);
+        console.log("screenObjectId ",screenObjectId);
+        console.log("dynSet ",dynSet);
+
+        Screen.findOneAndUpdate({_id:screenObjectId},dynSet,function(err,screen){
+          if(err){
+            console.log("Something wrong when updating data of Screen!");
+          }
+          let screenObjectId=screen._id;
+          let screenId=screen.screenId;
+          let cafeObjectId=screen.cafeObjectId;
+          let dynSet = {$set: {}};
+          dynSet.$set[screenId] = screenObjectId;
+          console.log("screenObjectId ",screenObjectId);
+          console.log("screenId ",screenId);
+          console.log("cafeObjectId ",cafeObjectId);
+          console.log("dynSet ",dynSet);
+          Cafe.findOneAndUpdate({_id:cafeObjectId},dynSet,function(err,cafe){
+            if(err){
+              console.log("Something wrong when updating data of Cafe!");
+            }
+            console.log("Cafe updated in DB...",cafe)
+          })
+          console.log("Screen updated in DB...")
+        })  
         console.log("Video updated in DB with cafeid : ",cafeId);
     });
+      
 
     });
 
