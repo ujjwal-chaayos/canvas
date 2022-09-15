@@ -72,7 +72,6 @@ exports.setAllItemMapping = async (req, res) => {
       images.push(req.files[file].data);
     }
   }
-
   let response = await drawItemText(
     images,
     JSON.parse(req.body.dummy_data),
