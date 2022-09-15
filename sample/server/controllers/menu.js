@@ -36,6 +36,11 @@ exports.uploadProductImages = (req, res) => {
   res.send(response);
 };
 
+exports.getCafeGenerated = async(req,res) => {
+  console.log("getting generated cafe details");
+  console.log(req.body);
+}
+
 exports.setItemMapping = async (req, res) => {
   console.log("setmapping called");
   let images = [];

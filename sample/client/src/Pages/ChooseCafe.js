@@ -30,6 +30,8 @@ const ChooseCafe = () => {
   const [allSelect, setAllSelect] = useState(false);
 
   useEffect(() => {
+
+    getGeneratedCafe();
     function checkCafe(cafe) {
       return cafe["category"] === "CAFE";
     }
@@ -92,7 +94,13 @@ const ChooseCafe = () => {
     return cafe['select']===true;
   }
 
-
+  const getGeneratedCafe = async() =>{
+    let formData = new FormData();
+    formData.append("screenId",screenId);
+    formData.append("templateId",tempId);
+    let response = await axios.post("http://localhost:8000/getCafeGenerated",formData);
+    console.log(response.data);
+  }
 
   const proceed = () => {
     let temp_cafe=[...cafe];
