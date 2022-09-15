@@ -245,7 +245,7 @@ const ChooseCafe = () => {
     console.log(filtered_cafe);
     filtered_cafe.forEach(function(item, index) {
       if(item["cafeId"]){
-        id_arr.push(item["cafeId"]);
+        id_arr.push(parseInt(item["cafeId"]));
       }
 
     });
@@ -374,10 +374,10 @@ const ChooseCafe = () => {
             <Box sx={{ p: 1,
               m: 1,
               bgcolor: "background.main"}}>
-                <Typography variant="h3"
+                <Typography variant="h4"
                         component="h3"
                         align="center"
-                        sx={{ color: "#303030" }}>Category {blockData[0]['categoryLen']}</Typography>
+                        sx={{ color: "#303030",p:2 }}>Group {blockData[0]['categoryLen']}</Typography>
                 {
                     blockData.map((data, key) => (
                       <Typography
