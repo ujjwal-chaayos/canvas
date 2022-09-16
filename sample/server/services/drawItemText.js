@@ -51,6 +51,10 @@ var resolvedPath = path
 const vegicon = resolvedPath + "/vegIcon.svg";
 const nonvegicon = resolvedPath + "/nonVegIcon.svg";
 const newicon = resolvedPath + "/newIcon.svg";
+const spicyicon = resolvedPath + "/Spicy.svg";
+const Healthyicon = resolvedPath + "/Healthy.svg";
+const Immunityicon = resolvedPath + "/ImmunityIcon.svg";
+const chaayosicon = resolvedPath + "/ChaayosSpecial.svg";
 
 let globalid;
 const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
@@ -174,7 +178,7 @@ async function writeMyTxt(
 
     drawText(screen, text, points, style);
     drawText(screen2, text, points, style);
-    //console.log(text);
+    console.log(text);
     let itemWidth = Math.floor(screen.measureText(text).width);
     let itemHeight = Math.floor(
       screen.measureText(text).actualBoundingBoxAscent
@@ -220,12 +224,14 @@ async function writeMyTxt(
         break;
       }
     }
+    var iconX = itemX + itemWidth;
+    var iconY = itemY - itemHeight;
     if (itemArray[k].icons === "VEG") {
       let iconpoint = {};
 
       //iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
-      iconpoint.x = itemX + itemWidth + 10;
-      iconpoint.y = itemY - itemHeight - 10;
+      iconpoint.x = iconX + 10;
+      iconpoint.y = iconY - 5;
       iconpoint.w = Math.max(
         parseInt(itemStyle.size.Items),
         Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
@@ -251,11 +257,12 @@ async function writeMyTxt(
           iconpoint.h
         );
       });
+      iconX = iconX + iconpoint.w + 10;
     } else if (itemArray[k].icons === "NON_VEG") {
       let iconpoint = {};
       //iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
-      iconpoint.x = itemX + itemWidth + 10;
-      iconpoint.y = itemY - itemHeight - 10;
+      iconpoint.x = iconX + 10;
+      iconpoint.y = iconY - 5;
       iconpoint.w = Math.max(
         parseInt(itemStyle.size.Items),
         Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
@@ -281,11 +288,108 @@ async function writeMyTxt(
           iconpoint.h
         );
       });
+      iconX =iconX + iconpoint.w+10;
+    }
+    if(itemArray[k].spicy===true){
+
+      let iconpoint = {};
+      iconpoint.x = iconX + 5;
+      iconpoint.y = iconY - 5;
+      iconpoint.w = Math.max(
+        parseInt(itemStyle.size.Items),
+        Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
+      );
+      iconpoint.h = Math.max(
+        parseInt(itemStyle.size.Items),
+        Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
+      );
+      //console.log("veg",iconpoint,screen.measureText(text).width);
+      await loadImage(spicyicon).then((image) => {
+        screen.drawImage(
+          image,
+          iconpoint.x,
+          iconpoint.y,
+          iconpoint.w,
+          iconpoint.h
+        );
+        screen2.drawImage(
+          image,
+          iconpoint.x,
+          iconpoint.y,
+          iconpoint.w,
+          iconpoint.h
+        );
+      });
+      iconX = iconX + iconpoint.w + 10;
+
+    }
+    if(itemArray[k].healty===true){
+      let iconpoint = {};
+      iconpoint.x = iconX + 5;
+      iconpoint.y = iconY - 5;
+      iconpoint.w = Math.max(
+        parseInt(itemStyle.size.Items),
+        Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
+      );
+      iconpoint.h = Math.max(
+        parseInt(itemStyle.size.Items),
+        Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
+      );
+      //console.log("veg",iconpoint,screen.measureText(text).width);
+      await loadImage(Healthyicon).then((image) => {
+        screen.drawImage(
+          image,
+          iconpoint.x,
+          iconpoint.y,
+          iconpoint.w,
+          iconpoint.h
+        );
+        screen2.drawImage(
+          image,
+          iconpoint.x,
+          iconpoint.y,
+          iconpoint.w,
+          iconpoint.h
+        );
+      });
+      iconX = iconX + iconpoint.w + 10;
+
+    }
+    if(itemArray[k].immunityBooster === true){
+      let iconpoint = {};
+      iconpoint.x = iconX + 5;
+      iconpoint.y = iconY - 5;
+      iconpoint.w = Math.max(
+        parseInt(itemStyle.size.Items),
+        Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
+      );
+      iconpoint.h = Math.max(
+        parseInt(itemStyle.size.Items),
+        Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
+      );
+      //console.log("veg",iconpoint,screen.measureText(text).width);
+      await loadImage(Immunityicon).then((image) => {
+        screen.drawImage(
+          image,
+          iconpoint.x,
+          iconpoint.y,
+          iconpoint.w,
+          iconpoint.h
+        );
+        screen2.drawImage(
+          image,
+          iconpoint.x,
+          iconpoint.y,
+          iconpoint.w,
+          iconpoint.h
+        );
+      });
+      iconX = iconpoint.w + 10;
     }
     if (itemArray[k].new === true) {
       let iconpoint = {};
-      iconpoint.x = itemX + itemWidth + 100;
-      iconpoint.y = itemY - itemHeight - 70;
+      iconpoint.x = iconX + 40;
+      iconpoint.y = iconY - 90;
       iconpoint.w = 180;
       iconpoint.h = 180;
       //console.log("new",iconpoint);
@@ -299,29 +403,29 @@ async function writeMyTxt(
         );
       });
     } else if (itemArray[k].trendingNow === true) {
-      let iconpoint = {};
-      iconpoint.x = itemX + itemWidth + 100;
-      iconpoint.y = itemY - itemHeight - 70;
-      iconpoint.w = 180;
-      iconpoint.h = 180;
-      //console.log("new",iconpoint);
-      await loadImage(newicon).then((image) => {
-        screen.drawImage(
-          image,
-          iconpoint.x,
-          iconpoint.y,
-          iconpoint.w,
-          iconpoint.h
-        );
-      });
+      // let iconpoint = {};
+      // iconpoint.x = iconX + 40;
+      // iconpoint.y = iconY - 80;
+      // iconpoint.w = 180;
+      // iconpoint.h = 180;
+      // //console.log("new",iconpoint);
+      // await loadImage(newicon).then((image) => {
+      //   screen.drawImage(
+      //     image,
+      //     iconpoint.x,
+      //     iconpoint.y,
+      //     iconpoint.w,
+      //     iconpoint.h
+      //   );
+      // });
     } else if (itemArray[k].chaayosSpecial === true) {
       let iconpoint = {};
-      iconpoint.x = itemX + itemWidth + 100;
-      iconpoint.y = itemY - itemHeight - 70;
+      iconpoint.x = iconX + 40;
+      iconpoint.y = iconY - 80;
       iconpoint.w = 180;
       iconpoint.h = 180;
       //console.log("new",iconpoint);
-      await loadImage(newicon).then((image) => {
+      await loadImage(chaayosicon).then((image) => {
         screen.drawImage(
           image,
           iconpoint.x,
@@ -732,7 +836,7 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
   };
 }
 
-const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFlag) => {
+const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFlag, tempId) => {
   //let bufferLength = imageArray.length;
   console.log("DrawItemText is called...");
 
@@ -807,7 +911,7 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFla
 
     if(videoFlag){
       console.log("calling img to video convertor for cafe id", cafeIds[i]);
-      await img2vid(names,cafeIds[i]);
+      await img2vid(names,cafeIds[i],tempId);
       console.log("ended img to video convertor for cafe id", cafeIds[i]);
     }
 
@@ -841,7 +945,7 @@ const drawItemText = async (imageArray, mapping, coordinates,  cafeIds, videoFla
   return response[0];
 };
 
-const img2vid = async (names,cafeId) => {
+const img2vid = async (names,cafeId,tempId) => {
   console.log("inside img to vid convertor!");
   let data = [];
   for (var name in names) {
@@ -872,7 +976,7 @@ const img2vid = async (names,cafeId) => {
       });
       var fileBuffer=Buffer.from(output,'base64');
       console.log(fileBuffer);
-      Template.findOneAndUpdate({cafeId: cafeId}, {$set:{cafeFinalMenuVideo:fileBuffer}},function(err, template){
+      Template.findOneAndUpdate({$and:[{cafeId: cafeId},{templateId:tempId}]}, {$set:{cafeFinalMenuVideo:fileBuffer}},function(err, template){
         if(err){
             console.log("Something wrong when updating data of Template!");
         }

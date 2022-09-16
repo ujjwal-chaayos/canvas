@@ -15,10 +15,11 @@ const ItemForm = ({ blockIds, proceed }) => {
   const getData = async () => {
     let localData=JSON.parse(localStorage.getItem("cafe_ids"));
     let id=localData[0];
-    const { data } = await axios.get("https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/"+id);
-    console.log(data['menuSequence']['category']);
+   
+    const { data } = await axios.get("http://15.206.45.59:8787/app-cache/unit/overall/1000/cafe/"+id+"/DAY_SLOT_BREAKFAST?partnerId=1&brandId=1");
+    console.log(id);
     let category_data=[...data['menuSequence']['category']];
-
+    console.log(data);
     let new_data=[];
     for(let i in category_data){
       let item_data={"title_id":"","value":"","block_id":""}

@@ -94,14 +94,20 @@ const uiJsonConverter = (menu, mapping) => {
         for (let k = 0; k < pids.length; k++) {
           let id = pids[k].toString();
           if (id in productPrices) {
+            var indicatorset = new Set(products[id].indicator);
+            var tagset = new Set(products[id].tag);
             item.push({
               item_id: id,
-              value: products[id].name,
+              value: products[id].alias != null ? products[id].alias: products[id].name,
               icons: products[id].attr,
               active: products[id].active,
-              new: id.toString() in np ? true : false,
+              new: id.toString() in np ? true : false || tagset.has("NEW")? true :false,
               trendingNow: id.toString() in tt ? true : false,
               chaayosSpecial: id.toString() in cs ? true : false,
+              spicy : indicatorset.has("Spicy")? true :false,
+              healty : indicatorset.has("Healthy")? true :false,
+              immunityBooster: tagset.has("Immunity Booster")? true :false
+
             });
             let values = [];
             for (let h = 0; h < productPrices[id].prices.length; h++) {

@@ -121,7 +121,7 @@ const UploadTemplate = () => {
 
   return (
     <Box
-      position="absolute"
+      position="fixed"
       top={0}
       left={0}
       height="100vh"
