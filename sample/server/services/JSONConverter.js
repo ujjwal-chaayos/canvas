@@ -98,7 +98,7 @@ const uiJsonConverter = (menu, mapping) => {
             var tagset = new Set(products[id].tag);
             item.push({
               item_id: id,
-              value: products[id].name,
+              value: products[id].alias != null ? products[id].alias: products[id].name,
               icons: products[id].attr,
               active: products[id].active,
               new: id.toString() in np ? true : false || tagset.has("NEW")? true :false,

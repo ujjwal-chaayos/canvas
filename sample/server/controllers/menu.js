@@ -19,7 +19,7 @@ exports.cafeGenerated = async (req, res) => {
   let data = await Cafe.find({}, screenId);
   let screenIds = [];
   for (let i in data) {
-    screenIds.push(data[i][screenId].toString());
+    screenIds.push(data[i][screenId]?.toString());
   }
   //console.log(screenIds)
   let screen = await Screen.find(
@@ -49,7 +49,7 @@ exports.cafeGenerated = async (req, res) => {
       cafeIds.push(template[i]["cafeId"]?.toString());
     }
   }
-  console.log(cafeIds);
+  //console.log(cafeIds);
   res.send(cafeIds);
 };
 
@@ -238,11 +238,11 @@ exports.setAllItemMapping = async (req, res) => {
 
 exports.getUnitMenu = async (req, res) => {
   let requestLength = req.body.length;
-
+  console.log(req.body);
   let tempData = {};
   for (let i = 0; i < requestLength; i++) {
     let response = await axios.get(
-      "https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/" + req.body[i]
+      "http://15.206.45.59:8787/app-cache/unit/overall/1000/cafe/"+req.body[i]+"/DAY_SLOT_BREAKFAST?partnerId=1&brandId=1"
     );
     //console.log("getting response for cafeid", req.body[i]);
     let key = req.body[i];
