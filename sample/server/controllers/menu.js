@@ -19,7 +19,7 @@ exports.cafeGenerated = async (req, res) => {
   let data = await Cafe.find({}, screenId);
   let screenIds = [];
   for (let i in data) {
-    screenIds.push(data[i][screenId].toString());
+    screenIds.push(data[i][screenId]?.toString());
   }
   //console.log(screenIds)
   let screen = await Screen.find(
@@ -49,7 +49,7 @@ exports.cafeGenerated = async (req, res) => {
       cafeIds.push(template[i]["cafeId"]?.toString());
     }
   }
-  console.log(cafeIds);
+  //console.log(cafeIds);
   res.send(cafeIds);
 };
 
@@ -128,7 +128,6 @@ exports.setAllItemMapping = async (req, res) => {
       images.push(req.files[file].data);
     }
   }
-
   let response = await drawItemText(
     images,
     JSON.parse(req.body.dummy_data),
@@ -254,13 +253,25 @@ exports.setAllItemMapping = async (req, res) => {
 
 exports.getUnitMenu = async (req, res) => {
   let requestLength = req.body.length;
-
+  console.log("get unit menu called")
+  let slot_details = {
+    t0: "DEFAULT",
+    t1: "DAY_SLOT_BREAKFAST",
+    t2: "DAY_SLOT_LUNCH",
+    t3: "DAY_SLOT_EVENING",
+    t4: "DAY_SLOT_DINNER",
+    t5: "DAY_SLOT_POST_DINNER",
+    t6: "DAY_SLOT_OVERNIGHT",
+  };
+  let slot = slot_details[req.body.templateId];
+  console.log(req.body)
   let tempData = {};
   for (let i = 0; i < requestLength; i++) {
     let response = await axios.get(
-      "https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/" + req.body[i]
+      //"http://15.206.45.59:8787/app-cache/unit/overall/1000/cafe/"+req.body.cafes[i]+"/"+slot+"?partnerId=1&brandId=1"
+      "https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/"+(req.body[i])
     );
-    //console.log("getting response for cafeid", req.body[i]);
+    console.log("getting response for cafeid", req.body[i]);
     let key = req.body[i];
     //console.log(key);
     tempData[key] = response.data;

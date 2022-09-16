@@ -69,8 +69,20 @@ const ChooseCafe = () => {
 
    async function doSomething (cafeIds,final) {
     const fetchData = async (id) => {
+      // let slot_details = {
+      //   t0: "DEFAULT",
+      //   t1: "DAY_SLOT_BREAKFAST",
+      //   t2: "DAY_SLOT_LUNCH",
+      //   t3: "DAY_SLOT_EVENING",
+      //   t4: "DAY_SLOT_DINNER",
+      //   t5: "DAY_SLOT_POST_DINNER",
+      //   t6: "DAY_SLOT_OVERNIGHT",
+      // };
+      //let slot = slot_details[tempId];
+      //console.log(slot);
       let response = await axios.get(
-        "https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/" + id
+        //"http://15.206.45.59:8787/app-cache/unit/overall/1000/cafe/"+id+"/"+slot+"?partnerId=1&brandId=1"
+        "https://app.chaayos.com/app-cache/unit/overall/1000/CAFE/"+id
       );
       let category = response.data.menuSequence.category;
       //console.log(category);
@@ -155,8 +167,7 @@ const ChooseCafe = () => {
         "Content-Type": "application/json",
       },
     };
-    axios
-      .post(
+    axios.post(
         "http://dev.kettle.chaayos.com:9595/master-service/rest/v1/user-management/user/units",
         payload,
         customConfig

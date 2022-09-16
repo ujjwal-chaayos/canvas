@@ -39,6 +39,10 @@ const Preview = ({ type, manage , allData}) => {
     if (type === "image") {
       console.log("image-n", type);
       let cafes=JSON.parse(localStorage.getItem("cafe_ids"));
+      // let formData = new FormData();
+      // formData.append("cafes",(cafes));
+      // formData.append("templateId",tempId);
+      // formData.append("screenId",screenId);
       console.log(cafes);
       let response = await axios.post(
         "http://localhost:8000/getUnitMenu",

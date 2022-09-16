@@ -178,7 +178,7 @@ async function writeMyTxt(
 
     drawText(screen, text, points, style);
     drawText(screen2, text, points, style);
-    //console.log(text);
+    console.log(text);
     let itemWidth = Math.floor(screen.measureText(text).width);
     let itemHeight = Math.floor(
       screen.measureText(text).actualBoundingBoxAscent
@@ -231,7 +231,7 @@ async function writeMyTxt(
 
       //iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
       iconpoint.x = iconX + 10;
-      iconpoint.y = iconY - 10;
+      iconpoint.y = iconY - 5;
       iconpoint.w = Math.max(
         parseInt(itemStyle.size.Items),
         Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
@@ -257,12 +257,12 @@ async function writeMyTxt(
           iconpoint.h
         );
       });
-      iconX = iconpoint.w + 10;
+      iconX = iconX + iconpoint.w + 10;
     } else if (itemArray[k].icons === "NON_VEG") {
       let iconpoint = {};
       //iconpoint.x = itemX + Math.floor(screen.measureText(text).width) + 10;
       iconpoint.x = iconX + 10;
-      iconpoint.y = iconY - 10;
+      iconpoint.y = iconY - 5;
       iconpoint.w = Math.max(
         parseInt(itemStyle.size.Items),
         Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
@@ -288,12 +288,13 @@ async function writeMyTxt(
           iconpoint.h
         );
       });
-      iconX = iconpoint.w+10;
+      iconX =iconX + iconpoint.w+10;
     }
-    if(itemArray[k].spicy=== true){
+    if(itemArray[k].spicy===true){
+
       let iconpoint = {};
-      iconpoint.x = iconX + 10;
-      iconpoint.y = iconY - 10;
+      iconpoint.x = iconX + 5;
+      iconpoint.y = iconY - 5;
       iconpoint.w = Math.max(
         parseInt(itemStyle.size.Items),
         Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
@@ -319,13 +320,13 @@ async function writeMyTxt(
           iconpoint.h
         );
       });
-      iconX = iconpoint.w + 10;
+      iconX = iconX + iconpoint.w + 10;
 
     }
     if(itemArray[k].healty===true){
       let iconpoint = {};
-      iconpoint.x = iconX + 10;
-      iconpoint.y = iconY - 10;
+      iconpoint.x = iconX + 5;
+      iconpoint.y = iconY - 5;
       iconpoint.w = Math.max(
         parseInt(itemStyle.size.Items),
         Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
@@ -351,13 +352,13 @@ async function writeMyTxt(
           iconpoint.h
         );
       });
-      iconX = iconpoint.w + 10;
+      iconX = iconX + iconpoint.w + 10;
 
     }
     if(itemArray[k].immunityBooster === true){
       let iconpoint = {};
-      iconpoint.x = iconX + 10;
-      iconpoint.y = iconY - 10;
+      iconpoint.x = iconX + 5;
+      iconpoint.y = iconY - 5;
       iconpoint.w = Math.max(
         parseInt(itemStyle.size.Items),
         Math.floor(screen.measureText(text).actualBoundingBoxAscent) + 15
@@ -388,7 +389,7 @@ async function writeMyTxt(
     if (itemArray[k].new === true) {
       let iconpoint = {};
       iconpoint.x = iconX + 40;
-      iconpoint.y = iconY - 60;
+      iconpoint.y = iconY - 90;
       iconpoint.w = 180;
       iconpoint.h = 180;
       //console.log("new",iconpoint);
@@ -404,7 +405,7 @@ async function writeMyTxt(
     } else if (itemArray[k].trendingNow === true) {
       // let iconpoint = {};
       // iconpoint.x = iconX + 40;
-      // iconpoint.y = iconY - 50;
+      // iconpoint.y = iconY - 80;
       // iconpoint.w = 180;
       // iconpoint.h = 180;
       // //console.log("new",iconpoint);
@@ -420,7 +421,7 @@ async function writeMyTxt(
     } else if (itemArray[k].chaayosSpecial === true) {
       let iconpoint = {};
       iconpoint.x = iconX + 40;
-      iconpoint.y = iconY - 30;
+      iconpoint.y = iconY - 80;
       iconpoint.w = 180;
       iconpoint.h = 180;
       //console.log("new",iconpoint);
