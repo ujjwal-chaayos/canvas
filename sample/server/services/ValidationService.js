@@ -42,9 +42,9 @@ const widthValidation = (block, txt, font) => {
 // };
 
 
-const wrapValidation = (block, txt, font,style) => {
+const wrapValidation = (block, txt, font,style,width,height) => {
   var txtWidth = 0;
-  let screen = new createCanvas(3840, 2160).getContext("2d");
+  let screen = new createCanvas(width, height).getContext("2d");
   screen.font = style;
   var blockWidth =  Math.ceil((block.w*100)/80) - 0.4*Math.ceil((block.w*100)/80);
   var blockHeight = block.h;

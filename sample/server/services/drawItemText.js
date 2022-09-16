@@ -444,7 +444,9 @@ async function doMyTextPrint(
   items,
   prices,
   screen,
-  screen2
+  screen2,
+  screenWidth,
+  screenHeight
 ) {
   console.log("text printing...");
   for (let i = 0; i < itemCoordinates.length; i++) {
@@ -481,7 +483,9 @@ async function doMyTextPrint(
           itemCoordinates[i],
           itemArray,
           { height: parseInt(itemStyle.size.Items), spacing: 5 },
-          style
+          style,
+          screenWidth,
+          screenHeight
         )
       ) {
         // console.log("item ARrAy" , itemArray);
@@ -816,9 +820,9 @@ async function doMyWork(imageBuffer, jsondata, coordinateJson, bufferLength) {
     prices,
     screen,
     screen2,
-    vegicon,
-    nonvegicon,
-    newicon
+    bgImg.width,
+    bgImg.height
+
   );
   console.log("text printed!!!");
   screen.save();

@@ -46,7 +46,7 @@ function loadOpenCV() {
 }
 
 const connection = mongoose
-  .connect(process.env.MONGODB_URL, {
+  .connect("mongodb://localhost:27017/db", {
     useNewUrlParser: true,
   })
   .then(() => console.log("Connected to MongoDB"))
